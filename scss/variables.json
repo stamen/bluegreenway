@@ -1,0 +1,20 @@
+{
+	"app": {
+		"containerPadding": 20
+	},
+	"breakpoints": {
+		"width": {
+			"small": 750,
+			"large": 1280
+		},
+		"bottomRow": {
+			"height": {
+				"small": 230,
+				"large": 310
+			}
+		}
+	},
+	"header": {
+		"height": 90
+	}
+}

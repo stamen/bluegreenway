@@ -1,0 +1,7 @@
+{
+	"layers": [
+		{
+			"url": "http://d.tile.stamen.com/terrain-background/{z}/{x}/{y}.jpg"
+		}
+	]
+}

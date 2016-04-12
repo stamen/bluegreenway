@@ -1,0 +1,158 @@
+// fill the browser with our glorious website
+body,
+html {
+	height: 100%;
+	width: 100%;
+	background-color: $background-color;
+}
+
+body {
+	// override Skeleton's strange line-height setting
+	line-height: 1.0;
+}
+
+body,
+svg text {
+	@extend %better-helvetica;
+
+	// Note: below are very loose responsive breakpoints;
+	// tighten up as needed for your application.
+
+	/* ----------- Phones ----------- */
+	@media screen
+		and (max-width: #{$breakpoints-width-small}px) {
+			font-size: 16px;
+	}
+
+	/* ----------- Tablets ----------- */
+	@media screen
+		and (min-width: #{$breakpoints-width-small}px)
+		and (max-width: #{$breakpoints-width-large}px) {
+			font-size: 20px;
+	}
+
+	/* ----------- Desktops ----------- */
+	@media screen
+		and (min-width: #{$breakpoints-width-large}px) {
+			font-size: 24px;
+	}
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.4em; }
+h3 { font-size: 1em; }
+h4 { font-size: 0.67em; }
+h5 { font-size: 0.5em; }
+h6 { font-size: 0.35em; }
+
+a {
+	&:link,
+	&:over,
+	&:hover,
+	&:active {
+		color: $text-link-color;
+	}
+}
+
+.container {
+	padding: #{$app-containerPadding}px;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.template-tile {
+	position: relative;
+	padding: #{$app-containerPadding}px;
+	box-sizing: border-box;
+	white-space: nowrap;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	// double border
+	&::before {
+		position: absolute;
+		display: block;
+		content: '';
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border: solid 1px $tile-border-color;
+		pointer-events: none;
+	}
+
+	&::after {
+		position: absolute;
+		display: block;
+		content: '';
+		top: 0.2em;
+		right: 0.2em;
+		bottom: 0.2em;
+		left: 0.2em;
+		border: solid 2px $tile-border-color;
+		pointer-events: none;
+	}
+}
+
+.top-row {
+	// flexible top row height, set in JS
+	// by App.jsx#computeComponentDimensions
+	margin-bottom: #{$app-containerPadding}px;
+}
+
+.bottom-row {
+	// fixed bottom row height, per breakpoint
+	/* ----------- Tablets and below ----------- */
+	@media screen
+		and (min-width: #{$breakpoints-width-small}px)
+		and (max-width: #{$breakpoints-width-large}px) {
+			height: #{$breakpoints-bottomRow-height-small}px;
+	}
+
+	/* ----------- Desktop and above ----------- */
+	@media screen
+		and (min-width: #{$breakpoints-width-large}px) {
+			height: #{$breakpoints-bottomRow-height-large}px;
+	}
+}
+
+header {
+	position: relative;
+	height: #{$header-height}px;
+
+	h1 {
+		margin: 0;
+	}
+
+	h4 {
+		display: inline-block;
+		position: relative;
+		top: -0.25em;
+		margin: 0 0 0 0.3em;
+		font-size: 0.66667em;
+		cursor: pointer;
+	}
+
+	.header-main {
+		@extend %better-helvetica-bold;
+	}
+}
+
+.leaflet-container {
+	width: 100%;
+	height: 100%;
+}
+
+// Override styles from @stamen/panorama
+.panorama {
+	&.item-selector {
+		h3 {
+			@extend %better-helvetica-bold;
+		}
+		ul {
+			height: 4.5em;
+		}
+	}
+}
