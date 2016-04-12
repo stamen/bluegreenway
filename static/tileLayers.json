@@ -1,7 +1,7 @@
 {
 	"layers": [
 		{
-			"url": "http://d.tile.stamen.com/terrain-background/{z}/{x}/{y}.jpg"
+			"url": "http://map.parks.stamen.com/{z}/{x}/{y}.png"
 		}
 	]
 }

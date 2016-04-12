@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import * as actions from './actions';
+import leaflet from 'leaflet';
 
 const identity = (state, action) => state;
 
@@ -83,8 +84,18 @@ export default {
 export const initialState = {
 
 	map: {
-		zoom: 6,
-		center: [39.098, -120.039]
+		zoom: 14,
+		bounds: leaflet.latLngBounds(
+			leaflet.latLng(37.733, -122.474),
+			leaflet.latLng(37.793, -122.346)),
+		zoomSnap: 0.0,
+		zoomControl: false,
+		keyboard: false,
+		dragging: false,
+		touchZoom: false,
+		scrollWheelZoom: false,
+		doubleClickZoom: false,
+		boxZoom: false
 	},
 
 	itemSelector: {

@@ -54,90 +54,12 @@ a {
 	}
 }
 
-.container {
-	padding: #{$app-containerPadding}px;
-}
-
-.full-height {
-	height: 100%;
-}
-
-.template-tile {
-	position: relative;
-	padding: #{$app-containerPadding}px;
-	box-sizing: border-box;
-	white-space: nowrap;
-	overflow-x: hidden;
-	overflow-y: auto;
-
-	// double border
-	&::before {
-		position: absolute;
-		display: block;
-		content: '';
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		border: solid 1px $tile-border-color;
-		pointer-events: none;
-	}
-
-	&::after {
-		position: absolute;
-		display: block;
-		content: '';
-		top: 0.2em;
-		right: 0.2em;
-		bottom: 0.2em;
-		left: 0.2em;
-		border: solid 2px $tile-border-color;
-		pointer-events: none;
-	}
-}
-
-.top-row {
-	// flexible top row height, set in JS
-	// by App.jsx#computeComponentDimensions
-	margin-bottom: #{$app-containerPadding}px;
-}
-
-.bottom-row {
-	// fixed bottom row height, per breakpoint
-	/* ----------- Tablets and below ----------- */
-	@media screen
-		and (min-width: #{$breakpoints-width-small}px)
-		and (max-width: #{$breakpoints-width-large}px) {
-			height: #{$breakpoints-bottomRow-height-small}px;
-	}
-
-	/* ----------- Desktop and above ----------- */
-	@media screen
-		and (min-width: #{$breakpoints-width-large}px) {
-			height: #{$breakpoints-bottomRow-height-large}px;
-	}
-}
-
-header {
-	position: relative;
-	height: #{$header-height}px;
-
-	h1 {
-		margin: 0;
-	}
-
-	h4 {
-		display: inline-block;
-		position: relative;
-		top: -0.25em;
-		margin: 0 0 0 0.3em;
-		font-size: 0.66667em;
-		cursor: pointer;
-	}
-
-	.header-main {
-		@extend %better-helvetica-bold;
-	}
+.background-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
 }
 
 .leaflet-container {
