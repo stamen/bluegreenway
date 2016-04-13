@@ -1,0 +1,69 @@
+// ============================================================
+// SKELETON CONFIG
+// ============================================================
+body {
+	// override Skeleton's strange line-height setting
+	line-height: 1.0;
+}
+
+body,
+svg text {
+	font-family: 'NeutrafaceText';
+	font-size: 20px;
+	line-height: 24px;
+	@include respond-to(small) {
+		font-size: 20px;
+		line-height: 30px;
+	}
+	@include respond-to(medium) {
+		font-size: 20px;
+		line-height: 30px;
+	}
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.4em; }
+h3 { font-size: 1em; }
+h4 { font-size: 0.67em; }
+h5 { font-size: 0.5em; }
+h6 { font-size: 0.35em; }
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+	color: $text-link-color;
+	text-decoration: none;
+}
+
+.background-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+}
+
+// ============================================================
+// COMPONENTS
+// ============================================================
+
+//
+// Override styles from @stamen/panorama and other libs
+//
+.panorama {
+	&.item-selector {
+		h3 {
+			font-family: 'NeutrafaceText';
+		}
+		ul {
+			height: 4.5em;
+		}
+	}
+}
+
+.leaflet-container {
+	width: 100%;
+	height: 100%;
+}

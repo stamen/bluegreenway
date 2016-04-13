@@ -1,14 +1,15 @@
 // lib styles
-@import "lib/skeleton";
+@import "lib/skeleton/config";
 @import "lib/normalize";
 
 // @stamen/panorama component styles
 @import "./node_modules/@stamen/itemselector/style";
 
 // application-wide styles
-@import "variables";
-@import "layout";
 @import "typography";
+@import "variables";
+@import "mixins";
+@import "app";
 
 // local component styles
 @import "components/header";
