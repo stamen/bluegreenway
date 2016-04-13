@@ -50,7 +50,7 @@ export default class Header extends React.Component {
 
 		return (
 			<header className='site-header'>
-				<h1>BLUE GREENWAY</h1>
+				<h1><Link to='/'>BLUE GREENWAY</Link></h1>
 				<ul>
 					<li><Link to='/stories'>Stories</Link></li>
 					<li><Link to='/events'>Events</Link></li>
