@@ -2,10 +2,16 @@
 // by gulp-json-sass in gulpfile.babel.js
 @import 'variables-derived.scss';
 
+$white: #ffffff;
+$blue: #043d58;
+$green: #8bc954;
+
+// skeleton overrides
+$link-color: $blue;
+
 // colors
-$background-color-light: #ffffff;
-$text-color: #ffffff;
-$text-link-color: rgb(8, 46, 70);
+$background-color-light: $white;
+$text-color: $white;
 
 // used by 'respond-to' mixin
 $breakpoints: (

@@ -1,3 +1,6 @@
+// variables used in skeleton and app
+@import "variables";
+
 // lib styles
 @import "lib/skeleton";
 
@@ -6,7 +9,6 @@
 
 // application-wide styles
 @import "fonts";
-@import "variables";
 @import "mixins";
 @import "app";
 
