@@ -1,11 +1,3 @@
-// fill the browser with our glorious website
-body,
-html {
-	height: 100%;
-	width: 100%;
-	background-color: $background-color;
-}
-
 body {
 	// override Skeleton's strange line-height setting
 	line-height: 1.0;
@@ -13,7 +5,7 @@ body {
 
 body,
 svg text {
-	@extend %better-helvetica;
+	font-family: 'NeutrafaceText';
 
 	// Note: below are very loose responsive breakpoints;
 	// tighten up as needed for your application.
@@ -45,13 +37,13 @@ h4 { font-size: 0.67em; }
 h5 { font-size: 0.5em; }
 h6 { font-size: 0.35em; }
 
-a {
-	&:link,
-	&:over,
-	&:hover,
-	&:active {
-		color: $text-link-color;
-	}
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+	color: $text-link-color;
+	text-decoration: none;
 }
 
 .background-container {
@@ -71,7 +63,7 @@ a {
 .panorama {
 	&.item-selector {
 		h3 {
-			@extend %better-helvetica-bold;
+			font-family: 'NeutrafaceText';
 		}
 		ul {
 			height: 4.5em;

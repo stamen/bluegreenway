@@ -8,6 +8,8 @@ import { Map, TileLayer, GeoJson } from 'react-leaflet';
 // Note: can also just `npm install` individual components, and import like so:
 // import ItemSelector from '@stamen/itemselector';
 
+import Header from '../components/header';
+
 // config
 import tileLayers from '../../static/tileLayers.json';
 import sassVars from '../../scss/variables.json';
@@ -192,6 +194,8 @@ class App extends React.Component {
 						{ this.renderTileLayers() }
 					</Map>
 				</div>
+				<Header { ...this.state.header } />
+				{/*
 				<div style={{position: 'relative', width: '15em', backgroundColor: 'white', margin: '1em', padding: '0.5em'}}>
 					A snake slithers across a tree branch, past what looks like the large iris of a flower. The flower blinks. It's the eye of the raptor. Muldoon sees it. He raises his gun. Instead of running away again, the raptor rises slowly out of the brush, fully revealing itself to Muldoon, hissing at him. The corners of Muldoon's mouth twitch up into a smile. He draws a bead on the animal. His finger tenses on the trigger. Suddenly, his smile vanishes, both eyes pop open, and a terrible thought sweeps across his face. His eyes flick to the side "Clever girl"
 
@@ -213,6 +217,7 @@ class App extends React.Component {
 
 					We can make it if we run. No, we can't. Why not? Because we are being hunted. Oh God. In the bushes straight ahead. It's all right. Like hell it is!
 				</div>
+				*/}
 			</div>
 		);
 

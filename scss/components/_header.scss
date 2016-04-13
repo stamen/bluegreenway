@@ -1,0 +1,28 @@
+.site-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 3.75em;
+
+	box-sizing: border-box;
+	padding: 1em;
+	background-color: rgba($background-color-light, 0.9);
+
+	h1 {
+		width: 50%;
+		margin: 0;
+	}
+
+	ul {
+		position: absolute;
+		right: 0;
+		bottom: 0.5em;
+		margin: 0;
+	}
+
+	li {
+		display: inline-block;
+		padding: 0 2.5em;
+	}
+}
