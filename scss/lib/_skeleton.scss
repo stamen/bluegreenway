@@ -6,6 +6,9 @@
 * http://www.opensource.org/licenses/mit-license.php
 * 12/9/2014
 * Sass Version by Seth Coelen https://github.com/whatsnewsaes
+*
+* Modified to maintain a typical browser default `font-size` of 16px,
+* and avoid the html { font-size: 62.5% } trick.
 */
 
 /* Base files. */
