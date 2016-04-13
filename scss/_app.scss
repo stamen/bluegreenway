@@ -1,6 +1,7 @@
 // ============================================================
-// SKELETON CONFIG
+// SKELETON OVERRIDES
 // ============================================================
+/*
 body {
 	// override Skeleton's strange line-height setting
 	line-height: 1.0;
@@ -21,6 +22,11 @@ svg text {
 	}
 }
 
+//
+// TODO: clean up headings and anchors CSS re: skeleton
+// then push back to template
+//
+
 h1 { font-size: 2em; }
 h2 { font-size: 1.4em; }
 h3 { font-size: 1em; }
@@ -35,6 +41,16 @@ a:hover,
 a:active {
 	color: $text-link-color;
 	text-decoration: none;
+}
+*/
+
+
+// ============================================================
+// APP
+// ============================================================
+body,
+svg text {
+	font-family: 'NeutrafaceText';
 }
 
 .background-container {
