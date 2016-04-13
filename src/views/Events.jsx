@@ -41,7 +41,7 @@ export default class Events extends React.Component {
 	render () {
 
 		return (
-			<div>
+			<div id='events'>
 				<h1>EVENTS</h1>
 			</div>
 		);

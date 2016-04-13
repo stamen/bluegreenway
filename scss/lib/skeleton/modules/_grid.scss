@@ -8,7 +8,7 @@
 * Sass Version by Seth Coelen https://github.com/whatsnewsaes
 */
 
-.container {
+.grid-container {
   position: relative;
   width: 100%;
   max-width: $container-width;
@@ -26,7 +26,7 @@
 
 // For devices larger than 400px
 @media (#{$bp-larger-than-mobile}) {
-  .container {
+  .grid-container {
     width: $container-width-larger-than-mobile;
     padding: 0;
   }
@@ -34,7 +34,7 @@
 
 // For devices larger than 550px
 @media (#{$bp-larger-than-phablet}) {
-  .container {
+  .grid-container {
     width: $container-width-larger-than-phablet;
   }
   .column,
@@ -107,7 +107,7 @@
 
 // Self Clearing Goodness
 
-.container:after,
+.grid-container:after,
 .row:after,
 .u-cf {
   content: "";

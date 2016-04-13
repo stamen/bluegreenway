@@ -41,7 +41,7 @@ export default class About extends React.Component {
 	render () {
 
 		return (
-			<div>
+			<div id='about'>
 				<h1>ABOUT</h1>
 			</div>
 		);

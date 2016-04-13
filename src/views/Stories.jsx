@@ -41,7 +41,7 @@ export default class Stories extends React.Component {
 	render () {
 
 		return (
-			<div>
+			<div id='stories'>
 				<h1>STORIES</h1>
 			</div>
 		);
