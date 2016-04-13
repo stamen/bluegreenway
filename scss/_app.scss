@@ -39,6 +39,14 @@ svg text {
 	font-family: 'NeutrafaceText';
 }
 
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+	text-decoration: none;
+}
+
 .background-container {
 	position: fixed;
 	top: 0;
@@ -47,12 +55,10 @@ svg text {
 	height: 100vh;
 }
 
-a,
-a:link,
-a:visited,
-a:hover,
-a:active {
-	text-decoration: none;
+.content-container {
+	position: absolute;
+	left: 0;
+	top: $header-height;
 }
 
 // ============================================================

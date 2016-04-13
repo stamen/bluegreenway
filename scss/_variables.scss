@@ -13,6 +13,9 @@ $link-color: $blue;
 $background-color: $white;
 $text-color: $white;
 
+// sizes
+$header-height: 3.75em;
+
 // used by 'respond-to' mixin
 $breakpoints: (
 	'small' : 768px,

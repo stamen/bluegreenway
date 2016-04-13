@@ -1,11 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
 
 import App from './views/App.jsx';
+import Home from './views/Home.jsx';
+import Stories from './views/Stories.jsx';
+import Events from './views/Events.jsx';
+import Projects from './views/Projects.jsx';
+import About from './views/About.jsx';
 import RouteNotFound from './views/404.jsx';
+
 import reducers, { initialState } from './reducers';
 import actionCreator from './actions';
 
@@ -47,10 +53,11 @@ if (process.env.ROUTE_ALL_TO_ROOT) {
 	render((
 		<Router history={ history } createElement={ createReduxComponent }>
 			<Route path='/' component={ App }>
-				<Route path='/stories' component={ App } />
-				<Route path='/events' component={ App } />
-				<Route path='/projects' component={ App } />
-				<Route path='/about' component={ App } />
+				<IndexRoute component={ Home } />
+				<Route path='stories' component={ Stories } />
+				<Route path='events' component={ Events } />
+				<Route path='projects' component={ Projects } />
+				<Route path='about' component={ About } />
 			</Route>
 			<Route path='*' component={ RouteNotFound } />
 		</Router>
