@@ -25,7 +25,7 @@ const actions = actionCreator(store);
 // using `react-router-redux`
 const history = syncHistoryWithStore(browserHistory, store);
 
-// Pass the session store and actionCreator into 
+// Pass the session store and actionCreator into
 // every component created by `react-router`.
 // Within each component, the store and action creator
 // will be available as `props.store` / `props.actions`.
@@ -46,7 +46,12 @@ if (process.env.ROUTE_ALL_TO_ROOT) {
 } else {
 	render((
 		<Router history={ history } createElement={ createReduxComponent }>
-			<Route path='/' component={ App } />
+			<Route path='/' component={ App }>
+				<Route path='/stories' component={ App } />
+				<Route path='/events' component={ App } />
+				<Route path='/projects' component={ App } />
+				<Route path='/about' component={ App } />
+			</Route>
 			<Route path='*' component={ RouteNotFound } />
 		</Router>
 	), document.getElementById('app'));
