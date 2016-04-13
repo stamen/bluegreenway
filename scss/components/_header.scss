@@ -1,11 +1,12 @@
 $link-padding: 1.5em;
 
 .site-header {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: $header-height;
+	z-index: 1;
 
 	background-color: rgba($background-color, 0.9);
 
