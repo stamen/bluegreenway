@@ -5,24 +5,31 @@
 	width: 100%;
 	height: 3.75em;
 
-	box-sizing: border-box;
-	padding: 1em;
-	background-color: rgba($background-color-light, 0.9);
+	background-color: rgba($background-color, 0.9);
 
 	h1 {
-		width: 50%;
+		max-width: 50%;
 		margin: 0;
 	}
 
 	ul {
 		position: absolute;
+		height: 100%;
+		top: 0;
 		right: 0;
-		bottom: 0.5em;
 		margin: 0;
+		padding: 0;
 	}
 
 	li {
 		display: inline-block;
-		padding: 0 2.5em;
+		height: 100%;
+		padding: 1.5em 2.5em;
+
+		&:hover,
+		&:active,
+		.active {
+			background-color: $green;
+		}
 	}
 }
