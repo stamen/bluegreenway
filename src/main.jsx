@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
+import { createHistory } from 'history';
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
 
 import App from './views/App.jsx';
@@ -29,6 +30,9 @@ const actions = actionCreator(store);
 
 // Set up a history object whose state will stay in sync with the store,
 // using `react-router-redux`
+const browserHistory = useRouterHistory(createHistory)({
+	basename: process.env.BASE_URL || '/'
+});
 const history = syncHistoryWithStore(browserHistory, store);
 
 // Pass the session store and actionCreator into
@@ -41,25 +45,15 @@ const createReduxComponent = (Component, props) => {
 };
 
 // Render the app as `react-router` <Route>s, within a <Router>
-// TODO: find a better solution (html <base>, set via build step?)
-if (process.env.ROUTE_ALL_TO_ROOT) {
-	// Direct all routes to `App` to support hosting somewhere other than root (e.g. studio.stamen.com)
-	render((
-		<Router history={ history } createElement={ createReduxComponent }>
-			<Route path='*' component={ App } />
-		</Router>
-	), document.getElementById('app'));
-} else {
-	render((
-		<Router history={ history } createElement={ createReduxComponent }>
-			<Route path='/' component={ App }>
-				<IndexRoute component={ Home } />
-				<Route path='stories' component={ Stories } />
-				<Route path='events' component={ Events } />
-				<Route path='projects' component={ Projects } />
-				<Route path='about' component={ About } />
-			</Route>
-			<Route path='*' component={ RouteNotFound } />
-		</Router>
-	), document.getElementById('app'));
-}
+render((
+	<Router history={ history } createElement={ createReduxComponent }>
+		<Route path='/' component={ App }>
+			<IndexRoute component={ Home } />
+			<Route path='stories' component={ Stories } />
+			<Route path='events' component={ Events } />
+			<Route path='projects' component={ Projects } />
+			<Route path='about' component={ About } />
+		</Route>
+		<Route path='*' component={ RouteNotFound } />
+	</Router>
+), document.getElementById('app'));

@@ -39,7 +39,7 @@ function browserifyTask (options) {
 		transform: [[babelify],			// Convert ES6 and React .jsx -> vanilla, ES5-compliant .js
 			[looseEnvify, {
 				NODE_ENV: options.development ? 'development' : 'production',	// set NODE_ENV in compiled code (to optimize react-redux)
-				ROUTE_ALL_TO_ROOT: $.util.env.routeAllToRoot						// set ROUTE_ALL_TO_ROOT to set up react-router (default: false)
+				BASE_URL: $.util.env.baseUrl							// set BASE_URL for react-router path resolution (default: '/')
 			}]
 		],
 		debug: options.development,		// Gives us sourcemapping
