@@ -13,7 +13,7 @@
   width: 100%;
   max-width: $container-width;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: $container-padding;
   box-sizing: border-box;
 }
 
@@ -24,18 +24,17 @@
   box-sizing: border-box;
 }
 
-// For devices larger than 400px
 @media (#{$bp-larger-than-mobile}) {
   .grid-container {
     width: $container-width-larger-than-mobile;
-    padding: 0;
+    padding: $container-padding-larger-than-mobile;
   }
 }
 
-// For devices larger than 550px
-@media (#{$bp-larger-than-phablet}) {
+@media (#{$bp-larger-than-tablet}) {
   .grid-container {
-    width: $container-width-larger-than-phablet;
+    width: $container-width-larger-than-tablet;
+    padding: $container-padding-larger-than-tablet;
   }
   .column,
   .columns {

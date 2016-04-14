@@ -1,7 +1,17 @@
 #home {
 	position: relative;
-	width: 15em;
-	background-color: white;
-	margin: 1em;
-	padding: 0.5em;
+
+	margin: 0em;
+	@media (#{$bp-larger-than-tablet}) {
+		margin: 1em;
+	}
+
+	.row {
+		margin-bottom: $grid-spacing-small;
+
+		div {
+			height: 8em;
+			background-color: white;
+		}
+	}
 }

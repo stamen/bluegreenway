@@ -2,23 +2,45 @@
 // by gulp-json-sass in gulpfile.babel.js
 @import 'variables-derived.scss';
 
+
+//
+// colors
+//
 $white: #ffffff;
 $blue: #043d58;
 $green: #8bc954;
-
-// skeleton overrides
-$link-color: $blue;
-
-// colors
 $background-color: $white;
 $text-color: $white;
 
-// sizes
-$header-height: 3.75em;
 
-// used by 'respond-to' mixin
-$breakpoints: (
-	'small' : 768px,
-	'medium' : 1024px,
-	'large' : 1400px
-);
+//
+// skeleton overrides
+//
+// note that only larger-than-mobile/tablet breakpoints
+// are applied in _grid.scss, so only those are overridden.
+//
+$link-color: $blue;
+
+$bp-larger-than-mobile: 'min-width: 768px';
+$bp-larger-than-tablet: 'min-width: 1024px';
+
+// grid-container at 540 for large screens,
+// 100% for smaller screens
+$container-width: 100%;
+$container-width-larger-than-mobile: 100%;
+$container-width-larger-than-tablet: 540px;
+
+// pad container on small screens only
+$container-padding: 0.5em;
+$container-padding-larger-than-mobile: 0.5em;
+$container-padding-larger-than-tablet: 0;
+
+$column-margin: 2%;
+
+
+//
+// sizing
+//
+$grid-spacing-large: 1em;
+$grid-spacing-small: 0.5em;
+$header-height: 3.75em;
