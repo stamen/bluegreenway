@@ -24,18 +24,18 @@ $link-color: $blue;
 $bp-larger-than-mobile: 'min-width: 768px';
 $bp-larger-than-tablet: 'min-width: 1024px';
 
-// grid-container at 540 for large screens,
-// 100% for smaller screens
+// grid-container at 1010 (75px col + 10px gutter)
+// for large screens, 100% for smaller screens
 $container-width: 100%;
 $container-width-larger-than-mobile: 100%;
-$container-width-larger-than-tablet: 540px;
+$container-width-larger-than-tablet: 1010px;
 
 // pad container on small screens only
 $container-padding: 0.5em;
 $container-padding-larger-than-mobile: 0.5em;
 $container-padding-larger-than-tablet: 0;
 
-$column-margin: 2%;
+$column-margin: 1%;
 
 
 //
