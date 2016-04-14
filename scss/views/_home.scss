@@ -23,7 +23,7 @@
 	$color5: rgb(87, 139, 74);
 	$color6: rgb(187, 173, 51);
 	$colors: $color1, $color2, $color3, $color4, $color5, $color6;
-	$num-rows: 3;
+	$num-rows: 6;
 	$num-cols: 3;
 
 	@for $i from 1 through $num-rows {

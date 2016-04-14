@@ -61,6 +61,23 @@ export default class Home extends React.Component {
 					<div className='six columns'></div>
 				</div>
 
+				<div className='row'>
+					<div className='three columns'></div>
+					<div className='six columns'></div>
+					<div className='three columns'></div>
+				</div>
+
+				<div className='row'>
+					<div className='six columns'></div>
+					<div className='three columns'></div>
+					<div className='three columns'></div>
+				</div>
+
+				<div className='row'>
+					<div className='three columns'></div>
+					<div className='three columns'></div>
+				</div>
+
 			</div>
 		);
 
