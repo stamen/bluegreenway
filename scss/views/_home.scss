@@ -14,4 +14,25 @@
 			background-color: white;
 		}
 	}
+
+	// for fun...
+	$color1: rgb(10, 107, 115);
+	$color2: rgb(163, 74, 49);
+	$color3: rgb(189, 200, 194);
+	$color4: rgb(5, 55, 39);
+	$color5: rgb(87, 139, 74);
+	$color6: rgb(187, 173, 51);
+	$colors: $color1, $color2, $color3, $color4, $color5, $color6;
+	$num-rows: 3;
+	$num-cols: 3;
+
+	@for $i from 1 through $num-rows {
+		.row:nth-child(0n+#{$i}) {
+			@for $j from 1 through $num-cols {
+				div:nth-child(0n+#{$j}) {
+					background-color: desaturate(lighten(nth($colors, random(length($colors))), 20%), 20%);
+				}
+			}
+		}
+	}
 }
