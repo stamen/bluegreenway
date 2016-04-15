@@ -1,5 +1,3 @@
-$link-padding: 1.5em;
-
 .site-header {
 	position: fixed;
 	top: 0;
@@ -32,19 +30,16 @@ $link-padding: 1.5em;
 	li {
 		display: inline-block;
 		height: 100%;
-		padding-top: $link-padding;
-		cursor: pointer;
-
-		&:hover,
-		&:active,
-		.active {
-			background-color: $green;
-		}
 
 		a {
-			width: 100%;
-			height: 100%;
-			padding: $link-padding 2.5em;
+			display: block;
+			padding: 1.5em 2.5em 0 2.5em;
+
+			&:hover,
+			&:active,
+			&.active {
+				background-color: $green;
+			}
 		}
 	}
 

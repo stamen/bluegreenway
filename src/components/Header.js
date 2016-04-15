@@ -42,10 +42,10 @@ export default class Header extends React.Component {
 			<header className='site-header'>
 				<h1><Link to='/'>BLUE GREENWAY</Link></h1>
 				<ul>
-					<li><Link to='/stories'>Stories</Link></li>
-					<li><Link to='/events'>Events</Link></li>
-					<li><Link to='/projects'>Projects</Link></li>
-					<li><Link to='/about'>About</Link></li>
+					<li><Link to='/stories' activeClassName='active'>Stories</Link></li>
+					<li><Link to='/events' activeClassName='active'>Events</Link></li>
+					<li><Link to='/projects' activeClassName='active'>Projects</Link></li>
+					<li><Link to='/about' activeClassName='active'>About</Link></li>
 				</ul>
 			</header>
 		);
