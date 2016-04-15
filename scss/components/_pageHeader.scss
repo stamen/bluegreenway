@@ -23,6 +23,23 @@
 		#about & {
 			background-image: url('./img/header-about.jpg');
 		}
+		@media #{$bp-high-pixel-density} {
+			#home & {
+				background-image: url('./img/header-home@2x.jpg');
+			}
+			#stories & {
+				background-image: url('./img/header-stories@2x.jpg');
+			}
+			#events & {
+				background-image: url('./img/header-events@2x.jpg');
+			}
+			#projects & {
+				background-image: url('./img/header-projects@2x.jpg');
+			}
+			#about & {
+				background-image: url('./img/header-about@2x.jpg');
+			}
+		}
 
 		> div {
 			display: flex;

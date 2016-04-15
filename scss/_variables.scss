@@ -2,15 +2,11 @@
 // by gulp-json-sass in gulpfile.babel.js
 @import 'variables-derived.scss';
 
-
-//
-// colors
-//
 $white: #ffffff;
 $blue: #043d58;
 $green: #8bc954;
-$background-color: $white;
 
+$background-color: $white;
 
 $text-color: $white;
 $text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5);
@@ -21,6 +17,10 @@ $header-z-index: 1;
 $footer-z-index: 2;
 $grid-spacing-large: 1em;
 $grid-spacing-small: 0.5em;
+
+$bp-high-pixel-density: '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)';
+
+
 
 //
 // skeleton overrides
