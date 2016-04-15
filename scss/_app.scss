@@ -50,8 +50,8 @@ a:active {
 	.row {
 		margin-bottom: $grid-spacing-small;
 
-		div {
-			height: 14em;
+		> div {
+			height: 13.6em;
 		}
 	}
 }

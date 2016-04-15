@@ -1,3 +1,27 @@
+@mixin colorize-grid ($num-rows, $num-cols, $first-row, $colors) {
+
+	@if ($colors == null) {
+		$color1: rgb(10, 107, 115);
+		$color2: rgb(163, 74, 49);
+		$color3: rgb(189, 200, 194);
+		$color4: rgb(5, 55, 39);
+		$color5: rgb(87, 139, 74);
+		$color6: rgb(187, 173, 51);
+		$colors: $color1, $color2, $color3, $color4, $color5, $color6;
+	}
+
+	@for $i from $first-row through $num-rows {
+		.row:nth-child(0n+#{$i}) {
+			@for $j from 1 through $num-cols {
+				> div:nth-child(0n+#{$j}) {
+					background-color: desaturate(lighten(nth($colors, random(length($colors))), 20%), 20%);
+				}
+			}
+		}
+	}
+
+}
+
 // respond-to mixin by Hugo Giraudel
 // http://www.sitepoint.com/managing-responsive-breakpoints-sass/
 // to use, define a map like the following (ideally in _variables.scss)
@@ -8,7 +32,6 @@ $breakpoints: (
 	'large' : 1400px
 );
 */
-
 @mixin respond-to ($breakpoint) {
 	// Retrieves the value from the key
 	$value: map-get($breakpoints, $breakpoint);
