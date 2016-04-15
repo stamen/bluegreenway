@@ -11,7 +11,6 @@
 
 		div {
 			height: 14em;
-			background-color: white;
 		}
 	}
 
@@ -23,10 +22,10 @@
 	$color5: rgb(87, 139, 74);
 	$color6: rgb(187, 173, 51);
 	$colors: $color1, $color2, $color3, $color4, $color5, $color6;
-	$num-rows: 6;
+	$num-rows: 7;
 	$num-cols: 3;
 
-	@for $i from 1 through $num-rows {
+	@for $i from 2 through $num-rows {
 		.row:nth-child(0n+#{$i}) {
 			@for $j from 1 through $num-cols {
 				div:nth-child(0n+#{$j}) {

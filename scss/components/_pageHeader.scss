@@ -1,0 +1,32 @@
+.page-header {
+	color: $text-color;
+	font-family: 'NeutrafaceText';
+	text-shadow: $text-shadow;
+
+	.header-cell {
+		width: 100%;
+
+		#home & {
+			background-image: url('./img/header-home.jpg');
+			background-size: cover;
+		}
+
+		> div {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			padding: 1em;
+		}
+	}
+
+	h1 {
+		font-size: 3.33em;
+		font-weight: bold;
+		margin-bottom: 0.5em;
+	}
+
+	p {
+		font-size: 1.89em;
+		margin-bottom: 0;
+	}
+}

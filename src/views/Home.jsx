@@ -5,6 +5,8 @@ import * as React from 'react';
 // Note: can also just `npm install` individual components, and import like so:
 // import ItemSelector from '@stamen/itemselector';
 
+import PageHeader from '../components/PageHeader';
+
 // main app container
 export default class Home extends React.Component {
 
@@ -42,6 +44,8 @@ export default class Home extends React.Component {
 
 		return (
 			<div id='home' className="grid-container">
+
+				<PageHeader />
 
 				<div className='row'>
 					<div className='three columns'></div>

@@ -10,7 +10,21 @@ $white: #ffffff;
 $blue: #043d58;
 $green: #8bc954;
 $background-color: $white;
+
+
+//
+// typography
+//
 $text-color: $white;
+$text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5);
+
+
+//
+// sizing
+//
+$grid-spacing-large: 1em;
+$grid-spacing-small: 0.5em;
+$header-height: 3.75em;
 
 
 //
@@ -36,11 +50,3 @@ $container-padding-larger-than-mobile: 0.5em;
 $container-padding-larger-than-tablet: 0;
 
 $column-margin: 1%;
-
-
-//
-// sizing
-//
-$grid-spacing-large: 1em;
-$grid-spacing-small: 0.5em;
-$header-height: 3.75em;
