@@ -38,6 +38,22 @@ a:active {
 	left: 0;
 	top: $header-height;
 	width: 100%;
+
+	margin: 0em;
+	@media (#{$bp-larger-than-tablet}) {
+		margin: 1em;
+	}
+}
+
+.grid-container {
+	margin: 0;
+	.row {
+		margin-bottom: $grid-spacing-small;
+
+		div {
+			height: 14em;
+		}
+	}
 }
 
 // ============================================================

@@ -5,10 +5,22 @@
 
 	.header-cell {
 		width: 100%;
+		background-size: cover;
 
 		#home & {
 			background-image: url('./img/header-home.jpg');
-			background-size: cover;
+		}
+		#stories & {
+			background-image: url('./img/header-stories.jpg');
+		}
+		#events & {
+			background-image: url('./img/header-events.jpg');
+		}
+		#projects & {
+			background-image: url('./img/header-projects.jpg');
+		}
+		#about & {
+			background-image: url('./img/header-about.jpg');
 		}
 
 		> div {

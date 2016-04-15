@@ -1,19 +1,6 @@
 #home {
 	position: relative;
 
-	margin: 0em;
-	@media (#{$bp-larger-than-tablet}) {
-		margin: 1em;
-	}
-
-	.row {
-		margin-bottom: $grid-spacing-small;
-
-		div {
-			height: 14em;
-		}
-	}
-
 	// for fun...
 	$color1: rgb(10, 107, 115);
 	$color2: rgb(163, 74, 49);
