@@ -1,0 +1,10 @@
+.site-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: $footer-height;
+	z-index: $footer-z-index;
+
+	background-color: rgba($background-color, 0.9);
+}

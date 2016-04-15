@@ -2,19 +2,9 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 /**
- * Header block, with title, background image, current conditions component, and selected module title/description.
+ * Header block at top of site, with logo and nav links
  */
 export default class Header extends React.Component {
-
-	static propTypes = {
-		selectedCategory: PropTypes.object,
-		selectedModule: PropTypes.object
-	};
-
-	static defaultProps = {
-		selectedCategory: null,
-		selectedModule: null
-	};
 
 	constructor (props) {
 

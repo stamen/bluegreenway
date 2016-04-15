@@ -12,20 +12,15 @@ $green: #8bc954;
 $background-color: $white;
 
 
-//
-// typography
-//
 $text-color: $white;
 $text-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5);
 
-
-//
-// sizing
-//
+$header-height: 3.75em;
+$footer-height: 9em;
+$header-z-index: 1;
+$footer-z-index: 2;
 $grid-spacing-large: 1em;
 $grid-spacing-small: 0.5em;
-$header-height: 3.75em;
-
 
 //
 // skeleton overrides

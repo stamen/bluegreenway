@@ -9,6 +9,7 @@ import { Map, TileLayer, GeoJson } from 'react-leaflet';
 // import ItemSelector from '@stamen/itemselector';
 
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 // config
 import tileLayers from '../../static/tileLayers.json';
@@ -195,8 +196,10 @@ class App extends React.Component {
 					</Map>
 				</div>
 				<Header { ...this.state.header } />
+
 				<div className='content-container'>
 					{ this.props.children }
+					<Footer { ...this.state.footer } />
 				</div>
 			</div>
 		);

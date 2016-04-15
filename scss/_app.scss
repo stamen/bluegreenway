@@ -38,15 +38,15 @@ a:active {
 	left: 0;
 	top: $header-height;
 	width: 100%;
-
-	margin: 0em;
-	@media (#{$bp-larger-than-tablet}) {
-		margin: 1em;
-	}
+	min-height: calc(100vh - #{$header-height});
 }
 
 .grid-container {
-	margin: 0;
+	margin: 0 0 $footer-height 0;
+	@media (#{$bp-larger-than-tablet}) {
+		margin: 1em 1em (1em + $footer-height) 1em;
+	}
+
 	.row {
 		margin-bottom: $grid-spacing-small;
 

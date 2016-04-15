@@ -6,6 +6,7 @@
 	.header-cell {
 		width: 100%;
 		background-size: cover;
+		margin-bottom: 1.5em;
 
 		#home & {
 			background-image: url('./img/header-home.jpg');
@@ -34,7 +35,7 @@
 	h1 {
 		font-size: 3.33em;
 		font-weight: bold;
-		margin-bottom: 0.5em;
+		margin-bottom: 0;
 	}
 
 	p {
