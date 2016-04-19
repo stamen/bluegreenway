@@ -8,8 +8,8 @@ import { Map, TileLayer, GeoJson } from 'react-leaflet';
 // Note: can also just `npm install` individual components, and import like so:
 // import ItemSelector from '@stamen/itemselector';
 
-import Header from '../components/header';
-import Footer from '../components/footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 // config
 import tileLayers from '../../static/tileLayers.json';
