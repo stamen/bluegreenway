@@ -8,7 +8,7 @@
 		"dist": "gulp dist",
 		"dist-studio": "gulp dist --dev --baseUrl '/bluegreenway/show/latest/'",
 		"lint": "eslint ./src",
-    "postinstall": "cd node_modules/leaflet; npm install; npm run build"
+		"postinstall": "cd node_modules/leaflet; npm install; npm run build"
 	},
 	"repository": {
 		"type": "git",
