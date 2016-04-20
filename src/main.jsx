@@ -1,13 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
-import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
+import { Redirect, Router, Route, IndexRedirect, IndexRoute, useRouterHistory } from 'react-router';
 import { createHistory } from 'history';
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
 
 import App from './views/App.jsx';
 import Home from './views/Home.jsx';
 import Stories from './views/Stories.jsx';
+import StoriesMap from './views/StoriesMap.jsx';
 import Events from './views/Events.jsx';
 import Projects from './views/Projects.jsx';
 import About from './views/About.jsx';
@@ -49,7 +50,11 @@ render((
 	<Router history={ history } createElement={ createReduxComponent }>
 		<Route path='/' component={ App }>
 			<IndexRoute component={ Home } />
-			<Route path='stories' component={ Stories } />
+			<Route path='stories'>
+				<IndexRedirect to='page' />
+				<Route path='page' component={ Stories } />
+				<Route path='map' component={ StoriesMap } />
+			</Route>
 			<Route path='events' component={ Events } />
 			<Route path='projects' component={ Projects } />
 			<Route path='about' component={ About } />

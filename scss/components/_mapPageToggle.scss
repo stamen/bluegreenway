@@ -1,0 +1,30 @@
+.map-page-toggle {
+	position: absolute;
+	right: $body-margin;
+	width: 160px;
+	top: $body-margin;
+	z-index: 1000;
+}
+
+.map-page-toggle-btn {
+	background: $white;
+	color: $blue;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
+
+	&:first-of-type {
+		margin-bottom: 5px;
+	}
+
+	&:hover, &.active {
+		background: $blue;
+		color: $white;
+	}
+}
