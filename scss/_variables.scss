@@ -18,6 +18,7 @@ $footer-z-index: 2;
 $grid-spacing-large: 1em;
 $grid-spacing-small: 0.5em;
 $body-margin: 1em;
+$mode-toggle-btn-height: 2em;
 
 $bp-high-pixel-density: '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)';
 
@@ -32,7 +33,7 @@ $bp-high-pixel-density: '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution:
 $link-color: $blue;
 
 $bp-larger-than-mobile: 'min-width: 768px';
-$bp-larger-than-tablet: 'min-width: 1024px';
+$bp-larger-than-tablet: 'min-width: 1025px';
 
 // grid-container at 1010 (75px col + 10px gutter)
 // for large screens, 100% for smaller screens

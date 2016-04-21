@@ -47,9 +47,13 @@ a:active {
 .content-container {
 	position: absolute;
 	left: 0;
-	top: $header-height;
+	top: $header-height + $mode-toggle-btn-height + $body-margin;
 	width: 100%;
 	min-height: calc(100vh - #{$header-height});
+
+	@media (#{$bp-larger-than-tablet}) {
+		top: $header-height;
+	}
 }
 
 .grid-container {

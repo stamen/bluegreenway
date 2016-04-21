@@ -30,8 +30,14 @@ export default class MapPageToggle extends React.Component {
 		var mode = this.props.mode;
 		return (
 			<div className="map-page-toggle">
-				<div className={"map-page-toggle-btn" + (mode === 'map' ? ' active' : '')} onClick={(() => this.mapClicked())}>map view</div>
-				<div className={"map-page-toggle-btn" + (mode === 'page' ? ' active' : '')} onClick={(() => this.pageClicked())}>page view</div>
+				<div className={"map-page-toggle-btn" + (mode === 'map' ? ' active' : '')} onClick={(() => this.mapClicked())}>
+					map
+					<span className="map-page-toggle-btn-fulltext"> view</span>
+				</div>
+				<div className={"map-page-toggle-btn" + (mode === 'page' ? ' active' : '')} onClick={(() => this.pageClicked())}>
+					page 
+					<span className="map-page-toggle-btn-fulltext"> view</span>
+				</div>
 			</div>
 		);
 	}
