@@ -1,5 +1,5 @@
 export const SET_STATE = 'SET_STATE';
-export const MAP_FOCUS_CHANGE = 'MAP_FOCUS_CHANGE';
+export const MODE_CHANGED = 'MODE_CHANGED';
 export const MAP_MOVED = 'MAP_MOVED';
 export const ITEM_SELECTED = 'ITEM_SELECTED';
 export const EXAMPLE_INITED = 'EXAMPLE_INITED';
@@ -17,9 +17,11 @@ export default function (store) {
 			});
 		},
 
-		mapFocusChanged (value) {
+		modeChanged (value) {
+			// Only allow map or page modes
+			value = (value in ['map', 'page'] ? value : 'page');
 			store.dispatch({
-				type: MAP_FOCUS_CHANGE,
+				type: MODE_CHANGED,
 				value: value
 			});
 		},

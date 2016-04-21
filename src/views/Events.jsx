@@ -1,20 +1,39 @@
 import * as React from 'react';
 
-import MapPageToggle from '../components/MapPageToggle';
 import PageHeader from '../components/PageHeader';
 
 export default class Events extends React.Component {
 
 	constructor (props) {
-
 		super(props);
 
+		this.onStateChange = this.onStateChange.bind(this);
+		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
+	}
+
+	onStateChange () {
+		let storeState = this.props.store.getState();
+		this.setState(storeState);
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		var urlMode = nextProps.params.mode;
+		var appMode = nextProps.store.getState().mode;
+		if (urlMode !== appMode) {
+			this.updateModeUrl(appMode);
+		}
+	}
+
+	updateModeUrl (mode) {
+		this.props.history.push(`/events/${mode}`);
 	}
 
 	componentWillMount () {
-
-		this.props.actions.mapFocusChanged(false);
-
+		var urlMode = this.props.params.mode;
+		if (urlMode) {
+			this.props.actions.modeChanged(urlMode);
+		}
+		this.onStateChange();
 	}
 
 	componentDidMount () {
@@ -25,7 +44,7 @@ export default class Events extends React.Component {
 
 	componentWillUnmount () {
 
-		//
+		this.unsubscribeStateChange();
 
 	}
 
@@ -39,11 +58,13 @@ export default class Events extends React.Component {
 
 		return (
 			<div>
-				<MapPageToggle mapLink="/events/map" pageLink="/events/page" active="page" />
-				<div id='events' className="grid-container">
-					<PageHeader />
-					{ this.renderRows(this.props.events) }
-				</div>
+				{ this.state.mode === 'page' ?
+					<div id='events' className="grid-container">
+						<PageHeader />
+						{ this.renderRows(this.props.events) }
+					</div>
+					: null
+				}
 			</div>
 		);
 

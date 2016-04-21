@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router';
 
 export default class MapPageToggle extends React.Component {
 
@@ -19,11 +18,20 @@ export default class MapPageToggle extends React.Component {
 	componentDidUpdate () {
 	}
 
+	mapClicked () {
+		this.props.modeChanged('map');
+	}
+
+	pageClicked () {
+		this.props.modeChanged('page');
+	}
+
 	render () {
+		var mode = this.props.mode;
 		return (
 			<div className="map-page-toggle">
-				<Link to={this.props.mapLink} className={"map-page-toggle-btn" + (this.props.active === 'map' ? ' active' : '')}>map view</Link>
-				<Link to={this.props.pageLink} className={"map-page-toggle-btn" + (this.props.active === 'page' ? ' active' : '')}>page view</Link>
+				<div className={"map-page-toggle-btn" + (mode === 'map' ? ' active' : '')} onClick={(() => this.mapClicked())}>map view</div>
+				<div className={"map-page-toggle-btn" + (mode === 'page' ? ' active' : '')} onClick={(() => this.pageClicked())}>page view</div>
 			</div>
 		);
 	}

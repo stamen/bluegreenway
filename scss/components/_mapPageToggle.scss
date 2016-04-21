@@ -2,7 +2,7 @@
 	position: absolute;
 	right: $body-margin;
 	width: 160px;
-	top: $body-margin;
+	top: $header-height + $body-margin;
 	z-index: 1000;
 }
 

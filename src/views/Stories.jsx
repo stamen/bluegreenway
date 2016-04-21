@@ -1,26 +1,39 @@
 import * as React from 'react';
 
-// import components from @stamen/panorama
-// import { ItemSelector } from '@stamen/panorama';
-// Note: can also just `npm install` individual components, and import like so:
-// import ItemSelector from '@stamen/itemselector';
-
-import MapPageToggle from '../components/MapPageToggle';
 import PageHeader from '../components/PageHeader';
 
-// main app container
 export default class Stories extends React.Component {
 
 	constructor (props) {
-
 		super(props);
 
+		this.onStateChange = this.onStateChange.bind(this);
+		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
+	}
+
+	onStateChange () {
+		let storeState = this.props.store.getState();
+		this.setState(storeState);
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		var urlMode = nextProps.params.mode;
+		var appMode = nextProps.store.getState().mode;
+		if (urlMode !== appMode) {
+			this.updateModeUrl(appMode);
+		}
+	}
+
+	updateModeUrl (mode) {
+		this.props.history.push(`/stories/${mode}`);
 	}
 
 	componentWillMount () {
-
-		this.props.actions.mapFocusChanged(false);
-
+		var urlMode = this.props.params.mode;
+		if (urlMode) {
+			this.props.actions.modeChanged(urlMode);
+		}
+		this.onStateChange();
 	}
 
 	componentDidMount () {
@@ -30,9 +43,7 @@ export default class Stories extends React.Component {
 	}
 
 	componentWillUnmount () {
-
-		//
-
+		this.unsubscribeStateChange();
 	}
 
 	componentDidUpdate () {
@@ -45,11 +56,13 @@ export default class Stories extends React.Component {
 
 		return (
 			<div>
-				<MapPageToggle mapLink="/stories/map" pageLink="/stories/page" active="page" />
-				<div id='stories' className="grid-container">
-					<PageHeader />
-					<h1>STORIES</h1>
-				</div>
+				{ this.state.mode === 'page' ?
+					<div id='stories' className="grid-container">
+						<PageHeader />
+						<h1>STORIES</h1>
+					</div>
+					: null
+				}
 			</div>
 		);
 

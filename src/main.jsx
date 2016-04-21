@@ -8,9 +8,7 @@ import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
 import App from './views/App.jsx';
 import Home from './views/Home.jsx';
 import Stories from './views/Stories.jsx';
-import StoriesMap from './views/StoriesMap.jsx';
 import Events from './views/Events.jsx';
-import EventsMap from './views/EventsMap.jsx';
 import Projects from './views/Projects.jsx';
 import About from './views/About.jsx';
 import RouteNotFound from './views/404.jsx';
@@ -51,17 +49,15 @@ render((
 	<Router history={ history } createElement={ createReduxComponent }>
 		<Route path='/' component={ App }>
 			<IndexRoute component={ Home } />
-			<Route path='stories'>
-				<IndexRedirect to='page' />
-				<Route path='page' component={ Stories } />
-				<Route path='map' component={ StoriesMap } />
+			<Route path='stories' component={ Stories }>
+				<Route path=':mode' component={ Stories } />
 			</Route>
-			<Route path='events'>
-				<IndexRedirect to='page' />
-				<Route path='page' component={ Events } />
-				<Route path='map' component={ EventsMap } />
+			<Route path='events' component={ Events }>
+				<Route path=':mode' component={ Events } />
 			</Route>
-			<Route path='projects' component={ Projects } />
+			<Route path='projects' component={ Projects }>
+				<Route path=':mode' component={ Projects } />
+			</Route>
 			<Route path='about' component={ About } />
 		</Route>
 		<Route path='*' component={ RouteNotFound } />

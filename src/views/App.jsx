@@ -10,6 +10,7 @@ import { Map, TileLayer, GeoJson } from 'react-leaflet';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import MapPageToggle from '../components/MapPageToggle';
 
 // config
 import tileLayers from '../../static/tileLayers.json';
@@ -48,6 +49,8 @@ class App extends React.Component {
 			componentState.map = Object.assign({}, storeState.map);
 		}
 
+		componentState.mode = storeState.mode;
+
 		/*
 		if (storeState.itemSelector) {
 			componentState.itemSelector = {
@@ -77,7 +80,7 @@ class App extends React.Component {
 
 	componentWillMount () {
 
-		this.props.actions.mapFocusChanged(false);
+		this.props.actions.modeChanged('page');
 
 		this.computeComponentDimensions();
 
@@ -192,7 +195,8 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<div className={'background-container' + (this.state.map.focus ? '' : ' blurred')}>
+				<MapPageToggle modeChanged={this.props.actions.modeChanged} mode={this.state.mode} />
+				<div className={'background-container' + (this.state.mode === 'map' ? '' : ' blurred')}>
 					<Map { ...this.state.map } ref='leafletMap' onLeafletMoveend={ this.onMapMoved } className='map-container'>
 						{ this.renderTileLayers() }
 					</Map>

@@ -6,17 +6,21 @@ const identity = (state, action) => state;
 
 export default {
 
+	mode (state = 'page', action) {
+		switch (action.type) {
+			case actions.MODE_CHANGED:
+				return action.value;
+			default:
+				return state;
+		}
+	},
+
 	map (state = {}, action) {
 		switch (action.type) {
 			case actions.MAP_MOVED:
 				return {
 					...state,
 					...action.value
-				};
-			case actions.MAP_FOCUS_CHANGE:
-				return {
-					...state,
-					focus: action.value
 				};
 			default:
 				return {
@@ -88,6 +92,8 @@ export default {
 // and can be merged into a set of initial state on store init if desired.
 export const initialState = {
 
+	mode: 'page',
+
 	map: {
 		zoom: 14,
 		bounds: leaflet.latLngBounds(
@@ -101,8 +107,7 @@ export const initialState = {
 		touchZoom: false,
 		scrollWheelZoom: false,
 		doubleClickZoom: false,
-		boxZoom: false,
-		focus: false
+		boxZoom: false
 	},
 
 	itemSelector: {
