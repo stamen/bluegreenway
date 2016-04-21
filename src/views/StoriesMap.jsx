@@ -13,7 +13,7 @@ export default class StoriesMap extends React.Component {
 
 	componentWillMount () {
 
-		//
+		this.props.actions.mapFocusChanged(true);
 
 	}
 

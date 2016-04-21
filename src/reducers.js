@@ -13,6 +13,11 @@ export default {
 					...state,
 					...action.value
 				};
+			case actions.MAP_FOCUS_CHANGE:
+				return {
+					...state,
+					focus: action.value
+				};
 			default:
 				return {
 					...state
@@ -87,7 +92,8 @@ export const initialState = {
 		zoom: 14,
 		bounds: leaflet.latLngBounds(
 			leaflet.latLng(37.733, -122.474),
-			leaflet.latLng(37.793, -122.346)),
+			leaflet.latLng(37.793, -122.346)
+		),
 		zoomSnap: 0.0,
 		zoomControl: false,
 		keyboard: false,
@@ -95,7 +101,8 @@ export const initialState = {
 		touchZoom: false,
 		scrollWheelZoom: false,
 		doubleClickZoom: false,
-		boxZoom: false
+		boxZoom: false,
+		focus: false
 	},
 
 	itemSelector: {

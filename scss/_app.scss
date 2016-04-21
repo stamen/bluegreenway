@@ -31,6 +31,17 @@ a:active {
 	left: 0;
 	width: 100%;
 	height: 100vh;
+
+	-webkit-transition: .5s filter, .5s -webkit-filter;
+	-moz-transition: .5s filter, .5s -moz-filter;
+	-ms-transition: .5s filter, .5s -ms-filter;
+	transition: .5s -webkit-filter, .5s -moz-filter, .5s -ms-filter, .5s filter;
+
+	&.blurred {
+		// NB: This works for everything but IE 8-11
+		-webkit-filter: blur(5px);
+		filter: blur(5px);
+	}
 }
 
 .content-container {

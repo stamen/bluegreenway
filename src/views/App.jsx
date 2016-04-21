@@ -77,6 +77,8 @@ class App extends React.Component {
 
 	componentWillMount () {
 
+		this.props.actions.mapFocusChanged(false);
+
 		this.computeComponentDimensions();
 
 		setTimeout(() => {
@@ -190,7 +192,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<div className='background-container'>
+				<div className={'background-container' + (this.state.map.focus ? '' : ' blurred')}>
 					<Map { ...this.state.map } ref='leafletMap' onLeafletMoveend={ this.onMapMoved } className='map-container'>
 						{ this.renderTileLayers() }
 					</Map>

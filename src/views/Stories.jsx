@@ -19,7 +19,7 @@ export default class Stories extends React.Component {
 
 	componentWillMount () {
 
-		//
+		this.props.actions.mapFocusChanged(false);
 
 	}
 
