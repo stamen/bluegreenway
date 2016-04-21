@@ -1,13 +1,8 @@
 import * as React from 'react';
 
-// import components from @stamen/panorama
-// import { ItemSelector } from '@stamen/panorama';
-// Note: can also just `npm install` individual components, and import like so:
-// import ItemSelector from '@stamen/itemselector';
-
+import MapPageToggle from '../components/MapPageToggle';
 import PageHeader from '../components/PageHeader';
 
-// main app container
 export default class Events extends React.Component {
 
 	constructor (props) {
@@ -18,7 +13,7 @@ export default class Events extends React.Component {
 
 	componentWillMount () {
 
-		//
+		this.props.actions.mapFocusChanged(false);
 
 	}
 
@@ -43,9 +38,12 @@ export default class Events extends React.Component {
 	render () {
 
 		return (
-			<div id='events' className="grid-container">
-				<PageHeader />
-				{ this.renderRows(this.props.events) }
+			<div>
+				<MapPageToggle mapLink="/events/map" pageLink="/events/page" active="page" />
+				<div id='events' className="grid-container">
+					<PageHeader />
+					{ this.renderRows(this.props.events) }
+				</div>
 			</div>
 		);
 

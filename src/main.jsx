@@ -10,6 +10,7 @@ import Home from './views/Home.jsx';
 import Stories from './views/Stories.jsx';
 import StoriesMap from './views/StoriesMap.jsx';
 import Events from './views/Events.jsx';
+import EventsMap from './views/EventsMap.jsx';
 import Projects from './views/Projects.jsx';
 import About from './views/About.jsx';
 import RouteNotFound from './views/404.jsx';
@@ -55,7 +56,11 @@ render((
 				<Route path='page' component={ Stories } />
 				<Route path='map' component={ StoriesMap } />
 			</Route>
-			<Route path='events' component={ Events } />
+			<Route path='events'>
+				<IndexRedirect to='page' />
+				<Route path='page' component={ Events } />
+				<Route path='map' component={ EventsMap } />
+			</Route>
 			<Route path='projects' component={ Projects } />
 			<Route path='about' component={ About } />
 		</Route>
