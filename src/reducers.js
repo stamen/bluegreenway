@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import * as actions from './actions';
 import leaflet from 'leaflet';
+import moment from 'moment';
 
 const identity = (state, action) => state;
 
@@ -60,23 +61,21 @@ export default {
 
 	}),
 
-	exampleComponent: combineReducers({
+	events: combineReducers({
 
-		inited (state = false, action) {
+		startDate (state = null, action) {
 			switch (action.type) {
-				case actions.EXAMPLE_INITED:
-					return true;
+				case actions.EVENTS_START_DATE_CHANGED:
+					return action.value;
 				default:
 					return state;
 			}
 		},
 
-		count (state = 0, action) {
+		endDate (state = null, action) {
 			switch (action.type) {
-				case actions.EXAMPLE_INCREMENT:
-					return state + 1;
-				case actions.EXAMPLE_DECREMENT:
-					return state - 1;
+				case actions.EVENTS_END_DATE_CHANGED:
+					return action.value;
 				default:
 					return state;
 			}
@@ -125,9 +124,9 @@ export const initialState = {
 		]
 	},
 
-	exampleComponent: {
-		inited: false,
-		count: 0
+	events: {
+		startDate: moment('1/1/2016', 'M/D/YYYY'),
+		endDate: moment()
 	}
 
 };

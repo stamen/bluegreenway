@@ -1,0 +1,46 @@
+.date-range-input {
+	background: lightgray;
+	border: 0;
+	color: $blue;
+	margin: 5px;
+	padding: 5px;
+	width: 45%;
+}
+
+.date-picker {
+	border: 0;
+	height: auto;
+
+	.dp-table {
+		.dp-cell {
+			color: black;
+		}
+
+		.dp-cell.dp-week-day-name {
+			background: $blue;
+			color: $white;
+		}
+
+		.dp-cell:not(:first-child) {
+			border: none;
+		}
+
+		.dp-cell.dp-current {
+			background: $green;
+			color: $white;
+		}
+
+		.dp-row {
+			border: none;
+		}
+		.dp-row:last-child {
+			border: none;
+		}
+	}
+
+	.dp-nav-table {
+		.dp-cell {
+			color: $blue;
+		}
+	}
+}

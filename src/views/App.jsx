@@ -84,10 +84,6 @@ class App extends React.Component {
 
 		this.computeComponentDimensions();
 
-		setTimeout(() => {
-			this.props.actions.exampleComponentInitialized();
-		}, 1000);
-
 		// set up initial state
 		this.onAppStateChange();
 
