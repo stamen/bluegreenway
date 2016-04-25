@@ -1,10 +1,78 @@
 .site-footer {
+	background-color: rgba($background-color, 0.9);
+	color: $blue;
+	font-size: 0.77em;
+	padding-bottom: 60px;
+	padding-top: 60px;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: $footer-height;
+	height: auto;
 	z-index: $footer-z-index;
 
-	background-color: rgba($background-color, 0.9);
+	@media (#{$bp-larger-than-tablet}) {
+		height: $footer-height-larger-than-tablet;
+		padding-bottom: 0;
+		padding-top: 0;
+	}
+}
+
+.site-footer-container {
+	width: 100%;
+
+	@media (#{$bp-larger-than-mobile}) {
+		width: $container-width-larger-than-mobile;
+		padding: $container-padding-larger-than-mobile;
+	}
+
+	@media (#{$bp-larger-than-tablet}) {
+		width: $container-width-larger-than-tablet;
+		padding: $container-padding-larger-than-tablet;
+	}
+}
+
+.site-footer-column {
+	padding: 15px;
+	margin: 0 auto;
+	text-align: center;
+	width: 240px;
+
+	@media (#{$bp-larger-than-tablet}) {
+		float: left;
+		margin: auto;
+		margin-left: 1%;
+		padding: 30px;
+		text-align: left;
+		width: 24.25%;
+
+		&:first-child {
+			margin: 0;
+		}
+	}
+}
+
+.site-footer-header {
+	font-weight: bold;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+}
+
+.site-footer-sfpa-logo {
+	background-image: url('./img/logo-sfpa.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	display: block;
+	height: 60px;
+	width: 100%;
+
+	@media #{$bp-high-pixel-density} {
+		background-image: url('./img/logo-sfpa@2x.png');
+	}
+}
+
+.site-footer-advocate {
+	margin-bottom: 5px;
+	text-align: center;
 }

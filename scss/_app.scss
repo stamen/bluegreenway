@@ -59,7 +59,7 @@ a:active {
 .grid-container {
 	margin: 0 0 $footer-height 0;
 	@media (#{$bp-larger-than-tablet}) {
-		margin: $body-margin $body-margin ($body-margin + $footer-height) $body-margin;
+		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-tablet) $body-margin;
 	}
 
 	.row {
