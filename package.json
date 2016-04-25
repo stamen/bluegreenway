@@ -43,6 +43,7 @@
     "gulp-copy": "0.0.2",
     "gulp-cssmin": "^0.1.7",
     "gulp-eslint": "^1.0.0",
+    "gulp-html-replace": "^1.5.5",
     "gulp-if": "^2.0.0",
     "gulp-json-sass": "0.0.2",
     "gulp-load-plugins": "^1.0.0",

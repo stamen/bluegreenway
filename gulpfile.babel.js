@@ -29,6 +29,9 @@ const dependencies = [
 	'redux'
 ];
 
+
+const baseUrl = $.util.env.baseUrl || '/';
+
 const WEB_SERVER_PORT = 8888;
 
 function browserifyTask (options) {
@@ -39,7 +42,7 @@ function browserifyTask (options) {
 		transform: [[babelify],			// Convert ES6 and React .jsx -> vanilla, ES5-compliant .js
 			[looseEnvify, {
 				NODE_ENV: options.development ? 'development' : 'production',	// set NODE_ENV in compiled code (to optimize react-redux)
-				BASE_URL: $.util.env.baseUrl							// set BASE_URL for react-router path resolution (default: '/')
+				BASE_URL: baseUrl							// set BASE_URL for react-router path resolution (default: '/')
 			}]
 		],
 		debug: options.development,		// Gives us sourcemapping
@@ -183,6 +186,14 @@ function copyTask (options) {
 		}));
 }
 
+function addHtmlBaseTask (options) {
+	gulp.src(options.src)
+		.pipe($.htmlReplace({
+			'base': '<base href="' + baseUrl + '">'
+		}))
+	.pipe(gulp.dest(options.dest));
+}
+
 function lintTask (options) {
 	console.log('ESLinting...');
 	return gulp.src(options.lintsrc)
@@ -234,13 +245,13 @@ gulp.task('default', () => {
 		// Copy static html files
 		copyTask({
 			src: './src/*.html',
-			dest: dest
+			dest
 		});
 
 		// Copy static assets
 		copyTask({
 			src: './static/**',
-			dest: dest
+			dest
 		});
 
 		// Copy @stamen/panorama stylesheet
@@ -259,7 +270,7 @@ gulp.task('default', () => {
 			reload,
 			lintsrc: './src/**/*.js*',
 			src: './src/main.jsx',
-			dest: dest
+			dest
 		});
 
 		// transpile variables.json into .scss
@@ -277,7 +288,7 @@ gulp.task('default', () => {
 			reload,
 			src: './scss/*.scss',
 			watchfiles: './scss/**/*.scss',
-			dest: dest
+			dest
 		});
 
 		// Fire up local server
@@ -300,16 +311,23 @@ gulp.task('dist', () => {
 		const dest = './dist',
 			development = false;
 
+		// Copy static html files and
+		// replace <base href=''> with baseUrl
+		addHtmlBaseTask({
+			src: './src/*.html',
+			dest
+		});
+
 		// Copy static html files
 		copyTask({
 			src: './src/*.html',
-			dest: dest
+			dest
 		});
 
 		// Copy static assets
 		copyTask({
 			src: './static/**',
-			dest: dest
+			dest
 		});
 
 		copyTask({
@@ -325,7 +343,7 @@ gulp.task('dist', () => {
 		browserifyTask({
 			development,
 			src: './src/main.jsx',
-			dest: dest
+			dest
 		});
 
 		// transpile variables.json into .scss
@@ -339,7 +357,7 @@ gulp.task('dist', () => {
 		cssTask({
 			development,
 			src: './scss/*.scss',
-			dest: dest
+			dest
 		});
 
 	});
