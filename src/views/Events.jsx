@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
+import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
 export default class Events extends React.Component {
@@ -68,14 +69,35 @@ export default class Events extends React.Component {
 
 	render () {
 		return (
-			<div>
-				{ this.state.mode === 'page' ?
-					<div id='events' className="grid-container">
-						<PageHeader />
-						{ this.renderRows(this.props.events) }
-					</div>
-					: null
-				}
+			<div id="events">
+				{ this.state.mode === 'page' ?  this.renderPageView() : this.renderMapView() }
+			</div>
+		);
+	}
+
+	renderPageView () {
+		return (
+			<div className="grid-container">
+				<PageHeader />
+				{ this.renderRows(this.props.events) }
+			</div>
+		);
+	}
+
+	renderMapView () {
+		return (
+			<div className="events-map-overlay two columns">
+				<MapOverlay>
+					map layers
+				</MapOverlay>
+				<MapOverlay>
+					<DateRange 
+						minDate={moment('1/1/2016', 'M/D/YYYY')} 
+						maxDate={moment()}
+						initialStartDate={this.state.events.startDate} 
+						initialEndDate={this.state.events.endDate}
+						onRangeChange={(range) => this.handleRangeChange(range)} />
+				</MapOverlay>
 			</div>
 		);
 	}

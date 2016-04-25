@@ -2,9 +2,15 @@
 	background: $gray;
 	border: 0;
 	color: $blue;
-	margin: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
 	padding: 5px;
 	width: 45%;
+
+	&:first-of-type {
+		margin-right: 5px;
+	}
 }
 
 .date-picker {
