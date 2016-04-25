@@ -5,6 +5,20 @@ import moment from 'moment';
 
 const identity = (state, action) => state;
 
+const MAP_LAYERS_PICKER_DEFAULT_LAYERS = [
+	{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
+	{ key: 'picnic_tables', name: 'picnic tables', checked: false },
+	{ key: 'benches', name: 'benches', checked: false },
+	{ key: 'community gardens', name: 'community gardens', checked: false },
+	{ key: 'development pipeline', name: 'development pipeline', checked: false }
+];
+const MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION = [
+	{ key: 'walking_biking', name: 'walking / biking' },
+	{ key: 'connector_streets', name: 'connector streets / paths' },
+	{ key: 'green_connector_network', name: 'green connector network' },
+	{ key: 'public_transportation', name: 'public transportation' }
+];
+
 export default {
 
 	mode (state = 'page', action) {
@@ -29,6 +43,36 @@ export default {
 				};
 		}
 	},
+
+	mapLayersPicker: combineReducers({
+		layers (state = MAP_LAYERS_PICKER_DEFAULT_LAYERS, action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_LAYERS_CHANGED:
+					return state.map(layer => {
+						if (layer.key === action.key) {
+							layer.checked = action.value;
+						}
+						return layer;
+					});
+				default:
+					return state;
+			}
+		},
+
+		transportation (state = MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION, action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED:
+					return state.map(layer => {
+						if (layer.key === action.key) {
+							layer.checked = action.value;
+						}
+						return layer;
+					});
+				default:
+					return state;
+			}
+		}
+	}),
 
 	itemSelector: combineReducers({
 

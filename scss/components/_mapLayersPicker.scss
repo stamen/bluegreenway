@@ -1,0 +1,24 @@
+.map-layers-picker {
+	padding: 10px;
+}
+
+.map-layers-picker-section:not(:last-of-type) {
+	margin-bottom: 20px;
+}
+
+.map-layers-picker-header {
+	font-size: 14px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.map-layers-picker-checkbox {
+	margin-top: 5px;
+
+	label {
+		color: $dark-gray;
+		font-size: 12px;
+		margin-left: 5px;
+		text-transform: uppercase;
+	}
+}

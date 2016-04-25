@@ -1,6 +1,8 @@
 export const SET_STATE = 'SET_STATE';
 export const MODE_CHANGED = 'MODE_CHANGED';
 export const MAP_MOVED = 'MAP_MOVED';
+export const MAP_LAYERS_PICKER_LAYERS_CHANGED = 'MAP_LAYERS_PICKER_LAYERS_CHANGED';
+export const MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED = 'MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED';
 export const ITEM_SELECTED = 'ITEM_SELECTED';
 export const EVENTS_START_DATE_CHANGED = 'EVENTS_START_DATE_CHANGED';
 export const EVENTS_END_DATE_CHANGED = 'EVENTS_END_DATE_CHANGED';
@@ -82,6 +84,22 @@ export default function (store) {
 			store.dispatch({
 				type: LOCATIONS_CHANGED,
 				value: locations
+			});
+		},
+
+		mapLayersPickerTransportationChange (key, value) {
+			store.dispatch({
+				type: MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED,
+				key,
+				value
+			});
+		},
+
+		mapLayersPickerLayerChange (key, value) {
+			store.dispatch({
+				type: MAP_LAYERS_PICKER_LAYERS_CHANGED,
+				key,
+				value
 			});
 		}
 

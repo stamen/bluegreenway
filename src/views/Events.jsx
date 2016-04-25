@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
+import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
@@ -88,7 +89,12 @@ export default class Events extends React.Component {
 		return (
 			<div className="events-map-overlay two columns">
 				<MapOverlay>
-					map layers
+					<MapLayersPicker 
+						layers={this.state.mapLayersPicker.layers}
+						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
+						transportation={this.state.mapLayersPicker.transportation}
+						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
+						/>
 				</MapOverlay>
 				<MapOverlay>
 					<DateRange 
