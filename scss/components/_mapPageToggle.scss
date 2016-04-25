@@ -3,7 +3,7 @@
 	left: 50%;
 	top: $header-height + $body-margin;
 	transform: translate(-50%, 0); 
-	z-index: 1000;
+	z-index: 1;
 
 	@media (#{$bp-larger-than-tablet}) {
 		left: auto;
