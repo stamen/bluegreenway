@@ -146,7 +146,11 @@ export default class Events extends React.Component {
 					</div>
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Events</div>
-						<EventFilters {...this.state} />
+						<EventFilters 
+							locationOptions={this.state.events.locationOptions}
+							eventTypeOptions={this.state.events.eventTypeOptions}
+							ageRangeOptions={this.state.events.ageRangeOptions}
+							costOptions={this.state.events.costOptions} />
 					</div>
 					{ firstEvent ? this.renderEvent(firstEvent) : null }
 					{ secondEvent ? this.renderEvent(secondEvent) : null }

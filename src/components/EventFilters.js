@@ -53,19 +53,19 @@ export default class EventFilters extends React.Component {
 				<Dropdown
 					placeholder="Location"
 					onChange={location => this.handleLocationChange(location)}
-					options={this.props.events.locationOptions} />
+					options={this.props.locationOptions} />
 				<Dropdown
 					placeholder="Event Type"
 					onChange={eventType => this.handleEventTypeChange(eventType)}
-					options={this.props.events.eventTypeOptions} />
+					options={this.props.eventTypeOptions} />
 				<Dropdown
 					placeholder="Age Range"
 					onChange={ageRange => this.handleAgeRangeChange(ageRange)}
-					options={this.props.events.ageRangeOptions} />
+					options={this.props.ageRangeOptions} />
 				<Dropdown
 					placeholder="Cost"
 					onChange={cost => this.handleCostChange(cost)}
-					options={this.props.events.costOptions} />
+					options={this.props.costOptions} />
 				<button className="filter-button" onClick={this.filterEvents.bind(this)}>
 					search
 				</button>
