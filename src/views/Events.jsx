@@ -2,6 +2,7 @@ import * as React from 'react';
 import moment from 'moment';
 
 import DateRange from '../components/DateRange';
+import EventFilters from '../components/EventFilters';
 import PageHeader from '../components/PageHeader';
 
 export default class Events extends React.Component {
@@ -66,7 +67,6 @@ export default class Events extends React.Component {
 	}
 
 	render () {
-
 		return (
 			<div>
 				{ this.state.mode === 'page' ?
@@ -78,7 +78,6 @@ export default class Events extends React.Component {
 				}
 			</div>
 		);
-
 	}
 
 	renderRows (events) {
@@ -145,7 +144,10 @@ export default class Events extends React.Component {
 							initialEndDate={this.state.events.endDate}
 							onRangeChange={(range) => this.handleRangeChange(range)} />
 					</div>
-					<div className='three columns'>TODO: dropdown filters here</div>
+					<div className='three columns filter-cell' style={{ background: 'white' }}>
+						<div className="filter-header">Filter Events</div>
+						<EventFilters {...this.state} />
+					</div>
 					{ firstEvent ? this.renderEvent(firstEvent) : null }
 					{ secondEvent ? this.renderEvent(secondEvent) : null }
 				</div>

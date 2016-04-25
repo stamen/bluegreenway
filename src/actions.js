@@ -4,6 +4,10 @@ export const MAP_MOVED = 'MAP_MOVED';
 export const ITEM_SELECTED = 'ITEM_SELECTED';
 export const EVENTS_START_DATE_CHANGED = 'EVENTS_START_DATE_CHANGED';
 export const EVENTS_END_DATE_CHANGED = 'EVENTS_END_DATE_CHANGED';
+export const AGE_RANGES_CHANGED = 'AGE_RANGES_CHANGED';
+export const COSTS_CHANGED = 'COSTS_CHANGED';
+export const EVENT_TYPES_CHANGED = 'EVENT_TYPES_CHANGED';
+export const LOCATIONS_CHANGED = 'LOCATIONS_CHANGED';
 
 export default function (store) {
 
@@ -50,6 +54,34 @@ export default function (store) {
 			store.dispatch({
 				type: EVENTS_END_DATE_CHANGED,
 				value: date
+			});
+		},
+
+		ageRangesChange (ageRanges) {
+			store.dispatch({
+				type: AGE_RANGES_CHANGED,
+				value: ageRanges
+			});
+		},
+
+		costsChange (costs) {
+			store.dispatch({
+				type: COSTS_CHANGED,
+				value: costs
+			});
+		},
+
+		eventTypesChange (eventTypes) {
+			store.dispatch({
+				type: EVENT_TYPES_CHANGED,
+				value: eventTypes
+			});
+		},
+
+		locationsChange (locations) {
+			store.dispatch({
+				type: LOCATIONS_CHANGED,
+				value: locations
 			});
 		}
 

@@ -79,6 +79,42 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		ageRangeOptions (state = [], action) {
+			switch (action.type) {
+				case actions.AGE_RANGES_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		costOptions (state = [], action) {
+			switch (action.type) {
+				case actions.COSTS_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		eventTypeOptions (state = [], action) {
+			switch (action.type) {
+				case actions.EVENT_TYPES_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		locationOptions (state = [], action) {
+			switch (action.type) {
+				case actions.LOCATIONS_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
 		}
 
 	})
@@ -126,7 +162,27 @@ export const initialState = {
 
 	events: {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
-		endDate: moment()
+		endDate: moment(),
+		ageRangeOptions: [
+			{ value: 'a', display: 'a' },
+			{ value: 'b', display: 'b' },
+			{ value: 'c', display: 'c' }
+		],
+		costOptions: [
+			{ value: 'a', display: 'a' },
+			{ value: 'b', display: 'b' },
+			{ value: 'c', display: 'c' }
+		],
+		locationOptions: [
+			{ value: 'a', display: 'a' },
+			{ value: 'b', display: 'b' },
+			{ value: 'c', display: 'c' }
+		],
+		eventTypeOptions: [
+			{ value: 'a', display: 'a' },
+			{ value: 'b', display: 'b' },
+			{ value: 'c', display: 'c' }
+		]
 	}
 
 };
