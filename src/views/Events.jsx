@@ -39,6 +39,11 @@ export default class Events extends React.Component {
 			this.props.actions.modeChanged(urlMode);
 		}
 		this.onStateChange();
+
+		// Fetch data if we need to
+		if (!this.props.store.getState().events.data.items.length) {
+			this.props.actions.fetchEventsData();
+		}
 	}
 
 	componentDidMount () {
@@ -80,7 +85,10 @@ export default class Events extends React.Component {
 		return (
 			<div className="grid-container">
 				<PageHeader />
-				{ this.renderRows(this.props.events) }
+				{ this.state.events.data.error ?
+					<div className="events-data-load-error">We're having a hard time loading data. Please try again.</div> :
+					null }
+				{ this.renderRows(this.state.events.data.items) }
 			</div>
 		);
 	}
