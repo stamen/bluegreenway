@@ -1,5 +1,9 @@
 import * as React from 'react';
+import moment from 'moment';
 
+import DateRange from '../components/DateRange';
+import MapLayersPicker from '../components/MapLayersPicker';
+import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
 export default class Stories extends React.Component {
@@ -52,20 +56,56 @@ export default class Stories extends React.Component {
 
 	}
 
+	handleRangeChange (range) {
+		if (range[0]) {
+			this.props.actions.storiesMinDateChanged(range[0]);
+		}
+		if (range[1]) {
+			this.props.actions.storiesMaxDateChanged(range[1]);
+		}
+	}
+
 	render () {
 
 		return (
-			<div>
-				{ this.state.mode === 'page' ?
-					<div id='stories' className="grid-container">
-						<PageHeader />
-						<h1>STORIES</h1>
-					</div>
-					: null
-				}
+			<div id="stories">
+				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 
 	}
+
+	renderPageView () {
+		return (
+			<div className="grid-container">
+				<PageHeader />
+				<h1>STORIES</h1>
+			</div>
+		);
+	}
+
+	renderMapView () {
+		return (
+			<div className="stories-map-overlay two columns">
+				<MapOverlay>
+					<MapLayersPicker 
+						layers={this.state.mapLayersPicker.layers}
+						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
+						transportation={this.state.mapLayersPicker.transportation}
+						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
+						/>
+				</MapOverlay>
+				<MapOverlay>
+					<DateRange 
+						minDate={moment('1/1/2016', 'M/D/YYYY')} 
+						maxDate={moment()}
+						initialStartDate={this.state.stories.startDate} 
+						initialEndDate={this.state.stories.endDate}
+						onRangeChange={(range) => this.handleRangeChange(range)} />
+				</MapOverlay>
+			</div>
+		);
+	}
+
 
 }

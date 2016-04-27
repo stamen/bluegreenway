@@ -161,6 +161,27 @@ export default {
 			}
 		}
 
+	}),
+
+	stories: combineReducers({
+
+		startDate (state = null, action) {
+			switch (action.type) {
+				case actions.STORIES_START_DATE_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		endDate (state = null, action) {
+			switch (action.type) {
+				case actions.STORIES_END_DATE_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		}
 	})
 
 
@@ -227,6 +248,11 @@ export const initialState = {
 			{ value: 'b', display: 'b' },
 			{ value: 'c', display: 'c' }
 		]
+	},
+
+	stories: {
+		startDate: moment('1/1/2016', 'M/D/YYYY'),
+		endDate: moment(),
 	}
 
 };

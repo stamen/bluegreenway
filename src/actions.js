@@ -11,6 +11,9 @@ export const COSTS_CHANGED = 'COSTS_CHANGED';
 export const EVENT_TYPES_CHANGED = 'EVENT_TYPES_CHANGED';
 export const LOCATIONS_CHANGED = 'LOCATIONS_CHANGED';
 
+export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
+export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
+
 export default function (store) {
 
 	return {
@@ -100,6 +103,20 @@ export default function (store) {
 				type: MAP_LAYERS_PICKER_LAYERS_CHANGED,
 				key,
 				value
+			});
+		},
+
+		storiesMinDateChanged (date) {
+			store.dispatch({
+				type: STORIES_START_DATE_CHANGED,
+				value: date
+			});
+		},
+
+		storiesMaxDateChanged (date) {
+			store.dispatch({
+				type: STORIES_END_DATE_CHANGED,
+				value: date
 			});
 		}
 
