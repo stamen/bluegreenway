@@ -74,7 +74,7 @@ export default class Projects extends React.Component {
 	renderMapView () {
 		return (
 			<div className="projects-map-overlay two columns">
-				<MapOverlay>
+				<MapOverlay collapsible={true}>
 					<MapLayersPicker 
 						layers={this.state.mapLayersPicker.layers}
 						onLayerChange={this.props.actions.mapLayersPickerLayerChange}

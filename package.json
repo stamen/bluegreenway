@@ -19,9 +19,12 @@
     "@stamen/panorama": "^0.3.2",
     "leaflet": "git+https://github.com/Leaflet/Leaflet.git",
     "react": "^15.0.1",
+    "react-collapse": "^2.2.0",
     "react-date-picker": "^4.0.10",
     "react-dom": "^15.0.1",
+    "react-height": "^2.1.0",
     "react-leaflet": "git+https://github.com/PaulLeCam/react-leaflet.git#leaflet-1.0",
+    "react-motion": "^0.4.3",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
     "redux": "^3.3.1"

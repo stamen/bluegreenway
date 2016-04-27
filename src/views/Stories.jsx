@@ -87,7 +87,7 @@ export default class Stories extends React.Component {
 	renderMapView () {
 		return (
 			<div className="stories-map-overlay two columns">
-				<MapOverlay>
+				<MapOverlay collapsible={true}>
 					<MapLayersPicker 
 						layers={this.state.mapLayersPicker.layers}
 						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
@@ -95,7 +95,7 @@ export default class Stories extends React.Component {
 						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
 						/>
 				</MapOverlay>
-				<MapOverlay>
+				<MapOverlay collapsible={true}>
 					<DateRange 
 						minDate={moment('1/1/2016', 'M/D/YYYY')} 
 						maxDate={moment()}
