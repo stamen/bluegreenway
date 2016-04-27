@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import MapLayersPicker from '../components/MapLayersPicker';
+import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
 export default class Projects extends React.Component {
@@ -53,19 +55,35 @@ export default class Projects extends React.Component {
 	}
 
 	render () {
-
 		return (
-			<div>
-				{ this.state.mode === 'page' ?
-					<div id='projects' className="grid-container">
-						<PageHeader />
-						<h1>PROJECTS</h1>
-					</div>
-					: null
-				}
+			<div id="projects">
+				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
+	}
 
+	renderPageView () {
+		return (
+			<div className="grid-container">
+				<PageHeader />
+				<h1>PROJECTS</h1>
+			</div>
+		);
+	}
+
+	renderMapView () {
+		return (
+			<div className="projects-map-overlay two columns">
+				<MapOverlay>
+					<MapLayersPicker 
+						layers={this.state.mapLayersPicker.layers}
+						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
+						transportation={this.state.mapLayersPicker.transportation}
+						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
+						/>
+				</MapOverlay>
+			</div>
+		);
 	}
 
 }

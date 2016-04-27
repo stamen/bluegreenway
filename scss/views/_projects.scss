@@ -1,3 +1,8 @@
 #projects {
-	
+	.projects-map-overlay {
+		position: absolute;
+		left: $body-margin;
+		top: $body-margin;
+		z-index: 1;
+	}
 }
