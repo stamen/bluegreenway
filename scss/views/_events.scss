@@ -47,4 +47,10 @@ $events-padding: 0.5em;
 		top: $body-margin;
 		z-index: 1;
 	}
+
+	.events-data-load-error {
+		background: #DA9D9D;
+		margin-bottom: 25px;
+		padding: 15px;
+	}
 }

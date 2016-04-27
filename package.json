@@ -17,6 +17,8 @@
   "author": "stamen",
   "dependencies": {
     "@stamen/panorama": "^0.3.2",
+    "es6-promise": "^3.1.2",
+    "isomorphic-fetch": "^2.2.1",
     "leaflet": "git+https://github.com/Leaflet/Leaflet.git",
     "react": "^15.0.1",
     "react-collapse": "^2.2.0",
@@ -28,7 +30,8 @@
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
     "react-twitter-widgets": "^0.2.4",
-    "redux": "^3.3.1"
+    "redux": "^3.3.1",
+    "redux-thunk": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.6.0",

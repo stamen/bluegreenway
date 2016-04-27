@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { Redirect, Router, Route, IndexRedirect, IndexRoute, useRouterHistory } from 'react-router';
 import { createHistory } from 'history';
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
@@ -22,7 +23,8 @@ const store = createStore(
 		...reducers,
 		routing: routerReducer
 	}),
-	initialState
+	initialState,
+	applyMiddleware(thunkMiddleware)
 );
 
 // Create the single action creator for this application session

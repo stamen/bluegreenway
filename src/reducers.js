@@ -3,6 +3,8 @@ import * as actions from './actions';
 import leaflet from 'leaflet';
 import moment from 'moment';
 
+import { cleanEventsData } from './models/events';
+
 const identity = (state, action) => state;
 
 const MAP_LAYERS_PICKER_DEFAULT_LAYERS = [
@@ -159,6 +161,29 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		data (state = { isFetching: false, items: [] }, action) {
+			switch (action.type) {
+				case actions.EVENTS_DATA_REQUEST:
+					return Object.assign({}, state, {
+						isFetching: true,
+						error: null
+					});
+				case actions.EVENTS_DATA_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						items: cleanEventsData(action.items),
+						error: null
+					});
+				case actions.EVENTS_DATA_ERROR_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						error: action.error
+					});
+				default:
+					return state;
+			}
 		}
 
 	}),
@@ -247,12 +272,17 @@ export const initialState = {
 			{ value: 'a', display: 'a' },
 			{ value: 'b', display: 'b' },
 			{ value: 'c', display: 'c' }
-		]
+		],
+		data: {
+			isFetching: false,
+			items: [],
+			error: null
+		}
 	},
 
 	stories: {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
-		endDate: moment(),
+		endDate: moment()
 	}
 
 };

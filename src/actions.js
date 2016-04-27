@@ -1,3 +1,11 @@
+// Set up promise polyfill for isomorphic-fetch
+import { polyfill } from 'es6-promise';
+polyfill();
+
+import fetch from 'isomorphic-fetch';
+
+import dataUrls from '../static/dataUrls.json';
+
 export const SET_STATE = 'SET_STATE';
 export const MODE_CHANGED = 'MODE_CHANGED';
 export const MAP_MOVED = 'MAP_MOVED';
@@ -10,6 +18,9 @@ export const AGE_RANGES_CHANGED = 'AGE_RANGES_CHANGED';
 export const COSTS_CHANGED = 'COSTS_CHANGED';
 export const EVENT_TYPES_CHANGED = 'EVENT_TYPES_CHANGED';
 export const LOCATIONS_CHANGED = 'LOCATIONS_CHANGED';
+export const EVENTS_DATA_REQUEST = 'EVENTS_DATA_REQUEST';
+export const EVENTS_DATA_RESPONSE = 'EVENTS_DATA_RESPONSE';
+export const EVENTS_DATA_ERROR_RESPONSE = 'EVENTS_DATA_ERROR_RESPONSE';
 
 export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
 export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
@@ -106,6 +117,43 @@ export default function (store) {
 			});
 		},
 
+		//
+		// Events data actions.
+		//
+		// Only fetchEventsData should be dispatched directly: 
+		// requestEventsData, receiveEventsData, and receiveEventsDataError are
+		// invoked by fetchEventsData as necessary
+		//
+		requestEventsData () {
+			return {
+				type: EVENTS_DATA_REQUEST
+			};
+		},
+
+		receiveEventsData (json) {
+			return {
+				type: EVENTS_DATA_RESPONSE,
+				items: json.nodes
+			};
+		},
+
+		receiveEventsDataError (error) {
+			return {
+				type: EVENTS_DATA_ERROR_RESPONSE,
+				error
+			};
+		},
+
+		fetchEventsData () {
+			store.dispatch(dispatch => {
+				dispatch(this.requestEventsData());
+				return fetch(dataUrls.events)
+					.then(response => response.json())
+					.then(json => dispatch(this.receiveEventsData(json)))
+					.catch(error => dispatch(this.receiveEventsDataError(error)));
+			});
+		},
+
 		storiesMinDateChanged (date) {
 			store.dispatch({
 				type: STORIES_START_DATE_CHANGED,
@@ -119,7 +167,6 @@ export default function (store) {
 				value: date
 			});
 		}
-
 	};
 
 };
