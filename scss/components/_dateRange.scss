@@ -31,6 +31,10 @@
 			border: none;
 		}
 
+		.dp-cell:focus {
+			outline: none;
+		}
+
 		.dp-cell.dp-current {
 			background: $green;
 			color: $white;
