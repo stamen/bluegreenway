@@ -14,8 +14,20 @@
 	}
 
 	h1 {
+		font-size: 2.5rem;
+		font-weight: bold;
+		line-height: 1.6;
 		max-width: 50%;
 		margin: 0;
+		margin-left: $body-margin;
+
+		a {
+			color: $light-blue;
+		}
+	}
+
+	.site-header-green {
+		color: $green;
 	}
 
 	ul {
