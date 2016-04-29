@@ -8,6 +8,12 @@ import EventFilters from '../components/EventFilters';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
+import {
+	getAgeRangesOptions,
+	getCostsOptions,
+	getLocationsOptions,
+	getTypesOptions
+} from '../models/events';
 
 export default class Events extends React.Component {
 
@@ -31,10 +37,15 @@ export default class Events extends React.Component {
 		}
 
 		if (nextState.events.data.items.length !== this.state.events.data.items.length) {
-			let locations = nextState.events.data.items.map(event => event.location);
-			locations = uniq(locations.filter(location => location));
-			this.props.actions.locationsChange(locations.map(location => ({ value: location, display: location })));
+			this.updateFilterOptions(nextState.events);
 		}
+	}
+
+	updateFilterOptions (events) {
+		this.props.actions.locationsChange(getLocationsOptions(events));
+		this.props.actions.costsChange(getCostsOptions(events));
+		this.props.actions.eventTypesChange(getTypesOptions(events));
+		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
 	}
 
 	updateModeUrl (mode) {

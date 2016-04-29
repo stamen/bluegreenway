@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { find, sortBy } from 'lodash';
+import { find, sortBy, uniq } from 'lodash';
 
 const timestampFormat = 'MM/DD/YYYY - HH:mma';
 
@@ -8,11 +8,13 @@ export function cleanEventItem (item) {
 	let cleaned = {};
 	cleaned.startDate = moment(item['Start Date'], timestampFormat);
 	cleaned.endDate = moment(item['End Date'], timestampFormat);
+	cleaned.ageRange = item['Age Range'];
 	cleaned.category = item.Category;
 	cleaned.cost = item.Cost;
 	cleaned.id = item.id;
 	cleaned.title = item.Title;
 	cleaned.location = item['Associated Location'];
+	cleaned.type = item.Category;
 	cleaned.url = item.URL;
 	return cleaned;
 }
@@ -41,4 +43,29 @@ function groupEvents(events) {
 
 export function cleanEventsData (items) {
 	return groupEvents(items.map(item => cleanEventItem(item)));
+}
+
+export function getAgeRangesOptions(events) {
+	let ageRanges = events.data.items.map(event => event.ageRange);
+	ageRanges = uniq(ageRanges.filter(ageRange => ageRange)).sort();
+	return ageRanges.map(ageRange => ({ value: ageRange, display: ageRange }));
+}
+
+export function getLocationsOptions(events) {
+	// This will have to do until locations are loaded too
+	let locations = events.data.items.map(event => event.location);
+	locations = uniq(locations.filter(location => location)).sort();
+	return locations.map(location => ({ value: location, display: location }));
+}
+
+export function getCostsOptions(events) {
+	let costs = events.data.items.map(event => event.cost);
+	costs = uniq(costs.filter(cost => cost)).sort();
+	return costs.map(cost => ({ value: cost, display: cost }));
+}
+
+export function getTypesOptions(events) {
+	let types = events.data.items.map(event => event.type);
+	types = uniq(types.filter(type => type)).sort();
+	return types.map(type => ({ value: type, display: type }));
 }
