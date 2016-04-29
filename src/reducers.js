@@ -253,26 +253,10 @@ export const initialState = {
 	events: {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
 		endDate: moment(),
-		ageRangeOptions: [
-			{ value: 'a', display: 'a' },
-			{ value: 'b', display: 'b' },
-			{ value: 'c', display: 'c' }
-		],
-		costOptions: [
-			{ value: 'a', display: 'a' },
-			{ value: 'b', display: 'b' },
-			{ value: 'c', display: 'c' }
-		],
-		locationOptions: [
-			{ value: 'a', display: 'a' },
-			{ value: 'b', display: 'b' },
-			{ value: 'c', display: 'c' }
-		],
-		eventTypeOptions: [
-			{ value: 'a', display: 'a' },
-			{ value: 'b', display: 'b' },
-			{ value: 'c', display: 'c' }
-		],
+		ageRangeOptions: [],
+		costOptions: [],
+		locationOptions: [],
+		eventTypeOptions: [],
 		data: {
 			isFetching: false,
 			items: [],
