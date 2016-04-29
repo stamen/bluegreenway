@@ -30,6 +30,27 @@ $events-padding: 0.5em;
 		}
 	}
 
+	.event-date-range {
+		font-size: 3.22em;
+		text-align: center;
+		text-shadow: $text-shadow;
+		text-transform: uppercase;
+
+		&-day {
+			font-weight: bold;
+			margin-left: 10px;
+		}
+
+		&-separator {
+			height: 25px;
+			line-height: 15px;
+		}
+
+		div {
+			width: 100%;
+		}
+	}
+
 	.event-details {
 		position: absolute;
 		bottom: $events-padding;

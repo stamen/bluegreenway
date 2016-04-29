@@ -1,5 +1,7 @@
 import * as React from 'react';
 import moment from 'moment';
+import 'moment-range';
+import { uniq } from 'lodash';
 
 import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
@@ -26,6 +28,12 @@ export default class Events extends React.Component {
 		var appMode = nextProps.store.getState().mode;
 		if (urlMode !== appMode) {
 			this.updateModeUrl(appMode);
+		}
+
+		if (nextState.events.data.items.length !== this.state.events.data.items.length) {
+			let locations = nextState.events.data.items.map(event => event.location);
+			locations = uniq(locations.filter(location => location));
+			this.props.actions.locationsChange(locations.map(location => ({ value: location, display: location })));
 		}
 	}
 
@@ -117,7 +125,10 @@ export default class Events extends React.Component {
 	}
 
 	renderRows (events) {
-		events = events.filter(event => event.startDate >= this.state.events.startDate && event.startDate <= this.state.events.endDate);
+		const currentRange = moment.range(this.state.events.startDate, this.state.events.endDate);
+		events = events.filter(event => {
+			return moment.range(event.startDate, event.endDate).overlaps(currentRange);
+		});
 
 		let firstEvent = events[0],
 			secondEvent = events[1],
@@ -176,10 +187,23 @@ export default class Events extends React.Component {
 	renderEvent (event) {
 		return (
 			<div className='event-cell three columns' key={ event.startDate.format('YYYYMMDD') + event.id }>
-				<div className='event-date'>
-					<span>{ event.startDate.format('MMM') }</span>
-					<span>{ event.startDate.format('D') }</span>
-				</div>
+				{ (event.startDate.format('D-MMM') === event.endDate.format('D-MMM')) ?
+					(<div className='event-date'>
+						<span>{ event.startDate.format('MMM') }</span>
+						<span>{ event.startDate.format('D') }</span>
+					</div>) :
+					(<div className='event-date-range'>
+						<div>
+							<span className="event-date-range-month">{ event.startDate.format('MMM') }</span>
+							<span className="event-date-range-day">{ event.startDate.format('D') }</span>
+						</div>
+						<div className="event-date-range-separator">&mdash;</div>
+						<div>
+							<span className="event-date-range-month">{ event.endDate.format('MMM') }</span>
+							<span className="event-date-range-day">{ event.endDate.format('D') }</span>
+						</div>
+					</div>)
+				}
 				<div className='event-details'>
 					<p className='event-title'>{ event.title }</p>
 					<p>Time: <span>{ (event.startDate.hour() === 0 && event.startDate.minute() === 0) ? 'all day' :  event.startDate.format('h:mm a') }</span></p>
