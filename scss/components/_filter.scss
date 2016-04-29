@@ -9,15 +9,10 @@
 	text-transform: uppercase;
 }
 
-.filter-dropdown {
-	background: $gray;
-	border: 0;
-	color: $blue;
-	display: block;
-	font-size: 16px;
-	margin: 10px 0;
-	padding: 5px;
-	width: 100%;
+.filter-container {
+	.Dropdown-root {
+		margin: 10px 0;
+	}
 }
 
 .filter-button {

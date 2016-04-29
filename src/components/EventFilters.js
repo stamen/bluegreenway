@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Dropdown from '../components/Dropdown';
+import Dropdown from 'react-dropdown';
 
 export default class EventFilters extends React.Component {
 
@@ -49,23 +49,27 @@ export default class EventFilters extends React.Component {
 
 	render () {
 		return (
-			<div>
+			<div className="filter-container">
 				<Dropdown
-					placeholder="Location"
+					placeholder={this.state.filterLocation ? this.state.filterLocation.label : 'Location'}
 					onChange={location => this.handleLocationChange(location)}
-					options={this.props.locationOptions} />
+					options={this.props.locationOptions}
+					value={this.state.filterLocation} />
 				<Dropdown
-					placeholder="Event Type"
+					placeholder={this.state.filterEventType ? this.state.filterEventType.label : 'Event Type'}
 					onChange={eventType => this.handleEventTypeChange(eventType)}
-					options={this.props.eventTypeOptions} />
+					options={this.props.eventTypeOptions}
+					value={this.state.filterEventType} />
 				<Dropdown
-					placeholder="Age Range"
+					placeholder={this.state.filterAgeRange ? this.state.filterAgeRange.label : 'Age Range'}
 					onChange={ageRange => this.handleAgeRangeChange(ageRange)}
-					options={this.props.ageRangeOptions} />
+					options={this.props.ageRangeOptions}
+					value={this.state.filterAgeRange} />
 				<Dropdown
-					placeholder="Cost"
+					placeholder={this.state.filterCost ? this.state.filterCost.label : 'Cost'}
 					onChange={cost => this.handleCostChange(cost)}
-					options={this.props.costOptions} />
+					options={this.props.costOptions}
+					value={this.state.filterCost} />
 				<button className="filter-button" onClick={this.filterEvents.bind(this)}>
 					search
 				</button>
