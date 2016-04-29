@@ -2,7 +2,7 @@ $events-padding: 0.5em;
 
 #events {
 	position: relative;
-	@include colorize-grid(6, 4, 1, null);
+	@include colorize-grid(20, 4, 1, null);
 	color: $text-color;
 
 	.event-cell {
