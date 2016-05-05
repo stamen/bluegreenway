@@ -38,6 +38,11 @@ export default class Stories extends React.Component {
 			this.props.actions.modeChanged(urlMode);
 		}
 		this.onStateChange();
+
+		// Fetch data if we need to
+		if (!this.props.store.getState().stories.data.items.length) {
+			this.props.actions.fetchStoriesData();
+		}
 	}
 
 	componentDidMount () {
@@ -79,7 +84,69 @@ export default class Stories extends React.Component {
 		return (
 			<div className="grid-container">
 				<PageHeader />
-				<h1>STORIES</h1>
+				{ this.state.stories.data.error ?
+					<div className="stories-data-load-error">We're having a hard time loading data. Please try again.</div> :
+					null }
+				{ this.renderRows(this.state.stories.data.items) }
+			</div>
+		);
+	}
+
+	renderRows (stories) {
+		let firstStory = stories[0],
+			remainingStoryRows;
+
+		// Pack stories into rows of 2
+		if (stories.length > 1) {
+			remainingStoryRows = stories.slice(1).reduce((out, story, i) => {
+				if (i % 2 === 0) {
+					out.push([]);
+				}
+				out[Math.floor(i / 2)].push(story);
+				return out;
+			}, []);
+		}
+
+		let storyCells = [];
+		if (remainingStoryRows) {
+			storyCells = remainingStoryRows.map((storyRow, i) => {
+				return (
+					<div className='row' key={ 'row=' + i }>
+						{ storyRow.map(story => this.renderStory(story)) }
+					</div>
+				);
+			});
+		}
+
+		return (
+			<div>
+				<div className='row'>
+					<div className='three columns' style={{ background: 'white' }}>
+						<DateRange 
+							minDate={moment('1/1/2016', 'M/D/YYYY')} 
+							maxDate={moment()}
+							initialStartDate={this.state.stories.startDate} 
+							initialEndDate={this.state.stories.endDate}
+							onRangeChange={(range) => this.handleRangeChange(range)} />
+					</div>
+					<div className='three columns filter-cell' style={{ background: 'white' }}>
+						<div className="filter-header">Filter Stories</div>
+					</div>
+					{ firstStory ? this.renderStory(firstStory) : null }
+				</div>
+				{ storyCells }
+			</div>
+		);
+	}
+
+	renderStory (story) {
+		return (
+			<div className='story-cell six columns' key={story.id} style={{ backgroundImage: `url(${story.images[0].src})` }}>
+				<div className="story-category">{ story.category }</div>
+				<div className="story-text">
+					<div className="story-title">{ story.title }</div>
+					<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
+				</div>
 			</div>
 		);
 	}

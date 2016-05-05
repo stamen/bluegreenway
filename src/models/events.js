@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { find, sortBy, uniq } from 'lodash';
 
-const timestampFormat = 'MM/DD/YYYY - HH:mma';
+import { timestampFormat } from './common';
 
 export function cleanEventItem (item) {
 	item = item.node;

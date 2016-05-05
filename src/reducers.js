@@ -4,6 +4,7 @@ import leaflet from 'leaflet';
 import moment from 'moment';
 
 import { cleanEventsData } from './models/events';
+import { cleanStoriesData } from './models/stories';
 
 const identity = (state, action) => state;
 
@@ -206,6 +207,29 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		data (state = { isFetching: false, items: [] }, action) {
+			switch (action.type) {
+				case actions.STORIES_DATA_REQUEST:
+					return Object.assign({}, state, {
+						isFetching: true,
+						error: null
+					});
+				case actions.STORIES_DATA_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						items: cleanStoriesData(action.items),
+						error: null
+					});
+				case actions.STORIES_DATA_ERROR_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						error: action.error
+					});
+				default:
+					return state;
+			}
 		}
 	})
 
@@ -266,7 +290,12 @@ export const initialState = {
 
 	stories: {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
-		endDate: moment()
+		endDate: moment(),
+		data: {
+			isFetching: false,
+			items: [],
+			error: null
+		}
 	}
 
 };

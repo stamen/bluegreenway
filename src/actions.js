@@ -22,6 +22,9 @@ export const EVENTS_DATA_REQUEST = 'EVENTS_DATA_REQUEST';
 export const EVENTS_DATA_RESPONSE = 'EVENTS_DATA_RESPONSE';
 export const EVENTS_DATA_ERROR_RESPONSE = 'EVENTS_DATA_ERROR_RESPONSE';
 
+export const STORIES_DATA_REQUEST = 'STORIES_DATA_REQUEST';
+export const STORIES_DATA_RESPONSE = 'STORIES_DATA_RESPONSE';
+export const STORIES_DATA_ERROR_RESPONSE = 'STORIES_DATA_ERROR_RESPONSE';
 export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
 export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
 
@@ -151,6 +154,43 @@ export default function (store) {
 					.then(response => response.json())
 					.then(json => dispatch(this.receiveEventsData(json)))
 					.catch(error => dispatch(this.receiveEventsDataError(error)));
+			});
+		},
+
+		//
+		// Stories data actions.
+		//
+		// Only fetchStoriesData should be dispatched directly: 
+		// requestStoriesData, receiveStoriesData, and receiveStoriesDataError are
+		// invoked by fetchStoriesData as necessary
+		//
+		requestStoriesData () {
+			return {
+				type: STORIES_DATA_REQUEST
+			};
+		},
+
+		receiveStoriesData (json) {
+			return {
+				type: STORIES_DATA_RESPONSE,
+				items: json.nodes
+			};
+		},
+
+		receiveStoriesDataError (error) {
+			return {
+				type: STORIES_DATA_ERROR_RESPONSE,
+				error
+			};
+		},
+
+		fetchStoriesData () {
+			store.dispatch(dispatch => {
+				dispatch(this.requestStoriesData());
+				return fetch(dataUrls.stories)
+					.then(response => response.json())
+					.then(json => dispatch(this.receiveStoriesData(json)))
+					.catch(error => dispatch(this.receiveStoriesDataError(error)));
 			});
 		},
 
