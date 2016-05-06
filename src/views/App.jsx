@@ -193,7 +193,7 @@ class App extends React.Component {
 			<div>
 				<MapPageToggle modeChanged={this.props.actions.modeChanged} mode={this.state.mode} />
 				<div className={'background-container' + (this.state.mode === 'map' ? '' : ' blurred')}>
-					<Map { ...this.state.map } ref='leafletMap' onLeafletMoveend={ this.onMapMoved } className='map-container'>
+					<Map { ...this.state.map } ref='leafletMap' onMoveend={ this.onMapMoved } className='map-container'>
 						{ this.renderTileLayers() }
 					</Map>
 				</div>

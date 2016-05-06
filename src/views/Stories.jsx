@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router';
 import moment from 'moment';
 
 import DateRange from '../components/DateRange';
@@ -122,10 +123,10 @@ export default class Stories extends React.Component {
 			<div>
 				<div className='row'>
 					<div className='three columns' style={{ background: 'white' }}>
-						<DateRange 
-							minDate={moment('1/1/2016', 'M/D/YYYY')} 
+						<DateRange
+							minDate={moment('1/1/2016', 'M/D/YYYY')}
 							maxDate={moment()}
-							initialStartDate={this.state.stories.startDate} 
+							initialStartDate={this.state.stories.startDate}
 							initialEndDate={this.state.stories.endDate}
 							onRangeChange={(range) => this.handleRangeChange(range)} />
 					</div>
@@ -141,12 +142,18 @@ export default class Stories extends React.Component {
 
 	renderStory (story) {
 		return (
-			<div className='story-cell six columns' key={story.id} style={{ backgroundImage: `url(${story.images[0].src})` }}>
-				<div className="story-category">{ story.category }</div>
-				<div className="story-text">
-					<div className="story-title">{ story.title }</div>
-					<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
-				</div>
+			<div
+				className='story-cell six columns'
+				key={story.id}
+				style={{ backgroundImage: `url(${story.images[0].src})` }}
+			>
+				<Link to={`/stories/${story.id}`} >
+					<div className="story-category">{ story.category }</div>
+					<div className="story-text">
+						<div className="story-title">{ story.title }</div>
+						<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
+					</div>
+				</Link>
 			</div>
 		);
 	}
@@ -155,7 +162,7 @@ export default class Stories extends React.Component {
 		return (
 			<div className="stories-map-overlay two columns">
 				<MapOverlay collapsible={true}>
-					<MapLayersPicker 
+					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}
 						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
 						transportation={this.state.mapLayersPicker.transportation}
@@ -163,10 +170,10 @@ export default class Stories extends React.Component {
 						/>
 				</MapOverlay>
 				<MapOverlay collapsible={true}>
-					<DateRange 
-						minDate={moment('1/1/2016', 'M/D/YYYY')} 
+					<DateRange
+						minDate={moment('1/1/2016', 'M/D/YYYY')}
 						maxDate={moment()}
-						initialStartDate={this.state.stories.startDate} 
+						initialStartDate={this.state.stories.startDate}
 						initialEndDate={this.state.stories.endDate}
 						onRangeChange={(range) => this.handleRangeChange(range)} />
 				</MapOverlay>
