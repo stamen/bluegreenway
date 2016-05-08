@@ -10,7 +10,7 @@ import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
 import App from './views/App.jsx';
 import Home from './views/Home.jsx';
 import Stories from './views/Stories.jsx';
-import StoryShow from './views/StoryShow.jsx';
+import Story from './views/Story.jsx';
 import Events from './views/Events.jsx';
 import Projects from './views/Projects.jsx';
 import About from './views/About.jsx';
@@ -62,8 +62,8 @@ render((
 			<IndexRoute component={ Home } />
 			<Route path='stories' component={ Stories }>
 				<Route path=':mode' component={ Stories } />
-				<Route path='stories/:id' component={ StoryShow }>
-					<Route path=':mode' component={ StoryShow } />
+				<Route path=':id' component={ Story }>
+					<Route path=':mode' component={ Story } />
 				</Route>
 			</Route>
 			<Route path='events' component={ Events }>

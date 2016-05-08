@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router';
 import moment from 'moment';
 
 import DateRange from '../components/DateRange';
@@ -60,6 +59,13 @@ export default class Stories extends React.Component {
 
 		//
 
+	}
+
+	viewStory (id) {
+		const mode = this.state.mode;
+		const path = `/stories/${id}/${mode}`;
+		console.log(path);
+		this.props.history.push(path);
 	}
 
 	handleRangeChange (range) {
@@ -146,14 +152,13 @@ export default class Stories extends React.Component {
 				className='story-cell six columns'
 				key={story.id}
 				style={{ backgroundImage: `url(${story.images[0].src})` }}
+				onClick={(() => this.viewStory(story.id))}
 			>
-				<Link to={`/stories/${story.id}`} >
-					<div className="story-category">{ story.category }</div>
-					<div className="story-text">
-						<div className="story-title">{ story.title }</div>
-						<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
-					</div>
-				</Link>
+				<div className="story-category">{ story.category }</div>
+				<div className="story-text">
+					<div className="story-title">{ story.title }</div>
+					<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
+				</div>
 			</div>
 		);
 	}
@@ -180,6 +185,5 @@ export default class Stories extends React.Component {
 			</div>
 		);
 	}
-
 
 }
