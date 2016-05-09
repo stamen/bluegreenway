@@ -61,10 +61,10 @@ export default class Stories extends React.Component {
 
 	}
 
-	viewStory (id) {
+	viewStory (title) {
+		title = title.replace(/ /g, '-');
 		const mode = this.state.mode;
-		const path = `/stories/${id}/${mode}`;
-		console.log(path);
+		const path = `/stories/${mode}/${title}`;
 		this.props.history.push(path);
 	}
 
@@ -152,7 +152,7 @@ export default class Stories extends React.Component {
 				className='story-cell six columns'
 				key={story.id}
 				style={{ backgroundImage: `url(${story.images[0].src})` }}
-				onClick={(() => this.viewStory(story.id))}
+				onClick={(() => this.viewStory(story.title))}
 			>
 				<div className="story-category">{ story.category }</div>
 				<div className="story-text">

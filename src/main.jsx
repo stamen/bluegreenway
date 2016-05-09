@@ -61,10 +61,9 @@ render((
 		<Route path='/' component={ App }>
 			<IndexRoute component={ Home } />
 			<Route path='stories' component={ Stories }>
-				<Route path=':mode' component={ Stories } />
-				<Route path=':id' component={ Story }>
-					<Route path=':mode' component={ Story } />
-				</Route>
+				<Route path=':mode' component={ Stories }>
+          <Route path=':title' component={ Story } />
+        </Route>
 			</Route>
 			<Route path='events' component={ Events }>
 				<Route path=':mode' component={ Events } />
