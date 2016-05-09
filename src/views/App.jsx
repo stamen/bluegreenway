@@ -1,7 +1,7 @@
 // import node modules
 import { debounce } from 'lodash';
 import * as React from 'react';
-import { Map, TileLayer, GeoJson } from 'react-leaflet';
+// import { Map, TileLayer, GeoJson } from 'react-leaflet';
 
 // import components from @stamen/panorama
 // import { ItemSelector } from '@stamen/panorama';
@@ -11,6 +11,7 @@ import { Map, TileLayer, GeoJson } from 'react-leaflet';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MapPageToggle from '../components/MapPageToggle';
+import LeafletMap from '../components/LeafletMap';
 
 // config
 import tileLayers from '../../static/tileLayers.json';
@@ -193,9 +194,7 @@ class App extends React.Component {
 			<div>
 				<MapPageToggle modeChanged={this.props.actions.modeChanged} mode={this.state.mode} />
 				<div className={'background-container' + (this.state.mode === 'map' ? '' : ' blurred')}>
-					<Map { ...this.state.map } ref='leafletMap' onLeafletMoveend={ this.onMapMoved } className='map-container'>
-						{ this.renderTileLayers() }
-					</Map>
+					<LeafletMap {...this.props} />
 				</div>
 				<Header { ...this.state.header } />
 
