@@ -60,11 +60,9 @@ render((
 	<Router history={ history } createElement={ createReduxComponent }>
 		<Route path='/' component={ App }>
 			<IndexRoute component={ Home } />
-			<Route path='stories' component={ Stories }>
-				<Route path=':mode' component={ Stories }>
-          <Route path=':title' component={ Story } />
-        </Route>
-			</Route>
+      <Route path='stories' component={ Stories } />
+			<Route path='stories/:mode' component={ Stories } />
+      <Route path='stories/:mode/:title' component={ Story } />
 			<Route path='events' component={ Events }>
 				<Route path=':mode' component={ Events } />
 			</Route>
