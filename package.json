@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp",
     "dist": "gulp dist",
-    "dist-studio": "gulp dist --dev --baseUrl '/bluegreenway/show/latest/'",
+    "dist-studio": "gulp dist --dev --baseUrl '/bluegreenway/show/latest/' && scp -rq ./dist/. studio.stamen.com:www/bluegreenway/show/latest",
     "lint": "eslint ./src",
     "postinstall": "cd node_modules/leaflet; npm install; npm run build"
   },
