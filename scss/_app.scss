@@ -31,6 +31,7 @@ a:active {
 	left: 0;
 	width: 100%;
 	height: 100vh;
+	pointer-events: none;
 
 	-webkit-transition: .5s filter, .5s -webkit-filter;
 	-moz-transition: .5s filter, .5s -moz-filter;
@@ -38,6 +39,7 @@ a:active {
 	transition: .5s -webkit-filter, .5s -moz-filter, .5s -ms-filter, .5s filter;
 
 	&.blurred {
+		pointer-events: all;
 		// NB: This works for everything but IE 8-11
 		-webkit-filter: blur(5px);
 		filter: blur(5px);
@@ -92,4 +94,8 @@ a:active {
 .leaflet-container, .map-container, #map {
 	width: 100%;
 	height: 100%;
+}
+
+.leaflet-bottom {
+	bottom: 195px;
 }

@@ -27,6 +27,7 @@ export const STORIES_DATA_RESPONSE = 'STORIES_DATA_RESPONSE';
 export const STORIES_DATA_ERROR_RESPONSE = 'STORIES_DATA_ERROR_RESPONSE';
 export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
 export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
+export const UPDATE_SELECTED_STORY = 'UPDATE_SELECTED_STORY';
 
 export default function (store) {
 
@@ -123,7 +124,7 @@ export default function (store) {
 		//
 		// Events data actions.
 		//
-		// Only fetchEventsData should be dispatched directly: 
+		// Only fetchEventsData should be dispatched directly:
 		// requestEventsData, receiveEventsData, and receiveEventsDataError are
 		// invoked by fetchEventsData as necessary
 		//
@@ -160,7 +161,7 @@ export default function (store) {
 		//
 		// Stories data actions.
 		//
-		// Only fetchStoriesData should be dispatched directly: 
+		// Only fetchStoriesData should be dispatched directly:
 		// requestStoriesData, receiveStoriesData, and receiveStoriesDataError are
 		// invoked by fetchStoriesData as necessary
 		//
@@ -205,6 +206,13 @@ export default function (store) {
 			store.dispatch({
 				type: STORIES_END_DATE_CHANGED,
 				value: date
+			});
+		},
+
+		updateSelectedStory (story) {
+			store.dispatch({
+				type: UPDATE_SELECTED_STORY,
+				story
 			});
 		}
 	};

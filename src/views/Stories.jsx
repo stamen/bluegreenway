@@ -61,6 +61,14 @@ export default class Stories extends React.Component {
 
 	}
 
+	viewStory (title, id, index) {
+		title = title.replace(/ /g, '-');
+		const mode = this.state.mode;
+		const path = `/stories/${mode}/${title}_${id}`;
+		this.props.actions.updateSelectedStory({ title, id, index });
+		this.props.history.push(path);
+	}
+
 	handleRangeChange (range) {
 		if (range[0]) {
 			this.props.actions.storiesMinDateChanged(range[0]);
@@ -112,7 +120,7 @@ export default class Stories extends React.Component {
 			storyCells = remainingStoryRows.map((storyRow, i) => {
 				return (
 					<div className='row' key={ 'row=' + i }>
-						{ storyRow.map(story => this.renderStory(story)) }
+						{ storyRow.map((story, i) => this.renderStory(story, i)) }
 					</div>
 				);
 			});
@@ -122,30 +130,36 @@ export default class Stories extends React.Component {
 			<div>
 				<div className='row'>
 					<div className='three columns' style={{ background: 'white' }}>
-						<DateRange 
-							minDate={moment('1/1/2016', 'M/D/YYYY')} 
+						<DateRange
+							minDate={moment('1/1/2016', 'M/D/YYYY')}
 							maxDate={moment()}
-							initialStartDate={this.state.stories.startDate} 
+							initialStartDate={this.state.stories.startDate}
 							initialEndDate={this.state.stories.endDate}
 							onRangeChange={(range) => this.handleRangeChange(range)} />
 					</div>
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Stories</div>
 					</div>
-					{ firstStory ? this.renderStory(firstStory) : null }
+					{ firstStory ? this.renderStory(firstStory, 0) : null }
 				</div>
 				{ storyCells }
 			</div>
 		);
 	}
 
-	renderStory (story) {
+	renderStory (story, index) {
+		const { id, title, images, category, body } = story;
 		return (
-			<div className='story-cell six columns' key={story.id} style={{ backgroundImage: `url(${story.images[0].src})` }}>
-				<div className="story-category">{ story.category }</div>
+			<div
+				className='story-cell six columns'
+				key={id}
+				style={{ backgroundImage: `url(${images[0].src})` }}
+				onClick={(() => this.viewStory(title, id, index))}
+			>
+				<div className="story-category">{ category }</div>
 				<div className="story-text">
-					<div className="story-title">{ story.title }</div>
-					<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
+					<div className="story-title">{ title }</div>
+					<div className="story-body" dangerouslySetInnerHTML={{ __html: body}}></div>
 				</div>
 			</div>
 		);
@@ -155,7 +169,7 @@ export default class Stories extends React.Component {
 		return (
 			<div className="stories-map-overlay two columns">
 				<MapOverlay collapsible={true}>
-					<MapLayersPicker 
+					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}
 						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
 						transportation={this.state.mapLayersPicker.transportation}
@@ -163,16 +177,15 @@ export default class Stories extends React.Component {
 						/>
 				</MapOverlay>
 				<MapOverlay collapsible={true}>
-					<DateRange 
-						minDate={moment('1/1/2016', 'M/D/YYYY')} 
+					<DateRange
+						minDate={moment('1/1/2016', 'M/D/YYYY')}
 						maxDate={moment()}
-						initialStartDate={this.state.stories.startDate} 
+						initialStartDate={this.state.stories.startDate}
 						initialEndDate={this.state.stories.endDate}
 						onRangeChange={(range) => this.handleRangeChange(range)} />
 				</MapOverlay>
 			</div>
 		);
 	}
-
 
 }
