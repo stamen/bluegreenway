@@ -61,10 +61,11 @@ export default class Stories extends React.Component {
 
 	}
 
-	viewStory (title) {
+	viewStory (title, id, index) {
 		title = title.replace(/ /g, '-');
 		const mode = this.state.mode;
 		const path = `/stories/${mode}/${title}`;
+		this.props.actions.selectStoryDetails({ title, id, index });
 		this.props.history.push(path);
 	}
 
@@ -119,7 +120,7 @@ export default class Stories extends React.Component {
 			storyCells = remainingStoryRows.map((storyRow, i) => {
 				return (
 					<div className='row' key={ 'row=' + i }>
-						{ storyRow.map(story => this.renderStory(story)) }
+						{ storyRow.map((story, i) => this.renderStory(story, i)) }
 					</div>
 				);
 			});
@@ -139,25 +140,26 @@ export default class Stories extends React.Component {
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Stories</div>
 					</div>
-					{ firstStory ? this.renderStory(firstStory) : null }
+					{ firstStory ? this.renderStory(firstStory, 0) : null }
 				</div>
 				{ storyCells }
 			</div>
 		);
 	}
 
-	renderStory (story) {
+	renderStory (story, index) {
+		const { id, title, images, category, body } = story;
 		return (
 			<div
 				className='story-cell six columns'
-				key={story.id}
-				style={{ backgroundImage: `url(${story.images[0].src})` }}
-				onClick={(() => this.viewStory(story.title))}
+				key={id}
+				style={{ backgroundImage: `url(${images[0].src})` }}
+				onClick={(() => this.viewStory(title, id, index))}
 			>
-				<div className="story-category">{ story.category }</div>
+				<div className="story-category">{ category }</div>
 				<div className="story-text">
-					<div className="story-title">{ story.title }</div>
-					<div className="story-body" dangerouslySetInnerHTML={{ __html: story.body}}></div>
+					<div className="story-title">{ title }</div>
+					<div className="story-body" dangerouslySetInnerHTML={{ __html: body}}></div>
 				</div>
 			</div>
 		);

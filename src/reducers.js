@@ -230,6 +230,15 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		selectedStory (state = null, action) {
+			switch (action.type) {
+				case actions.SELECT_STORY_DETAILS:
+					return action.story;
+				default:
+					return state;
+			}
 		}
 	})
 
@@ -291,6 +300,7 @@ export const initialState = {
 	stories: {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
 		endDate: moment(),
+		selectedStory: null,
 		data: {
 			isFetching: false,
 			items: [],

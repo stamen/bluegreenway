@@ -21,27 +21,32 @@ export default class Story extends React.Component {
 	}
 
 	componentWillUpdate (nextProps, nextState) {
-		var urlMode = nextProps.params.mode;
+		var urlMode = this.state.mode;
 		var appMode = nextProps.store.getState().mode;
+		var storyTitle = nextProps.store.getState().stories.selectedStory.title;
+		// console.log(this.state, nextProps.store.getState(), nextState);
 		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode);
+			this.updateModeUrl(appMode, storyTitle);
 		}
 	}
 
-	updateModeUrl (mode) {
-		const { title } = this.props.params.title;
-		this.props.history.push(`/stories/${mode}/${title}`);
+	updateModeUrl (mode, title) {
+		if (mode && title) {
+			this.props.history.push(`/stories/${mode}/${title}`);
+		} else if (mode && !title) {
+			this.props.history.push(`/stories/${mode}`);
+		} else {
+			this.props.history.push('*');
+		}
 	}
 
 	componentWillMount (){
-		var urlMode = this.props.params.mode;
-		var title = this.props.params.title;
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		}
+		// var urlMode = this.props.params.mode;
+		// var title = this.props.params.title;
+		// if (urlMode) {
+		//  this.props.actions.modeChanged(urlMode);
+		// }
 		this.onStateChange();
-
-		console.log(`story title: ${title}`) ;
 	}
 
 	componentDidMount () {
