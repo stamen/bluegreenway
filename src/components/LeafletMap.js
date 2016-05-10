@@ -6,6 +6,7 @@ export default class LeafletMap extends React.Component {
 		this.onStateChange = this.onStateChange.bind(this);
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 		this.initMap = this.initMap.bind(this);
+		this.setMapControls = this.setMapControls.bind(this);
 	}
 
 	componentWillMount() {
@@ -26,16 +27,13 @@ export default class LeafletMap extends React.Component {
 
 	onStateChange () {
 		let storeState = this.props.store.getState().map;
-		this.setState(storeState);
+		this.setState({ mapSettings: storeState });
 	}
 
 	initMap() {
-		const that = this;
 		const vizJSON = 'https://stamen.cartodb.com/u/stamen-org/api/v2/viz/4d180fa8-0e3d-11e6-aa9a-0ea31932ec1d/viz.json';
 		const options = {
 			cartodb_logo: false,
-			// center_lat: 37.759892,
-			// center_lon: -122.418079,
 			center: [37.757450, -122.406235],
 			infowindow: false,
 			legends: false,
@@ -46,13 +44,18 @@ export default class LeafletMap extends React.Component {
 		};
 		cartodb.createVis('map', vizJSON, options)
 			.on('done', (vis, layers) => {
-				console.log(vis, layers);
+				// console.log(this, vis, layers);
 				const map = vis.getNativeMap();
-				that.setState({ map });
+				this.setMapControls(map);
+				this.setState({ mapObject: map });
 			})
 			.on('error', err => {
 				console.warn(err);
 			});
+	}
+
+	setMapControls(map) {
+		new L.Control.Zoom({position: 'bottomright'}).addTo(map);
 	}
 
 	render() {
