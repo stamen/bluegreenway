@@ -35,7 +35,7 @@
       "properties": {
         "cartodb_id": 1,
         "name": "Mission Creek Shoreline North",
-        "bgw_id": 1
+        "bgw_id": 408
       }
     },
     {
@@ -72,7 +72,7 @@
       "properties": {
         "cartodb_id": 2,
         "name": "Mission Creek Shoreline North",
-        "bgw_id": 2
+        "bgw_id": 408
       }
     },
     {
@@ -169,7 +169,7 @@
       "properties": {
         "cartodb_id": 3,
         "name": "Mission Creek Shoreline South",
-        "bgw_id": 3
+        "bgw_id": 409
       }
     },
     {
@@ -3290,7 +3290,7 @@
       "properties": {
         "cartodb_id": 6,
         "name": "Power Plant Shoreline Access",
-        "bgw_id": 304
+        "bgw_id": 999999
       }
     },
     {
@@ -3327,7 +3327,7 @@
       "properties": {
         "cartodb_id": 4,
         "name": "Islais Landing/Islais Creek South",
-        "bgw_id": 350
+        "bgw_id": 999999
       }
     },
     {
@@ -3404,7 +3404,7 @@
       "properties": {
         "cartodb_id": 5,
         "name": "Tulare Park/Islais Creek North-East",
-        "bgw_id": 348
+        "bgw_id": 999999
       }
     },
     {
@@ -3457,7 +3457,7 @@
       "properties": {
         "cartodb_id": 18,
         "name": "P18 (MB)",
-        "bgw_id": 18
+        "bgw_id": 999999
       }
     },
     {
@@ -40818,7 +40818,7 @@
       "properties": {
         "cartodb_id": 19,
         "name": "Yosemite Slough Wetland + Candlestick Point State Recreation Area (needs to be split)",
-        "bgw_id": 197
+        "bgw_id": 999999
       }
     },
     {
@@ -41027,7 +41027,7 @@
       "properties": {
         "cartodb_id": 21,
         "name": "Mission Creek Shoreline South",
-        "bgw_id": 21
+        "bgw_id": 409
       }
     },
     {
@@ -41064,7 +41064,7 @@
       "properties": {
         "cartodb_id": 25,
         "name": "Mission Bay Parks 23 & 24",
-        "bgw_id": 25
+        "bgw_id": 999999
       }
     },
     {
@@ -41101,7 +41101,7 @@
       "properties": {
         "cartodb_id": 8,
         "name": "P19 (MB)",
-        "bgw_id": 8
+        "bgw_id": 999999
       }
     },
     {
@@ -41178,7 +41178,7 @@
       "properties": {
         "cartodb_id": 7,
         "name": "Agua Vista Park and Fishing Pier",
-        "bgw_id": 391
+        "bgw_id": 383
       }
     },
     {
@@ -41215,7 +41215,7 @@
       "properties": {
         "cartodb_id": 9,
         "name": "Boat Launch Ramp",
-        "bgw_id": 9
+        "bgw_id": 999999
       }
     },
     {
@@ -41256,7 +41256,7 @@
       "properties": {
         "cartodb_id": 11,
         "name": "Mission Creek Shoreline South",
-        "bgw_id": 11
+        "bgw_id": 409
       }
     },
     {
@@ -41297,7 +41297,7 @@
       "properties": {
         "cartodb_id": 12,
         "name": "Pier 64 Shoreline Access",
-        "bgw_id": 12
+        "bgw_id": 999999
       }
     },
     {
@@ -41342,7 +41342,7 @@
       "properties": {
         "cartodb_id": 14,
         "name": "Pier 64 Shoreline Access",
-        "bgw_id": 14
+        "bgw_id": 999999
       }
     },
     {
@@ -41411,7 +41411,7 @@
       "properties": {
         "cartodb_id": 24,
         "name": "Mission Bay Parks 23 & 24",
-        "bgw_id": 24
+        "bgw_id": 999999
       }
     },
     {
@@ -45896,7 +45896,7 @@
       "properties": {
         "cartodb_id": 15,
         "name": "Pier 94 Wetlands",
-        "bgw_id": 188
+        "bgw_id": 999999
       }
     },
     {
@@ -45945,7 +45945,7 @@
       "properties": {
         "cartodb_id": 13,
         "name": "Bayfront Park",
-        "bgw_id": 13
+        "bgw_id": 999999
       }
     },
     {
@@ -57118,7 +57118,7 @@
       "properties": {
         "cartodb_id": 10,
         "name": "Heron's Head Park",
-        "bgw_id": 329
+        "bgw_id": 395
       }
     },
     {
@@ -59903,7 +59903,7 @@
       "properties": {
         "cartodb_id": 16,
         "name": "Warm Water Cove Park",
-        "bgw_id": 195
+        "bgw_id": 426
       }
     },
     {
@@ -60180,7 +60180,7 @@
       "properties": {
         "cartodb_id": 26,
         "name": "Islais Creek North-West",
-        "bgw_id": 354
+        "bgw_id": 391
       }
     },
     {
@@ -60229,7 +60229,7 @@
       "properties": {
         "cartodb_id": 20,
         "name": "Mission Creek Shoreline South",
-        "bgw_id": 20
+        "bgw_id": 409
       }
     },
     {
@@ -60338,7 +60338,7 @@
       "properties": {
         "cartodb_id": 23,
         "name": "Pier 52 Boat Launch",
-        "bgw_id": 23
+        "bgw_id": 999999
       }
     },
     {
@@ -60387,7 +60387,7 @@
       "properties": {
         "cartodb_id": 22,
         "name": "Bayfront Park",
-        "bgw_id": 304
+        "bgw_id": 999999
       }
     },
     {
@@ -61260,7 +61260,7 @@
       "properties": {
         "cartodb_id": 27,
         "name": "India Basin Shoreline Park + India Basic Open Space (needs to be split)",
-        "bgw_id": 27
+        "bgw_id": 348
       }
     },
     {
@@ -62133,7 +62133,7 @@
       "properties": {
         "cartodb_id": 28,
         "name": "India Basin Shoreline Park (needs edit: overlaps India Basin Open Space)",
-        "bgw_id": 28
+        "bgw_id": 999999
       }
     },
     {
@@ -62926,7 +62926,7 @@
       "properties": {
         "cartodb_id": 17,
         "name": "China Basin Park",
-        "bgw_id": 289
+        "bgw_id": 999999
       }
     }
   ]
