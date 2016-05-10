@@ -23,11 +23,31 @@ export default class Story extends React.Component {
 	componentWillUpdate (nextProps, nextState) {
 		var urlMode = this.state.mode;
 		var appMode = nextProps.store.getState().mode;
-		var storyTitle = nextProps.store.getState().stories.selectedStory.title;
+		var storyTitle = this.props.params.title || nextProps.store.getState().stories.selectedStory.title;
 		// console.log(this.state, nextProps.store.getState(), nextState);
+		// for when the app loads with the URL of a specific story
 		if (urlMode !== appMode) {
 			this.updateModeUrl(appMode, storyTitle);
 		}
+		// for when the app loads with the URL of a specific story
+		if (this.state.stories.data.items !== nextState.stories.data.items &&
+			!this.props.store.getState().stories.selectedStory) {
+			const idx = storyTitle.lastIndexOf('_');
+			const storyId = +storyTitle.substring(idx).replace('_', '');
+			this.updateSelectedStory(storyId, nextState.stories.data.items);
+		}
+	}
+
+	updateSelectedStory (id, stories) {
+		stories.forEach((story, index) => {
+			if (story.id === id) {
+				this.props.actions.updateSelectedStory({
+					id,
+					index,
+					title: `${story.title.replace(/ /g, '-')}_${id}`
+				});
+			}
+		});
 	}
 
 	updateModeUrl (mode, title) {
@@ -41,11 +61,9 @@ export default class Story extends React.Component {
 	}
 
 	componentWillMount (){
-		// var urlMode = this.props.params.mode;
-		// var title = this.props.params.title;
-		// if (urlMode) {
-		//  this.props.actions.modeChanged(urlMode);
-		// }
+		if (!this.props.store.getState().stories.data.items.length) {
+			this.props.actions.fetchStoriesData();
+		}
 		this.onStateChange();
 	}
 
@@ -70,11 +88,29 @@ export default class Story extends React.Component {
 		}
 	}
 
+	renderStoryContent (story) {
+		if (story) {
+
+		}
+	}
+
 	renderPageView () {
+		const appState = this.props.store.getState();
+		if (!appState.stories.data.items.length || !appState.stories.selectedStory) {
+			 return false;
+		}
+		const storiesData = this.props.store.getState().stories;
+		const stories = storiesData.data.items;
+		const selectedStory = storiesData.selectedStory;
+		const storyData = storiesData.data.items[selectedStory.index];
+
+		console.log(selectedStory.title);
+
 		return (
 			<div className='grid-container'>
-				<PageHeader />
-				<div>Story</div>
+				<div className='row'>
+					<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData.body}} />
+				</div>
 			</div>
 		);
 	}

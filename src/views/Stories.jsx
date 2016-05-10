@@ -64,8 +64,8 @@ export default class Stories extends React.Component {
 	viewStory (title, id, index) {
 		title = title.replace(/ /g, '-');
 		const mode = this.state.mode;
-		const path = `/stories/${mode}/${title}`;
-		this.props.actions.selectStoryDetails({ title, id, index });
+		const path = `/stories/${mode}/${title}_${id}`;
+		this.props.actions.updateSelectedStory({ title, id, index });
 		this.props.history.push(path);
 	}
 

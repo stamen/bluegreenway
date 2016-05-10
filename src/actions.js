@@ -27,7 +27,7 @@ export const STORIES_DATA_RESPONSE = 'STORIES_DATA_RESPONSE';
 export const STORIES_DATA_ERROR_RESPONSE = 'STORIES_DATA_ERROR_RESPONSE';
 export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
 export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
-export const SELECT_STORY_DETAILS = 'SELECT_STORY_DETAILS';
+export const UPDATE_SELECTED_STORY = 'UPDATE_SELECTED_STORY';
 
 export default function (store) {
 
@@ -209,9 +209,9 @@ export default function (store) {
 			});
 		},
 
-		selectStoryDetails (story) {
+		updateSelectedStory (story) {
 			store.dispatch({
-				type: SELECT_STORY_DETAILS,
+				type: UPDATE_SELECTED_STORY,
 				story
 			});
 		}

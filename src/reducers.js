@@ -234,7 +234,7 @@ export default {
 
 		selectedStory (state = null, action) {
 			switch (action.type) {
-				case actions.SELECT_STORY_DETAILS:
+				case actions.UPDATE_SELECTED_STORY:
 					return action.story;
 				default:
 					return state;
