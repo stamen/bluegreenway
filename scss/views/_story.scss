@@ -1,0 +1,33 @@
+#story {
+  height: auto;
+
+  .grid-container {
+    height: auto;
+  }
+
+  .row {
+    height: auto;
+  }
+
+  .story-post {
+    height: auto;
+    // margin-bottom: 200px;
+
+    * {
+      background: none !important;
+    }
+
+    p, p > span {
+      font-size: 1em !important;
+      font-family: NeutrafaceText !important;
+      color: $blue !important;
+    }
+
+    img {
+      float: right !important;
+      padding: 0 0 20px 20px !important;
+      margin: 20px 0 0 0 !important;
+    }
+
+  }
+}
