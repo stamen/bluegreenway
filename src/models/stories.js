@@ -1,5 +1,6 @@
 import moment from 'moment';
 import slug from 'slug';
+import { find, sortBy, uniq } from 'lodash';
 
 import { timestampFormat } from './common';
 
@@ -33,4 +34,10 @@ export function cleanStoryItem (item) {
 
 export function cleanStoriesData (items) {
 	return items.map(item => cleanStoryItem(item));
+}
+
+export function getCategoryOptions(stories) {
+	let categories = stories.data.items.map(story => story.category);
+	categories = uniq(categories.filter(category => category)).sort();
+	return categories.map(category => ({ value: category, display: category }));
 }

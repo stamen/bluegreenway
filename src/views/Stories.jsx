@@ -5,6 +5,8 @@ import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
+import StoryFilters from '../components/StoryFilters';
+import { getCategoryOptions } from '../models/stories';
 
 export default class Stories extends React.Component {
 
@@ -25,6 +27,10 @@ export default class Stories extends React.Component {
 		var appMode = nextProps.store.getState().mode;
 		if (urlMode !== appMode) {
 			this.updateModeUrl(appMode);
+		}
+
+		if (nextState.stories.data.items.length !== this.state.stories.data.items.length) {
+			this.updateFilterOptions(nextState.stories);
 		}
 	}
 
@@ -49,9 +55,7 @@ export default class Stories extends React.Component {
 	}
 
 	componentDidMount () {
-
 		//
-
 	}
 
 	componentWillUnmount () {
@@ -59,9 +63,11 @@ export default class Stories extends React.Component {
 	}
 
 	componentDidUpdate () {
-
 		//
+	}
 
+	updateFilterOptions (stories) {
+		this.props.actions.storyCategoryChange(getCategoryOptions(stories));
 	}
 
 	viewStory (title, id) {
@@ -142,6 +148,8 @@ export default class Stories extends React.Component {
 					</div>
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Stories</div>
+						<StoryFilters
+							categoryOptions={this.state.stories.categoryOptions} />
 					</div>
 					{ firstStory ? this.renderStory(firstStory, 0) : null }
 				</div>

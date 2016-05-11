@@ -18,6 +18,7 @@ export const AGE_RANGES_CHANGED = 'AGE_RANGES_CHANGED';
 export const COSTS_CHANGED = 'COSTS_CHANGED';
 export const EVENT_TYPES_CHANGED = 'EVENT_TYPES_CHANGED';
 export const LOCATIONS_CHANGED = 'LOCATIONS_CHANGED';
+export const STORY_CATEGORY_CHANGE = 'STORY_CATEGORY_CHANGE';
 export const EVENTS_DATA_REQUEST = 'EVENTS_DATA_REQUEST';
 export const EVENTS_DATA_RESPONSE = 'EVENTS_DATA_RESPONSE';
 export const EVENTS_DATA_ERROR_RESPONSE = 'EVENTS_DATA_ERROR_RESPONSE';
@@ -102,6 +103,13 @@ export default function (store) {
 			store.dispatch({
 				type: LOCATIONS_CHANGED,
 				value: locations
+			});
+		},
+
+		storyCategoryChange (categories) {
+			store.dispatch({
+				type: STORY_CATEGORY_CHANGE,
+				value: categories
 			});
 		},
 

@@ -239,9 +239,17 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		categoryOptions (state = [], action) {
+			switch (action.type) {
+				case actions.STORY_CATEGORY_CHANGE:
+					return action.value;
+				default:
+					return state;
+			}
 		}
 	})
-
 
 };
 
