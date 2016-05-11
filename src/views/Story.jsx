@@ -8,6 +8,10 @@ import PageHeader from '../components/PageHeader';
 
 export default class Story extends React.Component {
 
+	// static contextTypes: {
+	// 	router: React.PropTypes.func
+	// };
+
 	constructor (props) {
 		super(props);
 
@@ -24,17 +28,16 @@ export default class Story extends React.Component {
 		var urlMode = this.state.mode;
 		var appMode = nextProps.store.getState().mode;
 		var storyTitle = this.props.params.title || nextProps.store.getState().stories.selectedStory.title;
-		// console.log(this.state, nextProps.store.getState(), nextState);
+		let { query } = this.props.location;
+		var id = query && query.id ? +query.id : null;
 		// for when the app loads with the URL of a specific story
 		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode, storyTitle);
+			this.updateModeUrl(appMode, storyTitle, id);
 		}
 		// for when the app loads with the URL of a specific story
 		if (this.state.stories.data.items !== nextState.stories.data.items &&
 			!this.props.store.getState().stories.selectedStory) {
-			const idx = storyTitle.lastIndexOf('_');
-			const storyId = +storyTitle.substring(idx).replace('_', '');
-			this.updateSelectedStory(storyId, nextState.stories.data.items);
+			this.updateSelectedStory(id, nextState.stories.data.items);
 		}
 	}
 
@@ -50,10 +53,10 @@ export default class Story extends React.Component {
 		});
 	}
 
-	updateModeUrl (mode, title) {
-		if (mode && title) {
-			this.props.history.push(`/stories/${mode}/${title}`);
-		} else if (mode && !title) {
+	updateModeUrl (mode, title, id) {
+		if (mode && title && id) {
+			this.props.history.push(`/stories/${mode}/${title}?id=${id}`);
+		} else if (mode && !title || mode && !id) {
 			this.props.history.push(`/stories/${mode}`);
 		} else {
 			this.props.history.push('*');
@@ -61,6 +64,7 @@ export default class Story extends React.Component {
 	}
 
 	componentWillMount (){
+		// console.log(this.props.location);
 		if (!this.props.store.getState().stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
@@ -88,12 +92,6 @@ export default class Story extends React.Component {
 		}
 	}
 
-	renderStoryContent (story) {
-		if (story) {
-
-		}
-	}
-
 	renderPageView () {
 		const appState = this.props.store.getState();
 		if (!appState.stories.data.items.length || !appState.stories.selectedStory) {
@@ -102,9 +100,10 @@ export default class Story extends React.Component {
 		const storiesData = this.props.store.getState().stories;
 		const stories = storiesData.data.items;
 		const selectedStory = storiesData.selectedStory;
-		const storyData = storiesData.data.items[selectedStory.index];
-
-		console.log(selectedStory.title);
+		const storyData = storiesData.data.items.filter(item => {
+			return item.title === selectedStory.title;
+		});
+		const storyData = storyData.length ? storyData[0] : null;
 
 		return (
 			<div className='grid-container'>

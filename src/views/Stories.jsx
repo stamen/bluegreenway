@@ -43,6 +43,9 @@ export default class Stories extends React.Component {
 		if (!this.props.store.getState().stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
+		if (this.props.store.getState().stories.selectedStory) {
+			this.props.actions.updateSelectedStory(null);
+		}
 	}
 
 	componentDidMount () {
@@ -61,11 +64,11 @@ export default class Stories extends React.Component {
 
 	}
 
-	viewStory (title, id, index) {
+	viewStory (title, id) {
 		title = title.replace(/ /g, '-');
 		const mode = this.state.mode;
-		const path = `/stories/${mode}/${title}_${id}`;
-		this.props.actions.updateSelectedStory({ title, id, index });
+		const path = `/stories/${mode}/${title}?id=${id}`;
+		this.props.actions.updateSelectedStory({ title, id });
 		this.props.history.push(path);
 	}
 
@@ -154,7 +157,7 @@ export default class Stories extends React.Component {
 				className='story-cell six columns'
 				key={id}
 				style={{ backgroundImage: `url(${images[0].src})` }}
-				onClick={(() => this.viewStory(title, id, index))}
+				onClick={(() => this.viewStory(title, id))}
 			>
 				<div className="story-category">{ category }</div>
 				<div className="story-text">

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import slug from 'slug';
 
 import { timestampFormat } from './common';
 
@@ -25,7 +26,7 @@ export function cleanStoryItem (item) {
 		postDate: moment(item['Post Date'], timestampFormat),
 		relatedEvents: parseRelatedIds(item['Related Events']),
 		relatedLocations: parseRelatedIds(item['Related Locations']),
-		title: item.title
+		title: slug(item.title, '_')
 	};
 	return cleaned;
 }
