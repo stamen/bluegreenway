@@ -23,7 +23,7 @@ function groupEvents(events) {
 	events = sortBy(events, 'startDate');
 	let groupedEvents = [];
 	events.forEach(event => {
-		let match = find(groupedEvents, groupedEvent => { 
+		let match = find(groupedEvents, groupedEvent => {
 			if (groupedEvent.title !== event.title) return false;
 			else {
 				// If this event starts one day after the end of an event with

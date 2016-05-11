@@ -38,7 +38,6 @@ export default class Stories extends React.Component {
 	}
 
 	componentWillMount () {
-		console.log('******** component will mount **********');
 		this.setState({ stories: {
 			categoryOptions: []
 		}});

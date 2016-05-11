@@ -1,4 +1,5 @@
 {
 	"events": "http://dev.sfparksalliance.org/feeds/events.json/1",
-	"stories": "http://dev.sfparksalliance.org/feeds/bgw-news.json"
+	"stories": "http://dev.sfparksalliance.org/feeds/bgw-news.json",
+	"projects": "http://dev.sfparksalliance.org/feeds/locations.json"
 }

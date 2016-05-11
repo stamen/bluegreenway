@@ -249,6 +249,42 @@ export default {
 					return state;
 			}
 		}
+	}),
+
+	projects: combineReducers({
+
+		data (state = { isFetching: false, items: [] }, action) {
+			switch (action.type) {
+				case actions.PROJECTS_DATA_REQUEST:
+					return Object.assign({}, state, {
+						isFetching: true,
+						error: null
+					});
+				case actions.PROJECTS_DATA_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						items: cleanProjectsData(actions.items),
+						error: null
+					});
+				case actions.PROJECTS_DATA_ERROR_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						error: action.error
+					});
+				default:
+					return state;
+			}
+		},
+
+		selectedProject (state = null, action) {
+			switch (action.type) {
+				case actions.UPDATE_SELECTED_PROJECT:
+					return action.project;
+				default:
+					return state;
+			}
+		}
+
 	})
 
 };
@@ -310,6 +346,14 @@ export const initialState = {
 		endDate: moment(),
 		selectedStory: null,
 		categoryOptions: [],
+		data: {
+			isFetching: false,
+			items: [],
+			error: null
+		}
+	},
+
+	projects: {
 		data: {
 			isFetching: false,
 			items: [],

@@ -30,6 +30,11 @@ export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
 export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
 export const UPDATE_SELECTED_STORY = 'UPDATE_SELECTED_STORY';
 
+export const PROJECTS_DATA_REQUEST = 'PROJECTS_DATA_REQUEST';
+export const PROJECTS_DATA_RESPONSE = 'PROJECTS_DATA_RESPONSE';
+export const PROJECTS_DATA_ERROR_RESPONSE = 'PROJECTS_DATA_ERROR_RESPONSE';
+export const UPDATE_SELECTED_PROJECT = 'UPDATE_SELECTED_PROJECT';
+
 export default function (store) {
 
 	return {
@@ -222,7 +227,53 @@ export default function (store) {
 				type: UPDATE_SELECTED_STORY,
 				story
 			});
+		},
+
+		//
+		// Projects actions
+		//
+		// Only fetchProjectsData should be dispatched directly:
+		// requestProjectData, receiveProjectData, and receiveProjectDataErrors are
+		// invoked by fetchProjectsData as necessary
+		//
+
+		requestProjectsData () {
+			return {
+				type: PROJECTS_DATA_REQUEST
+			};
+		},
+
+		receiveProjectsData (json) {
+			return {
+				type: PROJECTS_DATA_RESPONSE,
+				items: json.nodes
+			};
+		},
+
+		receiveProjectsDataError (error) {
+			return {
+				type: PROJECTS_DATA_ERROR_RESPONSE,
+				error
+			};
+		},
+
+		fetchProjectsData () {
+			store.dispatch(dispatch => {
+				dispatch(this.requestProjectsData());
+				return fetch(dataUrls.stories)
+					.then(response => response.json())
+					.then(json => dispatch(this.receiveProjectsData(json)))
+					.catch(error => dispatch(this.receiveProjectsDataError(error)));
+			});
+		},
+
+		updateSelectedProject (project) {
+			return {
+				type: UPDATE_SELECTED_PROJECT,
+				project
+			};
 		}
+
 	};
 
 };
