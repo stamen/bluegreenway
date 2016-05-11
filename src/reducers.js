@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { cleanEventsData } from './models/events';
 import { cleanStoriesData } from './models/stories';
+import { cleanProjectsData } from './models/projects';
 
 const identity = (state, action) => state;
 
@@ -263,7 +264,7 @@ export default {
 				case actions.PROJECTS_DATA_RESPONSE:
 					return Object.assign({}, state, {
 						isFetching: false,
-						items: cleanProjectsData(actions.items),
+						items: cleanProjectsData(action.items),
 						error: null
 					});
 				case actions.PROJECTS_DATA_ERROR_RESPONSE:

@@ -260,7 +260,7 @@ export default function (store) {
 		fetchProjectsData () {
 			store.dispatch(dispatch => {
 				dispatch(this.requestProjectsData());
-				return fetch(dataUrls.stories)
+				return fetch(dataUrls.projects)
 					.then(response => response.json())
 					.then(json => dispatch(this.receiveProjectsData(json)))
 					.catch(error => dispatch(this.receiveProjectsDataError(error)));

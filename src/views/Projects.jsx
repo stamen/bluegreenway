@@ -36,6 +36,10 @@ export default class Projects extends React.Component {
 			this.props.actions.modeChanged(urlMode);
 		}
 		this.onStateChange();
+
+		if (!this.props.store.getState().projects.data.items.length) {
+			this.props.actions.fetchProjectsData();
+		}
 	}
 
 	componentDidMount () {
@@ -75,7 +79,7 @@ export default class Projects extends React.Component {
 		return (
 			<div className="projects-map-overlay two columns">
 				<MapOverlay collapsible={true}>
-					<MapLayersPicker 
+					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}
 						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
 						transportation={this.state.mapLayersPicker.transportation}
