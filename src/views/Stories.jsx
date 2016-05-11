@@ -161,7 +161,7 @@ export default class Stories extends React.Component {
 			>
 				<div className="story-category">{ category }</div>
 				<div className="story-text">
-					<div className="story-title">{ title }</div>
+					<div className="story-title">{ title.replace(/_/g, ' ') }</div>
 					<div className="story-body" dangerouslySetInnerHTML={{ __html: body}}></div>
 				</div>
 			</div>

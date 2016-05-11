@@ -100,10 +100,10 @@ export default class Story extends React.Component {
 		const storiesData = this.props.store.getState().stories;
 		const stories = storiesData.data.items;
 		const selectedStory = storiesData.selectedStory;
-		const storyData = storiesData.data.items.filter(item => {
+		let storyData = storiesData.data.items.filter(item => {
 			return item.title === selectedStory.title;
 		});
-		const storyData = storyData.length ? storyData[0] : null;
+		storyData = storyData.length ? storyData[0] : null;
 
 		return (
 			<div className='grid-container'>
