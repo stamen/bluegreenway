@@ -309,6 +309,7 @@ export const initialState = {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
 		endDate: moment(),
 		selectedStory: null,
+		categoryOptions: [],
 		data: {
 			isFetching: false,
 			items: [],

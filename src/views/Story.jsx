@@ -37,17 +37,16 @@ export default class Story extends React.Component {
 		// for when the app loads with the URL of a specific story
 		if (this.state.stories.data.items !== nextState.stories.data.items &&
 			!this.props.store.getState().stories.selectedStory) {
-			this.updateSelectedStory(id, nextState.stories.data.items);
+			this.updateSelectedStory(id, storyTitle, nextState.stories.data.items);
 		}
 	}
 
-	updateSelectedStory (id, stories) {
-		stories.forEach((story, index) => {
-			if (story.id === id) {
+	updateSelectedStory (id, title, stories) {
+		stories.forEach(story => {
+			if (story.title === title) {
 				this.props.actions.updateSelectedStory({
 					id,
-					index,
-					title: `${story.title.replace(/ /g, '-')}_${id}`
+					title: story.title
 				});
 			}
 		});
@@ -108,7 +107,7 @@ export default class Story extends React.Component {
 		return (
 			<div className='grid-container'>
 				<div className='row'>
-					<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData.body}} />
+					<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData ? storyData.body : ''}} />
 				</div>
 			</div>
 		);

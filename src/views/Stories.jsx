@@ -12,7 +12,7 @@ export default class Stories extends React.Component {
 
 	constructor (props) {
 		super(props);
-
+		this.state = {};
 		this.onStateChange = this.onStateChange.bind(this);
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
@@ -28,8 +28,7 @@ export default class Stories extends React.Component {
 		if (urlMode !== appMode) {
 			this.updateModeUrl(appMode);
 		}
-
-		if (nextState.stories.data.items.length !== this.state.stories.data.items.length) {
+		if (!this.state.stories.categoryOptions.length) {
 			this.updateFilterOptions(nextState.stories);
 		}
 	}
@@ -39,6 +38,10 @@ export default class Stories extends React.Component {
 	}
 
 	componentWillMount () {
+		console.log('******** component will mount **********');
+		this.setState({ stories: {
+			categoryOptions: []
+		}});
 		var urlMode = this.props.params.mode;
 		if (urlMode) {
 			this.props.actions.modeChanged(urlMode);
@@ -51,6 +54,10 @@ export default class Stories extends React.Component {
 		}
 		if (this.props.store.getState().stories.selectedStory) {
 			this.props.actions.updateSelectedStory(null);
+		}
+		if (this.props.store.getState().stories.data.items.length &&
+			!this.props.store.getState().stories.categoryOptions.length) {
+			this.updateFilterOptions(this.props.store.getState().stories);
 		}
 	}
 
@@ -71,7 +78,6 @@ export default class Stories extends React.Component {
 	}
 
 	viewStory (title, id) {
-		title = title.replace(/ /g, '-');
 		const mode = this.state.mode;
 		const path = `/stories/${mode}/${title}?id=${id}`;
 		this.props.actions.updateSelectedStory({ title, id });
@@ -88,13 +94,11 @@ export default class Stories extends React.Component {
 	}
 
 	render () {
-
 		return (
 			<div id="stories">
 				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
-
 	}
 
 	renderPageView () {
