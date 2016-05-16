@@ -68,9 +68,26 @@ export default class Projects extends React.Component {
 
 	renderPageView () {
 		return (
-			<div className="grid-container">
+			<div className='grid-container'>
 				<PageHeader />
-				<h1>PROJECTS</h1>
+				<div className='row'>
+					<div className='three columns zone-cell'>
+						<h4 className='title'>Mission Bay/ Mission Rock</h4>
+						<div className='learn-more'><p>Learn More</p></div>
+					</div>
+					<div className='three columns zone-cell'>
+						<h4 className='title'>Pier 70/Central Waterfront</h4>
+						<div className='learn-more'><p>Learn More</p></div>
+					</div>
+					<div className='three columns zone-cell'>
+						<h4 className='title'>India Basin</h4>
+						<div className='learn-more'><p>Learn More</p></div>
+					</div>
+					<div className='three columns zone-cell'>
+						<h4 className='title'>Shipyard Candlestick</h4>
+						<div className='learn-more'><p>Learn More</p></div>
+					</div>
+				</div>
 			</div>
 		);
 	}

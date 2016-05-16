@@ -5,4 +5,35 @@
 		top: $body-margin;
 		z-index: 1;
 	}
+
+	.zone-cell {
+		height: 600px;
+		position: relative;
+		text-align: center;
+		background-color: #7bbbc9;
+
+		.title {
+			@extend %neutra-bold;
+			color: #17445f;
+			padding: 10px 10px 0 10px;
+		}
+
+		.learn-more {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: block;
+			height: 60px;
+			cursor: pointer;
+		}
+
+		p {
+			margin: 0;
+			padding: 0;
+			color: #fff;
+			line-height: 60px;
+			background: $green;
+		}
+	}
 }
