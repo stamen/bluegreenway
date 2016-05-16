@@ -13,6 +13,7 @@ import Stories from './views/Stories.jsx';
 import Story from './views/Story.jsx';
 import Events from './views/Events.jsx';
 import Projects from './views/Projects.jsx';
+import Zone from './views/Zone.jsx';
 import About from './views/About.jsx';
 import RouteNotFound from './views/404.jsx';
 
@@ -67,6 +68,7 @@ render((
 			<Route path='events/:mode' component={ Events } />
 			<Route path='projects' component={ Projects } />
 			<Route path='projects/:mode' component={ Projects } />
+      <Route path='projects/:mode/:zone' component={ Zone } />
 			<Route path='about' component={ About } />
 		</Route>
 		<Route path='*' component={ RouteNotFound } />

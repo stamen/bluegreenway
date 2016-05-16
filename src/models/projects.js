@@ -4,7 +4,6 @@ import { timestampFormat } from './common';
 
 export function cleanProjectItem (item) {
   item = item.node;
-  console.log(item);
   let cleaned = {};
   cleaned.accessible = item.Accessible;
   cleaned.additionalInfo = item['Additional Info'];
@@ -23,7 +22,6 @@ export function cleanProjectItem (item) {
   cleaned.url = item.URL;
   cleaned.postDate = moment(item['Post date'], timestampFormat);
   cleaned.updatedDate = moment(item['Updated date'], timestampFormat);
-  console.log(cleaned);
   return cleaned;
 }
 
