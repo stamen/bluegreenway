@@ -7,8 +7,7 @@
     "start": "gulp",
     "dist": "gulp dist",
     "dist-studio": "gulp dist --dev --baseUrl '/bluegreenway/show/latest/' && scp -rq ./dist/. studio.stamen.com:www/bluegreenway/show/latest",
-    "lint": "eslint ./src",
-    "postinstall": "cd node_modules/leaflet; npm install; npm run build"
+    "lint": "eslint ./src"
   },
   "repository": {
     "type": "git",
@@ -19,7 +18,6 @@
     "@stamen/panorama": "^0.3.2",
     "es6-promise": "^3.1.2",
     "isomorphic-fetch": "^2.2.1",
-    "leaflet": "git+https://github.com/Leaflet/Leaflet.git",
     "lodash": "^4.11.1",
     "moment-range": "^2.2.0",
     "react": "^15.0.1",
@@ -28,7 +26,6 @@
     "react-dom": "^15.0.1",
     "react-dropdown": "^1.0.3",
     "react-height": "^2.1.0",
-    "react-leaflet": "git+https://github.com/PaulLeCam/react-leaflet.git#leaflet-1.0",
     "react-motion": "^0.4.3",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
