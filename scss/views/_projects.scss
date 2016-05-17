@@ -10,7 +10,7 @@
 		height: 500px;
 		position: relative;
 		text-align: center;
-		background-color: #7bbbc9;
+		background-color: #fff;
 
 		.title {
 			z-index: 1;
@@ -48,5 +48,9 @@
 #map-mb, #map-p70, #map-ib, #map-sc {
 	width: 100%;
 	height: 100%;
-	cursor: default;
+	cursor: default !important;
+
+	.leaflet-control-attribution {
+		display: none;
+	}
 }

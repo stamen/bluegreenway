@@ -99,52 +99,34 @@ export default class Projects extends React.Component {
 			return false;
 		}
 
-		// map = L.map(id, {
-		// 	zoom: 12,
-		// 	center: [37.7439, -122.3895],
-		// 	zoomControl: false,
-		// 	scrollWheelZoom: false,
-		// 	dragging: false,
-		// 	touchZoom: false,
-		// 	doubleClickZoom: false,
-		// 	keyboard: false,
-		// 	attributionControl: false,
-		// 	zoomAnimation: false
-		// });
-		//
-		// console.log(vizJSON);
-		//
-		// // map.addLayer(basemap);
-		// cartodb.createLayer(map, vizJSON, {
-		// 	infowindow: false,
-		// 	tooltip: false,
-		// 	legends: false
-		// })
-		// 	.addTo(map)
-		// 	.on('done', layer => {
-		//
-		// 	})
-		// 	.on('error', error => {
-		// 		console.error(error);
-		// 	});
-
 		const options = {
+			attributionControl: false,
 			cartodb_logo: false,
 			center: [37.757450, -122.406235],
+			description: false,
+			doubleClickZoom: false,
+			dragging: false,
+			fullscreen: false,
 			infowindow: false,
+			keyboard: false,
+			layer_selector: false,
 			legends: false,
+			loaderControl: false,
+			shareable: false,
+			search: false,
 			scrollwheel: false,
 			search: false,
+			scrollWheelZoom: false,
+			touchZoom: false,
 			zoom: 12,
+			zoomAnimation: false,
 			zoomControl: false
 		};
 
 		cartodb.createVis(id, vizJSON, options)
 			.on('done', (vis, layers) => {
-				// console.log(this, vis, layers);
-				const map = vis.getNativeMap();
-				// this.setMapControls(map);
-				// this.setState({ mapObject: map });
+				map = vis.getNativeMap();
+
 				zoneLayer = L.geoJson(zoneFeatures, {
 					filter: (feature, layer) => {
 						return feature.properties.map_id === layerId;
@@ -156,9 +138,16 @@ export default class Projects extends React.Component {
 					}
 				});
 
-				// problem lies here:
-				// map.addLayer(zoneLayer);
-				// map.fitBounds(zoneLayer.getBounds());
+				map.addLayer(zoneLayer);
+				// following is a weird hack because map.fitBounds(zoneLayer.getBounds())
+				// was throwing an error...
+				let bounds = zoneLayer.getBounds();
+				bounds = [
+					[bounds._southWest.lat, bounds._southWest.lng],
+					[bounds._northEast.lat, bounds._northEast.lng]
+				];
+
+				map.fitBounds(bounds);
 
 				this.setState({
 					maps: {...this.state.maps, layerId: map}
