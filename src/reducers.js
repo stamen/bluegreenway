@@ -314,7 +314,7 @@ export default {
 					return state;
 			}
 		}
-		
+
 	})
 
 };
@@ -387,6 +387,14 @@ export const initialState = {
 		data: {
 			isFetching: false,
 			items: [],
+			error: null
+		}
+	},
+
+	geodata: {
+		zones: {
+			isFetching: false,
+			geojson: {},
 			error: null
 		}
 	}
