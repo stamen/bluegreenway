@@ -6,6 +6,8 @@ import PageHeader from '../components/PageHeader';
 
 import * as tileLayers from '../../static/tileLayers.json';
 
+let mapObjs = {};
+
 export default class Projects extends React.Component {
 
 	constructor (props) {
@@ -15,9 +17,34 @@ export default class Projects extends React.Component {
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
+	componentWillMount () {
+		var urlMode = this.props.params.mode;
+		if (urlMode) {
+			this.props.actions.modeChanged(urlMode);
+		}
+		this.onStateChange();
+
+		if (!this.props.store.getState().geodata.zones.geojson.features) {
+			this.props.actions.fetchZoneGeoData();
+		}
+
+
+		if (!this.props.store.getState().projects.data.items.length) {
+			this.props.actions.fetchProjectsData();
+		} else {
+
+		}
+
+		this.setState({
+			maps: {}
+		});
+	}
+
+	componentDidMount () {
+		// if we already have the zone data...
+		if (this.state.geodata.zones.geojson) {
+			this.createMiniMaps(this.state.geodata.zones.geojson);
+		}
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -26,60 +53,85 @@ export default class Projects extends React.Component {
 		if (urlMode !== appMode) {
 			this.updateModeUrl(appMode);
 		}
-	}
-
-	updateModeUrl (mode) {
-		this.props.history.push(`/projects/${mode}`);
-	}
-
-	componentWillMount () {
-		var urlMode = this.props.params.mode;
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		}
-		this.onStateChange();
-
-		if (!this.props.store.getState().projects.data.items.length) {
-			this.props.actions.fetchProjectsData();
+		if (nextProps.store.getState().geodata.zones !== this.state.geodata.zones) {
+			console.log('getting zone data');
 		}
 	}
 
-	componentDidMount () {
-		this.createMiniMaps();
+	componentDidUpdate (prevProps, prevState) {
+		if (prevState.geodata.zones !== this.state.geodata.zones) {
+			console.log('have zone data');
+			this.createMiniMaps(this.state.geodata.zones.geojson);
+		}
 	}
 
 	componentWillUnmount () {
 		this.unsubscribeStateChange();
 	}
 
-	componentDidUpdate () {
-		//
+	onStateChange () {
+		let storeState = this.props.store.getState();
+		this.setState(storeState);
 	}
 
-	createMiniMaps() {
+	updateModeUrl (mode) {
+		this.props.history.push(`/projects/${mode}`);
+	}
+
+	createMiniMaps(zones) {
 		const refs = this.refs;
 		Object.keys(refs).forEach(key => {
-			console.log(key);
-			this.renderMap(key);
+			this.renderMap(key, zones);
 		});
 	}
 
-	renderMap(id) {
+	renderMap(id, zoneFeatures) {
+		console.log(id, zoneFeatures);
+		let map;
 		let basemap = L.tileLayer(tileLayers.layers[1].url);
+		let zoneLayer;
+		let layerId = id.split('-')[1];
 
-		let map = L.map(id, {
+		// because of this redux react pattern, this will get called twice
+		// for each id. If the map already exists, don't init it again.
+		if (layerId in this.state.maps) {
+			return false;
+		}
+
+		map = L.map(id, {
 			zoom: 12,
-			center: [37.757450, -122.406235],
+			center: [37.7439, -122.3895],
 			zoomControl: false,
 			scrollwheel: false,
 			dragging: false,
 			touchZoom: false,
 			doubleClickZoom: false,
 			keyboard: false,
-			attributionControl: false
+			attributionControl: false,
+			zoomAnimation: false
 		});
 
 		map.addLayer(basemap);
+
+		zoneLayer = L.geoJson(zoneFeatures, {
+			filter: (feature, layer) => {
+				return feature.properties.map_id === layerId;
+			},
+			style: {
+				color: '#4DA3BC',
+				weight: 2,
+				fillColor: '#4DA3BC'
+			}
+		});
+
+		map.addLayer(zoneLayer);
+
+		map.fitBounds(zoneLayer.getBounds());
+
+		this.setState({
+			maps: {...this.state.maps, layerId: map}
+		});
+
 	}
 
 	render () {
