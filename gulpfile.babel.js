@@ -19,11 +19,8 @@ const $ = gulpLoadPlugins();
 // import packageJson from './package.json';
 // const dependencies = Object.keys(packageJson.dependencies);
 const dependencies = [
-	'@stamen/panorama',
-	'leaflet',
 	'react',
 	'react-dom',
-	'react-leaflet',
 	'react-router',
 	'react-router-redux',
 	'redux'

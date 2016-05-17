@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { vizJSON } from '../models/common.js';
 
 export default class LeafletMap extends React.Component {
 	constructor(props) {
@@ -31,7 +32,7 @@ export default class LeafletMap extends React.Component {
 	}
 
 	initMap() {
-		const vizJSON = 'https://stamen.cartodb.com/u/stamen-org/api/v2/viz/4d180fa8-0e3d-11e6-aa9a-0ea31932ec1d/viz.json';
+		// const vizJSON = 'https://stamen.cartodb.com/u/stamen-org/api/v2/viz/4d180fa8-0e3d-11e6-aa9a-0ea31932ec1d/viz.json';
 		const options = {
 			cartodb_logo: false,
 			center: [37.757450, -122.406235],
@@ -55,7 +56,7 @@ export default class LeafletMap extends React.Component {
 	}
 
 	setMapControls(map) {
-		new L.Control.Zoom({position: 'bottomright'}).addTo(map);
+		// new L.Control.Zoom({position: 'bottomright'}).addTo(map);
 	}
 
 	render() {
