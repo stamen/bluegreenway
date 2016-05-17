@@ -5,6 +5,7 @@ import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
 import * as tileLayers from '../../static/tileLayers.json';
+import { vizJSON } from '../models/common.js';
 
 let mapObjs = {};
 
@@ -98,39 +99,74 @@ export default class Projects extends React.Component {
 			return false;
 		}
 
-		map = L.map(id, {
+		// map = L.map(id, {
+		// 	zoom: 12,
+		// 	center: [37.7439, -122.3895],
+		// 	zoomControl: false,
+		// 	scrollWheelZoom: false,
+		// 	dragging: false,
+		// 	touchZoom: false,
+		// 	doubleClickZoom: false,
+		// 	keyboard: false,
+		// 	attributionControl: false,
+		// 	zoomAnimation: false
+		// });
+		//
+		// console.log(vizJSON);
+		//
+		// // map.addLayer(basemap);
+		// cartodb.createLayer(map, vizJSON, {
+		// 	infowindow: false,
+		// 	tooltip: false,
+		// 	legends: false
+		// })
+		// 	.addTo(map)
+		// 	.on('done', layer => {
+		//
+		// 	})
+		// 	.on('error', error => {
+		// 		console.error(error);
+		// 	});
+
+		const options = {
+			cartodb_logo: false,
+			center: [37.757450, -122.406235],
+			infowindow: false,
+			legends: false,
+			scrollwheel: false,
+			search: false,
 			zoom: 12,
-			center: [37.7439, -122.3895],
-			zoomControl: false,
-			scrollWheelZoom: false,
-			dragging: false,
-			touchZoom: false,
-			doubleClickZoom: false,
-			keyboard: false,
-			attributionControl: false,
-			zoomAnimation: false
-		});
+			zoomControl: false
+		};
 
-		map.addLayer(basemap);
+		cartodb.createVis(id, vizJSON, options)
+			.on('done', (vis, layers) => {
+				// console.log(this, vis, layers);
+				const map = vis.getNativeMap();
+				// this.setMapControls(map);
+				// this.setState({ mapObject: map });
+				zoneLayer = L.geoJson(zoneFeatures, {
+					filter: (feature, layer) => {
+						return feature.properties.map_id === layerId;
+					},
+					style: {
+						color: '#4DA3BC',
+						weight: 2,
+						fillColor: '#4DA3BC'
+					}
+				});
 
-		zoneLayer = L.geoJson(zoneFeatures, {
-			filter: (feature, layer) => {
-				return feature.properties.map_id === layerId;
-			},
-			style: {
-				color: '#4DA3BC',
-				weight: 2,
-				fillColor: '#4DA3BC'
-			}
-		});
+				// problem lies here:
+				// map.addLayer(zoneLayer);
+				// map.fitBounds(zoneLayer.getBounds());
 
-		map.addLayer(zoneLayer);
-
-		map.fitBounds(zoneLayer.getBounds());
-
-		this.setState({
-			maps: {...this.state.maps, layerId: map}
-		});
+				this.setState({
+					maps: {...this.state.maps, layerId: map}
+				});
+			})
+			.on('error', err => {
+				console.warn(err);
+			});
 
 	}
 
