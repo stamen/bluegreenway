@@ -102,7 +102,7 @@ export default class Projects extends React.Component {
 			zoom: 12,
 			center: [37.7439, -122.3895],
 			zoomControl: false,
-			scrollwheel: false,
+			scrollWheelZoom: false,
 			dragging: false,
 			touchZoom: false,
 			doubleClickZoom: false,
