@@ -1,7 +1,6 @@
 // import node modules
 import { debounce } from 'lodash';
 import * as React from 'react';
-// import { Map, TileLayer, GeoJson } from 'react-leaflet';
 
 // import components from @stamen/panorama
 // import { ItemSelector } from '@stamen/panorama';
