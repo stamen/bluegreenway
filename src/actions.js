@@ -30,6 +30,10 @@ export const STORIES_START_DATE_CHANGED = 'STORIES_START_DATE_CHANGED';
 export const STORIES_END_DATE_CHANGED = 'STORIES_END_DATE_CHANGED';
 export const UPDATE_SELECTED_STORY = 'UPDATE_SELECTED_STORY';
 
+export const ZONE_GEODATA_REQUEST = 'ZONE_GEODATA_REQUEST';
+export const ZONE_GEODATA_RESPONSE = 'ZONE_GEODATA_RESPONSE';
+export const ZONE_GEODATA_ERROR_RESPONSE = 'ZONE_GEODATA_ERROR_RESPONSE';
+
 export const PROJECTS_DATA_REQUEST = 'PROJECTS_DATA_REQUEST';
 export const PROJECTS_DATA_RESPONSE = 'PROJECTS_DATA_RESPONSE';
 export const PROJECTS_DATA_ERROR_RESPONSE = 'PROJECTS_DATA_ERROR_RESPONSE';
@@ -272,6 +276,39 @@ export default function (store) {
 				type: UPDATE_SELECTED_PROJECT,
 				project
 			};
+		},
+
+		//
+		// GeoData actions
+		//
+		requestZoneGeoData () {
+			return {
+				type: ZONE_GEODATA_REQUEST
+			};
+		},
+
+		receiveZoneGeoData (geojson) {
+			return {
+				type: ZONE_GEODATA_RESPONSE,
+				geojson
+			};
+		},
+
+		receiveZoneGeoDataError (error) {
+			return {
+				type: ZONE_GEODATA_ERROR_RESPONSE,
+				error
+			};
+		},
+
+		fetchZoneGeoData () {
+			store.dispatch(dispatch => {
+				dispatch(this.requestZoneGeoData());
+				return fetch(dataUrls.zones)
+					.then(response => response.json())
+					.then(json => dispatch(this.receiveZoneGeoData(json)))
+					.catch(error => dispatch(this.receiveZoneGeoDataError(error)));
+			});
 		}
 
 	};

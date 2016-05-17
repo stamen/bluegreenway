@@ -286,6 +286,35 @@ export default {
 			}
 		}
 
+	}),
+
+	geodata: combineReducers({
+
+		zones (state = { isFetching: false, geojson: {} }, action) {
+			switch (action.type) {
+				case actions.ZONE_GEODATA_REQUEST:
+					return Object.assign({}, state, {
+						isFetching: true,
+						geojson: null,
+						error: null
+					});
+				case actions.ZONE_GEODATA_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						geojson: action.geojson,
+						error: null
+					});
+				case actions.ZONE_GEODATA_ERROR_RESPONSE:
+					return Object.assign({}, state, {
+						isFetching: false,
+						geojson: null,
+						error: action.error
+					});
+				default:
+					return state;
+			}
+		}
+		
 	})
 
 };
