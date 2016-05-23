@@ -38,7 +38,7 @@ export default class MapLayersPicker extends React.Component {
 	}
 
 	handleChange (key, group, checked) {
-		if (group === 'layer') {
+		if (group === 'layers') {
 			this.props.onLayerChange(key, checked);
 		}
 		if (group === 'transportation') {
