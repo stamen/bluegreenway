@@ -55,13 +55,13 @@ export default class Projects extends React.Component {
 			this.updateModeUrl(appMode);
 		}
 		if (nextProps.store.getState().geodata.zones !== this.state.geodata.zones) {
-			console.log('getting zone data');
+			// console.log('getting zone data');
 		}
 	}
 
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.geodata.zones !== this.state.geodata.zones) {
-			console.log('have zone data');
+			// console.log('have zone data');
 			this.createMiniMaps(this.state.geodata.zones.geojson);
 		}
 	}
@@ -87,11 +87,12 @@ export default class Projects extends React.Component {
 	}
 
 	renderMap(id, zoneFeatures) {
-		console.log(id, zoneFeatures);
+		// console.log(id, zoneFeatures);
 		let map;
 		let basemap = L.tileLayer(tileLayers.layers[1].url);
 		let zoneLayer;
 		let layerId = id.split('-')[1];
+		let zoneFeaturesLayer = L.geoJson(zoneFeatures);
 
 		// because of this redux react pattern, this will get called twice
 		// for each id. If the map already exists, don't init it again.
@@ -133,21 +134,26 @@ export default class Projects extends React.Component {
 					},
 					style: {
 						color: '#4DA3BC',
-						weight: 2,
-						fillColor: '#4DA3BC'
+						weight: 0,
+						fillColor: '#4DA3BC',
+						fillOpacity: 1,
+						clickable: false
 					}
 				});
 
 				map.addLayer(zoneLayer);
 				// following is a weird hack because map.fitBounds(zoneLayer.getBounds())
 				// was throwing an error...
-				let bounds = zoneLayer.getBounds();
+				let bounds = zoneFeaturesLayer.getBounds();
 				bounds = [
 					[bounds._southWest.lat, bounds._southWest.lng],
 					[bounds._northEast.lat, bounds._northEast.lng]
 				];
-
-				map.fitBounds(bounds);
+				map.fitBounds(bounds, {
+					paddingTopLeft: [0, 100],
+					paddingBottomRight: [0, 0]
+				});
+				zoneLayer.bringToFront();
 
 				this.setState({
 					maps: {...this.state.maps, layerId: map}
