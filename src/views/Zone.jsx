@@ -21,6 +21,7 @@ export default class Zone extends Component {
   componentWillUpdate(nextProps, nextState) {
     const urlMode = nextProps.params.mode;
     const appMode = nextProps.store.getState().mode;
+    console.log(urlMode, appMode);
     const zoneTitle = this.props.params.zone;
     if (urlMode !== appMode) {
       this.updateModeUrl(appMode, zoneTitle);
@@ -34,6 +35,11 @@ export default class Zone extends Component {
   componentWillMount () {
     if (!this.props.store.getState().projects.data.items.length) {
       this.props.actions.fetchProjectsData();
+    }
+    let urlMode = this.props.params.mode;
+    let appMode = this.props.store.getState().mode;
+    if (urlMode !== appMode) {
+      this.props.actions.modeChanged(urlMode);
     }
     this.onStateChange();
   }
@@ -63,20 +69,22 @@ export default class Zone extends Component {
     const title = 'title';
     const about = 'some about text';
     return (
-      <div className='accordian-wrapper row'>
-        <div className='title-container'>
-          <h1 className='title'>{zoneTitle}</h1>
-          <p>{about}</p>
-          {/* to do: image? */}
-          <button>View on Map</button>
-        </div>
-        <div className='projects-list'>
-          <h4>Projects</h4>
-          {this.renderProjectList()}
-        </div>
-        <div className='open-spaces-list'>
-          <h4>Open Spaces</h4>
-          {this.renderOpenSpacesList()}
+      <div className='grid-container'>
+        <div className='accordian-wrapper row'>
+          <div className='title-container'>
+            <h1 className='title'>{zoneTitle}</h1>
+            <p>{about}</p>
+            {/* to do: image? */}
+            <button>View on Map</button>
+          </div>
+          <div className='projects-list'>
+            <h4>Projects</h4>
+            {this.renderProjectList()}
+          </div>
+          <div className='open-spaces-list'>
+            <h4>Open Spaces</h4>
+            {this.renderOpenSpacesList()}
+          </div>
         </div>
       </div>
     );
@@ -107,7 +115,7 @@ export default class Zone extends Component {
 
   render() {
     return (
-      <div id='zone' className='grid-container'>
+      <div id='zone'>
         { this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
       </div>
     );

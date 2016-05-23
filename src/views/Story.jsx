@@ -67,6 +67,11 @@ export default class Story extends React.Component {
 		if (!this.props.store.getState().stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
+		let urlMode = this.props.params.mode;
+		let appMode = this.props.store.getState().mode;
+		if (urlMode !== appMode) {
+			this.props.actions.modeChanged(urlMode);
+		}
 		this.onStateChange();
 	}
 
@@ -105,10 +110,8 @@ export default class Story extends React.Component {
 		storyData = storyData.length ? storyData[0] : null;
 
 		return (
-			<div className='grid-container'>
-				<div className='row'>
-					<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData ? storyData.body : ''}} />
-				</div>
+			<div className='row'>
+				<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData ? storyData.body : ''}} />
 			</div>
 		);
 	}
@@ -138,7 +141,7 @@ export default class Story extends React.Component {
 
 	render () {
 		return (
-			<div id="story">
+			<div id="story" className='grid-container'>
 				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);

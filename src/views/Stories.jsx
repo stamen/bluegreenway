@@ -41,8 +41,9 @@ export default class Stories extends React.Component {
 		this.setState({ stories: {
 			categoryOptions: []
 		}});
-		var urlMode = this.props.params.mode;
-		if (urlMode) {
+		let urlMode = this.props.params.mode;
+		let appMode = this.props.store.getState().mode;
+		if (urlMode !== appMode) {
 			this.props.actions.modeChanged(urlMode);
 		}
 		this.onStateChange();
