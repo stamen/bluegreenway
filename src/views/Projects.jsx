@@ -4,10 +4,16 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
+import slug from 'slug';
+
 import * as tileLayers from '../../static/tileLayers.json';
 import { vizJSON } from '../models/common.js';
 
-let mapObjs = {};
+// TO DO: figure out why this error is being thrown when hitting the browser's back button
+// after navigating to a Zone page from the Projects page:
+// warning.js:44 Warning: setState(...): Can only update a mounted or mounting component.
+// This usually means you called setState() on an unmounted component. This is a no-op.
+// Please check the code for the undefined component.
 
 export default class Projects extends React.Component {
 
@@ -23,17 +29,15 @@ export default class Projects extends React.Component {
 		if (urlMode) {
 			this.props.actions.modeChanged(urlMode);
 		}
+
 		this.onStateChange();
 
 		if (!this.props.store.getState().geodata.zones.geojson.features) {
 			this.props.actions.fetchZoneGeoData();
 		}
 
-
 		if (!this.props.store.getState().projects.data.items.length) {
 			this.props.actions.fetchProjectsData();
-		} else {
-
 		}
 
 		this.setState({
@@ -77,6 +81,28 @@ export default class Projects extends React.Component {
 
 	updateModeUrl (mode) {
 		this.props.history.push(`/projects/${mode}`);
+	}
+
+	onLearnMoreClick (mapId, e) {
+		let zoneTitleSlug = '';
+		let zoneId = this.state.geodata.zones.geojson.features.filter(feature => {
+			return feature.properties.map_id === mapId;
+		});
+		zoneId = zoneId[0].properties.map_id;
+
+		if (zoneId === 'mb') {
+			zoneTitleSlug = 'mission_bay_mission_rock';
+		} else if (zoneId === 'ib') {
+			zoneTitleSlug = 'india_basin';
+		} else if (zoneId === 'p70') {
+			zoneTitleSlug = 'pier_70';
+		} else if (zoneId === 'sc') {
+			zoneTitleSlug = 'shipyard_candlestick';
+		}
+
+		const mode = this.state.mode;
+		const path = `/projects/${mode}/${zoneTitleSlug}`;
+		this.props.history.push(path);
 	}
 
 	createMiniMaps(zones) {
@@ -181,22 +207,30 @@ export default class Projects extends React.Component {
 					<div className='three columns zone-cell'>
 						<h4 className='title'>Mission Bay/ Mission Rock</h4>
 						<div ref='map-mb' id='map-mb'></div>
-						<div className='learn-more'><p>Learn More</p></div>
+						<div className='learn-more' onClick={this.onLearnMoreClick.bind(this, 'mb')}>
+							<p>Learn More</p>
+						</div>
 					</div>
 					<div className='three columns zone-cell'>
 						<h4 className='title'>Pier 70/Central Waterfront</h4>
 						<div ref='map-p70' id='map-p70'></div>
-						<div className='learn-more'><p>Learn More</p></div>
+						<div className='learn-more' onClick={this.onLearnMoreClick.bind(this, 'p70')}>
+							<p>Learn More</p>
+						</div>
 					</div>
 					<div className='three columns zone-cell'>
 						<h4 className='title'>India Basin</h4>
 						<div ref='map-ib' id='map-ib'></div>
-						<div className='learn-more'><p>Learn More</p></div>
+						<div className='learn-more' onClick={this.onLearnMoreClick.bind(this, 'ib')}>
+							<p>Learn More</p>
+						</div>
 					</div>
 					<div className='three columns zone-cell'>
 						<h4 className='title'>Shipyard Candlestick</h4>
 						<div ref='map-sc' id='map-sc'></div>
-						<div className='learn-more'><p>Learn More</p></div>
+						<div className='learn-more' onClick={this.onLearnMoreClick.bind(this, 'sc')}>
+							<p>Learn More</p>
+						</div>
 					</div>
 				</div>
 			</div>
