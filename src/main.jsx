@@ -70,6 +70,7 @@ render((
 			<Route path='projects/:mode' component={ Projects } />
       <Route path='projects/:mode/:zone' component={ Zone } />
 			<Route path='about' component={ About } />
+      <Route path='about/:mode' component={ About } />
 		</Route>
 		<Route path='*' component={ RouteNotFound } />
 	</Router>
