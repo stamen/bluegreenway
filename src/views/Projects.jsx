@@ -55,7 +55,12 @@ export default class Projects extends React.Component {
 	componentWillUpdate(nextProps, nextState) {
 		var urlMode = nextProps.params.mode;
 		var appMode = nextProps.store.getState().mode;
+
 		if (urlMode !== appMode) {
+			if (appMode === 'map') {
+				// get rid of the leaflet maps that were drawn for the page view
+				this.destroyMaps();
+			}
 			this.updateModeUrl(appMode);
 		}
 		if (nextProps.store.getState().geodata.zones !== this.state.geodata.zones) {
@@ -64,8 +69,14 @@ export default class Projects extends React.Component {
 	}
 
 	componentDidUpdate (prevProps, prevState) {
+		let prevAppMode = prevState.mode;
+		let appMode = this.props.store.getState().mode;
 		if (prevState.geodata.zones !== this.state.geodata.zones) {
-			// console.log('have zone data');
+			this.createMiniMaps(this.state.geodata.zones.geojson);
+		}
+		if (prevAppMode === 'map' && appMode === 'page' && !this.state.maps.length) {
+			// assumes zone geodata was already loaded while user was visiting the map view
+			if (!this.state.geodata.zones.geojson) return;
 			this.createMiniMaps(this.state.geodata.zones.geojson);
 		}
 	}
@@ -77,6 +88,16 @@ export default class Projects extends React.Component {
 	onStateChange () {
 		let storeState = this.props.store.getState();
 		this.setState(storeState);
+	}
+
+	destroyMaps() {
+		this.state.maps.forEach(map => {
+			map.remove();
+		});
+
+		this.setState({
+			maps: []
+		});
 	}
 
 	updateModeUrl (mode) {
@@ -182,8 +203,10 @@ export default class Projects extends React.Component {
 				zoneLayer.bringToFront();
 
 				this.setState({
-					maps: [...this.state.maps, layerId]
+					maps: [...this.state.maps, map]
 				});
+
+				// console.log(this.state.maps);
 			})
 			.on('error', err => {
 				console.warn(err);
