@@ -41,7 +41,7 @@ export default class Projects extends React.Component {
 		}
 
 		this.setState({
-			maps: {}
+			maps: []
 		});
 	}
 
@@ -182,7 +182,7 @@ export default class Projects extends React.Component {
 				zoneLayer.bringToFront();
 
 				this.setState({
-					maps: {...this.state.maps, layerId: map}
+					maps: [...this.state.maps, layerId]
 				});
 			})
 			.on('error', err => {
