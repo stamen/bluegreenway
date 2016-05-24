@@ -6,23 +6,34 @@ export default class LeafletMap extends React.Component {
 		super(props);
 		this.onStateChange = this.onStateChange.bind(this);
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
-		this.initMap = this.initMap.bind(this);
-		this.setMapControls = this.setMapControls.bind(this);
 	}
 
 	componentWillMount() {
+		this.onStateChange();
+
 		if (!this.props.store.getState().geodata.projects.geojson.features) {
 			this.props.actions.fetchProjectsGeoData();
 		}
-
-		this.onStateChange();
 	}
 
 	componentDidMount() {
-		this.initMap();
+		if (this.props.store.getState().geodata.projects.geojson) {
+			// if the data has already been stored
+			this.initMap(this.props.store.getState().geodata.projects.geojson);
+		}
 	}
 
-	componentWillUpdate(nextProps) {
+	componentWillUpdate(nextProps, nextState) {
+		// console.log(nextState.geodata.projects.geojson,
+		// 	nextProps.store.getState().geodata.projects.geojson,
+		// 	this.state.geodata.projects.geojson);
+		if (!this.state.mapObject && nextState.geodata.projects !==
+				this.state.geodata.projects) {
+			this.initMap(nextProps.store.getState().geodata.projects.geojson);
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
 
 	}
 
@@ -31,11 +42,12 @@ export default class LeafletMap extends React.Component {
 	}
 
 	onStateChange () {
-		let storeState = this.props.store.getState().map;
-		this.setState({ mapSettings: storeState });
+		let storeState = this.props.store.getState();
+		this.setState(storeState);
 	}
 
-	initMap() {
+	initMap(projectsGeoJSON) {
+		// console.log('************ INIT MAP *************');
 		const options = {
 			cartodb_logo: false,
 			center: [37.757450, -122.406235],
@@ -43,15 +55,23 @@ export default class LeafletMap extends React.Component {
 			legends: false,
 			scrollwheel: false,
 			search: false,
-			zoom: 14,
+			zoom: 13,
 			zoomControl: false
 		};
 
-		cartodb.createVis('map', vizJSON, options)
+		let projectsLayer = L.geoJson(projectsGeoJSON);
+
+		cartodb.createVis('bgw-map', vizJSON, options)
 			.on('done', (vis, layers) => {
 				// console.log(this, vis, layers);
 				const map = vis.getNativeMap();
 				// this.setMapControls(map);
+				map.addLayer(projectsLayer);
+				map.fitBounds(projectsLayer.getBounds(), {
+					paddingTopLeft: [0, 0],
+					paddingBottomRight: [0, 0]
+				});
+				projectsLayer.bringToFront();
 				this.setState({ mapObject: map });
 			})
 			.on('error', err => {
@@ -60,12 +80,12 @@ export default class LeafletMap extends React.Component {
 	}
 
 	setMapControls(map) {
-		// new L.Control.Zoom({position: 'bottomright'}).addTo(map);
+		new L.Control.Zoom({position: 'bottomright'}).addTo(map);
 	}
 
 	render() {
 		return (
-			<div id='map' ref='leafletMap' className='map-container' />
+			<div id='bgw-map' ref='leafletMap' className='map-container' />
 		);
 	}
 }
