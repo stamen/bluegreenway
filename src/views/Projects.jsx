@@ -135,17 +135,23 @@ export default class Projects extends React.Component {
 
 	renderMap(id, zoneFeatures) {
 		// console.log(id, zoneFeatures);
+		// console.log('*******RENDER MINI MAP********');
 		let map;
 		let basemap = L.tileLayer(tileLayers.layers[1].url);
-		let zoneLayer;
 		let layerId = id.split('-')[1];
 		let zoneFeaturesLayer = L.geoJson(zoneFeatures);
-
-		// because of this redux react pattern, this will get called twice
-		// for each id. If the map already exists, don't init it again.
-		if (layerId in this.state.maps) {
-			return false;
-		}
+		let zoneLayer = L.geoJson(zoneFeatures, {
+			filter: (feature, layer) => {
+				return feature.properties.map_id === layerId;
+			},
+			style: {
+				color: '#4DA3BC',
+				weight: 0,
+				fillColor: '#4DA3BC',
+				fillOpacity: 1,
+				clickable: false
+			}
+		});
 
 		const options = {
 			attributionControl: false,
@@ -174,29 +180,8 @@ export default class Projects extends React.Component {
 		cartodb.createVis(id, vizJSON, options)
 			.on('done', (vis, layers) => {
 				map = vis.getNativeMap();
-
-				zoneLayer = L.geoJson(zoneFeatures, {
-					filter: (feature, layer) => {
-						return feature.properties.map_id === layerId;
-					},
-					style: {
-						color: '#4DA3BC',
-						weight: 0,
-						fillColor: '#4DA3BC',
-						fillOpacity: 1,
-						clickable: false
-					}
-				});
-
 				map.addLayer(zoneLayer);
-				// following is a weird hack because map.fitBounds(zoneLayer.getBounds())
-				// was throwing an error...
-				let bounds = zoneFeaturesLayer.getBounds();
-				bounds = [
-					[bounds._southWest.lat, bounds._southWest.lng],
-					[bounds._northEast.lat, bounds._northEast.lng]
-				];
-				map.fitBounds(bounds, {
+				map.fitBounds(zoneLayer.getBounds(), {
 					paddingTopLeft: [0, 100],
 					paddingBottomRight: [0, 0]
 				});
