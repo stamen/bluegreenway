@@ -313,6 +313,34 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		projects (state = { isFetching: false, geojson: {} }, action) {
+			switch (action.type) {
+				case actions.PROJECTS_GEODATA_REQUEST:
+					return {
+						...state,
+						isFetching: true,
+						geojson: null,
+						error: null
+					};
+				case actions.PROJECTS_GEODATA_RESPONSE:
+					return {
+						...state,
+						isFetching: false,
+						geojson: action.geojson,
+						error: null
+					};
+				case actions.PROJECTS_GEODATA_ERROR_RESPONSE:
+					return {
+						...state,
+						isFetching: false,
+						geojson: null,
+						error: action.error
+					};
+				default:
+					return state;
+			}
 		}
 
 	})
@@ -393,6 +421,12 @@ export const initialState = {
 
 	geodata: {
 		zones: {
+			isFetching: false,
+			geojson: {},
+			error: null
+		},
+
+		projects: {
 			isFetching: false,
 			geojson: {},
 			error: null
