@@ -15,7 +15,6 @@
   },
   "author": "stamen",
   "dependencies": {
-    "@stamen/panorama": "^0.3.2",
     "es6-promise": "^3.1.2",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.11.1",

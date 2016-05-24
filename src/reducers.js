@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import * as actions from './actions';
-import leaflet from 'leaflet';
 import moment from 'moment';
 
 import { cleanEventsData } from './models/events';
@@ -356,9 +355,9 @@ export const initialState = {
 
 	map: {
 		zoom: 14,
-		bounds: leaflet.latLngBounds(
-			leaflet.latLng(37.733, -122.474),
-			leaflet.latLng(37.793, -122.346)
+		bounds: L.latLngBounds(
+			L.latLng(37.733, -122.474),
+			L.latLng(37.793, -122.346)
 		),
 		zoomSnap: 0.0,
 		zoomControl: false,
