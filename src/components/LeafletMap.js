@@ -11,6 +11,10 @@ export default class LeafletMap extends React.Component {
 	}
 
 	componentWillMount() {
+		if (!this.props.store.getState().geodata.projects.geojson.features) {
+			this.props.actions.fetchProjectsGeoData();
+		}
+
 		this.onStateChange();
 	}
 
@@ -32,7 +36,6 @@ export default class LeafletMap extends React.Component {
 	}
 
 	initMap() {
-		// const vizJSON = 'https://stamen.cartodb.com/u/stamen-org/api/v2/viz/4d180fa8-0e3d-11e6-aa9a-0ea31932ec1d/viz.json';
 		const options = {
 			cartodb_logo: false,
 			center: [37.757450, -122.406235],
@@ -43,11 +46,12 @@ export default class LeafletMap extends React.Component {
 			zoom: 14,
 			zoomControl: false
 		};
+
 		cartodb.createVis('map', vizJSON, options)
 			.on('done', (vis, layers) => {
 				// console.log(this, vis, layers);
 				const map = vis.getNativeMap();
-				this.setMapControls(map);
+				// this.setMapControls(map);
 				this.setState({ mapObject: map });
 			})
 			.on('error', err => {
