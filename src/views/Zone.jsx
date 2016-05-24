@@ -101,14 +101,6 @@ export default class Zone extends Component {
 						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
 						/>
 				</MapOverlay>
-				<MapOverlay collapsible={true}>
-					<DateRange
-						minDate={moment('1/1/2016', 'M/D/YYYY')}
-						maxDate={moment()}
-						initialStartDate={this.state.stories.startDate}
-						initialEndDate={this.state.stories.endDate}
-						onRangeChange={(range) => this.handleRangeChange(range)} />
-				</MapOverlay>
 			</div>
 		);
 	}

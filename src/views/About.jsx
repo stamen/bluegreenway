@@ -3,7 +3,6 @@ import moment from 'moment';
 
 import { Timeline } from 'react-twitter-widgets';
 
-import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
@@ -65,14 +64,6 @@ export default class About extends React.Component {
 						transportation={this.state.mapLayersPicker.transportation}
 						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
 						/>
-				</MapOverlay>
-				<MapOverlay collapsible={true}>
-					<DateRange
-						minDate={moment('1/1/2016', 'M/D/YYYY')}
-						maxDate={moment()}
-						initialStartDate={this.state.stories.startDate}
-						initialEndDate={this.state.stories.endDate}
-						onRangeChange={(range) => this.handleRangeChange(range)} />
 				</MapOverlay>
 			</div>
 		);
