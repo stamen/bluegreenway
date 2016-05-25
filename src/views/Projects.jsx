@@ -181,7 +181,7 @@ export default class Projects extends React.Component {
 			.on('done', (vis, layers) => {
 				map = vis.getNativeMap();
 				map.addLayer(zoneLayer);
-				map.fitBounds(zoneLayer.getBounds(), {
+				map.fitBounds(zoneFeaturesLayer.getBounds(), {
 					paddingTopLeft: [0, 100],
 					paddingBottomRight: [0, 0]
 				});
