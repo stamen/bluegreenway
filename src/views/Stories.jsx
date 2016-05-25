@@ -168,13 +168,15 @@ export default class Stories extends React.Component {
 			<div
 				className='story-cell six columns'
 				key={id}
-				style={{ backgroundImage: `url(${images[0].src})` }}
 				onClick={(() => this.viewStory(title, id))}
-			>
-				<div className="story-category">{ category }</div>
-				<div className="story-text">
-					<div className="story-title">{ title.replace(/_/g, ' ') }</div>
-					<div className="story-body" dangerouslySetInnerHTML={{ __html: body}}></div>
+				style={{ backgroundImage: `url(${images[0].src})` }}
+				>
+				<div className='story-shade'>
+					<div className="story-category">{ category }</div>
+					<div className="story-text">
+						<div className="story-title">{ title.replace(/_/g, ' ') }</div>
+						<div className="story-body" dangerouslySetInnerHTML={{ __html: body}}></div>
+					</div>
 				</div>
 			</div>
 		);
