@@ -2,8 +2,12 @@
 // APP
 // ============================================================
 html {
-	font-size: 18px;
+	font-size: 12px;
 	box-sizing: border-box;
+
+	@media (#{$bp-larger-than-mobile}) {
+		font-size: 18px;
+	}
 }
 
 *,
@@ -59,7 +63,7 @@ a:active {
 }
 
 .grid-container {
-	margin: 0 0 $footer-height 0;
+	margin: 1em 0 $footer-height 0;
 	@media (#{$bp-larger-than-tablet}) {
 		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-tablet) $body-margin;
 	}

@@ -2,13 +2,19 @@
 	position: absolute;
 	left: 50%;
 	top: $header-height + $body-margin;
-	transform: translate(-50%, 0); 
+	transform: translate(-50%, 0);
 	z-index: 1;
 
 	@media (#{$bp-larger-than-tablet}) {
 		left: auto;
 		right: $body-margin;
-		transform: none; 
+		transform: none;
+	}
+
+	// target mobile specific
+	@include respond-to('small') {
+		left: 6%;
+		transform: none;
 	}
 }
 
