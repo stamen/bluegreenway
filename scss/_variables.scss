@@ -51,3 +51,16 @@ $container-padding-larger-than-mobile: 0.5em;
 $container-padding-larger-than-tablet: 0;
 
 $column-margin: 1%;
+
+// break points
+$breakpoint-medium: 1024px !default;
+$breakpoint-small: 767px !default;
+$breakpoint-tall: 750px !default;
+$breakpoint-short: 700px !default;
+
+$breakpoints: (
+  'medium': (max-width: $breakpoint-medium),
+  'small': (max-width: $breakpoint-small),
+  'tall': (min-height: $breakpoint-tall),
+  'short': (max-height: $breakpoint-short)
+);

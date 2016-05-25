@@ -25,28 +25,23 @@
 // respond-to mixin by Hugo Giraudel
 // http://www.sitepoint.com/managing-responsive-breakpoints-sass/
 // to use, define a map like the following (ideally in _variables.scss)
-/*
-$breakpoints: (
-	'small' : 768px,
-	'medium' : 1024px,
-	'large' : 1400px
-);
-*/
-@mixin respond-to ($breakpoint) {
-	// Retrieves the value from the key
-	$value: map-get($breakpoints, $breakpoint);
 
-	// If the key exists in the map
-	@if $value != null {
-		// Prints a media query based on the value
-		@media (min-width: $value) {
-			@content;
-		}
-	}
+/// Responsive manager.
+/// @access public
+/// @param {String} $breakpoint - Breakpoint
+/// @requires $breakpoints
+/// @link http://sass-guidelin.es/#breakpoint-manager
+@mixin respond-to($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
 
-	// If the key doesn't exist in the map
-	@else {
-		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
-			+ "Please make sure it is defined in `$breakpoints` map.";
-	}
+  @if $raw-query {
+    $query: if(type-of($raw-query) == 'string', unquote($raw-query), inspect($raw-query));
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. '
+         + 'Please make sure it is defined in `$breakpoints` map.';
+  }
 }
