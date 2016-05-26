@@ -20,20 +20,21 @@ export default class ProjectItem extends Component {
 
     handleClick () {
       this.setState({ isOpened: !this.state.isOpened });
-      console.log('handleClick called');
     }
 
     render () {
       const { isOpened, name, description, id } = this.props;
       return (
         <div
-          className='project-item'
+          className='item'
           onClick={ this.handleClick.bind(this) }
           >
-          <h4>{ name }</h4>
+          <h5 className={this.state.isOpened? 'active item-name': 'item-name'}>
+            { name }
+          </h5>
           <Collapse isOpened={ this.state.isOpened }>
             <div
-              className='project-description'
+              className='item-description'
               dangerouslySetInnerHTML={{__html: description}}
               />
           </Collapse>

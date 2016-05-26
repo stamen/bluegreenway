@@ -116,18 +116,21 @@ export default class Zone extends Component {
       <div className='grid-container'>
         <div className='accordian-wrapper row'>
           <div className='title-container'>
-            <h1 className='title'>{ zoneTitle }</h1>
+            <h2 className='title'>{ zoneTitle }</h2>
             <p>{ about }</p>
             { /* to do: image? */ }
             <button>View on Map</button>
           </div>
           <div className='projects-list'>
-            <h3>Projects</h3>
-            { this.renderProjectItems(this.state.projects.data.items) }
+            <h4 className='section-title'>Projects</h4>
+            { this.state.projects.data.items.length?
+              this.renderProjectItems(this.state.projects.data.items) :
+              <div className='loading'><p>loading projects...</p></div> }
           </div>
           <div className='open-spaces-list'>
-            <h3>Open Spaces</h3>
+            <h4 className='section-title'>Open Spaces</h4>
             { /* this.renderOpenSpacesItems() */ }
+            <div className='loading'><p>open spaces info coming soon!</p></div>
           </div>
         </div>
       </div>

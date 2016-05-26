@@ -1,13 +1,83 @@
 #zone {
+
+  $zone-margin-left: 1em;
+  $zone-margin-top: 1em;
+
+  .accordian-wrapper {
+    background: #fff;
+  }
+
+  button {
+    width: 200px;
+    background: $green;
+    color: #fff;
+    border: none;
+    padding: 0.35em;
+    cursor: pointer;
+  }
+
+  .title-container {
+    padding-left: $zone-margin-left;
+    padding-top: $zone-margin-top;
+  }
+
   .title {
+    @extend %neutra-bold;
     text-transform: capitalize;
   }
 
-  .projects-list {
+  .projects-list, .open-spaces-list {
     height: auto;
   }
 
-  .open-spaces-list {
-    height: auto;
+  .section-title {
+    background: $blue;
+    color: #fff;
+    padding: 0 0 0 .5em;
+    @extend %neutra-bold;
+      margin-bottom: 0;
   }
+
+  .loading {
+    margin-top: 0.5em;
+    margin-left: $zone-margin-left;
+  }
+
+  .item {
+    border-bottom: 2px solid $gray;
+    cursor: pointer;
+    padding-left: $zone-margin-left;
+  }
+
+  // this is causing a jump when the div is removed, how to avoid?
+  .item > div {
+    margin-bottom: 0.5em;
+  }
+
+  .item-name {
+    margin: 0.5em 0;
+    display: inline-block;
+    width: 100%;
+
+    &:after {
+      content: '\02795';
+      font-size: 13px;
+      color: #777;
+      float: right;
+      margin-right: 15px;
+    }
+
+    &.active:after {
+      content: "\2796"; // Unicode character for "minus" sign (-)
+    }
+  }
+
+  .item-description {
+    margin-bottom: 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
 }
