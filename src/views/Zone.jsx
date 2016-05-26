@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+import ProjectItem from '../components/ProjectItem';
 import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
@@ -26,7 +27,7 @@ export default class Zone extends Component {
   }
 
   componentDidMount () {
-    // 
+    //
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -39,7 +40,6 @@ export default class Zone extends Component {
     }
     if (nextState.projects !== this.state.projects) {
       console.log('we got projects now');
-      // this.filterProjects(nextState.projects.data.items);
     }
   }
 
@@ -74,41 +74,60 @@ export default class Zone extends Component {
     }
   }
 
-  filterProjects (projectItems) {
-    let filtered = projectItems.filter(project => {
-      return this.mapProjectZone(project.BGWZone) === this.state.params.zone;
+  renderProjectItems (projects) {
+    projects = projects.filter(project => {
+      return this.mapProjectZone(project.BGWZone) === this.props.params.zone;
     });
-    console.log(filtered);
+
+    let projectListItems = [];
+
+    if (projects.length) {
+      projectListItems = projects.map(project => {
+        return (
+          <ProjectItem
+            key={project.id}
+            id={project.id}
+            name={project.name}
+            description={project.description}
+            isOpened={false}
+            />
+        );
+      });
+    }
+
+    return (
+      <div className='project-list-items'>
+        { projectListItems }
+      </div>
+    );
   }
 
-  renderProjectList () {
-    // renders the list of projects for the given zone from?
-  }
-
-  renderOpenSpacesList () {
-    // renders the list of open spaces for the given zone from?
+  renderOpenSpacesItems () {
+    // renders the list of open spaces for the given zone from???
+    // potentially can also use the same logic from renderProjectItems &
+    // the <ProjectItem> component, so this method may not be necessary...
   }
 
   renderPageView () {
     let zoneTitle = this.props.params.zone.split('_').join(' ');
-    const title = 'title';
-    const about = 'some about text';
+    const about = `Some placeholder text about ${zoneTitle}....`;
+
     return (
       <div className='grid-container'>
         <div className='accordian-wrapper row'>
           <div className='title-container'>
-            <h1 className='title'>{zoneTitle}</h1>
-            <p>{about}</p>
-            {/* to do: image? */}
+            <h1 className='title'>{ zoneTitle }</h1>
+            <p>{ about }</p>
+            { /* to do: image? */ }
             <button>View on Map</button>
           </div>
           <div className='projects-list'>
-            <h4>Projects</h4>
-            {this.renderProjectList()}
+            <h3>Projects</h3>
+            { this.renderProjectItems(this.state.projects.data.items) }
           </div>
           <div className='open-spaces-list'>
-            <h4>Open Spaces</h4>
-            {this.renderOpenSpacesList()}
+            <h3>Open Spaces</h3>
+            { /* this.renderOpenSpacesItems() */ }
           </div>
         </div>
       </div>
