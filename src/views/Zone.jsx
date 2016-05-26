@@ -13,25 +13,6 @@ export default class Zone extends Component {
     this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
   }
 
-  onStateChange () {
-    let storeState = this.props.store.getState();
-    this.setState(storeState);
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    const urlMode = nextProps.params.mode;
-    const appMode = nextProps.store.getState().mode;
-    console.log(urlMode, appMode);
-    const zoneTitle = this.props.params.zone;
-    if (urlMode !== appMode) {
-      this.updateModeUrl(appMode, zoneTitle);
-    }
-  }
-
-  updateModeUrl (mode, zoneTitle) {
-    this.props.history.push(`/projects/${mode}/${zoneTitle}`);
-  }
-
   componentWillMount () {
     if (!this.props.store.getState().projects.data.items.length) {
       this.props.actions.fetchProjectsData();
@@ -45,6 +26,24 @@ export default class Zone extends Component {
   }
 
   componentDidMount () {
+    // 
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const urlMode = nextProps.params.mode;
+    const appMode = nextProps.store.getState().mode;
+    // console.log(urlMode, appMode);
+    const zoneTitle = this.props.params.zone;
+    if (urlMode !== appMode) {
+      this.updateModeUrl(appMode, zoneTitle);
+    }
+    if (nextState.projects !== this.state.projects) {
+      console.log('we got projects now');
+      // this.filterProjects(nextState.projects.data.items);
+    }
+  }
+
+  componentDidUpdate () {
     //
   }
 
@@ -52,8 +51,34 @@ export default class Zone extends Component {
     this.unsubscribeStateChange();
   }
 
-  componentDidUpdate () {
-    //
+  onStateChange () {
+    let storeState = this.props.store.getState();
+    this.setState(storeState);
+  }
+
+  updateModeUrl (mode, zoneTitle) {
+    this.props.history.push(`/projects/${mode}/${zoneTitle}`);
+  }
+
+  mapProjectZone(BGWZone) {
+    if (BGWZone === 'Hunters Point Naval Shipyard/Candlestick') {
+      return 'shipyard_candlestick';
+    } else if (BGWZone === "India Basin") {
+      return 'india_basin';
+    } else if (BGWZone === "Pier 70/Central Waterfront") {
+      return 'pier_70';
+    } else if (BGWZone === "Mission Bay/Mission Rock") {
+      return 'mission_bay_mission_rock';
+    } else {
+      return null;
+    }
+  }
+
+  filterProjects (projectItems) {
+    let filtered = projectItems.filter(project => {
+      return this.mapProjectZone(project.BGWZone) === this.state.params.zone;
+    });
+    console.log(filtered);
   }
 
   renderProjectList () {
