@@ -14,16 +14,26 @@
     border: none;
     padding: 0.35em;
     cursor: pointer;
+    position: absolute;
+    bottom: 1em;
   }
 
   .title-container {
+    height: 300px;
     padding-left: $zone-margin-left;
     padding-top: $zone-margin-top;
+
+    div {
+      height: 100%;
+      position: relative;
+      background-repeat: no-repeat;
+    }
   }
 
   .title {
     @extend %neutra-bold;
     text-transform: capitalize;
+    display: inline-block;
   }
 
   .projects-list, .open-spaces-list {

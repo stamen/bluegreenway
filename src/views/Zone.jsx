@@ -116,10 +116,15 @@ export default class Zone extends Component {
       <div className='grid-container'>
         <div className='accordian-wrapper row'>
           <div className='title-container'>
-            <h2 className='title'>{ zoneTitle }</h2>
-            <p>{ about }</p>
-            { /* to do: image? */ }
-            <button>View on Map</button>
+            <div className='six columns'>
+              <h2 className='title'>{ zoneTitle }</h2>
+              <p>{ about }</p>
+              <button>View on Map</button>
+            </div>
+            <div
+              className='six columns'
+              style={{backgroundImage:'url("img/zone-placeholder.jpg")'}}
+              />
           </div>
           <div className='projects-list'>
             <h4 className='section-title'>Projects</h4>
