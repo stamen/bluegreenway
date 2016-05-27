@@ -3,7 +3,13 @@ import { render } from 'react-dom';
 import { applyMiddleware, createStore, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { Redirect, Router, Route, IndexRedirect, IndexRoute, useRouterHistory } from 'react-router';
+import { Redirect,
+  Router,
+  Route,
+  IndexRedirect,
+  IndexRoute,
+  useRouterHistory,
+  hashHistory } from 'react-router';
 import { createHistory } from 'history';
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
 
@@ -41,11 +47,13 @@ const store = createStore(
 const actions = actionCreator(store);
 
 // Set up a history object whose state will stay in sync with the store,
-// using `react-router-redux`
+// using `react-router-redux` IF using server-side rendering:
 const browserHistory = useRouterHistory(createHistory)({
 	basename: process.env.BASE_URL || '/'
 });
-const history = syncHistoryWithStore(browserHistory, store);
+
+// IF NOT using server side rendering just use hashHistory & don't worry about baseurl
+const history = syncHistoryWithStore(hashHistory, store);
 
 // Pass the session store and actionCreator into
 // every component created by `react-router`.
