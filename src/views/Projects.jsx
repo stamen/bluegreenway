@@ -26,8 +26,12 @@ export default class Projects extends React.Component {
 
 	componentWillMount () {
 		var urlMode = this.props.params.mode;
+		var appMode = this.props.store.getState().mode;
+
 		if (urlMode) {
 			this.props.actions.modeChanged(urlMode);
+		} else {
+			this.updateModeUrl(appMode);
 		}
 
 		this.onStateChange();
@@ -55,6 +59,8 @@ export default class Projects extends React.Component {
 	componentWillUpdate(nextProps, nextState) {
 		var urlMode = nextProps.params.mode;
 		var appMode = nextProps.store.getState().mode;
+
+		console.log(urlMode, appMode);
 
 		if (urlMode !== appMode) {
 			if (appMode === 'map') {
@@ -90,6 +96,10 @@ export default class Projects extends React.Component {
 		this.setState(storeState);
 	}
 
+	updateModeUrl (mode) {
+		this.props.history.push(`/projects/${mode}`);
+	}
+
 	destroyMaps() {
 		this.state.maps.forEach(map => {
 			map.remove();
@@ -98,10 +108,6 @@ export default class Projects extends React.Component {
 		this.setState({
 			maps: []
 		});
-	}
-
-	updateModeUrl (mode) {
-		this.props.history.push(`/projects/${mode}`);
 	}
 
 	onLearnMoreClick (mapId, e) {

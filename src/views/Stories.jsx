@@ -17,35 +17,20 @@ export default class Stories extends React.Component {
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		var urlMode = nextProps.params.mode;
-		var appMode = nextProps.store.getState().mode;
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode);
-		}
-		if (!this.state.stories.categoryOptions.length) {
-			this.updateFilterOptions(nextState.stories);
-		}
-	}
-
-	updateModeUrl (mode) {
-		this.props.history.push(`/stories/${mode}`);
-	}
-
 	componentWillMount () {
 		this.setState({ stories: {
 			categoryOptions: []
 		}});
-		let urlMode = this.props.params.mode;
-		let appMode = this.props.store.getState().mode;
-		if (urlMode !== appMode) {
+
+		var urlMode = this.props.params.mode;
+		var appMode = this.props.store.getState().mode;
+
+		if (urlMode) {
 			this.props.actions.modeChanged(urlMode);
+		} else {
+			this.updateModeUrl(appMode);
 		}
+
 		this.onStateChange();
 
 		// Fetch data if we need to
@@ -65,16 +50,39 @@ export default class Stories extends React.Component {
 		//
 	}
 
-	componentWillUnmount () {
-		this.unsubscribeStateChange();
+	componentWillUpdate(nextProps, nextState) {
+		var urlMode = nextProps.params.mode;
+		var appMode = nextProps.store.getState().mode;
+		if (urlMode !== appMode) {
+			this.updateModeUrl(appMode);
+		}
+		if (nextState.stories.data.items.length !== this.state.stories.data.items.length) {
+			this.updateFilterOptions(nextState.stories);
+		}
 	}
 
 	componentDidUpdate () {
 		//
 	}
 
+	componentWillUnmount () {
+		this.unsubscribeStateChange();
+	}
+
+	updateModeUrl (mode) {
+		this.props.history.push(`/stories/${mode}`);
+	}
+
+	onStateChange () {
+		let storeState = this.props.store.getState();
+		this.setState(storeState);
+	}
+
 	updateFilterOptions (stories) {
 		this.props.actions.storyCategoryChange(getCategoryOptions(stories));
+		this.setState({
+
+		});
 	}
 
 	viewStory (title, id) {

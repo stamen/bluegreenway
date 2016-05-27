@@ -24,39 +24,16 @@ export default class Events extends React.Component {
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
-	}
+	componentWillMount () {
+		var urlMode = this.props.params.mode;
+		var appMode = this.props.store.getState().mode;
 
-	componentWillUpdate(nextProps, nextState) {
-		var urlMode = nextProps.params.mode;
-		var appMode = nextProps.store.getState().mode;
-		if (urlMode !== appMode) {
+		if (urlMode) {
+			this.props.actions.modeChanged(urlMode);
+		} else {
 			this.updateModeUrl(appMode);
 		}
 
-		if (nextState.events.data.items.length !== this.state.events.data.items.length) {
-			this.updateFilterOptions(nextState.events);
-		}
-	}
-
-	updateFilterOptions (events) {
-		this.props.actions.locationsChange(getLocationsOptions(events));
-		this.props.actions.costsChange(getCostsOptions(events));
-		this.props.actions.eventTypesChange(getTypesOptions(events));
-		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
-	}
-
-	updateModeUrl (mode) {
-		this.props.history.push(`/events/${mode}`);
-	}
-
-	componentWillMount () {
-		var urlMode = this.props.params.mode;
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		}
 		this.onStateChange();
 
 		// Fetch data if we need to
@@ -66,21 +43,46 @@ export default class Events extends React.Component {
 	}
 
 	componentDidMount () {
-
 		//
-
 	}
 
-	componentWillUnmount () {
+	componentWillUpdate(nextProps, nextState) {
+		var urlMode = nextProps.params.mode;
+		var appMode = nextProps.store.getState().mode;
 
-		this.unsubscribeStateChange();
+		console.log(urlMode, appMode);
 
+		if (urlMode !== appMode) {
+			this.updateModeUrl(appMode);
+		}
+
+		if (nextState.events.data.items.length !== this.state.events.data.items.length) {
+			this.updateFilterOptions(nextState.events);
+		}
 	}
 
 	componentDidUpdate () {
-
 		//
+	}
 
+	componentWillUnmount () {
+		this.unsubscribeStateChange();
+	}
+
+	updateModeUrl (mode) {
+		this.props.history.push(`/events/${mode}`);
+	}
+
+	onStateChange () {
+		let storeState = this.props.store.getState();
+		this.setState(storeState);
+	}
+
+	updateFilterOptions (events) {
+		this.props.actions.locationsChange(getLocationsOptions(events));
+		this.props.actions.costsChange(getCostsOptions(events));
+		this.props.actions.eventTypesChange(getTypesOptions(events));
+		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
 	}
 
 	handleRangeChange (range) {
@@ -116,7 +118,7 @@ export default class Events extends React.Component {
 		return (
 			<div className="events-map-overlay two columns">
 				<MapOverlay collapsible={true}>
-					<MapLayersPicker 
+					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}
 						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
 						transportation={this.state.mapLayersPicker.transportation}
@@ -124,10 +126,10 @@ export default class Events extends React.Component {
 						/>
 				</MapOverlay>
 				<MapOverlay collapsible={true}>
-					<DateRange 
-						minDate={moment('1/1/2016', 'M/D/YYYY')} 
+					<DateRange
+						minDate={moment('1/1/2016', 'M/D/YYYY')}
 						maxDate={moment()}
-						initialStartDate={this.state.events.startDate} 
+						initialStartDate={this.state.events.startDate}
 						initialEndDate={this.state.events.endDate}
 						onRangeChange={(range) => this.handleRangeChange(range)} />
 				</MapOverlay>
@@ -171,16 +173,16 @@ export default class Events extends React.Component {
 			<div>
 				<div className='row'>
 					<div className='three columns' style={{ background: 'white' }}>
-						<DateRange 
-							minDate={moment('1/1/2016', 'M/D/YYYY')} 
+						<DateRange
+							minDate={moment('1/1/2016', 'M/D/YYYY')}
 							maxDate={moment()}
-							initialStartDate={this.state.events.startDate} 
+							initialStartDate={this.state.events.startDate}
 							initialEndDate={this.state.events.endDate}
 							onRangeChange={(range) => this.handleRangeChange(range)} />
 					</div>
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Events</div>
-						<EventFilters 
+						<EventFilters
 							locationOptions={this.state.events.locationOptions}
 							eventTypeOptions={this.state.events.eventTypeOptions}
 							ageRangeOptions={this.state.events.ageRangeOptions}

@@ -17,11 +17,15 @@ export default class About extends React.Component {
 
 	componentWillMount () {
 		this.setState({});
-		let urlMode = this.props.params.mode;
-		let appMode = this.props.store.getState().mode;
+		var urlMode = this.props.params.mode;
+		var appMode = this.props.store.getState().mode;
+
 		if (urlMode) {
 			this.props.actions.modeChanged(urlMode);
+		} else {
+			this.updateModeUrl(appMode);
 		}
+
 		this.onStateChange();
 	}
 
