@@ -6,7 +6,7 @@ import { cleanEventsData } from './models/events';
 import { cleanStoriesData } from './models/stories';
 import { cleanProjectsData } from './models/projects';
 
-const identity = (state, action) => state;
+// const identity = (state, action) => state;
 
 const MAP_LAYERS_PICKER_DEFAULT_LAYERS = [
 	{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
@@ -16,10 +16,10 @@ const MAP_LAYERS_PICKER_DEFAULT_LAYERS = [
 	{ key: 'development pipeline', name: 'development pipeline', checked: false }
 ];
 const MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION = [
-	{ key: 'walking_biking', name: 'walking / biking' },
-	{ key: 'connector_streets', name: 'connector streets / paths' },
-	{ key: 'green_connector_network', name: 'green connector network' },
-	{ key: 'public_transportation', name: 'public transportation' }
+	{ key: 'walking_biking', name: 'walking / biking', checked: true },
+	{ key: 'connector_streets', name: 'connector streets / paths', checked: false },
+	{ key: 'green_connector_network', name: 'green connector network', checked: false },
+	{ key: 'public_transportation', name: 'public transportation', checked: false }
 ];
 
 export default {

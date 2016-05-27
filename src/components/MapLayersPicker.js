@@ -31,7 +31,7 @@ export default class MapLayersPicker extends React.Component {
 					<div className="map-layers-picker-header">
 						Transportation
 					</div>
-					{this.props.transportation.map(layer => this.renderCheckbox(layer.key, layer.name, 'transportation'))}
+					{this.props.transportation.map(layer => this.renderCheckbox(layer.key, layer.name, 'transportation', layer.checked))}
 				</div>
 			</div>
 		);
