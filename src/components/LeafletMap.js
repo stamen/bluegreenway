@@ -51,9 +51,10 @@ export default class LeafletMap extends React.Component {
 		const options = {
 			cartodb_logo: false,
 			center: [37.757450, -122.406235],
+			dragging: true,
 			infowindow: false,
 			legends: false,
-			scrollwheel: false,
+			scrollwheel: true,
 			search: false,
 			zoom: 13,
 			zoomControl: false
@@ -65,7 +66,7 @@ export default class LeafletMap extends React.Component {
 			.on('done', (vis, layers) => {
 				// console.log(this, vis, layers);
 				const map = vis.getNativeMap();
-				// this.setMapControls(map);
+				this.setMapControls(map);
 				map.addLayer(projectsLayer);
 				map.fitBounds(projectsLayer.getBounds(), {
 					paddingTopLeft: [0, 0],

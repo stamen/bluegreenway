@@ -35,7 +35,7 @@ a:active {
 	left: 0;
 	width: 100%;
 	height: 100vh;
-	pointer-events: none;
+	// pointer-events: none;
 
 	-webkit-transition: .5s filter, .5s -webkit-filter;
 	-moz-transition: .5s filter, .5s -moz-filter;
@@ -56,6 +56,11 @@ a:active {
 	top: $header-height + $mode-toggle-btn-height + $body-margin;
 	width: 100%;
 	min-height: calc(100vh - #{$header-height});
+
+	&.map-view-enabled {
+		// when the user toggles the map-view, we don't want to cover the background-container
+		width: 250px;
+	}
 
 	@media (#{$bp-larger-than-tablet}) {
 		top: $header-height;

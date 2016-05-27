@@ -60,7 +60,7 @@ export default class About extends React.Component {
 
 	renderMapView () {
 		return (
-			<div className='stories-map-overlay two columns'>
+			<div className='stories-map-overlay'>
 				<MapOverlay collapsible={true}>
 					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}

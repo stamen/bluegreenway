@@ -116,7 +116,7 @@ export default class Events extends React.Component {
 
 	renderMapView () {
 		return (
-			<div className="events-map-overlay two columns">
+			<div className="events-map-overlay">
 				<MapOverlay collapsible={true}>
 					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}

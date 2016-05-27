@@ -44,7 +44,7 @@ export default class Home extends React.Component {
 
 	renderMapView () {
 		return (
-			<div className="projects-map-overlay two columns">
+			<div className="projects-map-overlay">
 				<MapOverlay collapsible={true}>
 					<MapLayersPicker
 						layers={this.state.mapLayersPicker.layers}
@@ -108,5 +108,5 @@ export default class Home extends React.Component {
 			</div>
 		);
 	}
-	
+
 }

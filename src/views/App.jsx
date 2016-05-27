@@ -28,10 +28,7 @@ class App extends React.Component {
 	}
 
 	componentWillMount () {
-		this.props.actions.modeChanged('page');
-
 		this.computeComponentDimensions();
-
 		// set up initial state
 		this.onAppStateChange();
 	}
@@ -49,6 +46,19 @@ class App extends React.Component {
 		return !this.mapHashUpdated;
 	}
 
+	componentWillUpdate (nextProps, nextState) {
+		let contentContainer = this.refs.contentContainer;
+		let footer = this.refs.footer;
+
+		if (nextState.mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
+			contentContainer.classList.add('map-view-enabled');
+			this.setState({ showFooter: false });
+		} else if (nextState.mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
+			contentContainer.classList.remove('map-view-enabled');
+			this.setState({ showFooter: true });
+		}
+	}
+
 	componentDidUpdate () {
 		//
 	}
@@ -63,6 +73,7 @@ class App extends React.Component {
 			componentState.map = Object.assign({}, storeState.map);
 		}
 		componentState.mode = storeState.mode;
+		componentState.showFooter = this.props.store.getState().mode === 'page';
 		// Call `setState()` with the updated data, which causes a re-`render()`
 		this.setState(componentState);
 	}
@@ -106,9 +117,9 @@ class App extends React.Component {
 				</div>
 				<Header { ...this.state.header } />
 
-				<div className='content-container'>
+				<div ref='contentContainer' className='content-container'>
 					{ this.props.children }
-					<Footer { ...this.state.footer } />
+					{ this.state.showFooter? <Footer /> : null }
 				</div>
 			</div>
 		);
