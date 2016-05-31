@@ -1,0 +1,30 @@
+{
+  "name": "cartodb.js",
+  "main": [
+    "cartodb.js",
+    "themes/css/cartodb.css"
+  ],
+  "version": "3.15.9",
+  "homepage": "https://github.com/CartoDB/cartodb.js",
+  "authors": [
+    "CartoDB <support@cartodb.com>"
+  ],
+  "description": "CartoDB javascript library",
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "_release": "3.15.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.15.9",
+    "commit": "47d6a79deb933dcc4c36cd89137ba032886944e0"
+  },
+  "_source": "https://github.com/CartoDB/cartodb.js-bower.git",
+  "_target": "~3.15.9",
+  "_originalSource": "cartodb.js",
+  "_direct": true
+}
