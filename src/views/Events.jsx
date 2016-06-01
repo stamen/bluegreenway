@@ -53,8 +53,6 @@ export default class Events extends React.Component {
 		var urlMode = nextProps.params.mode;
 		var appMode = nextProps.store.getState().mode;
 
-		console.log(urlMode, appMode);
-
 		if (urlMode !== appMode) {
 			this.updateModeUrl(appMode);
 		}

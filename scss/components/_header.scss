@@ -5,8 +5,13 @@
 	width: 100%;
 	height: $header-height;
 	z-index: $header-z-index;
+	transition: top 0.2s ease-in-out;
 
 	background-color: rgba($background-color, 0.9);
+
+	&.nav-up {
+		top: -$header-height;
+	}
 
 	a {
 		width: 100%;
