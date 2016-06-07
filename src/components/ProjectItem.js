@@ -12,7 +12,7 @@ export default class ProjectItem extends Component {
     }
 
     componentWillMount() {
-      const { isOpened } = this.props;
+      const { isOpened } = this.props || false;
       this.setState({
         isOpened
       });

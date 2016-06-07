@@ -1,44 +1,32 @@
-import * as React from 'react';
+import React, { PropTypes } from 'react';
 
-export default class MapPageToggle extends React.Component {
+const MapPageToggle = ({mode, modeChanged}) => {
 
-	constructor (props) {
-		super(props);
+	function mapClicked () {
+		modeChanged('map');
 	}
 
-	componentWillMount () {
+	function pageClicked () {
+		modeChanged('page');
 	}
 
-	componentDidMount () {
-	}
-
-	componentWillUnmount () {
-	}
-
-	componentDidUpdate () {
-	}
-
-	mapClicked () {
-		this.props.modeChanged('map');
-	}
-
-	pageClicked () {
-		this.props.modeChanged('page');
-	}
-
-	render () {
-		var mode = this.props.mode;
-		return (
-			<div className="map-page-toggle">
-				<div className={"map-page-toggle-btn" + (mode === 'map' ? ' active' : '')} onClick={(() => this.mapClicked())}>
-					map
-					<span className="map-page-toggle-btn-fulltext"> view</span>
-				</div>
-				<div className={"map-page-toggle-btn" + (mode === 'page' ? ' active' : '')} onClick={(() => this.pageClicked())}>
-					page 
-					<span className="map-page-toggle-btn-fulltext"> view</span>
-				</div>
+	return (
+		<div className="map-page-toggle">
+			<div className={"map-page-toggle-btn" + (mode === 'map' ? ' active' : '')} onClick={(() => mapClicked())}>
+				map
+				<span className="map-page-toggle-btn-fulltext"> view</span>
 			</div>
-		);
-	}
-}
+			<div className={"map-page-toggle-btn" + (mode === 'page' ? ' active' : '')} onClick={(() => pageClicked())}>
+				page
+				<span className="map-page-toggle-btn-fulltext"> view</span>
+			</div>
+		</div>
+	);
+};
+
+MapPageToggle.propTypes = {
+	mode: PropTypes.bool,
+	modeChanged: PropTypes.func
+};
+
+export default MapPageToggle;
