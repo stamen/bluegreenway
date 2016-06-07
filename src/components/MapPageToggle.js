@@ -25,7 +25,7 @@ const MapPageToggle = ({mode, modeChanged}) => {
 };
 
 MapPageToggle.propTypes = {
-	mode: PropTypes.bool,
+	mode: PropTypes.string,
 	modeChanged: PropTypes.func
 };
 
