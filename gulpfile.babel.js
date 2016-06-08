@@ -22,7 +22,6 @@ const dependencies = [
 	'react',
 	'react-dom',
 	'react-router',
-	'react-router-redux',
 	'redux'
 ];
 
