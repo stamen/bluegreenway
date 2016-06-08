@@ -10,8 +10,7 @@ import { Redirect,
   IndexRoute,
   useRouterHistory,
   hashHistory } from 'react-router';
-import { createHistory } from 'history';
-import { routerReducer, syncHistoryWithStore } from 'react-router-redux';
+import { createHashHistory } from 'history';
 
 import App from './views/App.jsx';
 import Home from './views/Home.jsx';
@@ -35,10 +34,7 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
 
 // Create the single store for this application session
 const store = createStore(
-	combineReducers({
-		...reducers,
-		routing: routerReducer
-	}),
+	combineReducers(reducers),
 	initialState,
 	applyMiddleware(...middleware)
 );
@@ -46,14 +42,11 @@ const store = createStore(
 // Create the single action creator for this application session
 const actions = actionCreator(store);
 
-// Set up a history object whose state will stay in sync with the store,
-// using `react-router-redux` IF using server-side rendering:
-const browserHistory = useRouterHistory(createHistory)({
-	basename: process.env.BASE_URL || '/'
+// set up hash history without querystring cruft (e.g. ?_k=xi50sh)
+// from: https://github.com/reactjs/react-router/blob/master/upgrade-guides/v2.0.0.md#using-custom-histories
+const appHistory = useRouterHistory(createHashHistory)({
+	queryKey: false
 });
-
-// IF NOT using server side rendering just use hashHistory & don't worry about baseurl
-const history = syncHistoryWithStore(hashHistory, store);
 
 // Pass the session store and actionCreator into
 // every component created by `react-router`.
@@ -66,7 +59,7 @@ const createReduxComponent = (Component, props) => {
 
 // Render the app as `react-router` <Route>s, within a <Router>
 render((
-	<Router history={ history } createElement={ createReduxComponent }>
+	<Router history={ appHistory } createElement={ createReduxComponent }>
 		<Route path='/' component={ App }>
 			<IndexRoute component={ Home } />
 			<Route path='stories' component={ Stories } />
