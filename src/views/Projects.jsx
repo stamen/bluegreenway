@@ -9,12 +9,6 @@ import slug from 'slug';
 import * as tileLayers from '../../static/tileLayers.json';
 import { vizJSON } from '../models/common.js';
 
-// TO DO: figure out why this error is being thrown when hitting the browser's back button
-// after navigating to a Zone page from the Projects page:
-// warning.js:44 Warning: setState(...): Can only update a mounted or mounting component.
-// This usually means you called setState() on an unmounted component. This is a no-op.
-// Please check the code for the undefined component.
-
 export default class Projects extends React.Component {
 
 	constructor (props) {
