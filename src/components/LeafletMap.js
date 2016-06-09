@@ -79,8 +79,10 @@ export default class LeafletMap extends React.Component {
 		cartodb.createVis('bgw-map', vizJSON, options)
 			.on('done', (vis, layers) => {
 
-				setTimeout(() => {
+				// to get the Leaflet map object
+				let map = vis.getNativeMap();
 
+				const initMap = () => {
 					// console.log(vis, layers);
 					// the first layer (layers[0]) is typically the basemap used in the visualization
 					// the second layer is the one containing the actual styled geodata layers
@@ -99,8 +101,6 @@ export default class LeafletMap extends React.Component {
 					sublayers.bgwline = layer.getSubLayer(2);
 					sublayers.zones = layer.getSubLayer(1);
 
-					// to get the Leaflet map object
-					const map = vis.getNativeMap();
 					this.setMapControls(map);
 
 					// add the Projects GeoJSON overlay
@@ -112,12 +112,22 @@ export default class LeafletMap extends React.Component {
 					});
 					projectsLayer.bringToFront();
 
+					this.mapState.initing = false;
 					this.mapState.layers = sublayers;
 
 					this.forceUpdate();
 
-				}, 1000);
+				};
+
+				// wait to intiialize until Leaflet is ready.
+				if (map._loaded) {
+					initMap();
+				} else {
+					map.on('load', initMap);
+				}
+
 			})
+
 			.on('error', err => {
 				console.warn(err);
 			});
