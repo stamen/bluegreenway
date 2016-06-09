@@ -1,63 +1,63 @@
 import * as React from 'react';
 import { vizJSON } from '../models/common.js';
+import { get } from 'lodash';
 
 export default class LeafletMap extends React.Component {
 	constructor(props) {
 		super(props);
-		this.onStateChange = this.onStateChange.bind(this);
-		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
+
+		this.mapState = {
+			initing: false,
+			layers: null,
+		};
 	}
 
 	componentWillMount() {
-		this.onStateChange();
-
-		if (!this.props.store.getState().geodata.projects.geojson.features) {
+		const storeState = this.props.store.getState();
+		if (!get(storeState, 'geodata.projects.geojson.features')) {
 			this.props.actions.fetchProjectsGeoData();
 		}
 	}
 
 	componentDidMount() {
-		if (this.props.store.getState().geodata.projects.geojson) {
-			// if the data has already been stored
-			this.initMap(this.props.store.getState().geodata.projects.geojson);
-		}
+		const storeState = this.props.store.getState();
+		this.initMap(get(storeState, 'geodata.projects.geojson'));
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		if (!this.state.mapObject && nextState.geodata.projects !==
-				this.state.geodata.projects) {
-			this.initMap(nextProps.store.getState().geodata.projects.geojson);
-		}
-		if (this.state.mapLayers && nextState.mapLayersPicker !== this.state.mapLayersPicker) {
-			this.updateMapLayers(nextState.mapLayersPicker);
-		}
+		const storeState = nextProps.store.getState();
+		this.initMap(get(storeState, 'geodata.projects.geojson'));
+
+		this.updateMapLayers(storeState.mapLayersPicker);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.mapObject) {
+		// hide controls after map has initialized
+		if (this.mapState.layers) {
 			// i know, i know...
 			$('.leaflet-control-attribution.leaflet-control').remove();
 		}
 	}
 
-	componentWillUnmount() {
-		this.unsubscribeStateChange();
-	}
-
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
-	}
-
 	updateMapLayers (mapLayersPicker) {
+		if (!this.mapState.layers) return;
+
 		if (mapLayersPicker.transportation[0].checked) {
-			this.state.mapLayers.biking.show();
+			this.mapState.layers.biking.show();
 		} else if (!mapLayersPicker.transportation[0].checked) {
-			this.state.mapLayers.biking.hide();
+			this.mapState.layers.biking.hide();
 		}
 	}
 
 	initMap(projectsGeoJSON) {
+		// if already inited, or begun initing, bail
+		if (this.mapState.initing || this.mapState.layers) return;
+
+		// invalid geojson
+		if (!projectsGeoJSON || !projectsGeoJSON.features) return;
+
+		this.mapState.initing = true;
+
 		const options = {
 			cartodb_logo: false,
 			center: [37.757450, -122.406235],
@@ -78,40 +78,45 @@ export default class LeafletMap extends React.Component {
 
 		cartodb.createVis('bgw-map', vizJSON, options)
 			.on('done', (vis, layers) => {
-				// console.log(vis, layers);
-				// the first layer (layers[0]) is typically the basemap used in the visualization
-				// the second layer is the one containing the actual styled geodata layers
-				// cartodb.js refers to these as "subLayers", yes it's confusing!
-				const layer = layers[1];
-				const sublayerCount = layer.getSubLayerCount();
-				let sublayers = {};
 
-				// we can iterate over subLayers like this
-				for (let i = 0; i < sublayerCount; i++) {
-					// layer.getSubLayer(i).hide();
-				}
+				setTimeout(() => {
 
-				// typically it's useful to store them like so:
-				sublayers.biking = layer.getSubLayer(3);
-				sublayers.bgwline = layer.getSubLayer(2);
-				sublayers.zones = layer.getSubLayer(1);
+					// console.log(vis, layers);
+					// the first layer (layers[0]) is typically the basemap used in the visualization
+					// the second layer is the one containing the actual styled geodata layers
+					// cartodb.js refers to these as "subLayers", yes it's confusing!
+					const layer = layers[1];
+					const sublayerCount = layer.getSubLayerCount();
+					let sublayers = {};
 
-				// to get the Leaflet map object
-				const map = vis.getNativeMap();
-				this.setMapControls(map);
+					// we can iterate over subLayers like this
+					for (let i = 0; i < sublayerCount; i++) {
+						// layer.getSubLayer(i).hide();
+					}
 
-				// add the Projects GeoJSON overlay
-				map.addLayer(projectsLayer);
-				map.fitBounds(projectsLayer.getBounds(), {
-					paddingTopLeft: [0, 0],
-					paddingBottomRight: [0, 0]
-				});
-				projectsLayer.bringToFront();
+					// typically it's useful to store them like so:
+					sublayers.biking = layer.getSubLayer(3);
+					sublayers.bgwline = layer.getSubLayer(2);
+					sublayers.zones = layer.getSubLayer(1);
 
-				this.setState({
-					mapObject: map,
-					mapLayers: sublayers
-				});
+					// to get the Leaflet map object
+					const map = vis.getNativeMap();
+					this.setMapControls(map);
+
+					// add the Projects GeoJSON overlay
+					map.addLayer(projectsLayer);
+					map.fitBounds(projectsLayer.getBounds(), {
+						paddingTopLeft: [0, 0],
+						paddingBottomRight: [0, 0],
+						animate: false
+					});
+					projectsLayer.bringToFront();
+
+					this.mapState.layers = sublayers;
+
+					this.forceUpdate();
+
+				}, 1000);
 			})
 			.on('error', err => {
 				console.warn(err);
@@ -123,8 +128,9 @@ export default class LeafletMap extends React.Component {
 	}
 
 	render() {
+		// note: map container stays hidden until cartodb is fully initialized.
 		return (
-			<div id='bgw-map' ref='leafletMap' className='map-container' />
+			<div id='bgw-map' ref='leafletMap' className={ `map-container${ !this.mapState.layers ? ' hidden': '' }` } />
 		);
 	}
 }
