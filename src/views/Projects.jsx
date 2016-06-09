@@ -28,6 +28,8 @@ export default class Projects extends React.Component {
 			this.updateModeUrl(appMode);
 		}
 
+		this.props.actions.mapLayersPickerProjectsChange(true);
+
 		this.onStateChange();
 
 		if (!this.props.store.getState().geodata.zones.geojson.features) {

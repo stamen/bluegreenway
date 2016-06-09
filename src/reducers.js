@@ -21,6 +21,7 @@ const MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION = [
 	{ key: 'green_connector_network', name: 'green connector network', checked: false },
 	{ key: 'public_transportation', name: 'public transportation', checked: false }
 ];
+const MAP_LAYERS_PICKER_DEFAULT_PROJECTS = false;
 
 export default {
 
@@ -71,6 +72,15 @@ export default {
 						}
 						return layer;
 					});
+				default:
+					return state;
+			}
+		},
+
+		projects (state = MAP_LAYERS_PICKER_DEFAULT_PROJECTS, action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_PROJECTS_CHANGED:
+					return action.value;
 				default:
 					return state;
 			}

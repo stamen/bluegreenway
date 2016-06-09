@@ -37,6 +37,8 @@ export default class Events extends React.Component {
 			this.updateModeUrl(appMode);
 		}
 
+		this.props.actions.mapLayersPickerProjectsChange(false);
+
 		this.onStateChange();
 
 		// Fetch data if we need to

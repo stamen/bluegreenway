@@ -18,6 +18,9 @@ export default class Home extends React.Component {
 		if (urlMode) {
 			this.props.actions.modeChanged(urlMode);
 		}
+		
+		this.props.actions.mapLayersPickerProjectsChange(false);
+
 		this.onStateChange();
 	}
 

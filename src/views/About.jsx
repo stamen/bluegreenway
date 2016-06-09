@@ -26,6 +26,8 @@ export default class About extends React.Component {
 			this.updateModeUrl(appMode);
 		}
 
+		this.props.actions.mapLayersPickerProjectsChange(false);
+
 		this.onStateChange();
 	}
 

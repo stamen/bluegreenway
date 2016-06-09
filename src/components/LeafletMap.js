@@ -8,6 +8,7 @@ export default class LeafletMap extends React.Component {
 
 		this.mapState = {
 			initing: false,
+			map: null,
 			layers: null,
 		};
 	}
@@ -33,25 +34,31 @@ export default class LeafletMap extends React.Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		// hide controls after map has initialized
-		if (this.mapState.layers) {
+		if (this.mapState.map) {
 			// i know, i know...
 			$('.leaflet-control-attribution.leaflet-control').remove();
 		}
 	}
 
 	updateMapLayers (mapLayersPicker) {
-		if (!this.mapState.layers) return;
+		if (!this.mapState.map) return;
 
 		if (mapLayersPicker.transportation[0].checked) {
 			this.mapState.layers.biking.show();
-		} else if (!mapLayersPicker.transportation[0].checked) {
+		} else {
 			this.mapState.layers.biking.hide();
+		}
+
+		if (mapLayersPicker.projects) {
+			this.mapState.map.addLayer(this.mapState.layers.projects);
+		} else {
+			this.mapState.map.removeLayer(this.mapState.layers.projects);
 		}
 	}
 
 	initMap(projectsGeoJSON) {
 		// if already inited, or begun initing, bail
-		if (this.mapState.initing || this.mapState.layers) return;
+		if (this.mapState.initing || this.mapState.map) return;
 
 		// invalid geojson
 		if (!projectsGeoJSON || !projectsGeoJSON.features) return;
@@ -104,16 +111,19 @@ export default class LeafletMap extends React.Component {
 					this.setMapControls(map);
 
 					// add the Projects GeoJSON overlay
-					map.addLayer(projectsLayer);
+					// map.addLayer(projectsLayer);
 					map.fitBounds(projectsLayer.getBounds(), {
 						paddingTopLeft: [0, 0],
 						paddingBottomRight: [0, 0],
 						animate: false
 					});
-					projectsLayer.bringToFront();
+					// projectsLayer.bringToFront();
 
 					this.mapState.initing = false;
+					this.mapState.map = map;
 					this.mapState.layers = sublayers;
+
+					this.mapState.layers.projects = projectsLayer;
 
 					this.forceUpdate();
 
