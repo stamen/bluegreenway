@@ -6,7 +6,7 @@ import fetch from 'isomorphic-fetch';
 
 // dataUrls_tmp.json = for use while working offline
 // dataUrls.json = for use in production
-import dataUrls from '../static/dataUrls_tmp.json';
+import dataUrls from '../static/dataUrls.json';
 
 export const SET_STATE = 'SET_STATE';
 export const MODE_CHANGED = 'MODE_CHANGED';

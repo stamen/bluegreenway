@@ -1,7 +1,0 @@
-{
-	"events": "cms/events.json",
-	"stories": "cms/stories.json",
-	"projects": "cms/projects.json",
-	"zones": "geodata/bluegreenway_zones.geojson",
-	"projectsGeoData": "geodata/bgw_projects.geojson"
-}
