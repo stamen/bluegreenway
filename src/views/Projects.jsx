@@ -13,19 +13,23 @@ class Projects extends React.Component {
 	static miniMapConfig = [
 		{
 			id: 'mb',
-			title: 'Mission Bay/ Mission Rock'
+			title: 'Mission Bay/ Mission Rock',
+			slug: 'mission_bay_mission_rock'
 		},
 		{
 			id: 'p70',
-			title: 'Pier 70/Central Waterfront'
+			title: 'Pier 70/Central Waterfront',
+			slug: 'pier_70'
 		},
 		{
 			id: 'ib',
-			title: 'India Basin'
+			title: 'India Basin',
+			slug: 'india_basin'
 		},
 		{
 			id: 'sc',
-			title: 'Shipyard Candlestick'
+			title: 'Shipyard Candlestick',
+			slug: 'shipyard_candlestick'
 		}
 	];
 
@@ -78,18 +82,8 @@ class Projects extends React.Component {
 
 	onLearnMoreClick (mapId, e) {
 		let geodata = get(this.props.store.getState().geodata, 'zones.geojson'),
-			zoneTitleSlug = '',
-			zoneId = geodata.features.find(feature => feature.properties.map_id === mapId).properties.map_id;
-
-		if (zoneId === 'mb') {
-			zoneTitleSlug = 'mission_bay_mission_rock';
-		} else if (zoneId === 'ib') {
-			zoneTitleSlug = 'india_basin';
-		} else if (zoneId === 'p70') {
-			zoneTitleSlug = 'pier_70';
-		} else if (zoneId === 'sc') {
-			zoneTitleSlug = 'shipyard_candlestick';
-		}
+			zoneId = geodata.features.find(feature => feature.properties.map_id === mapId).properties.map_id,
+			zoneTitleSlug = Projects.miniMapConfig.find(config => config.id === mapId).slug;
 
 		// TODO: this should just be a <Link>, created in renderPageView()
 		let { mode } = this.props.params,
@@ -109,8 +103,6 @@ class Projects extends React.Component {
 	}
 
 	renderMap (layerId, zoneFeatures) {
-		// console.log(id, zoneFeatures);
-		// console.log('*******RENDER MINI MAP********');
 		let map,
 			basemap = L.tileLayer(tileLayers.layers[1].url),
 			zoneFeaturesLayer = L.geoJson(zoneFeatures),
@@ -169,7 +161,6 @@ class Projects extends React.Component {
 	}
 
 	renderPageView () {
-		console.log(">>>>> render projects page");
 		return (
 			<div className='grid-container'>
 				<PageHeader />
@@ -192,7 +183,6 @@ class Projects extends React.Component {
 
 	renderMapView () {
 		let { mapLayersPicker } = this.props.store.getState();
-		console.log(">>>>> render projects map");
 		return (
 			<div className="projects-map-overlay">
 				<MapOverlay collapsible={ true }>
@@ -215,7 +205,6 @@ class Projects extends React.Component {
 
 	render () {
 		let { mode } = this.props.params;
-		console.log(">>>>> projects mode:", mode);
 		return (
 			<div id="projects">
 				{ mode === 'page' ? this.renderPageView() : this.renderMapView() }
