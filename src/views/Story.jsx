@@ -26,15 +26,9 @@ class Story extends React.Component {
 	}
 
 	componentWillUpdate (nextProps, nextState) {
-		var urlMode = this.state.mode;
-		var appMode = nextProps.store.getState().mode;
 		var storyTitle = this.props.params.title || nextProps.store.getState().stories.selectedStory.title;
-		let { query } = this.props.location;
-		var id = query && query.id ? +query.id : null;
-		// for when the app loads with the URL of a specific story
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode, storyTitle, id);
-		}
+		// let { query } = this.props.location;
+		// var id = query && query.id ? +query.id : null;
 		// for when the app loads with the URL of a specific story
 		if (this.state.stories.data.items !== nextState.stories.data.items &&
 			!this.props.store.getState().stories.selectedStory) {
@@ -53,25 +47,10 @@ class Story extends React.Component {
 		});
 	}
 
-	updateModeUrl (mode, title, id) {
-		if (mode && title && id) {
-			this.props.router.push(`/stories/${mode}/${title}?id=${id}`);
-		} else if (mode && !title || mode && !id) {
-			this.props.router.push(`/stories/${mode}`);
-		} else {
-			this.props.router.push('*');
-		}
-	}
-
 	componentWillMount (){
 		// console.log(this.props.location);
 		if (!this.props.store.getState().stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
-		}
-		let urlMode = this.props.params.mode;
-		let appMode = this.props.store.getState().mode;
-		if (urlMode !== appMode) {
-			this.props.actions.modeChanged(urlMode);
 		}
 		this.onStateChange();
 	}
@@ -141,7 +120,7 @@ class Story extends React.Component {
 	render () {
 		return (
 			<div id="story" className='grid-container'>
-				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}

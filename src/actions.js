@@ -9,7 +9,7 @@ import fetch from 'isomorphic-fetch';
 import dataUrls from '../static/dataUrls.json';
 
 export const SET_STATE = 'SET_STATE';
-export const MODE_CHANGED = 'MODE_CHANGED';
+// export const MODE_CHANGED = 'MODE_CHANGED';
 export const MAP_MOVED = 'MAP_MOVED';
 export const MAP_LAYERS_PICKER_LAYERS_CHANGED = 'MAP_LAYERS_PICKER_LAYERS_CHANGED';
 export const MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED = 'MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED';
@@ -56,6 +56,7 @@ export default function (store) {
 			});
 		},
 
+		/*
 		modeChanged (value) {
 			// Only allow map or page modes
 			value = (value in ['map', 'page'] ? value : 'page');
@@ -64,6 +65,7 @@ export default function (store) {
 				value: value
 			});
 		},
+		*/
 
 		mapMoved (mapState) {
 			store.dispatch({

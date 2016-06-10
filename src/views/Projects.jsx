@@ -57,7 +57,7 @@ class Projects extends React.Component {
 
 	componentWillUpdate (nextProps, nextState) {
 		const storeState = nextProps.store.getState(),
-			{ mode } = nextProps.store.getState(),
+			{ mode } = nextProps.params,
 			geodata = get(storeState.geodata, 'zones.geojson');
 
 		if (mode === 'page') {
@@ -65,38 +65,7 @@ class Projects extends React.Component {
 		} else {
 			this.destroyMaps();
 		}
-
-		/*
-		var urlMode = nextProps.params.mode;
-		var appMode = nextProps.store.getState().mode;
-
-		if (urlMode !== appMode) {
-			if (appMode === 'map') {
-				// get rid of the leaflet maps that were drawn for the page view
-				this.destroyMaps();
-			}
-			this.updateModeUrl(appMode);
-		}
-		*/
 	}
-	/*
-	componentDidUpdate (prevProps, prevState) {
-		let prevAppMode = prevState.mode;
-
-		const storeState = this.props.store.getState(),
-			geodata = get(storeState.geodata, 'zones.geojson'),
-			appMode = storeState.mode;
-
-		if (geodata) {
-			this.createMiniMaps(this.state.geodata.zones.geojson);
-		}
-		if (prevAppMode === 'map' && appMode === 'page' && !this.state.maps.length) {
-			// assumes zone geodata was already loaded while user was visiting the map view
-			if (!this.state.geodata.zones.geojson) return;
-			this.createMiniMaps(this.state.geodata.zones.geojson);
-		}
-	}
-	*/
 
 	destroyMaps () {
 		if (!this.miniMaps) return;
@@ -123,7 +92,7 @@ class Projects extends React.Component {
 		}
 
 		// TODO: this should just be a <Link>, created in renderPageView()
-		let { mode } = this.props.store.getState(),
+		let { mode } = this.props.params,
 			path = `/projects/${ mode }/${ zoneTitleSlug }`;
 		this.props.router.push(path);
 	}
@@ -245,7 +214,7 @@ class Projects extends React.Component {
 	}
 
 	render () {
-		let { mode } = this.props.store.getState();
+		let { mode } = this.props.params;
 		console.log(">>>>> projects mode:", mode);
 		return (
 			<div id="projects">

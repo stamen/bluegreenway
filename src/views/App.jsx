@@ -33,11 +33,12 @@ class App extends React.Component {
 	componentWillUpdate (nextProps, nextState) {
 		let contentContainer = this.refs.contentContainer;
 		let footer = this.refs.footer;
+		let mode = nextProps.params.mode || 'page';
 
-		if (nextState.mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
+		if (mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
 			contentContainer.classList.add('map-view-enabled');
 			this.setState({ showFooter: false });
-		} else if (nextState.mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
+		} else if (mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
 			contentContainer.classList.remove('map-view-enabled');
 			this.setState({ showFooter: true });
 		}
@@ -56,8 +57,11 @@ class App extends React.Component {
 		if (storeState.map) {
 			componentState.map = Object.assign({}, storeState.map);
 		}
-		componentState.mode = storeState.mode;
-		componentState.showFooter = this.props.store.getState().mode === 'page';
+
+		let mode = this.props.params.mode || 'page';
+		componentState.mode = mode;
+		componentState.showFooter = mode === 'page';
+
 		// Call `setState()` with the updated data, which causes a re-`render()`
 		this.setState(componentState);
 	}
@@ -65,12 +69,12 @@ class App extends React.Component {
 	render () {
 		// pass props down to route view
 		let childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, ...this.props));
+		let mode = this.props.params.mode || 'page';
 
 		return (
 			<div>
-				{/* <MapPageToggle modeChanged={ this.props.actions.modeChanged } mode={ this.state.mode } /> */}
-				<MapPageToggle currentLocation={ this.props.location } mode={ this.state.mode } />
-				<div className={ 'background-container' + (this.state.mode === 'map' ? '' : ' blurred') }>
+			<MapPageToggle currentLocation={ this.props.location } mode={ mode } />
+				<div className={ 'background-container' + (mode === 'map' ? '' : ' blurred') }>
 					<LeafletMap { ...this.props } />
 				</div>
 				<Header { ...this.state.header } />

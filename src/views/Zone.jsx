@@ -19,11 +19,6 @@ class Zone extends Component {
 		if (!this.props.store.getState().projects.data.items.length) {
 			this.props.actions.fetchProjectsData();
 		}
-		let urlMode = this.props.params.mode;
-		let appMode = this.props.store.getState().mode;
-		if (urlMode !== appMode) {
-			this.props.actions.modeChanged(urlMode);
-		}
 		this.onStateChange();
 	}
 
@@ -32,13 +27,7 @@ class Zone extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		const urlMode = nextProps.params.mode;
-		const appMode = nextProps.store.getState().mode;
-		// console.log(urlMode, appMode);
 		const zoneTitle = this.props.params.zone;
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode, zoneTitle);
-		}
 		if (nextState.projects !== this.state.projects) {
 			console.log('we got projects now');
 		}
@@ -55,10 +44,6 @@ class Zone extends Component {
 	onStateChange () {
 		let storeState = this.props.store.getState();
 		this.setState(storeState);
-	}
-
-	updateModeUrl (mode, zoneTitle) {
-		this.props.router.push(`/projects/${mode}/${zoneTitle}`);
 	}
 
 	mapProjectZone(BGWZone) {
@@ -167,10 +152,10 @@ class Zone extends Component {
 	}
 
 	render() {
-		console.log(">>>>> zone mode:", this.state.mode);
+		console.log(">>>>> zone mode:", this.props.params.mode);
 		return (
 			<div id='zone'>
-				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}

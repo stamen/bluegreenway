@@ -61,19 +61,34 @@ const createReduxComponent = (Component, props) => {
 render((
 	<Router history={ appHistory } createElement={ createReduxComponent }>
 		<Route path='/' component={ App }>
-			<IndexRoute component={ Home } />
-			<Route path='stories' component={ Stories } />
-			<Route path='stories/:mode' component={ Stories } />
-			<Route path='stories/:mode/:title' component={ Story } />
-			<Route path='events' component={ Events } />
-			<Route path='events/:mode' component={ Events } />
+			<IndexRedirect to='home' />
+			<Route path='home'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Home } />
+			</Route>
+
+			<Route path='stories'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Stories }>
+					<Route path=':title' component={ Story } />
+				</Route>
+			</Route>
+
+			<Route path='events'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Events } />
+			</Route>
+
 			<Route path='projects'>
 				<IndexRedirect to='page' />
 				<Route path=':mode' component={ Projects } />
 				<Route path=':mode/:zone' component={ Zone } />
 			</Route>
-			<Route path='about' component={ About } />
-			<Route path='about/:mode' component={ About } />
+
+			<Route path='about'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ About } />
+			</Route>
 		</Route>
 		<Route path='*' component={ RouteNotFound } />
 	</Router>

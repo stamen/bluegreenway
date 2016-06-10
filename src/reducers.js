@@ -25,6 +25,7 @@ const MAP_LAYERS_PICKER_DEFAULT_PROJECTS = false;
 
 export default {
 
+	/*
 	mode (state = 'page', action) {
 		switch (action.type) {
 			case actions.MODE_CHANGED:
@@ -33,6 +34,7 @@ export default {
 				return state;
 		}
 	},
+	*/
 
 	map (state = {}, action) {
 		switch (action.type) {
@@ -360,8 +362,6 @@ export default {
 // These values will override the defaults specified in each reducer's argument list,
 // and can be merged into a set of initial state on store init if desired.
 export const initialState = {
-
-	mode: 'page',
 
 	map: {
 		zoom: 14,

@@ -29,15 +29,6 @@ class Events extends React.Component {
 	}
 
 	componentWillMount () {
-		var urlMode = this.props.params.mode;
-		var appMode = this.props.store.getState().mode;
-
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		} else {
-			this.updateModeUrl(appMode);
-		}
-
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
 		this.onStateChange();
@@ -53,13 +44,6 @@ class Events extends React.Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		var urlMode = nextProps.params.mode;
-		var appMode = nextProps.store.getState().mode;
-
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode);
-		}
-
 		if (nextState.events.data.items.length !== this.state.events.data.items.length) {
 			this.updateFilterOptions(nextState.events);
 		}
@@ -71,10 +55,6 @@ class Events extends React.Component {
 
 	componentWillUnmount () {
 		this.unsubscribeStateChange();
-	}
-
-	updateModeUrl (mode) {
-		this.props.router.push(`/events/${mode}`);
 	}
 
 	onStateChange () {
@@ -101,7 +81,7 @@ class Events extends React.Component {
 	render () {
 		return (
 			<div id="events">
-				{ this.state.mode === 'page' ?  this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ?  this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}
