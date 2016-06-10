@@ -6,22 +6,6 @@ import { cleanEventsData } from './models/events';
 import { cleanStoriesData } from './models/stories';
 import { cleanProjectsData } from './models/projects';
 
-// TODO: these consts should move into initialState (bottom of this file)
-const MAP_LAYERS_PICKER_DEFAULT_LAYERS = [
-	{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
-	{ key: 'picnic_tables', name: 'picnic tables', checked: false },
-	{ key: 'benches', name: 'benches', checked: false },
-	{ key: 'community gardens', name: 'community gardens', checked: false },
-	{ key: 'development pipeline', name: 'development pipeline', checked: false }
-];
-const MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION = [
-	{ key: 'walking_biking', name: 'walking / biking', checked: true },
-	{ key: 'connector_streets', name: 'connector streets / paths', checked: false },
-	{ key: 'green_connector_network', name: 'green connector network', checked: false },
-	{ key: 'public_transportation', name: 'public transportation', checked: false }
-];
-const MAP_LAYERS_PICKER_DEFAULT_PROJECTS = false;
-
 export default {
 
 	/*
@@ -50,7 +34,7 @@ export default {
 	},
 
 	mapLayersPicker: combineReducers({
-		layers (state = MAP_LAYERS_PICKER_DEFAULT_LAYERS, action) {
+		layers (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_LAYERS_CHANGED:
 					return state.map(layer => {
@@ -64,7 +48,7 @@ export default {
 			}
 		},
 
-		transportation (state = MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION, action) {
+		transportation (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED:
 					return state.map(layer => {
@@ -78,7 +62,7 @@ export default {
 			}
 		},
 
-		projects (state = MAP_LAYERS_PICKER_DEFAULT_PROJECTS, action) {
+		projects (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_PROJECTS_CHANGED:
 					return action.value;
@@ -345,6 +329,23 @@ export const initialState = {
 		scrollWheelZoom: false,
 		doubleClickZoom: false,
 		boxZoom: false
+	},
+
+	mapLayersPicker: {
+		layers: [
+			{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
+			{ key: 'picnic_tables', name: 'picnic tables', checked: false },
+			{ key: 'benches', name: 'benches', checked: false },
+			{ key: 'community gardens', name: 'community gardens', checked: false },
+			{ key: 'development pipeline', name: 'development pipeline', checked: false }
+		],
+		transportation: [
+			{ key: 'walking_biking', name: 'walking / biking', checked: true },
+			{ key: 'connector_streets', name: 'connector streets / paths', checked: false },
+			{ key: 'green_connector_network', name: 'green connector network', checked: false },
+			{ key: 'public_transportation', name: 'public transportation', checked: false }
+		],
+		projects: false
 	},
 
 	events: {
