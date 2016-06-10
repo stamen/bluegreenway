@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { get } from 'lodash';
 import { vizJSON } from '../models/common.js';
+import sassVars from '../../scss/variables.json';
 
 export default class LeafletMap extends React.Component {
 	constructor(props) {
@@ -79,6 +80,7 @@ export default class LeafletMap extends React.Component {
 			legends: false,
 			scrollwheel: true,
 			search: false,
+			shareable: false,
 			zoom: 13,
 			zoomControl: false
 		};
@@ -112,10 +114,12 @@ export default class LeafletMap extends React.Component {
 
 					this.setMapControls(map);
 
-					// fit map to encompass projects bounds
+					// fit map to encompass projects bounds,
+					// and nudge it below header and to right of page content
 					// note: projectsLayer is added/removed via an action, not here.
+					let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
 					map.fitBounds(projectsLayer.getBounds(), {
-						paddingTopLeft: [0, 0],
+						paddingTopLeft: [leftPadding, sassVars.header.height],
 						paddingBottomRight: [0, 0],
 						animate: false
 					});
