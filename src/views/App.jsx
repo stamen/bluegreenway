@@ -13,7 +13,6 @@ import LeafletMap from '../components/LeafletMap';
 
 // config
 import tileLayers from '../../static/tileLayers.json';
-import sassVars from '../../scss/variables.json';
 
 // main app container
 class App extends React.Component {
@@ -21,30 +20,14 @@ class App extends React.Component {
 	constructor (props) {
 		super(props);
 		// bind event handlers
-		this.onWindowResize = debounce(this.onWindowResize.bind(this), 250);
-		this.onMapMoved = this.onMapMoved.bind(this);
 		this.onAppStateChange = this.onAppStateChange.bind(this);
 		// subscribe for future state changes
 		props.store.subscribe(this.onAppStateChange);
 	}
 
 	componentWillMount () {
-		this.computeComponentDimensions();
 		// set up initial state
 		this.onAppStateChange();
-	}
-
-	componentDidMount () {
-		window.addEventListener('resize', this.onWindowResize);
-	}
-
-	componentWillUnmount () {
-		window.removeEventListener('resize', this.onWindowResize);
-	}
-
-	shouldComponentUpdate (nextProps, nextState) {
-		// Do not re-render if the state change was just map state.
-		return !this.mapHashUpdated;
 	}
 
 	componentWillUpdate (nextProps, nextState) {
@@ -79,47 +62,20 @@ class App extends React.Component {
 		this.setState(componentState);
 	}
 
-	onMapMoved (event) {
-		if (event && event.target && this.state.map.bounds && this.refs.leafletMap) {
-			/*
-			this.props.actions.mapMoved({
-				zoom: event.target.getZoom(),
-				// center: event.target.getCenter(),
-				bounds: event.target.getBounds()
-			});
-			*/
-
-			// maintain map bounds when map container resizes
-			let map = this.refs.leafletMap.getLeafletElement(),
-				currentZoom = map.getZoom(),
-				newZoom = map.getBoundsZoom(this.state.map.bounds);
-
-			if (currentZoom != newZoom) {
-				this.refs.leafletMap.getLeafletElement().fitBounds(this.state.map.bounds);
-			}
-		}
-	}
-
-	onWindowResize (event) {
-		this.computeComponentDimensions();
-	}
-
-	computeComponentDimensions () {
-		// This state is needed to render, but since it's not something that could be serialized
-		// and used to rehydrate the application on init, it exists outside of the application store.
-	}
-
 	render () {
+		// pass props down to route view
+		let childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, ...this.props));
+
 		return (
 			<div>
-				<MapPageToggle modeChanged={this.props.actions.modeChanged} mode={this.state.mode} />
-				<div className={'background-container' + (this.state.mode === 'map' ? '' : ' blurred')}>
-					<LeafletMap {...this.props} />
+				<MapPageToggle modeChanged={ this.props.actions.modeChanged } mode={ this.state.mode } />
+				<div className={ 'background-container' + (this.state.mode === 'map' ? '' : ' blurred') }>
+					<LeafletMap { ...this.props } />
 				</div>
 				<Header { ...this.state.header } />
 
 				<div ref='contentContainer' className='content-container'>
-					{ this.props.children }
+					{ childrenWithProps }
 					{ this.state.showFooter? <Footer /> : null }
 				</div>
 			</div>

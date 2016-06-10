@@ -110,6 +110,7 @@ class Zone extends Component {
 	}
 
 	renderPageView () {
+		console.log(">>>>> render zone page");
 		let zoneTitle = this.props.params.zone.split('_').join(' ');
 		const about = `Some placeholder text about ${zoneTitle}....`;
 
@@ -144,6 +145,7 @@ class Zone extends Component {
 	}
 
 	renderMapView () {
+		console.log(">>>>> render zone map");
 		return (
 			<div className='stories-map-overlay'>
 				<MapOverlay collapsible={ true }>
@@ -165,6 +167,7 @@ class Zone extends Component {
 	}
 
 	render() {
+		console.log(">>>>> zone mode:", this.state.mode);
 		return (
 			<div id='zone'>
 				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
