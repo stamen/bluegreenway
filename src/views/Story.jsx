@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import moment from 'moment';
 
 import DateRange from '../components/DateRange';
@@ -6,7 +7,7 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
-export default class Story extends React.Component {
+class Story extends React.Component {
 
 	// static contextTypes: {
 	// 	router: React.PropTypes.func
@@ -54,11 +55,11 @@ export default class Story extends React.Component {
 
 	updateModeUrl (mode, title, id) {
 		if (mode && title && id) {
-			this.props.history.push(`/stories/${mode}/${title}?id=${id}`);
+			this.props.router.push(`/stories/${mode}/${title}?id=${id}`);
 		} else if (mode && !title || mode && !id) {
-			this.props.history.push(`/stories/${mode}`);
+			this.props.router.push(`/stories/${mode}`);
 		} else {
-			this.props.history.push('*');
+			this.props.router.push('*');
 		}
 	}
 
@@ -139,3 +140,5 @@ export default class Story extends React.Component {
 		);
 	}
 }
+
+export default withRouter(Story);

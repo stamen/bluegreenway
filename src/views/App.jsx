@@ -1,6 +1,7 @@
 // import node modules
 import { debounce } from 'lodash';
 import * as React from 'react';
+import { withRouter } from 'react-router';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -127,4 +128,4 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default withRouter(App);

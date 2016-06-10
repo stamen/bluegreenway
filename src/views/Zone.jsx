@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import moment from 'moment';
 
 import ProjectItem from '../components/ProjectItem';
@@ -7,7 +8,7 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
-export default class Zone extends Component {
+class Zone extends Component {
 	constructor(props) {
 		super(props);
 		this.onStateChange = this.onStateChange.bind(this);
@@ -57,7 +58,7 @@ export default class Zone extends Component {
 	}
 
 	updateModeUrl (mode, zoneTitle) {
-		this.props.history.push(`/projects/${mode}/${zoneTitle}`);
+		this.props.router.push(`/projects/${mode}/${zoneTitle}`);
 	}
 
 	mapProjectZone(BGWZone) {
@@ -165,3 +166,5 @@ export default class Zone extends Component {
 		);
 	}
 }
+
+export default withRouter(Zone);

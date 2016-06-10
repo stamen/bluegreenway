@@ -1,5 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
+import { withRouter } from 'react-router';
 
 import { Timeline } from 'react-twitter-widgets';
 
@@ -7,7 +8,7 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
-export default class About extends React.Component {
+class About extends React.Component {
 
 	constructor (props) {
 		super(props);
@@ -57,7 +58,7 @@ export default class About extends React.Component {
 	}
 
 	updateModeUrl (mode) {
-		this.props.history.push(`/about/${mode}`);
+		this.props.router.push(`/about/${mode}`);
 	}
 
 	renderMapView () {
@@ -105,3 +106,5 @@ export default class About extends React.Component {
 	}
 
 }
+
+export default withRouter(About);

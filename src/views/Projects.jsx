@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
@@ -9,7 +10,7 @@ import slug from 'slug';
 import * as tileLayers from '../../static/tileLayers.json';
 import { vizJSON } from '../models/common.js';
 
-export default class Projects extends React.Component {
+class Projects extends React.Component {
 
 	constructor (props) {
 		super(props);
@@ -56,8 +57,6 @@ export default class Projects extends React.Component {
 		var urlMode = nextProps.params.mode;
 		var appMode = nextProps.store.getState().mode;
 
-		console.log(urlMode, appMode);
-
 		if (urlMode !== appMode) {
 			if (appMode === 'map') {
 				// get rid of the leaflet maps that were drawn for the page view
@@ -93,7 +92,7 @@ export default class Projects extends React.Component {
 	}
 
 	updateModeUrl (mode) {
-		this.props.history.push(`/projects/${mode}`);
+		this.props.router.push(`/projects/${mode}`);
 	}
 
 	destroyMaps() {
@@ -125,7 +124,7 @@ export default class Projects extends React.Component {
 
 		const mode = this.state.mode;
 		const path = `/projects/${mode}/${zoneTitleSlug}`;
-		this.props.history.push(path);
+		this.props.router.push(path);
 	}
 
 	createMiniMaps(zones) {
@@ -263,3 +262,5 @@ export default class Projects extends React.Component {
 	}
 
 }
+
+export default withRouter(Projects);

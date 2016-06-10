@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import moment from 'moment';
 
 import DateRange from '../components/DateRange';
@@ -8,7 +9,7 @@ import PageHeader from '../components/PageHeader';
 import StoryFilters from '../components/StoryFilters';
 import { getCategoryOptions } from '../models/stories';
 
-export default class Stories extends React.Component {
+class Stories extends React.Component {
 
 	constructor (props) {
 		super(props);
@@ -72,7 +73,7 @@ export default class Stories extends React.Component {
 	}
 
 	updateModeUrl (mode) {
-		this.props.history.push(`/stories/${mode}`);
+		this.props.router.push(`/stories/${mode}`);
 	}
 
 	onStateChange () {
@@ -91,7 +92,7 @@ export default class Stories extends React.Component {
 		const mode = this.state.mode;
 		const path = `/stories/${mode}/${title}?id=${id}`;
 		this.props.actions.updateSelectedStory({ title, id });
-		this.props.history.push(path);
+		this.props.router.push(path);
 	}
 
 	handleRangeChange (range) {
@@ -208,3 +209,5 @@ export default class Stories extends React.Component {
 	}
 
 }
+
+export default withRouter(Stories);

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import moment from 'moment';
 import 'moment-range';
 import { uniq } from 'lodash';
@@ -18,7 +19,7 @@ import {
 // global for tracking which default image to use when no photo is supplied
 let defaultImageIndex = 6;
 
-export default class Events extends React.Component {
+class Events extends React.Component {
 
 	constructor (props) {
 		super(props);
@@ -73,7 +74,7 @@ export default class Events extends React.Component {
 	}
 
 	updateModeUrl (mode) {
-		this.props.history.push(`/events/${mode}`);
+		this.props.router.push(`/events/${mode}`);
 	}
 
 	onStateChange () {
@@ -247,3 +248,5 @@ export default class Events extends React.Component {
 	}
 
 }
+
+export default withRouter(Events);
