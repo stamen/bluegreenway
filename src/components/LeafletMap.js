@@ -52,6 +52,18 @@ export default class LeafletMap extends React.Component {
 			this.mapState.layers.biking.hide();
 		}
 
+		if (mapLayersPicker.transportation[1].checked) {
+			this.mapState.layers.green_connections.show();
+		} else {
+			this.mapState.layers.green_connections.hide();
+		}
+
+		if (mapLayersPicker.layers[0].checked) {
+			this.mapState.layers.pois.show();
+		} else {
+			this.mapState.layers.pois.hide();
+		}
+
 		if (mapLayersPicker.projects) {
 			this.mapState.map.addLayer(this.mapState.layers.projects);
 		} else {
@@ -108,9 +120,10 @@ export default class LeafletMap extends React.Component {
 					}
 
 					// typically it's useful to store them like so:
-					sublayers.biking = layer.getSubLayer(3);
-					sublayers.bgwline = layer.getSubLayer(2);
-					sublayers.zones = layer.getSubLayer(1);
+					sublayers.pois = layer.getSubLayer(3);
+					sublayers.biking = layer.getSubLayer(2);
+					sublayers.green_connections = layer.getSubLayer(1);
+					sublayers.zones = layer.getSubLayer(0);
 
 					this.setMapControls(map);
 

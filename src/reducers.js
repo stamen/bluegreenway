@@ -333,17 +333,11 @@ export const initialState = {
 
 	mapLayersPicker: {
 		layers: [
-			{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
-			{ key: 'picnic_tables', name: 'picnic tables', checked: false },
-			{ key: 'benches', name: 'benches', checked: false },
-			{ key: 'community gardens', name: 'community gardens', checked: false },
-			{ key: 'development pipeline', name: 'development pipeline', checked: false }
+			{ key: 'boat_landings', name: 'boat launches / picnic tables / benches', checked: false}
 		],
 		transportation: [
-			{ key: 'walking_biking', name: 'walking / biking', checked: true },
-			{ key: 'connector_streets', name: 'connector streets / paths', checked: false },
-			{ key: 'green_connector_network', name: 'green connector network', checked: false },
-			{ key: 'public_transportation', name: 'public transportation', checked: false }
+			{ key: 'walking_biking', name: 'bike network', checked: true },
+			{ key: 'green_connector_network', name: 'green connector network', checked: true }
 		],
 		projects: false
 	},
