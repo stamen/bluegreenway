@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { vizJSON } from '../models/common.js';
 import { get } from 'lodash';
+import { vizJSON } from '../models/common.js';
 
 export default class LeafletMap extends React.Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ export default class LeafletMap extends React.Component {
 		const storeState = nextProps.store.getState();
 		this.initMap(get(storeState, 'geodata.projects.geojson'));
 
-		this.updateMapLayers(storeState.mapLayersPicker);
+		this.updateMapLayers(storeState);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -40,8 +40,10 @@ export default class LeafletMap extends React.Component {
 		}
 	}
 
-	updateMapLayers (mapLayersPicker) {
+	updateMapLayers (storeState) {
 		if (!this.mapState.map) return;
+
+		let { mapLayersPicker, projects } = storeState;
 
 		if (mapLayersPicker.transportation[0].checked) {
 			this.mapState.layers.biking.show();
@@ -53,6 +55,10 @@ export default class LeafletMap extends React.Component {
 			this.mapState.map.addLayer(this.mapState.layers.projects);
 		} else {
 			this.mapState.map.removeLayer(this.mapState.layers.projects);
+		}
+
+		if (projects.selectedProject) {
+			console.log(">>>>> selectedProject:", projects.selectedProject);
 		}
 	}
 
@@ -77,11 +83,7 @@ export default class LeafletMap extends React.Component {
 			zoomControl: false
 		};
 
-		let projectsLayer = L.geoJson(projectsGeoJSON,{
-			style: feature => {
-				// to do: style features based on a bgw_zone_id
-			}
-		});
+		let projectsLayer = this.createProjectsMapLayer(projectsGeoJSON);
 
 		cartodb.createVis('bgw-map', vizJSON, options)
 			.on('done', (vis, layers) => {
@@ -110,14 +112,13 @@ export default class LeafletMap extends React.Component {
 
 					this.setMapControls(map);
 
-					// add the Projects GeoJSON overlay
-					// map.addLayer(projectsLayer);
+					// fit map to encompass projects bounds
+					// note: projectsLayer is added/removed via an action, not here.
 					map.fitBounds(projectsLayer.getBounds(), {
 						paddingTopLeft: [0, 0],
 						paddingBottomRight: [0, 0],
 						animate: false
 					});
-					// projectsLayer.bringToFront();
 
 					this.mapState.initing = false;
 					this.mapState.map = map;
@@ -141,6 +142,44 @@ export default class LeafletMap extends React.Component {
 			.on('error', err => {
 				console.warn(err);
 			});
+	}
+
+	createProjectsMapLayer (projectsGeoJSON) {
+		let dummyProject = {
+			name: 'Placeholder Project',
+			desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi libero justo, malesuada non laoreet at, varius sed nulla. Nullam vel felis facilisis, aliquam arcu ut, euismod risus. Donec venenatis erat magna, id bibendum ligula rutrum sed. In vitae tempus magna.'
+		};
+
+		return L.geoJson(projectsGeoJSON, {
+			style: feature => {
+				// to do: style features based on a bgw_zone_id
+			},
+			onEachFeature: (feature, layer) => {
+				layer.on('click', () => {
+					const storeState = this.props.store.getState();
+
+					let project;
+					if (!feature.properties.id_is_fake) {
+						project = storeState.projects.data.items.find(project => project.id === feature.properties.bgw_id);
+					}
+					if (!project) project = dummyProject;
+
+					let popupContent = `<h3>${ project.name }</h3><p>${ project.description }</p>`;
+
+					// cartodb.js pins us to an old-ass version of Leaflet that doesn't have this function,
+					// so we have to manually instantiate a popup on click instead of binding and updating it.
+					// layer.setPopupContent(`<h3>${ project.name }</h3><p>${ project.description }</p>`);
+					L.popup()
+						.setLatLng(layer.getBounds().getCenter())
+						.setContent(popupContent)
+						.openOn(this.mapState.map);
+
+					if (project !== dummyProject) {
+						this.props.actions.updateSelectedProject(project);
+					}
+				});
+			}
+		});
 	}
 
 	setMapControls(map) {

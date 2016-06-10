@@ -285,10 +285,10 @@ export default function (store) {
 		},
 
 		updateSelectedProject (project) {
-			return {
+			store.dispatch({
 				type: UPDATE_SELECTED_PROJECT,
 				project
-			};
+			});
 		},
 
 		//
