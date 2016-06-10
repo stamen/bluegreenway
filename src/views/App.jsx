@@ -33,7 +33,7 @@ class App extends React.Component {
 	componentWillUpdate (nextProps, nextState) {
 		let contentContainer = this.refs.contentContainer;
 		let footer = this.refs.footer;
-		let { mode } = nextProps.params;
+		let mode = nextProps.params.mode || 'page';
 
 		if (mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
 			contentContainer.classList.add('map-view-enabled');
@@ -58,7 +58,7 @@ class App extends React.Component {
 			componentState.map = Object.assign({}, storeState.map);
 		}
 
-		let { mode } = this.props.params;
+		let mode = this.props.params.mode || 'page';
 		componentState.mode = mode;
 		componentState.showFooter = mode === 'page';
 
@@ -69,11 +69,12 @@ class App extends React.Component {
 	render () {
 		// pass props down to route view
 		let childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, ...this.props));
+		let mode = this.props.params.mode || 'page';
 
 		return (
 			<div>
-			<MapPageToggle currentLocation={ this.props.location } mode={ this.props.params.mode } />
-				<div className={ 'background-container' + (this.props.params.mode === 'map' ? '' : ' blurred') }>
+			<MapPageToggle currentLocation={ this.props.location } mode={ mode } />
+				<div className={ 'background-container' + (mode === 'map' ? '' : ' blurred') }>
 					<LeafletMap { ...this.props } />
 				</div>
 				<Header { ...this.state.header } />
