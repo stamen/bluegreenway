@@ -128,17 +128,17 @@ export default function (store) {
 			});
 		},
 
-		mapLayersPickerTransportationChange (key, value) {
+		mapLayersPickerLayerChange (key, value) {
 			store.dispatch({
-				type: MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED,
+				type: MAP_LAYERS_PICKER_LAYERS_CHANGED,
 				key,
 				value
 			});
 		},
 
-		mapLayersPickerLayerChange (key, value) {
+		mapLayersPickerTransportationChange (key, value) {
 			store.dispatch({
-				type: MAP_LAYERS_PICKER_LAYERS_CHANGED,
+				type: MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED,
 				key,
 				value
 			});

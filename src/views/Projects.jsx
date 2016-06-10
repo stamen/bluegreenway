@@ -249,13 +249,19 @@ class Projects extends React.Component {
 	renderMapView () {
 		return (
 			<div className="projects-map-overlay">
-				<MapOverlay collapsible={true}>
+				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
-						layers={this.state.mapLayersPicker.layers}
-						onLayerChange={this.props.actions.mapLayersPickerLayerChange}
-						transportation={this.state.mapLayersPicker.transportation}
-						onTransportationChange={this.props.actions.mapLayersPickerTransportationChange}
-						/>
+						title='Recreation'
+						layers={ this.state.mapLayersPicker.layers }
+						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
+					/>
+				</MapOverlay>
+				<MapOverlay collapsible={ true }>
+					<MapLayersPicker
+						title='Transportation'
+						layers={ this.state.mapLayersPicker.transportation }
+						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
+					/>
 				</MapOverlay>
 			</div>
 		);
