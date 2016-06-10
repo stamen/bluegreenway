@@ -81,7 +81,8 @@ render((
 			<Route path='projects'>
 				<IndexRedirect to='page' />
 				<Route path=':mode' component={ Projects } />
-				<Route path=':mode/:zone' component={ Zone } />
+				<Route path='page/:zone' component={ Zone } />
+				<Route path='map/:zone' component={ Projects } />
 			</Route>
 
 			<Route path='about'>

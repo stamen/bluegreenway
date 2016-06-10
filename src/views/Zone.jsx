@@ -129,33 +129,12 @@ class Zone extends Component {
 		);
 	}
 
-	renderMapView () {
-		console.log(">>>>> render zone map");
-		return (
-			<div className='stories-map-overlay'>
-				<MapOverlay collapsible={ true }>
-					<MapLayersPicker
-						title='Recreation'
-						layers={ this.state.mapLayersPicker.layers }
-						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
-				</MapOverlay>
-				<MapOverlay collapsible={ true }>
-					<MapLayersPicker
-						title='Transportation'
-						layers={ this.state.mapLayersPicker.transportation }
-						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
-					/>
-				</MapOverlay>
-			</div>
-		);
-	}
-
 	render() {
 		console.log(">>>>> zone mode:", this.props.params.mode);
+		// map view is always handled by Projects.jsx, not Zone.jsx
 		return (
 			<div id='zone'>
-				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.renderPageView() }
 			</div>
 		);
 	}
