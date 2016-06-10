@@ -23,15 +23,6 @@ class Stories extends React.Component {
 			categoryOptions: []
 		}});
 
-		var urlMode = this.props.params.mode;
-		var appMode = this.props.store.getState().mode;
-
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		} else {
-			this.updateModeUrl(appMode);
-		}
-
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
 		this.onStateChange();
@@ -54,11 +45,6 @@ class Stories extends React.Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		var urlMode = nextProps.params.mode;
-		var appMode = nextProps.store.getState().mode;
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode);
-		}
 		if (nextState.stories.data.items.length !== this.state.stories.data.items.length) {
 			this.updateFilterOptions(nextState.stories);
 		}
@@ -70,10 +56,6 @@ class Stories extends React.Component {
 
 	componentWillUnmount () {
 		this.unsubscribeStateChange();
-	}
-
-	updateModeUrl (mode) {
-		this.props.router.push(`/stories/${mode}`);
 	}
 
 	onStateChange () {
@@ -89,8 +71,8 @@ class Stories extends React.Component {
 	}
 
 	viewStory (title, id) {
-		const mode = this.state.mode;
-		const path = `/stories/${mode}/${title}?id=${id}`;
+		const { mode } = this.props.params;
+		const path = `/stories/${ mode }/${ title }?id=${ id }`;
 		this.props.actions.updateSelectedStory({ title, id });
 		this.props.router.push(path);
 	}
@@ -107,7 +89,7 @@ class Stories extends React.Component {
 	render () {
 		return (
 			<div id="stories">
-				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}

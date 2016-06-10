@@ -6,25 +6,9 @@ import { cleanEventsData } from './models/events';
 import { cleanStoriesData } from './models/stories';
 import { cleanProjectsData } from './models/projects';
 
-// const identity = (state, action) => state;
-
-const MAP_LAYERS_PICKER_DEFAULT_LAYERS = [
-	{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
-	{ key: 'picnic_tables', name: 'picnic tables', checked: false },
-	{ key: 'benches', name: 'benches', checked: false },
-	{ key: 'community gardens', name: 'community gardens', checked: false },
-	{ key: 'development pipeline', name: 'development pipeline', checked: false }
-];
-const MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION = [
-	{ key: 'walking_biking', name: 'walking / biking', checked: true },
-	{ key: 'connector_streets', name: 'connector streets / paths', checked: false },
-	{ key: 'green_connector_network', name: 'green connector network', checked: false },
-	{ key: 'public_transportation', name: 'public transportation', checked: false }
-];
-const MAP_LAYERS_PICKER_DEFAULT_PROJECTS = false;
-
 export default {
 
+	/*
 	mode (state = 'page', action) {
 		switch (action.type) {
 			case actions.MODE_CHANGED:
@@ -33,6 +17,7 @@ export default {
 				return state;
 		}
 	},
+	*/
 
 	map (state = {}, action) {
 		switch (action.type) {
@@ -49,7 +34,7 @@ export default {
 	},
 
 	mapLayersPicker: combineReducers({
-		layers (state = MAP_LAYERS_PICKER_DEFAULT_LAYERS, action) {
+		layers (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_LAYERS_CHANGED:
 					return state.map(layer => {
@@ -63,7 +48,7 @@ export default {
 			}
 		},
 
-		transportation (state = MAP_LAYERS_PICKER_DEFAULT_TRANSPORTATION, action) {
+		transportation (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED:
 					return state.map(layer => {
@@ -77,7 +62,7 @@ export default {
 			}
 		},
 
-		projects (state = MAP_LAYERS_PICKER_DEFAULT_PROJECTS, action) {
+		projects (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_PROJECTS_CHANGED:
 					return action.value;
@@ -85,37 +70,6 @@ export default {
 					return state;
 			}
 		}
-	}),
-
-	itemSelector: combineReducers({
-
-		title (state = '', action) {
-			switch (action.type) {
-				case actions.ITEM_SELECTOR_SET_TITLE:
-					return action.value;
-				default:
-					return state;
-			}
-		},
-
-		items (state = null, action) {
-			switch (action.type) {
-				case actions.ITEM_SELECTOR_SET_ITEMS:
-					return action.value;
-				default:
-					return state;
-			}
-		},
-
-		selectedItem (state = null, action) {
-			switch (action.type) {
-				case actions.ITEM_SELECTED:
-					return action.value;
-				default:
-					return state;
-			}
-		}
-
 	}),
 
 	events: combineReducers({
@@ -361,8 +315,6 @@ export default {
 // and can be merged into a set of initial state on store init if desired.
 export const initialState = {
 
-	mode: 'page',
-
 	map: {
 		zoom: 14,
 		bounds: L.latLngBounds(
@@ -379,19 +331,21 @@ export const initialState = {
 		boxZoom: false
 	},
 
-	itemSelector: {
-		title: 'Select a tileset',
-		items: [
-			{ "id": 1, "name": "Toner" },
-			{ "id": 2, "name": "Toner Background" },
-			{ "id": 3, "name": "Toner Lite" },
-			{ "id": 4, "name": "Terrain" },
-			{ "id": 5, "name": "Terrain Background" },
-			{ "id": 6, "name": "Watercolor" },
-			{ "id": 7, "name": "Satellite" },
-			{ "id": 8, "name": "Positron" },
-			{ "id": 9, "name": "Dark Matter" }
-		]
+	mapLayersPicker: {
+		layers: [
+			{ key: 'boat_landings', name: 'boat landings / launches', checked: false},
+			{ key: 'picnic_tables', name: 'picnic tables', checked: false },
+			{ key: 'benches', name: 'benches', checked: false },
+			{ key: 'community gardens', name: 'community gardens', checked: false },
+			{ key: 'development pipeline', name: 'development pipeline', checked: false }
+		],
+		transportation: [
+			{ key: 'walking_biking', name: 'walking / biking', checked: true },
+			{ key: 'connector_streets', name: 'connector streets / paths', checked: false },
+			{ key: 'green_connector_network', name: 'green connector network', checked: false },
+			{ key: 'public_transportation', name: 'public transportation', checked: false }
+		],
+		projects: false
 	},
 
 	events: {

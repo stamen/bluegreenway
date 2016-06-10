@@ -19,11 +19,6 @@ class Zone extends Component {
 		if (!this.props.store.getState().projects.data.items.length) {
 			this.props.actions.fetchProjectsData();
 		}
-		let urlMode = this.props.params.mode;
-		let appMode = this.props.store.getState().mode;
-		if (urlMode !== appMode) {
-			this.props.actions.modeChanged(urlMode);
-		}
 		this.onStateChange();
 	}
 
@@ -32,13 +27,7 @@ class Zone extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-		const urlMode = nextProps.params.mode;
-		const appMode = nextProps.store.getState().mode;
-		// console.log(urlMode, appMode);
 		const zoneTitle = this.props.params.zone;
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode, zoneTitle);
-		}
 		if (nextState.projects !== this.state.projects) {
 			console.log('we got projects now');
 		}
@@ -55,10 +44,6 @@ class Zone extends Component {
 	onStateChange () {
 		let storeState = this.props.store.getState();
 		this.setState(storeState);
-	}
-
-	updateModeUrl (mode, zoneTitle) {
-		this.props.router.push(`/projects/${mode}/${zoneTitle}`);
 	}
 
 	mapProjectZone(BGWZone) {
@@ -110,6 +95,7 @@ class Zone extends Component {
 	}
 
 	renderPageView () {
+		console.log(">>>>> render zone page");
 		let zoneTitle = this.props.params.zone.split('_').join(' ');
 		const about = `Some placeholder text about ${zoneTitle}....`;
 
@@ -143,31 +129,12 @@ class Zone extends Component {
 		);
 	}
 
-	renderMapView () {
-		return (
-			<div className='stories-map-overlay'>
-				<MapOverlay collapsible={ true }>
-					<MapLayersPicker
-						title='Recreation'
-						layers={ this.state.mapLayersPicker.layers }
-						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
-				</MapOverlay>
-				<MapOverlay collapsible={ true }>
-					<MapLayersPicker
-						title='Transportation'
-						layers={ this.state.mapLayersPicker.transportation }
-						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
-					/>
-				</MapOverlay>
-			</div>
-		);
-	}
-
 	render() {
+		console.log(">>>>> zone mode:", this.props.params.mode);
+		// map view is always handled by Projects.jsx, not Zone.jsx
 		return (
 			<div id='zone'>
-				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.renderPageView() }
 			</div>
 		);
 	}

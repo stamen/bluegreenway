@@ -4,12 +4,12 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { Redirect,
-  Router,
-  Route,
-  IndexRedirect,
-  IndexRoute,
-  useRouterHistory,
-  hashHistory } from 'react-router';
+	Router,
+	Route,
+	IndexRedirect,
+	IndexRoute,
+	useRouterHistory,
+	hashHistory } from 'react-router';
 import { createHashHistory } from 'history';
 
 import App from './views/App.jsx';
@@ -28,8 +28,8 @@ import actionCreator from './actions';
 const middleware = [thunkMiddleware];
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
-  // redux-logger only works in a browser environment
-  // middleware.push(createLogger());
+	// redux-logger only works in a browser environment
+	// middleware.push(createLogger());
 }
 
 // Create the single store for this application session
@@ -61,17 +61,34 @@ const createReduxComponent = (Component, props) => {
 render((
 	<Router history={ appHistory } createElement={ createReduxComponent }>
 		<Route path='/' component={ App }>
-			<IndexRoute component={ Home } />
-			<Route path='stories' component={ Stories } />
-			<Route path='stories/:mode' component={ Stories } />
-			<Route path='stories/:mode/:title' component={ Story } />
-			<Route path='events' component={ Events } />
-			<Route path='events/:mode' component={ Events } />
-			<Route path='projects' component={ Projects } />
-			<Route path='projects/:mode' component={ Projects } />
-			<Route path='projects/:mode/:zone' component={ Zone } />
-			<Route path='about' component={ About } />
-			<Route path='about/:mode' component={ About } />
+			<IndexRedirect to='home' />
+			<Route path='home'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Home } />
+			</Route>
+
+			<Route path='stories'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Stories } />
+				<Route path=':mode/:title' component={ Story } />
+			</Route>
+
+			<Route path='events'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Events } />
+			</Route>
+
+			<Route path='projects'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ Projects } />
+				<Route path='page/:zone' component={ Zone } />
+				<Route path='map/:zone' component={ Projects } />
+			</Route>
+
+			<Route path='about'>
+				<IndexRedirect to='page' />
+				<Route path=':mode' component={ About } />
+			</Route>
 		</Route>
 		<Route path='*' component={ RouteNotFound } />
 	</Router>

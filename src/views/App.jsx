@@ -13,7 +13,6 @@ import LeafletMap from '../components/LeafletMap';
 
 // config
 import tileLayers from '../../static/tileLayers.json';
-import sassVars from '../../scss/variables.json';
 
 // main app container
 class App extends React.Component {
@@ -21,40 +20,25 @@ class App extends React.Component {
 	constructor (props) {
 		super(props);
 		// bind event handlers
-		this.onWindowResize = debounce(this.onWindowResize.bind(this), 250);
-		this.onMapMoved = this.onMapMoved.bind(this);
 		this.onAppStateChange = this.onAppStateChange.bind(this);
 		// subscribe for future state changes
 		props.store.subscribe(this.onAppStateChange);
 	}
 
 	componentWillMount () {
-		this.computeComponentDimensions();
 		// set up initial state
 		this.onAppStateChange();
-	}
-
-	componentDidMount () {
-		window.addEventListener('resize', this.onWindowResize);
-	}
-
-	componentWillUnmount () {
-		window.removeEventListener('resize', this.onWindowResize);
-	}
-
-	shouldComponentUpdate (nextProps, nextState) {
-		// Do not re-render if the state change was just map state.
-		return !this.mapHashUpdated;
 	}
 
 	componentWillUpdate (nextProps, nextState) {
 		let contentContainer = this.refs.contentContainer;
 		let footer = this.refs.footer;
+		let mode = nextProps.params.mode || 'page';
 
-		if (nextState.mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
+		if (mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
 			contentContainer.classList.add('map-view-enabled');
 			this.setState({ showFooter: false });
-		} else if (nextState.mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
+		} else if (mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
 			contentContainer.classList.remove('map-view-enabled');
 			this.setState({ showFooter: true });
 		}
@@ -73,53 +57,30 @@ class App extends React.Component {
 		if (storeState.map) {
 			componentState.map = Object.assign({}, storeState.map);
 		}
-		componentState.mode = storeState.mode;
-		componentState.showFooter = this.props.store.getState().mode === 'page';
+
+		let mode = this.props.params.mode || 'page';
+		componentState.mode = mode;
+		componentState.showFooter = mode === 'page';
+
 		// Call `setState()` with the updated data, which causes a re-`render()`
 		this.setState(componentState);
 	}
 
-	onMapMoved (event) {
-		if (event && event.target && this.state.map.bounds && this.refs.leafletMap) {
-			/*
-			this.props.actions.mapMoved({
-				zoom: event.target.getZoom(),
-				// center: event.target.getCenter(),
-				bounds: event.target.getBounds()
-			});
-			*/
-
-			// maintain map bounds when map container resizes
-			let map = this.refs.leafletMap.getLeafletElement(),
-				currentZoom = map.getZoom(),
-				newZoom = map.getBoundsZoom(this.state.map.bounds);
-
-			if (currentZoom != newZoom) {
-				this.refs.leafletMap.getLeafletElement().fitBounds(this.state.map.bounds);
-			}
-		}
-	}
-
-	onWindowResize (event) {
-		this.computeComponentDimensions();
-	}
-
-	computeComponentDimensions () {
-		// This state is needed to render, but since it's not something that could be serialized
-		// and used to rehydrate the application on init, it exists outside of the application store.
-	}
-
 	render () {
+		// pass props down to route view
+		let childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, ...this.props));
+		let mode = this.props.params.mode || 'page';
+
 		return (
 			<div>
-				<MapPageToggle modeChanged={this.props.actions.modeChanged} mode={this.state.mode} />
-				<div className={'background-container' + (this.state.mode === 'map' ? '' : ' blurred')}>
-					<LeafletMap {...this.props} />
+			<MapPageToggle currentLocation={ this.props.location } mode={ mode } />
+				<div className={ 'background-container' + (mode === 'map' ? '' : ' blurred') }>
+					<LeafletMap { ...this.props } />
 				</div>
 				<Header { ...this.state.header } />
 
 				<div ref='contentContainer' className='content-container'>
-					{ this.props.children }
+					{ childrenWithProps }
 					{ this.state.showFooter? <Footer /> : null }
 				</div>
 			</div>

@@ -13,11 +13,6 @@ export default class Home extends React.Component {
 
 	componentWillMount () {
 		this.setState({});
-		let urlMode = this.props.params.mode;
-		let appMode = this.props.store.getState().mode;
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		}
 		
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
@@ -111,9 +106,10 @@ export default class Home extends React.Component {
 	}
 
 	render () {
+		let mode = this.props.params.mode || 'page';
 		return (
 			<div id='home'>
-				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}

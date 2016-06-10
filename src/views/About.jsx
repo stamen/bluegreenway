@@ -18,34 +18,10 @@ class About extends React.Component {
 
 	componentWillMount () {
 		this.setState({});
-		var urlMode = this.props.params.mode;
-		var appMode = this.props.store.getState().mode;
-
-		if (urlMode) {
-			this.props.actions.modeChanged(urlMode);
-		} else {
-			this.updateModeUrl(appMode);
-		}
 
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
 		this.onStateChange();
-	}
-
-	componentDidMount () {
-		//
-	}
-
-	componentWillUpdate (nextProps, nextState) {
-		const urlMode = this.state.mode;
-		const appMode = nextProps.store.getState().mode;
-		if (urlMode !== appMode) {
-			this.updateModeUrl(appMode);
-		}
-	}
-
-	componentDidUpdate () {
-		//
 	}
 
 	componentWillUnmount () {
@@ -55,10 +31,6 @@ class About extends React.Component {
 	onStateChange () {
 		let storeState = this.props.store.getState();
 		this.setState(storeState);
-	}
-
-	updateModeUrl (mode) {
-		this.props.router.push(`/about/${mode}`);
 	}
 
 	renderMapView () {
@@ -106,7 +78,7 @@ class About extends React.Component {
 	render () {
 		return (
 			<div id='about'>
-				{ this.state.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}
