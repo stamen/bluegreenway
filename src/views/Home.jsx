@@ -106,10 +106,9 @@ export default class Home extends React.Component {
 	}
 
 	render () {
-		let mode = this.props.params.mode || 'page';
 		return (
 			<div id='home'>
-				{ mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}
