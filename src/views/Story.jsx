@@ -27,8 +27,8 @@ class Story extends React.Component {
 
 	componentWillUpdate (nextProps, nextState) {
 		var storyTitle = this.props.params.title || nextProps.store.getState().stories.selectedStory.title;
-		// let { query } = this.props.location;
-		// var id = query && query.id ? +query.id : null;
+		let { query } = this.props.location;
+		var id = query && query.id ? +query.id : null;
 		// for when the app loads with the URL of a specific story
 		if (this.state.stories.data.items !== nextState.stories.data.items &&
 			!this.props.store.getState().stories.selectedStory) {

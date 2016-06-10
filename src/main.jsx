@@ -69,9 +69,8 @@ render((
 
 			<Route path='stories'>
 				<IndexRedirect to='page' />
-				<Route path=':mode' component={ Stories }>
-					<Route path=':title' component={ Story } />
-				</Route>
+				<Route path=':mode' component={ Stories } />
+				<Route path=':mode/:title' component={ Story } />
 			</Route>
 
 			<Route path='events'>
