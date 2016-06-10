@@ -68,7 +68,8 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<MapPageToggle modeChanged={ this.props.actions.modeChanged } mode={ this.state.mode } />
+				{/* <MapPageToggle modeChanged={ this.props.actions.modeChanged } mode={ this.state.mode } /> */}
+				<MapPageToggle currentLocation={ this.props.location } mode={ this.state.mode } />
 				<div className={ 'background-container' + (this.state.mode === 'map' ? '' : ' blurred') }>
 					<LeafletMap { ...this.props } />
 				</div>
