@@ -7,15 +7,17 @@
     background: #fff;
   }
 
-  button {
+  .button {
+    display: block;
+    position: absolute;
     width: 200px;
+    bottom: 1em;
+    padding: 0.35em;
+    
+    border: none;
+    cursor: pointer;
     background: $green;
     color: #fff;
-    border: none;
-    padding: 0.35em;
-    cursor: pointer;
-    position: absolute;
-    bottom: 1em;
   }
 
   .title-container {
