@@ -24,8 +24,12 @@ class Zone extends Component {
 	}
 
 	componentWillMount () {
-		if (!this.props.store.getState().projects.data.items.length) {
+		const storeState = this.props.store.getState();
+		if (!get(storeState.projects, 'data.items.length')) {
 			this.props.actions.fetchProjectsData();
+		}
+		if (!get(storeState.geodata, 'zones.geojson.features')) {
+			this.props.actions.fetchZoneGeoData();
 		}
 		this.onStateChange();
 	}
