@@ -382,21 +382,25 @@ export const initialState = {
 	zoneConfigs: [
 		{
 			id: 'mb',
+			title: 'Mission Bay / Mission Rock',
 			slug: 'mission_bay_mission_rock',
 			bgwZoneId: 'Mission Bay/Mission Rock'
 		},
 		{
 			id: 'p70',
+			title: 'Pier 70 / Central Waterfront',
 			slug: 'pier_70',
 			bgwZoneId: 'Pier 70/Central Waterfront'
 		},
 		{
 			id: 'ib',
+			title: 'India Basin',
 			slug: 'india_basin',
 			bgwZoneId: 'India Basin'
 		},
 		{
 			id: 'sc',
+			title: 'Shipyard Candlestick',
 			slug: 'shipyard_candlestick',
 			bgwZoneId: 'Hunters Point Naval Shipyard/Candlestick'
 		}
