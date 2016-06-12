@@ -97,20 +97,34 @@ class Zone extends Component {
 					</div>
 					<div className='projects-list'>
 						<h4 className='section-title'>Projects</h4>
-						{ this.renderProjectItems(storeState.projects.data.items, zone) }
+						{ this.renderProjectItems(storeState.projects.data.items, zone, false) }
 					</div>
 					<div className='open-spaces-list'>
 						<h4 className='section-title'>Open Spaces</h4>
-						{ /* this.renderOpenSpacesItems() */ }
-						<div className='loading'><p>open spaces info coming soon!</p></div>
+						{ this.renderProjectItems(storeState.projects.data.items, zone, true) }
 					</div>
 				</div>
 			</div>
 		);
 	}
 
-	renderProjectItems (projects, zone) {
+	renderProjectItems (projects, zone, isOpenSpace) {
+		const locationCategories = [
+			{
+				id: 'Park or Playground',
+				openSpace: true
+			},
+			{
+				id: 'Other',
+				openSpace: false
+			}
+		];
+
 		projects = this.props.actions.utils.getProjectsInZone(projects, zone);
+		projects = projects.filter(project => {
+			let locationCategory = locationCategories.find(category => category.id === project.locationCategory);
+			return (locationCategory && locationCategory.openSpace === isOpenSpace);
+		});
 
 		let projectListItems = [];
 
@@ -133,12 +147,6 @@ class Zone extends Component {
 				{ projectListItems }
 			</div>
 		);
-	}
-
-	renderOpenSpacesItems () {
-		// renders the list of open spaces for the given zone from???
-		// potentially can also use the same logic from renderProjectItems &
-		// the <ProjectItem> component, so this method may not be necessary...
 	}
 
 }
