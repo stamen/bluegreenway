@@ -251,6 +251,17 @@ export default {
 
 	}),
 
+	/**
+	 * Zone constants hardcoded in initialState below, used to link FE code, CMS data, and geojson.
+	 * Geodata can be retrieved via `getZone*` methods in actions.js.
+	 * TODO: shouldn't need the `getZone*` methods, should just merge state from geodata into a single `zones` reducer.
+	 */
+	zoneConfigs (state = [], action) {
+
+		return state;
+
+	},
+
 	geodata: combineReducers({
 
 		zones (state = { isFetching: false, geojson: {} }, action) {
@@ -367,6 +378,29 @@ export const initialState = {
 			error: null
 		}
 	},
+
+	zoneConfigs: [
+		{
+			id: 'mb',
+			slug: 'mission_bay_mission_rock',
+			bgwZoneId: 'Mission Bay/Mission Rock'
+		},
+		{
+			id: 'p70',
+			slug: 'pier_70',
+			bgwZoneId: 'Pier 70/Central Waterfront'
+		},
+		{
+			id: 'ib',
+			slug: 'india_basin',
+			bgwZoneId: 'India Basin'
+		},
+		{
+			id: 'sc',
+			slug: 'shipyard_candlestick',
+			bgwZoneId: 'Hunters Point Naval Shipyard/Candlestick'
+		}
+	],
 
 	projects: {
 		data: {

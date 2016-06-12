@@ -177,12 +177,12 @@ class Projects extends React.Component {
 			<div className='grid-container'>
 				<PageHeader />
 				<div className='row'>
-					{ zoneConfigs.map(mapConfig => {
+					{ zoneConfigs.map(zoneConfig => {
 						return (
-							<div className='three columns zone-cell' key={ mapConfig.id }>
-								<h4 className='title'>{ mapConfig.title }</h4>
-								<div id={ `map-${ mapConfig.id }` }></div>
-								<div className='learn-more' onClick={ this.onLearnMoreClick.bind(this, mapConfig.id) }>
+							<div className='three columns zone-cell' key={ zoneConfig.id }>
+								<h4 className='title'>{ zoneConfig.title }</h4>
+								<div id={ `map-${ zoneConfig.id }` }></div>
+								<div className='learn-more' onClick={ this.onLearnMoreClick.bind(this, zoneConfig.id) }>
 									<p>Learn More</p>
 								</div>
 							</div>

@@ -3,6 +3,7 @@ import { polyfill } from 'es6-promise';
 polyfill();
 
 import fetch from 'isomorphic-fetch';
+import { get } from 'lodash';
 
 // dataUrls_tmp.json = for use while working offline
 // dataUrls.json = for use in production
@@ -354,8 +355,73 @@ export default function (store) {
 					.then(json => dispatch(this.receiveProjectsGeoData(json)))
 					.catch(error => dispatch(this.receiveProjectsGeoDataError(error)));
 			});
+		},
+
+		// Utility functions that are not actions, but pull data from the store.
+		utils: {
+
+			// ---------------------------------------- //
+			// Zones-related data from various sources:
+			// zones geojson:
+			// 	"cartodb_id": 1,
+			// 	"name": "Mission Bay/ Mission Rock",
+			// 	"description": null,
+			// 	"map_id": "mb"
+			//
+			// projects CMS:
+			// 	"BGW Zone": "Mission Bay/Mission Rock",
+			//
+			// store.zoneConfigs:
+			// 	id: 'mb',
+			// 	slug: 'mission_bay_mission_rock',
+			// 	bgwZoneId: 'Mission Bay/Mission Rock'
+			// ---------------------------------------- //
+
+			/**
+			 * @param id {String} short string used in zones geojson file
+			 * 		  and client code, but not present in CMS data.
+			 * @return {Object} Zone geojson
+			 */
+			getZoneById (id) {
+
+				let zoneGeodata = get(store.getState().geodata, 'zones.geojson.features');
+				return zoneGeodata ? zoneGeodata.find(z => z.properties.map_id === id) : null;
+
+			},
+
+			/**
+			 * @param slug {String} slugified zone id used in BGW URLs.
+			 * @return {Object} Zone geojson
+			 */
+			getZoneBySlug (slug) {
+
+				let zoneConfig = store.getState().zoneConfigs.find(z => z.slug === slug);
+				return zoneConfig ? this.getZoneById(zoneConfig.id) : null;
+
+			},
+
+			/**
+			 * @param bgwId {String} Long, descriptive string from projects CMS.
+			 * 		  This string is created and managed by CMS, and appears to be the
+			 * 		  only Zone identifier in the CMS, so *should* be safe for use.
+			 * @return {Object} Zone geojson.
+			 */
+			getZoneByBGWId (bgwId) {
+
+				// TODO: map zoneId to zoneName, then return getZoneByBGWId(zoneName)
+				// below is untested, semi-psuedocode
+				let zone = store.getState().zones.find(z => z.bgwZoneId === bgwId);
+				return zone ? this.getZoneById(zoneConfig.id) : null;
+
+			},
+
+			getProjectsInZone (projects, zone) {
+
+				let zoneConfig = store.getState().zoneConfigs.find(z => z.id === zone.properties.map_id);
+				return projects.filter(p => p.BGWZone === zoneConfig.bgwZoneId);
+
+			}
+
 		}
-
 	};
-
 };

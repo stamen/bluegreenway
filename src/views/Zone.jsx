@@ -54,6 +54,7 @@ class Zone extends Component {
 		this.setState(storeState);
 	}
 
+	/*
 	mapProjectZone(BGWZone) {
 		if (BGWZone === 'Hunters Point Naval Shipyard/Candlestick') {
 			return 'shipyard_candlestick';
@@ -67,6 +68,7 @@ class Zone extends Component {
 			return null;
 		}
 	}
+	*/
 
 	render() {
 		// map view is always handled by Projects.jsx, not Zone.jsx,
@@ -79,18 +81,33 @@ class Zone extends Component {
 	}
 
 	renderPageView () {
-		// TODO: this should come from store.geodata.zones (see TODO in Projects.jsx)
-		let zoneConfig = zoneConfigs.find(z => z.slug === this.props.params.zone);
+		const storeState = this.props.store.getState();
 
-		if (!zoneConfig) {
+		let zone = this.props.actions.utils.getZoneBySlug(this.props.params.zone),
+			zoneAndProjectDataLoaded = !!get(storeState.projects, 'data.items.length') && !!get(storeState.geodata, 'zones.geojson.features');
+
+		if (!zone) {
+			let title,
+				message;
+
+			if (!zoneAndProjectDataLoaded) {
+				// projects/zones data not yet loaded
+				title = '';
+				message = 'Loading projects...';
+			} else {
+				// invalid slug/zone
+				title = 'Oops...';
+				message = 'There is no Blue Greenway zone at this URL. Click the button below to return to the projects page.';
+			}
+
 			return (
 				<div className='grid-container'>
 					<div className='accordian-wrapper row'>
 						<div className='title-container'>
 							<div className='six columns'>
-								<h2 className='title'>Oops...</h2>
-								<p>There is no Blue Greenway zone at this URL. Click the button below to return to the projects page.</p>
-								<a className='button' href='#'>Return to Projects</a>
+								<h2 className='title'>{ title }</h2>
+								<p>{ message }</p>
+								{ zoneAndProjectDataLoaded ? <a className='button' href='#'>Return to Projects</a> : '' }
 							</div>
 						</div>
 					</div>
@@ -100,15 +117,8 @@ class Zone extends Component {
 
 		console.log(">>>>> TODO: make sure this path works on a hard refresh and when navigated to at runtime. Need to have zones data loaded before rendering. Also, refactor out the store listener and setState() calls.");
 
-		let zoneData = get(this.props.store.getState().geodata, 'zones.geojson.features');
-		zoneData = zoneData ? zoneData.find(z => z.properties.map_id === zoneConfig.id) : null;
-
-		// if the URL specifies a valid zone, but we haven't yet loaded the data for it,
-		// don't render anything yet.
-		if (!zoneData) return null;
-
 		// TODO: image doesn't exist in the zone data...where can we get it from?
-		let { name, description, image } = zoneData.properties;
+		let { name, description, image } = zone.properties;
 
 		return (
 			<div className='grid-container'>
@@ -129,9 +139,7 @@ class Zone extends Component {
 					</div>
 					<div className='projects-list'>
 						<h4 className='section-title'>Projects</h4>
-						{ this.state.projects.data.items.length?
-							this.renderProjectItems(this.state.projects.data.items, name) :
-							<div className='loading'><p>loading projects...</p></div> }
+						{ this.renderProjectItems(this.state.projects.data.items, zone) }
 					</div>
 					<div className='open-spaces-list'>
 						<h4 className='section-title'>Open Spaces</h4>
@@ -143,11 +151,9 @@ class Zone extends Component {
 		);
 	}
 
-	renderProjectItems (projects, zoneName) {
-		projects = projects.filter(project => {
-			return this.mapProjectZone(project.BGWZone) === zoneName;
-		});
-		console.log(">>>>> filtered projects on zonename:", zoneName, "; filtered projects:", projects);
+	renderProjectItems (projects, zone) {
+		projects = this.props.actions.utils.getProjectsInZone(projects, zone);
+		console.log(">>>>> filtered projects on zone:", zone, "; filtered projects:", projects);
 
 		let projectListItems = [];
 
