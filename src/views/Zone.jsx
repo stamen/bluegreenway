@@ -19,8 +19,6 @@ import PageHeader from '../components/PageHeader';
 class Zone extends Component {
 	constructor(props) {
 		super(props);
-		this.onStateChange = this.onStateChange.bind(this);
-		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
 	componentWillMount () {
@@ -31,50 +29,9 @@ class Zone extends Component {
 		if (!get(storeState.geodata, 'zones.geojson.features')) {
 			this.props.actions.fetchZoneGeoData();
 		}
-		this.onStateChange();
 	}
 
-	componentDidMount () {
-		//
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		const zoneTitle = this.props.params.zone;
-		if (nextState.projects !== this.state.projects) {
-			console.log('we got projects now');
-		}
-	}
-
-	componentDidUpdate () {
-		//
-	}
-
-	componentWillUnmount () {
-		this.unsubscribeStateChange();
-	}
-
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
-	}
-
-	/*
-	mapProjectZone(BGWZone) {
-		if (BGWZone === 'Hunters Point Naval Shipyard/Candlestick') {
-			return 'shipyard_candlestick';
-		} else if (BGWZone === "India Basin") {
-			return 'india_basin';
-		} else if (BGWZone === "Pier 70/Central Waterfront") {
-			return 'pier_70';
-		} else if (BGWZone === "Mission Bay/Mission Rock") {
-			return 'mission_bay_mission_rock';
-		} else {
-			return null;
-		}
-	}
-	*/
-
-	render() {
+	render () {
 		// map view is always handled by Projects.jsx, not Zone.jsx,
 		// so there is only renderPageView().
 		return (
@@ -119,8 +76,6 @@ class Zone extends Component {
 			);
 		}
 
-		console.log(">>>>> TODO: make sure this path works on a hard refresh and when navigated to at runtime. Need to have zones data loaded before rendering. Also, refactor out the store listener and setState() calls.");
-
 		// TODO: image doesn't exist in the zone data...where can we get it from?
 		let { name, description, image } = zone.properties;
 
@@ -130,20 +85,19 @@ class Zone extends Component {
 					<div className='title-container'>
 						<div className='six columns'>
 							<h2 className='title'>{ name }</h2>
-							<p>{ description }</p>
+							<p>{ (description || 'Zone placeholder description text') + (image ? '' : ' (and placeholder image at right)') }</p>
 							<a className='button' href='#'>View on Map</a>
 						</div>
 						<div
 							className='six columns'
 							style={ {
-								backgroundImage:'url("img/zone-placeholder.jpg")'
-								// backgroundImage:`url('${ image }')`
+								backgroundImage:`url('${ image || 'img/zone-placeholder.jpg' }')`
 							} }
 						/>
 					</div>
 					<div className='projects-list'>
 						<h4 className='section-title'>Projects</h4>
-						{ this.renderProjectItems(this.state.projects.data.items, zone) }
+						{ this.renderProjectItems(storeState.projects.data.items, zone) }
 					</div>
 					<div className='open-spaces-list'>
 						<h4 className='section-title'>Open Spaces</h4>
@@ -157,7 +111,6 @@ class Zone extends Component {
 
 	renderProjectItems (projects, zone) {
 		projects = this.props.actions.utils.getProjectsInZone(projects, zone);
-		console.log(">>>>> filtered projects on zone:", zone, "; filtered projects:", projects);
 
 		let projectListItems = [];
 
