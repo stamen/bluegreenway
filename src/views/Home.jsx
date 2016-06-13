@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Masonry from 'masonry-layout';
+
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
@@ -14,6 +16,10 @@ export default class Home extends React.Component {
 	}
 
 	componentDidMount () {
+		if (this.props.params.mode === 'page') this.initMasonry();
+	}
+
+	componentWillReceiveProps (nextProps) {
 		//
 	}
 
@@ -21,8 +27,27 @@ export default class Home extends React.Component {
 		//
 	}
 
-	componentDidUpdate () {
-		//
+	componentDidUpdate (prevProps) {
+		if (prevProps.params.mode !== this.props.params.mode &&
+			prevProps.params.mode === 'map') this.initMasonry();
+	}
+
+	initMasonry () {
+		const grid = document.querySelector('.grid-container');
+		const msnry = new Masonry(grid, {
+			columnWidth: '',
+			columnWidth: '.grid-sizer',
+			itemSelector: '.grid-item',
+			percentPosition: true,
+			gutter: 10
+		});
+
+		msnry.once('layoutComplete', () => {
+		  grid.classList.add('load');
+			console.log('masonry loaded');
+		});
+
+		msnry.layout();
 	}
 
 	renderMapView () {
@@ -51,42 +76,6 @@ export default class Home extends React.Component {
 		return (
 			<div className='grid-container'>
 				<PageHeader />
-
-				<div className='row'>
-					<div className='three columns'></div>
-					<div className='six columns'></div>
-					<div className='three columns'></div>
-				</div>
-
-				<div className='row'>
-					<div className='six columns'></div>
-					<div className='three columns'></div>
-					<div className='three columns'></div>
-				</div>
-
-				<div className='row'>
-					<div className='three columns'></div>
-					<div className='three columns'></div>
-					<div className='six columns'></div>
-				</div>
-
-				<div className='row'>
-					<div className='three columns'></div>
-					<div className='six columns'></div>
-					<div className='three columns'></div>
-				</div>
-
-				<div className='row'>
-					<div className='six columns'></div>
-					<div className='three columns'></div>
-					<div className='three columns'></div>
-				</div>
-
-				<div className='row'>
-					<div className='three columns'></div>
-					<div className='three columns'></div>
-				</div>
-
 			</div>
 		);
 	}
