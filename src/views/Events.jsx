@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment-range';
 import { uniq } from 'lodash';
 
+import Event from '../components/Event';
 import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
 import MapLayersPicker from '../components/MapLayersPicker';
@@ -91,7 +92,7 @@ class Events extends React.Component {
 			<div className="grid-container">
 				<PageHeader />
 				{ this.state.events.data.error ?
-					<div className="events-data-load-error">We're having a hard time loading data. Please try again.</div> :
+					<div className="events-data-load-error">"We're having a hard time loading data. Please try again."</div> :
 					null }
 				{ this.renderRows(this.state.events.data.items) }
 			</div>
@@ -189,48 +190,13 @@ class Events extends React.Component {
 	}
 
 	renderEvent (event) {
-		let eventStyle = { backgroundImage: '' };
-
-		if (event.photoURL) {
-			eventStyle.backgroundImage = `url(${event.photoURL})`;
-		} else {
-			eventStyle.backgroundImage = `url(img/events-default-${defaultImageIndex}.jpg)`;
-			defaultImageIndex -= 1;
-			if (defaultImageIndex === 0) defaultImageIndex = 6;
-		}
+		event.defaultImageIndex = defaultImageIndex;
+		defaultImageIndex -= 1;
+		if (defaultImageIndex === 0) defaultImageIndex = 6;
 
 		return (
-			<div
-				className='event-cell three columns'
-				key={ event.startDate.format('YYYYMMDD') + event.id }
-				style={eventStyle}>
-				<div className='event-shade'>
-					{ (event.startDate.format('D-MMM') === event.endDate.format('D-MMM')) ?
-						(<div className='event-date'>
-							<span>{ event.startDate.format('MMM') }</span>
-							<span>{ event.startDate.format('D') }</span>
-						</div>) :
-						(<div className='event-date-range'>
-							<div>
-								<span className="event-date-range-month">{ event.startDate.format('MMM') }</span>
-								<span className="event-date-range-day">{ event.startDate.format('D') }</span>
-							</div>
-							<div className="event-date-range-separator">&mdash;</div>
-							<div>
-								<span className="event-date-range-month">{ event.endDate.format('MMM') }</span>
-								<span className="event-date-range-day">{ event.endDate.format('D') }</span>
-							</div>
-						</div>)
-					}
-					<div className='event-details'>
-						<p className='event-title'>{ event.title }</p>
-						<p>Time: <span>{ (event.startDate.hour() === 0 && event.startDate.minute() === 0) ? 'all day' :  event.startDate.format('h:mm a') }</span></p>
-						<p>Cost: <span>{ event.cost }</span></p>
-					</div>
-				</div>
-			</div>
+			<Event {...event } key={ event.startDate.format('YYYYMMDD') + event.id } />
 		);
-
 	}
 
 }
