@@ -22,9 +22,11 @@ export default (props) => (
 					<p><a href="mailto:feedback@sfparksalliance.org">feedback@sfparksalliance.org</a></p>
 					<p>1663 Mission St, Suite 320<br />San Francisco, CA 94103</p>
 				</div>
+				{/*
 				<div className="site-footer-column">
 					Weather
 				</div>
+				*/}
 			</div>
 		</div>
 	</footer>

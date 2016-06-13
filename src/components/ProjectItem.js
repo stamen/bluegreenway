@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Collapse from 'react-collapse';
 
-// this component is used to create the accordian in /projects/page/{ zone_name }
+// this component is used to create the accordion in /projects/page/{ zone_name }
 
 export default class ProjectItem extends Component {
     static propTypes = {
