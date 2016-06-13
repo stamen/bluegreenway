@@ -1,96 +1,116 @@
 #zone {
 
-  $zone-margin-left: 1em;
-  $zone-margin-top: 1em;
+	$zone-margin-horiz: 1em;
+	$zone-margin-vert: 1em;
 
-  .accordian-wrapper {
-    background: #fff;
-    box-shadow: $page-shadow;
-  }
+	.accordian-wrapper {
+		background: #fff;
+		box-shadow: $page-shadow;
+	}
 
-  .button {
-    display: block;
-    position: absolute;
-    width: 200px;
-    bottom: 1em;
-    padding: 0.35em;
-    
-    border: none;
-    cursor: pointer;
-    background: $green;
-    color: #fff;
-  }
+	.button {
+		display: block;
+		width: 12em;
+		padding: 0.35em;
+		
+		border: none;
+		cursor: pointer;
+		background: $green;
+		color: #fff;
+		text-align: center;
+	}
 
-  .title-container {
-    height: 300px;
-    padding-left: $zone-margin-left;
-    padding-top: $zone-margin-top;
+	.zone-header {
+		.button {
+			position: absolute;
+			bottom: $zone-margin-vert;
+		}
+	}
 
-    div {
-      height: 100%;
-      position: relative;
-      background-repeat: no-repeat;
-    }
-  }
+	.title-container {
+		height: 300px;
+		padding-left: $zone-margin-horiz;
+		padding-top: $zone-margin-vert;
 
-  .title {
-    @extend %neutra-bold;
-    text-transform: capitalize;
-    display: inline-block;
-  }
+		div {
+			height: 100%;
+			position: relative;
+			background-repeat: no-repeat;
+		}
+	}
 
-  .projects-list, .open-spaces-list {
-    height: auto;
-  }
+	.title {
+		@extend %neutra-bold;
+		text-transform: capitalize;
+		display: inline-block;
+	}
 
-  .section-title {
-    background: $blue;
-    color: #fff;
-    padding: 0 0 0 .5em;
-    @extend %neutra-bold;
-      margin-bottom: 0;
-  }
+	.projects-list, .open-spaces-list {
+		height: auto;
+	}
 
-  .loading {
-    margin-top: 0.5em;
-    margin-left: $zone-margin-left;
-  }
+	.section-title {
+		background: $blue;
+		color: #fff;
+		padding: 0 0 0 .5em;
+		@extend %neutra-bold;
+			margin-bottom: 0;
+	}
 
-  .item {
-    border-bottom: 2px solid $gray;
-    cursor: pointer;
-    padding-left: $zone-margin-left;
-  }
+	.loading {
+		margin-top: 0.5em;
+		margin-left: $zone-margin-horiz;
+	}
 
-  // this is causing a jump when the div is removed, how to avoid?
-  .item > div {
-    margin-bottom: 0.5em;
-  }
+	.item {
+		border-bottom: 2px solid $gray;
+		cursor: pointer;
+		padding: 0 $zone-margin-horiz;
 
-  .item-name {
-    margin: 0.5em 0;
-    display: inline-block;
-    width: 100%;
+		// this is causing a jump when the div is removed, how to avoid?
+		> div {
+			margin-bottom: 0.5em;
+		}
 
-    &:after {
-      content: '\02795';
-      font-size: 13px;
-      color: #777;
-      float: right;
-      margin-right: 15px;
-    }
+		.button {
+			margin: $zone-margin-vert 0;
+			position: relative;
+		}
+	}
 
-    &.active:after {
-      content: "\2796"; // Unicode character for "minus" sign (-)
-    }
-  }
+	.item-name {
+		margin: 0.5em 0;
+		display: inline-block;
+		width: 100%;
 
-  .item-description {
-    margin-bottom: 0;
+		&:after {
+			content: '\02795';
+			font-size: 13px;
+			color: #777;
+			float: right;
+			margin-right: 15px;
+		}
 
-    p {
-      margin: 0;
-    }
-  }
+		&.active:after {
+			content: "\2796"; // Unicode character for "minus" sign (-)
+		}
+	}
+
+	.item-description {
+		margin-bottom: 0;
+
+		p,
+		span {
+			// override inline styles from CMS
+			margin: 0 !important;
+
+			// @extend %neutra;
+			font-family: 'NeutrafaceText', sans-serif !important;
+			font-weight: normal !important;
+			font-style: normal !important;
+			font-size: 1em !important;
+
+		}
+	}
 
 }
