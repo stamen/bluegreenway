@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
 import Masonry from 'masonry-layout';
+import times from 'lodash/times';
 
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
@@ -56,6 +57,41 @@ class Home extends React.Component {
 		msnry.layout();
 	}
 
+	renderGridItems () {
+		const { projects, stories, events } = this.props.store.getState();
+		const pLen = projects.data.items.length;
+		const sLen = stories.data.items.length;
+		const eLen = events.data.items.length;
+
+		// iterate over events, featured person profiles(?), & stories
+		let len = Math.max(pLen, sLen, eLen);
+		let items = [];
+		times(len, ()=> {
+			if (projects.data.items.length) items.push({project: projects.data.items.pop()});
+			if (stories.data.items.length) items.push({story: stories.data.items.pop()});
+			if (events.data.items.length) items.push({event: events.data.items.pop()});
+		});
+
+		// create divs with corresponding classNames that determine width & height
+		let divs = items.map((item, idx) => {
+			if (item.project) {
+				return (
+					<div className='grid-item project'>Project</div>
+				);
+			} else if (item.story) {
+				return (
+					<div className='grid-item story'>Story</div>
+				);
+			} else if (item.event) {
+				return (
+					<div className='grid-item event'>Event</div>
+				);
+			}
+		});
+
+		return divs;
+	}
+
 	renderMapView () {
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
@@ -84,7 +120,7 @@ class Home extends React.Component {
 			<div className='grid-container'>
 				<PageHeader />
 				{ projects.data.items.length && stories.data.items.length && events.data.items.length?
-					'' : <h3>Loading, hang tight...</h3> }
+					this.renderGridItems() : <h3>Loading, hang tight...</h3> }
 			</div>
 		);
 	}
