@@ -7,16 +7,10 @@ export default class Home extends React.Component {
 
 	constructor (props) {
 		super(props);
-		this.onStateChange = this.onStateChange.bind(this);
-		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
 	componentWillMount () {
-		this.setState({});
-		
 		this.props.actions.mapLayersPickerProjectsChange(false);
-
-		this.onStateChange();
 	}
 
 	componentDidMount () {
@@ -31,29 +25,21 @@ export default class Home extends React.Component {
 		//
 	}
 
-	componentWillUnmount () {
-		this.unsubscribeStateChange();
-	}
-
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
-	}
-
 	renderMapView () {
+		let { mapLayersPicker } = this.props.store.getState();
 		return (
 			<div className="projects-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
-						layers={ this.state.mapLayersPicker.layers }
+						layers={ mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Transportation'
-						layers={ this.state.mapLayersPicker.transportation }
+						layers={ mapLayersPicker.transportation }
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
