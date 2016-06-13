@@ -1,18 +1,24 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import Masonry from 'masonry-layout';
 
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
 
 	constructor (props) {
 		super(props);
 	}
 
 	componentWillMount () {
-		this.props.actions.mapLayersPickerProjectsChange(false);
+		const { projects, stories, events } = this.props.store.getState();
+		const { actions } = this.props;
+		if (!projects.data.items.length) actions.fetchProjectsData();
+		if (!stories.data.items.length) actions.fetchStoriesData();
+		if (!events.data.items.length) actions.fetchEventsData();
+		actions.mapLayersPickerProjectsChange(false);
 	}
 
 	componentDidMount () {
@@ -73,9 +79,12 @@ export default class Home extends React.Component {
 	}
 
 	renderPageView () {
+		const { projects, stories, events } = this.props.store.getState();
 		return (
 			<div className='grid-container'>
 				<PageHeader />
+				{ projects.data.items.length && stories.data.items.length && events.data.items.length?
+					'' : <h3>Loading, hang tight...</h3> }
 			</div>
 		);
 	}
@@ -89,3 +98,5 @@ export default class Home extends React.Component {
 	}
 
 }
+
+export default withRouter(Home);
