@@ -4,36 +4,40 @@ import { vizJSON } from '../models/common.js';
 import sassVars from '../../scss/variables.json';
 
 export default class LeafletMap extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 
 		this.mapState = {
 			initing: false,
 			map: null,
 			layers: null,
+			projects: {
+				layerData: {},
+				popups: {}
+			}
 		};
 	}
 
-	componentWillMount() {
+	componentWillMount () {
 		const storeState = this.props.store.getState();
 		if (!get(storeState, 'geodata.projects.geojson.features')) {
 			this.props.actions.fetchProjectsGeoData();
 		}
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		const storeState = this.props.store.getState();
 		this.initMap(get(storeState, 'geodata.projects.geojson'));
 	}
 
-	componentWillUpdate(nextProps, nextState) {
+	componentWillUpdate (nextProps, nextState) {
 		const storeState = nextProps.store.getState();
 		this.initMap(get(storeState, 'geodata.projects.geojson'));
 
 		this.updateMapLayers(storeState);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate (prevProps, prevState) {
 		// hide controls after map has initialized
 		if (this.mapState.map) {
 			// i know, i know...
@@ -71,11 +75,22 @@ export default class LeafletMap extends React.Component {
 		}
 
 		if (projects.selectedProject) {
-			console.log(">>>>> selectedProject:", projects.selectedProject);
+			let popup = this.mapState.projects.popups[projects.selectedProject.id];
+
+			// If popup has not yet been created, create it
+			if (!popup) {
+				this.initProjectPopup(projects.selectedProject);
+				popup = this.mapState.projects.popups[projects.selectedProject.id];
+			}
+
+			// ...and then open it.
+			if (popup) {
+				popup.openOn(this.mapState.map);
+			}
 		}
 	}
 
-	initMap(projectsGeoJSON) {
+	initMap (projectsGeoJSON) {
 		// if already inited, or begun initing, bail
 		if (this.mapState.initing || this.mapState.map) return;
 
@@ -162,48 +177,66 @@ export default class LeafletMap extends React.Component {
 	}
 
 	createProjectsMapLayer (projectsGeoJSON) {
-		let dummyProject = {
-			name: 'Placeholder Project',
-			desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi libero justo, malesuada non laoreet at, varius sed nulla. Nullam vel felis facilisis, aliquam arcu ut, euismod risus. Donec venenatis erat magna, id bibendum ligula rutrum sed. In vitae tempus magna.'
-		};
-
 		return L.geoJson(projectsGeoJSON, {
 			style: feature => {
 				// to do: style features based on a bgw_zone_id
 			},
+
+			// Project data load from the CMS separately from the project geojson.
+			// So, we store the geojson feature and map layer to use for creating a popup
+			// when the selected project changes, either via a layer click handler (assigned here),
+			// or programmatically via an action fired from elsewhere.
 			onEachFeature: (feature, layer) => {
-				layer.on('click', () => {
-					const storeState = this.props.store.getState();
-
-					let project;
-					if (!feature.properties.id_is_fake) {
-						project = storeState.projects.data.items.find(project => project.id === feature.properties.bgw_id);
-					}
-					if (!project) project = dummyProject;
-
-					let popupContent = `<h3>${ project.name }</h3><p>${ project.description }</p>`;
-
-					// cartodb.js pins us to an old-ass version of Leaflet that doesn't have this function,
-					// so we have to manually instantiate a popup on click instead of binding and updating it.
-					// layer.setPopupContent(`<h3>${ project.name }</h3><p>${ project.description }</p>`);
-					L.popup()
-						.setLatLng(layer.getBounds().getCenter())
-						.setContent(popupContent)
-						.openOn(this.mapState.map);
-
-					if (project !== dummyProject) {
-						this.props.actions.updateSelectedProject(project);
-					}
-				});
+				this.mapState.projects.layerData[feature.properties.bgw_id] = {
+					feature,
+					layer,
+				};
+				layer.on('click', (event) => this.onProjectFeatureClicked(feature, layer));
 			}
 		});
 	}
 
-	setMapControls(map) {
+	/**
+	 * Create project popup on demand, since project data may not yet be available from the CMS
+	 * when the project geojson is loaded and added to the map.
+	 */
+	initProjectPopup (project) {
+		let layerData = this.mapState.projects.layerData[project.id];
+		if (!layerData) return null;
+
+		let { feature, layer } = layerData;
+		
+		let popupContent = `<h3>${ project.name }</h3><p>${ project.description }</p>`;
+
+		this.mapState.projects.popups[project.id] = L.popup()
+			.setLatLng(layer.getBounds().getCenter())
+			.setContent(popupContent);
+
+	}
+
+	/**
+	 * Update selected project on click, but only if the CMS project data
+	 * associated with the clicked project geojson layer have loaded.
+	 */
+	onProjectFeatureClicked (feature) {
+		const projects = get(this.props.store.getState().projects, 'data.items');
+		if (!projects.length) return;
+
+		let projectId = feature.properties.bgw_id,
+			project = projects.find(project => project.id === projectId);
+
+		if (project) {
+			this.props.actions.updateSelectedProject(project);
+		} else {
+			console.warn(`No project with id ${ projectId } found in projects returned from SFPA CMS.`);
+		}
+	}
+
+	setMapControls (map) {
 		new L.Control.Zoom({position: 'bottomright'}).addTo(map);
 	}
 
-	render() {
+	render () {
 		// note: map container stays hidden until cartodb is fully initialized.
 		return (
 			<div id='bgw-map' ref='leafletMap' className={ `map-container${ !this.mapState.layers ? ' hidden': '' }` } />

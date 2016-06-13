@@ -19,6 +19,7 @@ import PageHeader from '../components/PageHeader';
 class Zone extends Component {
 	constructor(props) {
 		super(props);
+		this.onProjectMapLinkClicked = this.onProjectMapLinkClicked.bind(this);
 	}
 
 	componentWillMount () {
@@ -133,10 +134,8 @@ class Zone extends Component {
 				return (
 					<ProjectItem
 						key={ project.id }
-						id={ project.id }
-						name={ project.name }
-						description={ project.description }
-						isOpened={ false }
+						project={ project }
+						viewOnMapCB={ this.onProjectMapLinkClicked }
 					/>
 				);
 			});
@@ -147,6 +146,13 @@ class Zone extends Component {
 				{ projectListItems }
 			</div>
 		);
+	}
+
+	onProjectMapLinkClicked (project) {
+		// KLUDGE: set project on map after navigating to map
+		setTimeout(() => {
+			this.props.actions.updateSelectedProject(project);
+		}, 100);
 	}
 
 }
