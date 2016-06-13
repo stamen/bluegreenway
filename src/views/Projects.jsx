@@ -126,6 +126,12 @@ class Projects extends React.Component {
 
 		cartodb.createVis(`map-${ layerId }`, vizJSON, options)
 			.on('done', (vis, layers) => {
+
+				// don't show POIs on minimaps
+				let layer = layers[1],
+					poisLayer = layer.getSubLayer(3);
+				poisLayer.hide();
+				
 				map = vis.getNativeMap();
 				map.addLayer(zoneLayer);
 				map.fitBounds(zoneFeaturesLayer.getBounds(), {
