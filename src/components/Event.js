@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Event = (event) => {
+  console.log(event.homepage);
   let eventStyle = { backgroundImage: '' };
+  let eventClassName = '';
 
   if (event.photoURL) {
     eventStyle.backgroundImage = `url(${event.photoURL})`;
@@ -9,9 +11,16 @@ const Event = (event) => {
     eventStyle.backgroundImage = `url(img/events-default-${event.defaultImageIndex}.jpg)`;
   }
 
+  // if the event is on the homepage ditch extra classes
+  if (event.homepage) {
+    eventClassName='event-cell';
+  } else {
+    eventClassName='event-cell three columns';
+  }
+
   return (
     <div
-      className='event-cell three columns'
+      className={eventClassName}
       style={eventStyle}>
       <div className='event-shade'>
         { (event.startDate.format('D-MMM') === event.endDate.format('D-MMM')) ?

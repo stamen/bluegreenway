@@ -1,7 +1,17 @@
 import React, { PropTypes } from 'react';
 
 const Story = (props) => {
+  console.log(props.homepage);
   const { id, title, images, category, body, mode, router} = props;
+
+  let storyClassName = '';
+
+  // if the story is on the homepage ditch extra classes
+  if (props.homepage) {
+    storyClassName='story-cell';
+  } else {
+    storyClassName='story-cell six columns';
+  }
 
   function viewStory() {
     const path = `/stories/${ mode }/${ title }?id=${ id }`;
@@ -11,7 +21,7 @@ const Story = (props) => {
 
   return (
     <div
-      className='story-cell six columns'
+      className={storyClassName}
       onClick={(() => viewStory())}
       style={{ backgroundImage: `url(${images[0].src})` }}
       >
