@@ -34,7 +34,7 @@ class Home extends React.Component {
 	}
 
 	componentWillReceiveProps (nextProps) {
-
+		//
 	}
 
 	componentWillUpdate (nextProps, nextState) {
@@ -42,11 +42,8 @@ class Home extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-
-		// if (prevProps.params.mode !== this.props.params.mode &&
-		// 	prevProps.params.mode === 'map') this.initMasonry();
-
-		if (this.refs.gridContainer.children.length > 1) {
+		// init packery after dom elements are rendered
+		if (this.refs.gridContainer.children.length > 3) {
 			this.initPackery();
 		}
 	}
@@ -63,8 +60,8 @@ class Home extends React.Component {
 		// console.log(pckry);
 
 		pckry.once('layoutComplete', () => {
+			// callback for packery init
 		  grid.classList.add('loaded');
-			console.log('packry loaded');
 		});
 
 		pckry.layout();
@@ -72,40 +69,68 @@ class Home extends React.Component {
 
 	renderGridItems () {
 		const { stories, events } = this.props.store.getState();
-
-		// create a new array for homepage events & stories
+		// create a new array for homepage events & stories, must be a grouping of 7 elements
+		// should look like: [story, story, story, event, story, story, event]
+		// should pull from stories about featured people, the most recent other stories, and most recent events
 		let len = 7;
 		let items = [];
 		times(len, (i)=> {
-			if (i < 2) {
-				if (events.data.items[i]) {
+			if (i < 3) {
+				// first three elements should be stories
+				if (stories.data.items[i]) {
 					items.push({
-						event: Object.assign({},
-							events.data.items.slice(i, i + 1)[0]
+						story: Object.assign({},
+							stories.data.items.slice(i, i + 1)[0]
 						)
 					});
 				}
 			}
-			if (stories.data.items[i]) {
-				items.push({
-					story: Object.assign({},
-						stories.data.items.slice(i, i + 1)[0]
-					)
-				});
+			if (i > 3 && i < 6) {
+				// 4th and 5th zero based indexed elements should be stories
+				let x = i - 1;
+				if (stories.data.items[x]) {
+					items.push({
+						story: Object.assign({},
+							stories.data.items.slice(x, x + 1)[0]
+						)
+					});
+				}
+			}
+			if (i === 3 || i === 6) {
+				// 3rd and 6th zero based indexed elements should be events
+				let n;
+				if (i === 3) n = 0;
+				if (i === 6) n = 1;
+				if (events.data.items[n]) {
+					items.push({
+						event: Object.assign({},
+							events.data.items.slice(n, n + 1)[0]
+						)
+					});
+				}
 			}
 		});
 
 		console.log(items);
+		// items = [items[2], items[1], items[0], items[3], items[4], items[6], items[5]];
 
-		// create divs with corresponding classNames that determine width & height
+		// create divs with corresponding classNames that determine width & height for use with Packery & Skeleton grid
+		// inside divs reside a corresponding story or event component
 		let divs = items.map((item, idx) => {
 			if (item.story) {
 				item.story.homepage = true;
 				// assign a class for the grid item to be taller
 				// todo: assign this class only when item.story.category is for featured persons of BGW
-				let itemTall = idx % 2 === 0 ? 'grid-item--tall' : '';
+				let storyClassNames;
+
+				if (idx === 0 || idx === 2 || idx === 4) {
+					storyClassNames = 'grid-item grid-item--tall three columns';
+				} else {
+					storyClassNames =  'grid-item six columns';
+				}
+
 				return (
-					<div className={`grid-item six columns ${itemTall}`} key={item.story.id}>
+					<div className={storyClassNames} key={item.story.id}>
 						<Story
 							{...item.story}
 							onClick={this.props.actions.updateSelectedStory}
@@ -114,6 +139,7 @@ class Home extends React.Component {
 					</div>
 				);
 			} else if (item.event) {
+				console.log(idx, item.event.id);
 				item.event.homepage = true;
 				item.event.defaultImageIndex = defaultImageIndex;
 				defaultImageIndex -= 1;
@@ -158,8 +184,8 @@ class Home extends React.Component {
 		const { projects, stories, events } = this.props.store.getState();
 		return (
 			<div ref='gridContainer' className='grid-container'>
-				<div className='gutter-sizer' />
 				<div className='grid-sizer three columns' />
+				<div className='gutter-sizer' />
 				<div className='grid-item twelve columns'>
 					<PageHeader />
 				</div>

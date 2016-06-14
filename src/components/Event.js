@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Event = (event) => {
-  console.log(event.homepage);
   let eventStyle = { backgroundImage: '' };
   let eventClassName = '';
 

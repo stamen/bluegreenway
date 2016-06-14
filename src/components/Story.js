@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 const Story = (props) => {
-  console.log(props.homepage);
   const { id, title, images, category, body, mode, router} = props;
 
   let storyClassName = '';

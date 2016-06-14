@@ -22,6 +22,7 @@ $events-padding: 0.5em;
 .event-date {
 	text-shadow: $text-shadow;
 	text-align: center;
+	color: #fff;
 
 	span {
 		display: block;
@@ -65,6 +66,7 @@ $events-padding: 0.5em;
 	bottom: $events-padding;
 	font-size: 0.83em;
 	line-height: 1.11em;
+	color: #fff;
 
 	p {
 		margin: 0;
