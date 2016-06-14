@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router';
 import moment from 'moment';
 
+import Story from '../components/Story';
 import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
@@ -70,13 +71,6 @@ class Stories extends React.Component {
 		});
 	}
 
-	viewStory (title, id) {
-		const { mode } = this.props.params;
-		const path = `/stories/${ mode }/${ title }?id=${ id }`;
-		this.props.actions.updateSelectedStory({ title, id });
-		this.props.router.push(path);
-	}
-
 	handleRangeChange (range) {
 		if (range[0]) {
 			this.props.actions.storiesMinDateChanged(range[0]);
@@ -99,7 +93,7 @@ class Stories extends React.Component {
 			<div className="grid-container">
 				<PageHeader />
 				{ this.state.stories.data.error ?
-					<div className="stories-data-load-error">We're having a hard time loading data. Please try again.</div> :
+					<div className="stories-data-load-error">"We're having a hard time loading data. Please try again."</div> :
 					null }
 				{ this.renderRows(this.state.stories.data.items) }
 			</div>
@@ -155,23 +149,15 @@ class Stories extends React.Component {
 		);
 	}
 
-	renderStory (story, index) {
-		const { id, title, images, category, body } = story;
+	renderStory(story) {
 		return (
-			<div
-				className='story-cell six columns'
-				key={id}
-				onClick={(() => this.viewStory(title, id))}
-				style={{ backgroundImage: `url(${images[0].src})` }}
-				>
-				<div className='story-shade'>
-					<div className="story-category">{ category }</div>
-					<div className="story-text">
-						<div className="story-title">{ title.replace(/_/g, ' ') }</div>
-						<div className="story-body" dangerouslySetInnerHTML={{ __html: body}}></div>
-					</div>
-				</div>
-			</div>
+			<Story
+				{...story}
+				onClick={this.props.actions.updateSelectedStory}
+				key={story.id}
+				router={this.props.router}
+				mode={this.props.params.mode}
+			/>
 		);
 	}
 

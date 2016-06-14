@@ -1,62 +1,64 @@
 #stories {
-	.stories-map-overlay {
-		position: absolute;
-		left: $body-margin;
-		top: $body-margin;
-		z-index: 1;
+	
+}
+
+.stories-map-overlay {
+	position: absolute;
+	left: $body-margin;
+	top: $body-margin;
+	z-index: 1;
+}
+
+.story-cell {
+	background-size: cover;
+	color: $white;
+	position: relative;
+}
+
+.story-shade {
+	background-color: $stories-shade;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.story-body {
+	max-height: 50px;
+	overflow: hidden;
+	max-width: 100%;
+	width: 100%;
+
+	* {
+		color: $white !important;
+		font-family: 'NeutrafaceText' !important;
+		font-size: 18px !important;
 	}
 
-	.story-cell {
-		background-size: cover;
-		color: $white;
-		position: relative;
+	p {
+		margin-bottom: 5px !important;
 	}
+}
 
-	.story-shade {
-		background-color: $stories-shade;
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
+.story-category {
+	background: $blue;
+	display: inline-block;
+	font-weight: bold;
+	left: 10px;
+	padding: 5px 8px;
+	position: absolute;
+	text-transform: uppercase;
+	top: 10px;
+}
 
-	.story-body {
-		max-height: 50px;
-		overflow: hidden;
-		max-width: 100%;
-		width: 100%;
+.story-text {
+	bottom: 0;
+	left: 0;
+	padding: 20px;
+	position: absolute;
+	width: 100%;
+}
 
-		* {
-			color: $white !important;
-			font-family: 'NeutrafaceText' !important;
-			font-size: 18px !important;
-		}
-
-		p {
-			margin-bottom: 5px !important;
-		}
-	}
-
-	.story-category {
-		background: $blue;
-		display: inline-block;
-		font-weight: bold;
-		left: 10px;
-		padding: 5px 8px;
-		position: absolute;
-		text-transform: uppercase;
-		top: 10px;
-	}
-
-	.story-text {
-		bottom: 0;
-		left: 0;
-		padding: 20px;
-		position: absolute;
-		width: 100%;
-	}
-
-	.story-title {
-		font-size: 1.5em;
-		font-weight: bold;
-	}
+.story-title {
+	font-size: 1.5em;
+	font-weight: bold;
 }

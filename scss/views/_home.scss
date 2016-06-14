@@ -1,4 +1,33 @@
 #home {
 	position: relative;
 	@include colorize-grid(7, 3, 2, null);
+
+	.gutter-sizer {
+		width: 1%;
+	}
+
+	.grid-sizer,
+	.grid-item {
+		height: 245px;
+		margin-left: 0;
+
+		.event-cell, .story-cell {
+			width: 100%;
+			height: 245px;
+		}
+	}
+
+	.grid-item.grid-item--tall {
+		height: 500px;
+		background: #333;
+	}
+
+	.grid-item.grid-item--width2 {
+		// width: 48.5%;
+	}
+
+	.grid-item--width4 {
+		// width: 97%;
+		// margin-bottom: 10px;
+	}
 }
