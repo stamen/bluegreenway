@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
-import Masonry from 'masonry-layout';
 import times from 'lodash/times';
+import Packery from 'packery';
 
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
+import Event from '../components/Event';
+import Story from '../components/Story';
+
+let defaultImageIndex = 6;
 
 class Home extends React.Component {
 
@@ -16,18 +20,21 @@ class Home extends React.Component {
 	componentWillMount () {
 		const { projects, stories, events } = this.props.store.getState();
 		const { actions } = this.props;
-		if (!projects.data.items.length) actions.fetchProjectsData();
+		// if (!projects.data.items.length) actions.fetchProjectsData();
 		if (!stories.data.items.length) actions.fetchStoriesData();
 		if (!events.data.items.length) actions.fetchEventsData();
 		actions.mapLayersPickerProjectsChange(false);
+		this.setState({
+			packeryLoaded: false
+		});
 	}
 
 	componentDidMount () {
-		if (this.props.params.mode === 'page') this.initMasonry();
+		//
 	}
 
 	componentWillReceiveProps (nextProps) {
-		//
+
 	}
 
 	componentWillUpdate (nextProps, nextState) {
@@ -35,56 +42,77 @@ class Home extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-		if (prevProps.params.mode !== this.props.params.mode &&
-			prevProps.params.mode === 'map') this.initMasonry();
+
+		// if (prevProps.params.mode !== this.props.params.mode &&
+		// 	prevProps.params.mode === 'map') this.initMasonry();
+
+		if (this.refs.gridContainer.children.length > 1) {
+			this.initPackery();
+		}
 	}
 
-	initMasonry () {
-		const grid = document.querySelector('.grid-container');
-		const msnry = new Masonry(grid, {
-			columnWidth: '',
+	initPackery () {
+		const grid = this.refs.gridContainer;
+		const pckry = new Packery(grid, {
 			columnWidth: '.grid-sizer',
+			gutter: '.gutter-sizer',
 			itemSelector: '.grid-item',
-			percentPosition: true,
-			gutter: 10
+			percentPosition: true
 		});
 
-		msnry.once('layoutComplete', () => {
-		  grid.classList.add('load');
-			console.log('masonry loaded');
+		// console.log(pckry);
+
+		pckry.once('layoutComplete', () => {
+		  grid.classList.add('loaded');
+			console.log('packry loaded');
 		});
 
-		msnry.layout();
+		pckry.layout();
 	}
 
 	renderGridItems () {
-		const { projects, stories, events } = this.props.store.getState();
-		const pLen = projects.data.items.length;
+		const { stories, events } = this.props.store.getState();
 		const sLen = stories.data.items.length;
 		const eLen = events.data.items.length;
 
 		// iterate over events, featured person profiles(?), & stories
-		let len = Math.max(pLen, sLen, eLen);
+		let len = 7; // Math.max(pLen, sLen, eLen);
 		let items = [];
-		times(len, ()=> {
-			if (projects.data.items.length) items.push({project: projects.data.items.pop()});
-			if (stories.data.items.length) items.push({story: stories.data.items.pop()});
-			if (events.data.items.length) items.push({event: events.data.items.pop()});
+		times(len, (i)=> {
+			if (i < 2) {
+				if (events.data.items[i]) items.push({event: events.data.items.slice(i, i + 1)[0]});
+			}
+			if (stories.data.items[i]) items.push({story: stories.data.items.slice(i, i + 1)[0]});
 		});
+
+		console.log(items);
 
 		// create divs with corresponding classNames that determine width & height
 		let divs = items.map((item, idx) => {
-			if (item.project) {
+			if (item.story) {
+				item.story.homepage = true;
+				let itemTall = idx % 2 === 0 ? 'grid-item--tall' : '';
 				return (
-					<div className='grid-item project'>Project</div>
-				);
-			} else if (item.story) {
-				return (
-					<div className='grid-item story'>Story</div>
+					<div className={`grid-item six columns ${itemTall}`} key={item.story.id}>
+						<Story
+							{...item.story}
+							onClick={this.props.actions.updateSelectedStory}
+							router={this.props.router}
+							mode={this.props.params.mode} />
+					</div>
 				);
 			} else if (item.event) {
+				item.event.homepage = true;
+				item.event.defaultImageIndex = defaultImageIndex;
+				defaultImageIndex -= 1;
+				if (defaultImageIndex === 0) defaultImageIndex = 6;
+
 				return (
-					<div className='grid-item event'>Event</div>
+					<div className='grid-item three columns' key={ item.event.startDate.format('YYYYMMDD') + item.event.id }>
+						<Event
+						{...item.event }
+						/>
+					</div>
 				);
 			}
 		});
@@ -117,9 +145,13 @@ class Home extends React.Component {
 	renderPageView () {
 		const { projects, stories, events } = this.props.store.getState();
 		return (
-			<div className='grid-container'>
-				<PageHeader />
-				{ projects.data.items.length && stories.data.items.length && events.data.items.length?
+			<div ref='gridContainer' className='grid-container'>
+				<div className='gutter-sizer' />
+				<div className='grid-sizer three columns' />
+				<div className='grid-item twelve columns'>
+					<PageHeader />
+				</div>
+				{ stories.data.items.length && events.data.items.length?
 					this.renderGridItems() : <h3>Loading, hang tight...</h3> }
 			</div>
 		);
