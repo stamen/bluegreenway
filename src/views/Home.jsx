@@ -72,17 +72,27 @@ class Home extends React.Component {
 
 	renderGridItems () {
 		const { stories, events } = this.props.store.getState();
-		const sLen = stories.data.items.length;
-		const eLen = events.data.items.length;
 
-		// iterate over events, featured person profiles(?), & stories
-		let len = 7; // Math.max(pLen, sLen, eLen);
+		// create a new array for homepage events & stories
+		let len = 7;
 		let items = [];
 		times(len, (i)=> {
 			if (i < 2) {
-				if (events.data.items[i]) items.push({event: events.data.items.slice(i, i + 1)[0]});
+				if (events.data.items[i]) {
+					items.push({
+						event: Object.assign({},
+							events.data.items.slice(i, i + 1)[0]
+						)
+					});
+				}
 			}
-			if (stories.data.items[i]) items.push({story: stories.data.items.slice(i, i + 1)[0]});
+			if (stories.data.items[i]) {
+				items.push({
+					story: Object.assign({},
+						stories.data.items.slice(i, i + 1)[0]
+					)
+				});
+			}
 		});
 
 		console.log(items);
@@ -91,6 +101,8 @@ class Home extends React.Component {
 		let divs = items.map((item, idx) => {
 			if (item.story) {
 				item.story.homepage = true;
+				// assign a class for the grid item to be taller
+				// todo: assign this class only when item.story.category is for featured persons of BGW
 				let itemTall = idx % 2 === 0 ? 'grid-item--tall' : '';
 				return (
 					<div className={`grid-item six columns ${itemTall}`} key={item.story.id}>
