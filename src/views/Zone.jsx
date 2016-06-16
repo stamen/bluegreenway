@@ -90,9 +90,9 @@ class Zone extends Component {
 							<a className='button' href='#'>View on Map</a>
 						</div>
 						<div
-							className='six columns'
+							className='six columns zone-img'
 							style={ {
-								backgroundImage:`url('${ image || 'img/zone-placeholder.jpg' }')`
+								backgroundImage:`url('img/${ image || 'zone-placeholder.jpg' }')`
 							} }
 						/>
 					</div>

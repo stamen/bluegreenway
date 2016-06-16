@@ -12,7 +12,7 @@
 		display: block;
 		width: 12em;
 		padding: 0.35em;
-		
+
 		border: none;
 		cursor: pointer;
 		background: $green;
@@ -25,6 +25,10 @@
 			position: absolute;
 			bottom: $zone-margin-vert;
 		}
+	}
+
+	.zone-img {
+		background-size: contain;
 	}
 
 	.title-container {
