@@ -62,14 +62,45 @@ class Story extends React.Component {
 
 		const stories = get(storeState, 'stories.data.items'),
 			selectedStory = get(storeState, 'stories.selectedStory');
-		let storyData = stories.find(item => item.title === selectedStory.title);
+		let storyData = stories.find(item => item.title === selectedStory.title),
+			{ body } = storyData;
 
-		console.log(">>>>> storyData:", storyData);
+		if (body) {
+			// write to offscreen DOM in order to do some manipulation...
+			let storyDoc = new DOMParser().parseFromString(body, 'text/html'),
+				storyDocBody = storyDoc.querySelector('body');
+
+			if (storyDocBody) {
+
+				// Insert title at the top
+				let titleContainer = document.createElement('div');
+				titleContainer.classList.add('story-title');
+				titleContainer.textContent = storyData.title.replace(/_/g, ' ');
+				storyDocBody.insertBefore(titleContainer, storyDocBody.firstChild);
+
+				// And then images above that (if we have any)
+				if (storyData.images && storyData.images.length) {
+					let imageContainer = document.createElement('div');
+					imageContainer.classList.add('image-container');
+
+					// insert after subtitle element
+					storyDocBody.insertBefore(imageContainer, storyDocBody.firstChild);
+					storyData.images.forEach(image => {
+						let img = document.createElement('img');
+						img.setAttribute('src', image.src);
+						if (image.alt) img.setAttribute('alt', image.alt);
+						imageContainer.appendChild(img);
+					});
+				}
+
+				// dump back into a string to pass off to React
+				body = storyDocBody.innerHTML;
+			}
+		}
 
 		return (
 			<div className='row'>
-				<div className="story-title">{ storyData.title.replace(/_/g, ' ') }</div>
-				<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData ? storyData.body : ''}} />
+				<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: body || ''}} />
 			</div>
 		);
 	}

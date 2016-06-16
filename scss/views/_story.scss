@@ -1,6 +1,10 @@
+// 
+// Note: all the `!important`s are needed to override inline styles from the CMS.
+// 
 #story {
 	height: auto;
 	color: $blue;
+	margin-left: 1em;
 
 	.grid-container {
 		height: auto;
@@ -14,11 +18,10 @@
 	}
 
 	.story-title {
-		font-size: 1.75rem;
-		margin-bottom: 0.5rem;
+		font-size: 1.75rem !important;
+		margin: 0 0 0.5rem 0 !important;
 	}
 
-	// Note: all the `!important`s are needed to override inline styles from the CMS.
 	.story-post {
 		height: auto;
 		margin-left: 0;
@@ -27,7 +30,8 @@
 			background: none !important;
 		}
 
-		p, p > span {
+		p,
+		p > span {
 			font-size: 1rem !important;
 			font-family: NeutrafaceText !important;
 			color: $blue !important;
@@ -36,17 +40,31 @@
 
 		img {
 			float: right !important;
-			padding: 0 0 20px 20px !important;
 			margin: 20px 0 0 0 !important;
+			padding: 0 0 20px 20px !important;
 		}
 
-		p:first-child,
-		div:first-child,
-		p:first-child > span,
-		div:first-child > span {
+		p:first-of-type,
+		p:first-of-type > span {
 			font-size: 1.25rem !important;
 			font-weight: bold;
 			line-height: 1.25rem !important;
+		}
+	}
+
+	.image-container {
+		position: relative;
+		float: right;
+		width: 60%;
+
+		margin-right: -10rem;	// make & break the grid.
+		padding-left: 20px;
+
+		img {
+			width: 100%;
+			height: auto;
+			margin: 0 0 20px 0 !important;
+			padding: 0 !important;
 		}
 	}
 }
