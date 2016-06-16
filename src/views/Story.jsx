@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
 import moment from 'moment';
+import { get } from 'lodash';
 
 import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
@@ -56,18 +57,18 @@ class Story extends React.Component {
 	renderPageView () {
 		const storeState = this.props.store.getState();
 		if (!storeState.stories.data.items.length || !storeState.stories.selectedStory) {
-			 return false;
+			 return null;
 		}
-		const storiesData = this.props.store.getState().stories;
-		const stories = storiesData.data.items;
-		const selectedStory = storiesData.selectedStory;
-		let storyData = storiesData.data.items.filter(item => {
-			return item.title === selectedStory.title;
-		});
-		storyData = storyData.length ? storyData[0] : null;
+
+		const stories = get(storeState, 'stories.data.items'),
+			selectedStory = get(storeState, 'stories.selectedStory');
+		let storyData = stories.find(item => item.title === selectedStory.title);
+
+		console.log(">>>>> storyData:", storyData);
 
 		return (
 			<div className='row'>
+				<div className="story-title">{ storyData.title.replace(/_/g, ' ') }</div>
 				<div className='eight columns story-post' dangerouslySetInnerHTML={{ __html: storyData ? storyData.body : ''}} />
 			</div>
 		);

@@ -13,8 +13,6 @@ const Story = (props) => {
 
 	let storyClassName = '';
 
-	console.log(">>>>> props:", props);
-
 	// if the story is on the homepage ditch extra classes
 	if (props.homepage) {
 		storyClassName='story-cell';

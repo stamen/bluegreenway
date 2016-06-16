@@ -1,33 +1,52 @@
 #story {
-  height: auto;
+	height: auto;
+	color: $blue;
 
-  .grid-container {
-    height: auto;
-  }
+	.grid-container {
+		height: auto;
+	}
 
-  .row {
-    height: auto;
-  }
+	.row {
+		height: auto;
+		> div {
+			height: auto;
+		}
+	}
 
-  .story-post {
-    height: auto;
-    // margin-bottom: 200px;
+	.story-title {
+		font-size: 1.75rem;
+		margin-bottom: 0.5rem;
+	}
 
-    * {
-      background: none !important;
-    }
+	// Note: all the `!important`s are needed to override inline styles from the CMS.
+	.story-post {
+		height: auto;
+		margin-left: 0;
 
-    p, p > span {
-      font-size: 1em !important;
-      font-family: NeutrafaceText !important;
-      color: $blue !important;
-    }
+		* {
+			background: none !important;
+		}
 
-    img {
-      float: right !important;
-      padding: 0 0 20px 20px !important;
-      margin: 20px 0 0 0 !important;
-    }
+		p, p > span {
+			font-size: 1rem !important;
+			font-family: NeutrafaceText !important;
+			color: $blue !important;
+			line-height: 1rem !important;
+		}
 
-  }
+		img {
+			float: right !important;
+			padding: 0 0 20px 20px !important;
+			margin: 20px 0 0 0 !important;
+		}
+
+		p:first-child,
+		div:first-child,
+		p:first-child > span,
+		div:first-child > span {
+			font-size: 1.25rem !important;
+			font-weight: bold;
+			line-height: 1.25rem !important;
+		}
+	}
 }
