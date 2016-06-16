@@ -210,7 +210,7 @@
         "description": "The southernmost part of the Blue Greenway includes vast open space, the Yosemite Slough wetland restoration project, new dwelling units, some industrial development, and California’s first urban state park. Once complete, the Shipyard and Candlestick Point together will include a total of 332 acres of open space.",
         "map_id": "sc",
         "bgw_id": "5941",
-        "image": "zone-sc.jpg"
+        "image": "img_ZONE_Hunters-Point-Naval-Shipyard-Candlestick.jpg"
       }
     },
     {
@@ -350,7 +350,7 @@
         "description": "In recent years, the northern portion of the Blue Greenway has undergone many renovations. The efforts of these renovations have significantly improved the shoreline’s environmental resilience and improved waterfront access. Two major development projects, Mission Rock and Chase Center, the future home of the Golden State Warriors basketball team, will continue to drastically enhance waterfront access.",
         "map_id": "mb",
         "bgw_id": "5935",
-        "image": "zone-mb.jpg"
+        "image": "img_ZONE_Mission-Bay-Mission-Rock.jpg"
       }
     },
     {
@@ -498,7 +498,7 @@
         "description": "Today chain-linked and barbed wire fences block much of the central waterfront. Future plans will rejuvenate this historic San Francisco area, with a sensitive balance of change and preservation into a clean and livable neighborhood.",
         "map_id": "p70",
         "bgw_id": "5938",
-        "image": "zone-p70.jpg"
+        "image": "img_ZONE_Pier-70-Forest-City.jpg"
       }
     },
     {
@@ -646,7 +646,7 @@
         "description": "India Basin is a bay front inlet lined with several existing and proposed park sites. Today Heron’s Head Park, India Basin Open Space, the former PG&E Hunters Point Power Plant, and India Basin Shoreline Park are accessible to the public. Future plans will connect the existing sites to recently acquired Recreation and Parks Department (RPD) property at 900 Innes Open Space and adjacent 700 Innes site created by private development, creating one of the largest waterfront open spaces in the city. Once completed, an aligned Class 1 bike path will connect the southeast neighborhoods to the greater Blue Greenway and Bay Trail.",
         "map_id": "ib",
         "bgw_id": "5939",
-        "image": "zone-ib.jpg"
+        "image": "img_ZONE_India-Basin.jpg"
       }
     }
   ]
