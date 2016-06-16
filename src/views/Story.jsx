@@ -9,30 +9,21 @@ import PageHeader from '../components/PageHeader';
 
 class Story extends React.Component {
 
-	// static contextTypes: {
-	// 	router: React.PropTypes.func
-	// };
-
 	constructor (props) {
 		super(props);
-
-		this.onStateChange = this.onStateChange.bind(this);
-		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
-	}
-
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
 	}
 
 	componentWillUpdate (nextProps, nextState) {
-		var storyTitle = this.props.params.title || nextProps.store.getState().stories.selectedStory.title;
-		let { query } = this.props.location;
-		var id = query && query.id ? +query.id : null;
+		const storeState = nextProps.store.getState();
+		let storyTitle = nextProps.params.title || storeState.stories.selectedStory.title,
+			{ query } = this.props.location,
+			id = query && query.id ? +query.id : null;
+
 		// for when the app loads with the URL of a specific story
-		if (this.state.stories.data.items !== nextState.stories.data.items &&
-			!this.props.store.getState().stories.selectedStory) {
-			this.updateSelectedStory(id, storyTitle, nextState.stories.data.items);
+		// if (this.state.stories.data.items !== nextState.stories.data.items &&
+		// 	!storeState.stories.selectedStory) {
+		if (id && !storeState.stories.selectedStory) {
+			this.updateSelectedStory(id, storyTitle, storeState.stories.data.items);
 		}
 	}
 
@@ -47,24 +38,10 @@ class Story extends React.Component {
 		});
 	}
 
-	componentWillMount (){
-		// console.log(this.props.location);
+	componentWillMount () {
 		if (!this.props.store.getState().stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
-		this.onStateChange();
-	}
-
-	componentDidMount () {
-		//
-	}
-
-	componentWillUnmount () {
-		this.unsubscribeStateChange();
-	}
-
-	componentDidUpdate () {
-		//
 	}
 
 	handleRangeChange (range) {
@@ -77,8 +54,8 @@ class Story extends React.Component {
 	}
 
 	renderPageView () {
-		const appState = this.props.store.getState();
-		if (!appState.stories.data.items.length || !appState.stories.selectedStory) {
+		const storeState = this.props.store.getState();
+		if (!storeState.stories.data.items.length || !storeState.stories.selectedStory) {
 			 return false;
 		}
 		const storiesData = this.props.store.getState().stories;
@@ -97,19 +74,20 @@ class Story extends React.Component {
 	}
 
 	renderMapView () {
+		const storeState = this.props.store.getState();
 		return (
 			<div className='stories-map-overlay'>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
-						layers={ this.state.mapLayersPicker.layers }
+						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Transportation'
-						layers={ this.state.mapLayersPicker.transportation }
+						layers={ storeState.mapLayersPicker.transportation }
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
