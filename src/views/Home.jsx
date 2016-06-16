@@ -57,8 +57,6 @@ class Home extends React.Component {
 			percentPosition: true
 		});
 
-		// console.log(pckry);
-
 		pckry.once('layoutComplete', () => {
 			// callback for packery init
 		  grid.classList.add('loaded');
@@ -111,9 +109,6 @@ class Home extends React.Component {
 			}
 		});
 
-		console.log(items);
-		// items = [items[2], items[1], items[0], items[3], items[4], items[6], items[5]];
-
 		// create divs with corresponding classNames that determine width & height for use with Packery & Skeleton grid
 		// inside divs reside a corresponding story or event component
 		let divs = items.map((item, idx) => {
@@ -139,7 +134,6 @@ class Home extends React.Component {
 					</div>
 				);
 			} else if (item.event) {
-				console.log(idx, item.event.id);
 				item.event.homepage = true;
 				item.event.defaultImageIndex = defaultImageIndex;
 				defaultImageIndex -= 1;
