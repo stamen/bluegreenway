@@ -25,6 +25,7 @@
 	.story-post {
 		height: auto;
 		margin-left: 0;
+		text-align: justify !important;
 
 		* {
 			background: none !important;
@@ -35,7 +36,7 @@
 			font-size: 1rem !important;
 			font-family: NeutrafaceText !important;
 			color: $blue !important;
-			line-height: 1rem !important;
+			line-height: 1.3rem !important;
 		}
 
 		img {
@@ -48,7 +49,7 @@
 		p:first-of-type > span {
 			font-size: 1.25rem !important;
 			font-weight: bold;
-			line-height: 1.25rem !important;
+			line-height: 1.5rem !important;
 		}
 	}
 
