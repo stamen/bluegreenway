@@ -10,10 +10,13 @@ function parseRelatedIds (s) {
 }
 
 function parseImages (images) {
+	if (!images) return [];
+
 	// If we only have one image, return that image wrapped in an array
 	if (images.src) {
 		return [images];
 	}
+
 	return images;
 }
 

@@ -22,8 +22,8 @@ const Story = (props) => {
     <div
       className={storyClassName}
       onClick={(() => viewStory())}
-      style={{ backgroundImage: `url(${images[0].src})` }}
-      >
+      style={images.length ? { backgroundImage: `url(${images[0].src})` } : {}}
+    >
       <div className='story-shade'>
         <div className="story-category">{ category }</div>
         <div className="story-text">
