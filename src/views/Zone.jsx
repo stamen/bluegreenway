@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import moment from 'moment';
 import { get } from 'lodash';
 
@@ -20,6 +20,7 @@ class Zone extends Component {
 	constructor(props) {
 		super(props);
 		this.onProjectMapLinkClicked = this.onProjectMapLinkClicked.bind(this);
+		this.onZoneMapLinkClicked = this.onZoneMapLinkClicked.bind(this);
 	}
 
 	componentWillMount () {
@@ -77,8 +78,8 @@ class Zone extends Component {
 			);
 		}
 
-		// TODO: image doesn't exist in the zone data...where can we get it from?
-		let { name, description, image } = zone.properties;
+		let { name, description, image } = zone.properties,
+			mapUrl = 'projects/map';	// TODO: pass this in instead of hardcoding
 
 		return (
 			<div className='grid-container'>
@@ -87,7 +88,7 @@ class Zone extends Component {
 						<div className='six columns zone-header'>
 							<h2 className='title'>{ name }</h2>
 							<p>{ (description || 'Zone placeholder description text') + (image ? '' : ' (and placeholder image at right)') }</p>
-							<a className='button' href=''>View on Map</a>
+							<Link className='button' onClick={ () => this.onZoneMapLinkClicked(zone) } to={ mapUrl }>View on Map</Link>
 						</div>
 						<div
 							className='six columns zone-img'
@@ -146,6 +147,14 @@ class Zone extends Component {
 				{ projectListItems }
 			</div>
 		);
+	}
+
+	onZoneMapLinkClicked (zone) {
+		// KLUDGE: set zone on map after navigating to map
+		setTimeout(() => {
+			console.log(">>>>> TODO: view zone on map:", zone);
+			// this.props.actions.updateSelectedZone(zone);
+		}, 100);
 	}
 
 	onProjectMapLinkClicked (project) {
