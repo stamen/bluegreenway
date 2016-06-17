@@ -42,6 +42,7 @@ function groupEvents(events) {
 }
 
 export function cleanEventsData (items) {
+	// console.log("events:", items.map(i => i.node['Associated Location']));
 	return groupEvents(items.map(item => cleanEventItem(item)));
 }
 

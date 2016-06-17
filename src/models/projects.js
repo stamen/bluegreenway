@@ -26,6 +26,8 @@ export function cleanProjectItem (item) {
 }
 
 export function cleanProjectsData (projects) {
+  // console.log("projects:", projects.filter(project => project.node['Is BGW'] !== null).map(i => i.node.id));
+
   // note: may want to remove filter for production...
   return projects
     .filter(project => {

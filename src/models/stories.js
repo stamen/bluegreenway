@@ -22,6 +22,7 @@ function parseImages (images) {
 
 export function cleanStoryItem (item) {
 	item = item.node;
+	console.log(">>>>> item:", item);
 	let cleaned = {
 		body: item.Body,
 		category: item.Category,
@@ -36,6 +37,7 @@ export function cleanStoryItem (item) {
 }
 
 export function cleanStoriesData (items) {
+	// console.log("locations:", items.map(i => i.node['Related Locations']));
 	return items.map(item => cleanStoryItem(item));
 }
 

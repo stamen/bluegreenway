@@ -72,7 +72,7 @@ class Home extends React.Component {
 		// should pull from stories about featured people, the most recent other stories, and most recent events
 		let len = 7;
 		let items = [];
-		times(len, (i)=> {
+		times(len, i => {
 			if (i < 3) {
 				// first three elements should be stories
 				if (stories.data.items[i]) {
@@ -117,6 +117,7 @@ class Home extends React.Component {
 				// assign a class for the grid item to be taller
 				// todo: assign this class only when item.story.category is for featured persons of BGW
 				let storyClassNames;
+				console.log(">>>>> item:", item);
 
 				if (idx === 0 || idx === 2 || idx === 4) {
 					storyClassNames = 'grid-item grid-item--tall three columns';
