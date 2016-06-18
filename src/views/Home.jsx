@@ -66,62 +66,54 @@ class Home extends React.Component {
 	}
 
 	renderGridItems () {
-		const { stories, events } = this.props.store.getState();
-		// create a new array for homepage events & stories, must be a grouping of 7 elements
-		// should look like: [story, story, story, event, story, story, event]
-		// should pull from stories about featured people, the most recent other stories, and most recent events
-		let len = 7;
-		let items = [];
-		times(len, i => {
-			if (i < 3) {
-				// first three elements should be stories
-				if (stories.data.items[i]) {
-					items.push({
-						story: Object.assign({},
-							stories.data.items.slice(i, i + 1)[0]
-						)
-					});
-				}
+		let storeState = this.props.store.getState(),
+			itemsByType = {
+				story: storeState.stories.data.items.filter(item => item.category !== 'People of the Blue Greenway'),
+				people: storeState.stories.data.items.filter(item => item.category === 'People of the Blue Greenway'),
+				event: storeState.events.data.items.concat()
+			};
+
+		let gridItemTypes = [
+			'people',
+			'story',
+			'event',
+			'event',
+			'event',
+			'people',
+			'story',
+			'event'
+		];
+
+		let items = gridItemTypes.map(type => {
+			if (!itemsByType[type].length) {
+				// TODO: find a way to fail more gracefully than this,
+				// e.g. pull from a different itemsByType list.
+				throw new Error(`Not enough items of type ${ type } to complete the layout.`);
 			}
-			if (i > 3 && i < 6) {
-				// 4th and 5th zero based indexed elements should be stories
-				let x = i - 1;
-				if (stories.data.items[x]) {
-					items.push({
-						story: Object.assign({},
-							stories.data.items.slice(x, x + 1)[0]
-						)
-					});
-				}
-			}
-			if (i === 3 || i === 6) {
-				// 3rd and 6th zero based indexed elements should be events
-				let n;
-				if (i === 3) n = 0;
-				if (i === 6) n = 1;
-				if (events.data.items[n]) {
-					items.push({
-						event: Object.assign({},
-							events.data.items.slice(n, n + 1)[0]
-						)
-					});
-				}
-			}
+			return {
+				[type]: itemsByType[type].shift()
+			};
 		});
 
 		// create divs with corresponding classNames that determine width & height for use with Packery & Skeleton grid
 		// inside divs reside a corresponding story or event component
+		let isPeople;
 		let divs = items.map((item, idx) => {
+			isPeople = item.people;
+			if (isPeople) {
+				item.story = item.people;
+			}
+
 			if (item.story) {
 				item.story.homepage = true;
 				// assign a class for the grid item to be taller
-				// todo: assign this class only when item.story.category is for featured persons of BGW
 				let storyClassNames;
-				console.log(">>>>> item:", item);
 
-				if (idx === 0 || idx === 2 || idx === 4) {
+				if (isPeople) {
+					// people stories are formatted as 1x2 grid items
 					storyClassNames = 'grid-item grid-item--tall three columns';
 				} else {
+					// non-people stories are formatted as 2x1 grid items
 					storyClassNames =  'grid-item six columns';
 				}
 
@@ -184,7 +176,7 @@ class Home extends React.Component {
 				<div className='grid-item twelve columns'>
 					<PageHeader />
 				</div>
-				{ stories.data.items.length && events.data.items.length?
+				{ stories.data.items.length && events.data.items.length ?
 					this.renderGridItems() : <h3>Loading, hang tight...</h3> }
 			</div>
 		);

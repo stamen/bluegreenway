@@ -22,7 +22,6 @@ function parseImages (images) {
 
 export function cleanStoryItem (item) {
 	item = item.node;
-	console.log(">>>>> item:", item);
 	let cleaned = {
 		body: item.Body,
 		category: item.Category,
