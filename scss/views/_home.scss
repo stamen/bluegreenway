@@ -1,4 +1,6 @@
 #home {
+	$cell-margin: 1em;
+
 	position: relative;
 	@include colorize-grid(7, 3, 2, null);
 
@@ -8,26 +10,46 @@
 
 	.grid-sizer,
 	.grid-item {
-		height: 245px;
+		position: relative;
+		// height: $row-height;
 		margin-left: 0;
 
-		.event-cell, .story-cell {
+		> div {
 			width: 100%;
-			height: 245px;
+			height: $row-height;
 		}
+
+		cursor: pointer;
 	}
 
 	.grid-item.grid-item--tall {
-		height: 500px;
+		> div {
+			height: 2 * ($row-height + $grid-spacing-small);
+		}
 		background: #333;
-	}
 
-	.grid-item.grid-item--width2 {
-		// width: 48.5%;
-	}
+		// story item overrides (from stories.scss)
+		.story-category {
+			display: none;
+		}
+		.story-text {
+			position: relative;
+			top: 0;
+			height: 100%;
+		}
+		.story-title {
+			//
+		}
+		.story-body {
+			position: absolute;
+			bottom: $cell-margin;
+			width: calc(100% - #{2 * $cell-margin});
+			max-height: $row-height - $cell-margin;
+			overflow: hidden;
 
-	.grid-item--width4 {
-		// width: 97%;
-		// margin-bottom: 10px;
+			p:not(:first-child) {
+				display: none;
+			}
+		}
 	}
 }
