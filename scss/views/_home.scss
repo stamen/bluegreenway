@@ -24,7 +24,7 @@
 
 	.grid-item.grid-item--tall {
 		> div {
-			height: 2 * ($row-height + $grid-spacing-small);
+			height: 2 * $row-height + $grid-spacing-small;
 		}
 		background: #333;
 
