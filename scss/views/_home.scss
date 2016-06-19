@@ -40,12 +40,30 @@
 		.story-title {
 			//
 		}
+
+		$font-size: 1em;
+		$line-height: 1.8em;
+		$lines-to-show: 7;
 		.story-body {
 			position: absolute;
 			bottom: $cell-margin;
 			width: calc(100% - #{2 * $cell-margin});
 			max-height: $row-height - $cell-margin;
 			overflow: hidden;
+
+			// multiline ellipsis (webkit-only), per
+			// https://codepen.io/martinwolf/pen/qlFdp
+			display: block; /* Fallback for non-webkit */
+			display: -webkit-box;
+			max-width: calc(100% - #{2 * $cell-margin});
+			height: $font-size * $line-height * $lines-to-show / 1em; /* Fallback for non-webkit; divide by 1em to clear up em*em units */
+			margin: 0 auto;
+			font-size: $font-size;
+			line-height: $line-height;
+			-webkit-line-clamp: $lines-to-show;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
 			p:not(:first-child) {
 				display: none;
