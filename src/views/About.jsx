@@ -19,6 +19,8 @@ class About extends React.Component {
 	componentWillMount () {
 		this.setState({});
 
+		this.props.actions.mapLayersPickerStoriesChange(false);
+		this.props.actions.mapLayersPickerEventsChange(false);
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
 		this.onStateChange();

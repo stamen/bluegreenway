@@ -30,6 +30,8 @@ class Events extends React.Component {
 	}
 
 	componentWillMount () {
+		this.props.actions.mapLayersPickerStoriesChange(false);
+		this.props.actions.mapLayersPickerEventsChange(true);
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
 		this.onStateChange();

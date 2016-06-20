@@ -62,6 +62,24 @@ export default {
 			}
 		},
 
+		stories (state = {}, action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_STORIES_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		events (state = {}, action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_EVENTS_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
 		projects (state = {}, action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_PROJECTS_CHANGED:

@@ -14,6 +14,8 @@ export const SET_STATE = 'SET_STATE';
 export const MAP_MOVED = 'MAP_MOVED';
 export const MAP_LAYERS_PICKER_LAYERS_CHANGED = 'MAP_LAYERS_PICKER_LAYERS_CHANGED';
 export const MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED = 'MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED';
+export const MAP_LAYERS_PICKER_STORIES_CHANGED = 'MAP_LAYERS_PICKER_STORIES_CHANGED';
+export const MAP_LAYERS_PICKER_EVENTS_CHANGED = 'MAP_LAYERS_PICKER_EVENTS_CHANGED';
 export const MAP_LAYERS_PICKER_PROJECTS_CHANGED = 'MAP_LAYERS_PICKER_PROJECTS_CHANGED';
 export const ITEM_SELECTED = 'ITEM_SELECTED';
 export const EVENTS_START_DATE_CHANGED = 'EVENTS_START_DATE_CHANGED';
@@ -143,6 +145,20 @@ export default function (store) {
 			store.dispatch({
 				type: MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED,
 				key,
+				value
+			});
+		},
+
+		mapLayersPickerStoriesChange (value) {
+			store.dispatch({
+				type: MAP_LAYERS_PICKER_STORIES_CHANGED,
+				value
+			});
+		},
+
+		mapLayersPickerEventsChange (value) {
+			store.dispatch({
+				type: MAP_LAYERS_PICKER_EVENTS_CHANGED,
 				value
 			});
 		},

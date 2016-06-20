@@ -17,16 +17,21 @@ class Stories extends React.Component {
 	}
 
 	componentWillMount () {
-		const storeState = this.props.store.getState();
+		this.props.actions.mapLayersPickerStoriesChange(true);
+		this.props.actions.mapLayersPickerEventsChange(false);
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
 		// Fetch data if we need to
+		const storeState = this.props.store.getState();
+
 		if (!storeState.stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
+
 		if (storeState.stories.selectedStory) {
 			this.props.actions.updateSelectedStory(null);
 		}
+
 		if (storeState.stories.data.items.length &&
 			!storeState.stories.categoryOptions.length) {
 			this.updateFilterOptions(storeState.stories);
@@ -42,7 +47,6 @@ class Stories extends React.Component {
 	}
 
 	updateFilterOptions (stories) {
-		console.log(">>>>> updateFilterOptions");
 		this.props.actions.storyCategoryChange(getCategoryOptions(stories));
 	}
 
@@ -126,7 +130,7 @@ class Stories extends React.Component {
 		);
 	}
 
-	renderStory(story) {
+	renderStory (story) {
 		return (
 			<Story
 				{ ...story }

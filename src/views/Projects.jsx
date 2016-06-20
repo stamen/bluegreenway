@@ -26,6 +26,8 @@ class Projects extends React.Component {
 			geodata = get(storeState.geodata, 'zones.geojson'),
 			projects = get(storeState.projects, 'data.items');
 
+		this.props.actions.mapLayersPickerStoriesChange(false);
+		this.props.actions.mapLayersPickerEventsChange(false);
 		this.props.actions.mapLayersPickerProjectsChange(true);
 
 		if (!geodata || !geodata.features) {
@@ -131,7 +133,7 @@ class Projects extends React.Component {
 				let layer = layers[1],
 					poisLayer = layer.getSubLayer(3);
 				poisLayer.hide();
-				
+
 				map = vis.getNativeMap();
 				map.addLayer(zoneLayer);
 				map.fitBounds(zoneFeaturesLayer.getBounds(), {

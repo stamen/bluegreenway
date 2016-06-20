@@ -2,6 +2,7 @@ import * as React from 'react';
 import { get } from 'lodash';
 import { vizJSON } from '../models/common.js';
 import sassVars from '../../scss/variables.json';
+// import { geoPath } from 'd3-geo';
 
 export default class LeafletMap extends React.Component {
 	constructor (props) {
@@ -50,6 +51,7 @@ export default class LeafletMap extends React.Component {
 
 		let { mapLayersPicker, projects } = storeState;
 
+		// TODO: DRY this out
 		if (mapLayersPicker.transportation[0].checked) {
 			this.mapState.layers.biking.show();
 		} else {
@@ -66,6 +68,33 @@ export default class LeafletMap extends React.Component {
 			this.mapState.layers.pois.show();
 		} else {
 			this.mapState.layers.pois.hide();
+		}
+
+		if (mapLayersPicker.stories) {
+			if (!this.mapState.layers.stories) {
+				this.createStoriesMapLayer();
+			}
+			if (this.mapState.layers.stories) {
+				// show it only if it's already been created
+				this.mapState.map.addLayer(this.mapState.layers.stories);
+			}
+		} else if (this.mapState.layers.stories) {
+			// hide it only if it's already been created
+			this.mapState.map.removeLayer(this.mapState.layers.stories);
+		}
+
+		if (mapLayersPicker.events) {
+			if (!this.mapState.layers.events) {
+				// attempt to create it if it hasn't already been created
+				this.createEventsMapLayer();
+			}
+			if (this.mapState.layers.events) {
+				// show it only if it's already been created
+				this.mapState.map.addLayer(this.mapState.layers.events);
+			}
+		} else if (this.mapState.layers.events) {
+			// hide it only if it's already been created
+			this.mapState.map.removeLayer(this.mapState.layers.events);
 		}
 
 		if (mapLayersPicker.projects) {
@@ -144,7 +173,7 @@ export default class LeafletMap extends React.Component {
 
 					// fit map to encompass projects bounds,
 					// and nudge it below header and to right of page content
-					// note: projectsLayer is added/removed via an action, not here.
+					// note: stories/events/projects layers are added/removed via actions, not here.
 					let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
 					map.fitBounds(projectsLayer.getBounds(), {
 						paddingTopLeft: [leftPadding, sassVars.header.height],
@@ -155,6 +184,14 @@ export default class LeafletMap extends React.Component {
 					this.mapState.initing = false;
 					this.mapState.map = map;
 					this.mapState.layers = sublayers;
+
+					if (!this.mapState.layers.stories) {
+						this.mapState.layers.stories = this.createStoriesMapLayer();
+					}
+
+					if (!this.mapState.layers.events) {
+						this.mapState.layers.events = this.createEventsMapLayer();
+					}
 
 					this.mapState.layers.projects = projectsLayer;
 
@@ -174,6 +211,90 @@ export default class LeafletMap extends React.Component {
 			.on('error', err => {
 				console.warn(err);
 			});
+	}
+
+	createStoriesMapLayer () {
+		// TODO: DRY out this and createEventsMapLayer
+		const storeState = this.props.store.getState();
+
+		// bail if story data not yet loaded
+		if (!storeState.stories.data.items.length) return null;
+
+		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
+		// bail if projects geojson not yet loaded
+		if (!projectsGeoJSON.length) return null;
+
+		// console.log(">>>>> stories:", storeState.stories.data.items.map(i => i.relatedLocations));
+
+		let markers = [];
+		storeState.stories.data.items.forEach(story => {
+			if (!story.relatedLocations.length) return;
+
+			let locationId = story.relatedLocations[0],
+				project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
+
+			if (project) {
+				console.log("TODO: compute the centroid of this project and use it to create a marker");
+				/*
+				geoPath
+					.datum(feature)
+					.centroid()
+					// returns pixel value, not lat-lon??
+					*/
+
+				/*
+				let marker = L.marker([centerLat, centerLng])
+					.bindPopup('story popup placeholder');
+				markers.push(marker);
+				*/
+			}
+		});
+
+		if (!markers.length) return null;
+		this.mapState.layers.stories = L.layerGroup(markers);
+	}
+
+	createEventsMapLayer () {
+		// TODO: DRY out this and createStoriesMapLayer
+		const storeState = this.props.store.getState();
+
+		// bail if event data not yet loaded
+		if (!storeState.events.data.items.length) return null;
+
+		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
+		// bail if projects geojson not yet loaded
+		if (!projectsGeoJSON.length) return null;
+
+		// console.log(">>>>> events:", storeState.events.data.items.map(i => i.location));
+		console.log(">>>>> events:", storeState.events.data.items);
+
+		let markers = [];
+		storeState.events.data.items.forEach(event => {
+			if (!event.location) return;
+
+			// TODO: can be > 1 location; create a marker for each
+			let locationId = event.location.split(',')[0],
+				project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
+
+			if (project) {
+				console.log("TODO: compute the centroid of this project and use it to create a marker");
+				/*
+				geoPath
+					.datum(feature)
+					.centroid()
+					// returns pixel value, not lat-lon??
+					*/
+
+				/*
+				let marker = L.marker([centerLat, centerLng])
+					.bindPopup('event popup placeholder');
+				markers.push(marker);
+				*/
+			}
+		});
+
+		if (!markers.length) return null;
+		this.mapState.layers.events = L.layerGroup(markers);
 	}
 
 	createProjectsMapLayer (projectsGeoJSON) {
@@ -205,7 +326,7 @@ export default class LeafletMap extends React.Component {
 		if (!layerData) return null;
 
 		let { feature, layer } = layerData;
-		
+
 		let popupContent = `<h3>${ project.name }</h3><p>${ project.description }</p>`;
 
 		this.mapState.projects.popups[project.id] = L.popup()
