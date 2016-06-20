@@ -32,7 +32,8 @@
     "redux": "^3.3.1",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^1.0.3",
-    "slug": "^0.9.1"
+    "slug": "^0.9.1",
+    "turf-centroid": "^3.0.10"
   },
   "devDependencies": {
     "babel-core": "^6.6.0",

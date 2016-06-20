@@ -2,7 +2,7 @@ import * as React from 'react';
 import { get } from 'lodash';
 import { vizJSON } from '../models/common.js';
 import sassVars from '../../scss/variables.json';
-// import { geoPath } from 'd3-geo';
+import centroid from 'turf-centroid';
 
 export default class LeafletMap extends React.Component {
 	constructor (props) {
@@ -70,32 +70,21 @@ export default class LeafletMap extends React.Component {
 			this.mapState.layers.pois.hide();
 		}
 
-		if (mapLayersPicker.stories) {
-			if (!this.mapState.layers.stories) {
-				this.createStoriesMapLayer();
+		// toggle marker layers, creating on-demand as needed
+		['stories', 'events'].forEach(type => {
+			if (mapLayersPicker[type]) {
+				if (!this.mapState.layers[type]) {
+					this.createMarkerMapLayer(type);
+				}
+				if (this.mapState.layers[type]) {
+					// show it only if it's already been created
+					this.mapState.map.addLayer(this.mapState.layers[type]);
+				}
+			} else if (this.mapState.layers[type]) {
+				// hide it only if it's already been created
+				this.mapState.map.removeLayer(this.mapState.layers[type]);
 			}
-			if (this.mapState.layers.stories) {
-				// show it only if it's already been created
-				this.mapState.map.addLayer(this.mapState.layers.stories);
-			}
-		} else if (this.mapState.layers.stories) {
-			// hide it only if it's already been created
-			this.mapState.map.removeLayer(this.mapState.layers.stories);
-		}
-
-		if (mapLayersPicker.events) {
-			if (!this.mapState.layers.events) {
-				// attempt to create it if it hasn't already been created
-				this.createEventsMapLayer();
-			}
-			if (this.mapState.layers.events) {
-				// show it only if it's already been created
-				this.mapState.map.addLayer(this.mapState.layers.events);
-			}
-		} else if (this.mapState.layers.events) {
-			// hide it only if it's already been created
-			this.mapState.map.removeLayer(this.mapState.layers.events);
-		}
+		});
 
 		if (mapLayersPicker.projects) {
 			this.mapState.map.addLayer(this.mapState.layers.projects);
@@ -185,12 +174,14 @@ export default class LeafletMap extends React.Component {
 					this.mapState.map = map;
 					this.mapState.layers = sublayers;
 
+					// If projects geojson loads after stories and events CMS data,
+					// create Stories and Events map layers now.
+					// Otherwise, they're created when stories/events data load, in updateMapLayers.
 					if (!this.mapState.layers.stories) {
-						this.mapState.layers.stories = this.createStoriesMapLayer();
+						this.createMarkerMapLayer('stories');
 					}
-
 					if (!this.mapState.layers.events) {
-						this.mapState.layers.events = this.createEventsMapLayer();
+						this.createMarkerMapLayer('events');
 					}
 
 					this.mapState.layers.projects = projectsLayer;
@@ -213,88 +204,72 @@ export default class LeafletMap extends React.Component {
 			});
 	}
 
-	createStoriesMapLayer () {
-		// TODO: DRY out this and createEventsMapLayer
+	createMarkerMapLayer (type) {
 		const storeState = this.props.store.getState();
 
-		// bail if story data not yet loaded
-		if (!storeState.stories.data.items.length) return null;
+		// bail if data not yet loaded
+		let layerData = get(storeState[type], 'data.items');
+		if (!layerData.length) return null;
 
-		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
 		// bail if projects geojson not yet loaded
+		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
 		if (!projectsGeoJSON.length) return null;
 
-		// console.log(">>>>> stories:", storeState.stories.data.items.map(i => i.relatedLocations));
+		let locationsField;
+
+		switch (type) {
+			case 'stories':
+				locationsField = 'relatedLocations';
+				break;
+			case 'events':
+				locationsField = 'location';
+				break;
+			default:
+				throw new Error('Cannot create map layer for type:', type);
+		}
+
+		/*
+		// TEMP FOR TESTING
+		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
+		if (type === 'stories') {
+			layerData = layerData.concat();
+			layerData[0].relatedLocations = [ 5951 ];	// test against Heron's Head Park
+		}
+		*/
 
 		let markers = [];
-		storeState.stories.data.items.forEach(story => {
-			if (!story.relatedLocations.length) return;
+		layerData.forEach(item => {
+			// TODO: can be > 1 location; create a marker for each
+			let locationId;
+			if (Array.isArray(item[locationsField])) {
+				if (!item[locationsField].length) return;
+				locationId = item[locationsField][0];
+			} else {
+				locationId = item[locationsField].split(',')[0];
+			}
+			if (!locationId) return;
 
-			let locationId = story.relatedLocations[0],
-				project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
+			let project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
+			if (!project) return;
 
-			if (project) {
-				console.log("TODO: compute the centroid of this project and use it to create a marker");
-				/*
-				geoPath
-					.datum(feature)
-					.centroid()
-					// returns pixel value, not lat-lon??
-					*/
-
-				/*
-				let marker = L.marker([centerLat, centerLng])
-					.bindPopup('story popup placeholder');
+			let centroidResult = get(centroid(project), 'geometry.coordinates');
+			if (centroidResult) {
+				let marker = L.marker([centroidResult[1], centroidResult[0]])
+					.bindPopup(this.initMarkerPopup(type, item));
 				markers.push(marker);
-				*/
+			} else {
+				console.warn(`Could not derive centroid for project[${ locationId }]:`, project);
 			}
 		});
 
 		if (!markers.length) return null;
-		this.mapState.layers.stories = L.layerGroup(markers);
+
+		this.mapState.layers[type] = L.layerGroup(markers);
 	}
 
-	createEventsMapLayer () {
-		// TODO: DRY out this and createStoriesMapLayer
-		const storeState = this.props.store.getState();
-
-		// bail if event data not yet loaded
-		if (!storeState.events.data.items.length) return null;
-
-		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
-		// bail if projects geojson not yet loaded
-		if (!projectsGeoJSON.length) return null;
-
-		// console.log(">>>>> events:", storeState.events.data.items.map(i => i.location));
-		console.log(">>>>> events:", storeState.events.data.items);
-
-		let markers = [];
-		storeState.events.data.items.forEach(event => {
-			if (!event.location) return;
-
-			// TODO: can be > 1 location; create a marker for each
-			let locationId = event.location.split(',')[0],
-				project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
-
-			if (project) {
-				console.log("TODO: compute the centroid of this project and use it to create a marker");
-				/*
-				geoPath
-					.datum(feature)
-					.centroid()
-					// returns pixel value, not lat-lon??
-					*/
-
-				/*
-				let marker = L.marker([centerLat, centerLng])
-					.bindPopup('event popup placeholder');
-				markers.push(marker);
-				*/
-			}
-		});
-
-		if (!markers.length) return null;
-		this.mapState.layers.events = L.layerGroup(markers);
+	initMarkerPopup (type, data) {
+		console.log(">>>>> create popup with data:", data);
+		return `${ type } placeholder popup`;
 	}
 
 	createProjectsMapLayer (projectsGeoJSON) {
