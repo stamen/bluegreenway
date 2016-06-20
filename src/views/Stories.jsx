@@ -14,61 +14,36 @@ class Stories extends React.Component {
 
 	constructor (props) {
 		super(props);
-		this.state = {};
-		this.onStateChange = this.onStateChange.bind(this);
-		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
 	componentWillMount () {
-		this.setState({ stories: {
-			categoryOptions: []
-		}});
-
+		const storeState = this.props.store.getState();
 		this.props.actions.mapLayersPickerProjectsChange(false);
 
-		this.onStateChange();
-
 		// Fetch data if we need to
-		if (!this.props.store.getState().stories.data.items.length) {
+		if (!storeState.stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
-		if (this.props.store.getState().stories.selectedStory) {
+		if (storeState.stories.selectedStory) {
 			this.props.actions.updateSelectedStory(null);
 		}
-		if (this.props.store.getState().stories.data.items.length &&
-			!this.props.store.getState().stories.categoryOptions.length) {
-			this.updateFilterOptions(this.props.store.getState().stories);
+		if (storeState.stories.data.items.length &&
+			!storeState.stories.categoryOptions.length) {
+			this.updateFilterOptions(storeState.stories);
 		}
 	}
 
-	componentDidMount () {
-		//
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		if (nextState.stories.data.items.length !== this.state.stories.data.items.length) {
-			this.updateFilterOptions(nextState.stories);
+	componentWillUpdate (nextProps, nextState) {
+		const storeState = this.props.store.getState();
+		if (storeState.stories.data.items.length &&
+			!storeState.stories.categoryOptions.length) {
+			this.updateFilterOptions(storeState.stories);
 		}
-	}
-
-	componentDidUpdate () {
-		//
-	}
-
-	componentWillUnmount () {
-		this.unsubscribeStateChange();
-	}
-
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
 	}
 
 	updateFilterOptions (stories) {
+		console.log(">>>>> updateFilterOptions");
 		this.props.actions.storyCategoryChange(getCategoryOptions(stories));
-		this.setState({
-
-		});
 	}
 
 	handleRangeChange (range) {
@@ -89,18 +64,20 @@ class Stories extends React.Component {
 	}
 
 	renderPageView () {
+		const storeState = this.props.store.getState();
 		return (
 			<div className="grid-container">
 				<PageHeader />
-				{ this.state.stories.data.error ?
+				{ storeState.stories.data.error ?
 					<div className="stories-data-load-error">"We're having a hard time loading data. Please try again."</div> :
 					null }
-				{ this.renderRows(this.state.stories.data.items) }
+				{ this.renderRows(storeState.stories.data.items) }
 			</div>
 		);
 	}
 
 	renderRows (stories) {
+		const storeState = this.props.store.getState();
 		let firstStory = stories[0],
 			remainingStoryRows;
 
@@ -129,18 +106,18 @@ class Stories extends React.Component {
 		return (
 			<div>
 				<div className='row'>
-					<div className='three columns' style={{ background: 'white' }}>
+					<div className='three columns' style={ { background: 'white' } }>
 						<DateRange
-							minDate={moment('1/1/2016', 'M/D/YYYY')}
-							maxDate={moment()}
-							initialStartDate={this.state.stories.startDate}
-							initialEndDate={this.state.stories.endDate}
-							onRangeChange={(range) => this.handleRangeChange(range)} />
+							minDate={ moment('1/1/2016', 'M/D/YYYY') }
+							maxDate={ moment() }
+							initialStartDate={ storeState.stories.startDate }
+							initialEndDate={ storeState.stories.endDate }
+							onRangeChange={ (range) => this.handleRangeChange(range) } />
 					</div>
-					<div className='three columns filter-cell' style={{ background: 'white' }}>
+					<div className='three columns filter-cell' style={ { background: 'white' } }>
 						<div className="filter-header">Filter Stories</div>
 						<StoryFilters
-							categoryOptions={this.state.stories.categoryOptions} />
+							categoryOptions={ storeState.stories.categoryOptions } />
 					</div>
 					{ firstStory ? this.renderStory(firstStory, 0) : null }
 				</div>
@@ -152,29 +129,30 @@ class Stories extends React.Component {
 	renderStory(story) {
 		return (
 			<Story
-				{...story}
-				onClick={this.props.actions.updateSelectedStory}
-				key={story.id}
-				router={this.props.router}
-				mode={this.props.params.mode}
+				{ ...story }
+				onClick={ this.props.actions.updateSelectedStory }
+				key={ story.id }
+				router={ this.props.router }
+				mode={ this.props.params.mode }
 			/>
 		);
 	}
 
 	renderMapView () {
+		const storeState = this.props.store.getState();
 		return (
 			<div className="stories-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
-						layers={ this.state.mapLayersPicker.layers }
+						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Transportation'
-						layers={ this.state.mapLayersPicker.transportation }
+						layers={ storeState.mapLayersPicker.transportation }
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
