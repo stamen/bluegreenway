@@ -243,9 +243,9 @@ export default class LeafletMap extends React.Component {
 			let locationId;
 			if (Array.isArray(item[locationsField])) {
 				if (!item[locationsField].length) return;
-				locationId = item[locationsField][0];
+				locationId = item[locationsField] && item[locationsField][0];
 			} else {
-				locationId = item[locationsField].split(',')[0];
+				locationId = item[locationsField] && item[locationsField].split(',')[0];
 			}
 			if (!locationId) return;
 

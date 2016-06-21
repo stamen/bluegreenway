@@ -373,7 +373,7 @@ export const initialState = {
 
 	events: {
 		startDate: moment('1/1/2016', 'M/D/YYYY'),
-		endDate: moment(),
+		endDate: moment().add(1, 'months'),
 		ageRangeOptions: [],
 		costOptions: [],
 		locationOptions: [],
