@@ -4,9 +4,15 @@ $events-padding: 0.5em;
 	position: relative;
 	@include colorize-grid(20, 4, 1, null);
 	color: $text-color;
+
+	.date-picker-cell,
+	.filter-cell {
+		box-shadow: $page-shadow;
+	}
 }
 
 .event-cell {
+	box-shadow: $page-shadow;
 	position: relative;
 	background-repeat: no-repeat;
 	background-size: cover;

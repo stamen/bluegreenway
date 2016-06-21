@@ -110,7 +110,7 @@ class Stories extends React.Component {
 		return (
 			<div>
 				<div className='row'>
-					<div className='three columns' style={ { background: 'white' } }>
+					<div className='three columns date-picker-cell' style={ { background: 'white' } }>
 						<DateRange
 							minDate={ moment('1/1/2016', 'M/D/YYYY') }
 							maxDate={ moment() }

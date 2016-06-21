@@ -1,5 +1,6 @@
 .map-overlay {
 	background: $white;
+	box-shadow: $page-shadow;
 	color: $blue;
 
 	&:not(:last-of-type) {

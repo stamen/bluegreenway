@@ -4,12 +4,17 @@
 	position: relative;
 	@include colorize-grid(7, 3, 2, null);
 
+	.page-header {
+		margin-bottom: 0;
+	}
+
 	.gutter-sizer {
 		width: 1%;
 	}
 
 	.grid-sizer,
 	.grid-item {
+		box-shadow: $page-shadow;
 		position: relative;
 		// height: $row-height;
 		margin-left: 0;

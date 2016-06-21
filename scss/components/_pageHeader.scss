@@ -5,6 +5,7 @@
 	// margin-bottom: 0;
 
 	.header-shade {
+		box-shadow: $page-shadow;
 		height: 100%;
 		width: 100%;
 		background-color: $header-shade;
@@ -36,7 +37,7 @@
 			background-repeat: no-repeat;
 
 			@media (#{$bp-larger-than-mobile}) {
-				background-size: auto;
+				background-size: cover;
 			}
 
 		}
@@ -46,7 +47,7 @@
 			background-repeat: no-repeat;
 
 			@media (#{$bp-larger-than-mobile}) {
-				background-size: auto;
+				background-size: cover;
 			}
 
 		}
@@ -56,7 +57,7 @@
 			background-repeat: no-repeat;
 
 			@media (#{$bp-larger-than-mobile}) {
-				background-size: auto;
+				background-size: cover;
 			}
 
 		}
@@ -66,7 +67,7 @@
 			background-repeat: no-repeat;
 
 			@media (#{$bp-larger-than-mobile}) {
-				background-size: auto;
+				background-size: cover;
 			}
 		}
 

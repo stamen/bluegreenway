@@ -1,5 +1,8 @@
 #stories {
-	
+	.date-picker-cell,
+	.filter-cell {
+		box-shadow: $page-shadow;
+	}
 }
 
 .stories-map-overlay {
@@ -18,6 +21,7 @@
 
 .story-shade {
 	background-color: $stories-shade;
+	box-shadow: $page-shadow;
 	position: relative;
 	width: 100%;
 	height: 100%;
