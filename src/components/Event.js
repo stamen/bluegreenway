@@ -19,8 +19,8 @@ const Event = (event) => {
 
 	return (
 		<div
-			className={eventClassName}
-			style={eventStyle}>
+			className={ eventClassName }
+			style={ eventStyle }>
 			<div className='event-shade'>
 				{ (event.startDate.format('D-MMM') === event.endDate.format('D-MMM')) ?
 					(<div className='event-date'>

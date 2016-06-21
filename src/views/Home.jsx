@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router';
 import times from 'lodash/times';
 import Packery from 'packery';
+import moment from 'moment';
 
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
@@ -81,15 +82,34 @@ class Home extends React.Component {
 			'event',
 			'people',
 			'story',
+			'event',
+			'people',
+			'story',
+			'event',
+			'event',
+			'event',
+			'people',
+			'story',
 			'event'
 		];
 
 		let items = gridItemTypes.map(type => {
 			if (!itemsByType[type].length) {
-				// TODO: find a way to fail more gracefully than this,
-				// e.g. pull from a different itemsByType list.
-				throw new Error(`Not enough items of type ${ type } to complete the layout.`);
+				if (type === 'event') {
+					// create dummy (filler) event
+					itemsByType[type].push({
+						startDate: moment(),
+						endDate: moment(),
+						title: "Coming Soon...",
+						cost: "N/A"
+					});
+				} else {
+					// TODO: find a way to fail more gracefully than this,
+					// e.g. pull from a different itemsByType list.
+					throw new Error(`Not enough items of type ${ type } to complete the layout.`);
+				}
 			}
+
 			return {
 				[type]: itemsByType[type].shift()
 			};
@@ -131,6 +151,8 @@ class Home extends React.Component {
 				item.event.defaultImageIndex = defaultImageIndex;
 				defaultImageIndex -= 1;
 				if (defaultImageIndex === 0) defaultImageIndex = 6;
+
+				console.log(">>>>> item.event:", item.event);
 
 				return (
 					<div className='grid-item three columns' key={ item.event.startDate.format('YYYYMMDD') + item.event.id }>
