@@ -320,6 +320,8 @@ export default function (store) {
 		},
 
 		receiveZoneGeoData (geojson) {
+			// console.log("zones geojson:", geojson.features);
+			
 			return {
 				type: ZONE_GEODATA_RESPONSE,
 				geojson
@@ -351,7 +353,7 @@ export default function (store) {
 
 		receiveProjectsGeoData (geojson) {
 			// log all the project names and ids:
-			// console.log(">>>>> projects geojson:", geojson.features.map(f => `${ f.properties.name }: ${ f.properties.bgw_id }`));
+			// console.log("projects geojson:", geojson.features.map(f => `${ f.properties.name }: ${ f.properties.bgw_id }`));
 			
 			return {
 				type: PROJECTS_GEODATA_RESPONSE,

@@ -27,7 +27,7 @@ export function cleanProjectItem (item) {
 
 export function cleanProjectsData (projects) {
 	// log all the project names and ids:
-	// console.log("projects:", projects.map(i => (`${ i.node.Name }: ${ i.node.id }`)));
+	// console.log("projects:", projects.map(p => (`[${ p.node.id }] ${ p.node.Name }: { zoneId: ${ p.node['BGW Zone'] } }`)));
 
 	return projects.map(project => cleanProjectItem(project));
 }
