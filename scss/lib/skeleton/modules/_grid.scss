@@ -36,6 +36,16 @@
     width: $container-width-larger-than-tablet;
     padding: $container-padding-larger-than-tablet;
   }
+}
+
+@media (#{$bp-larger-than-narrow-desktop}) {
+  .grid-container {
+    width: $container-width-larger-than-narrow-desktop;
+    padding: $container-padding-larger-than-narrow-desktop;
+  }
+}
+
+@media (#{$bp-larger-than-mobile}) {
   .column,
   .columns {
     margin-left: $column-margin;

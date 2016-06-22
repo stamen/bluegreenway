@@ -44,17 +44,22 @@ $link-color: $blue;
 
 $bp-larger-than-mobile: 'min-width: 768px';
 $bp-larger-than-tablet: 'min-width: 1025px';
+// This breakpoint is specific to the moment where the mapPageToggle starts
+// to collide with the grid
+$bp-larger-than-narrow-desktop: 'min-width: 1248px';
 
 // grid-container at 1010 (75px col + 10px gutter)
 // for large screens, 100% for smaller screens
 $container-width: 100%;
 $container-width-larger-than-mobile: 100%;
-$container-width-larger-than-tablet: 1010px;
+$container-width-larger-than-tablet: 100%;
+$container-width-larger-than-narrow-desktop: 1010px;
 
 // pad container on small screens only
 $container-padding: 0.5em;
 $container-padding-larger-than-mobile: 0.5em;
-$container-padding-larger-than-tablet: 0;
+$container-padding-larger-than-tablet: 0.5em;
+$container-padding-larger-than-narrow-desktop: 0;
 
 $column-margin: 1%;
 

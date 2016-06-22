@@ -62,14 +62,14 @@ a:active {
 		width: 250px;
 	}
 
-	@media (#{$bp-larger-than-tablet}) {
+	@media (#{$bp-larger-than-narrow-desktop}) {
 		top: $header-height;
 	}
 }
 
 .grid-container {
 	margin: 1em 0 $footer-height 0;
-	@media (#{$bp-larger-than-tablet}) {
+	@media (#{$bp-larger-than-narrow-desktop}) {
 		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-tablet) $body-margin;
 	}
 

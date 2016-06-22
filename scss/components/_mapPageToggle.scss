@@ -5,7 +5,7 @@
 	transform: translate(-50%, 0);
 	z-index: 1;
 
-	@media (#{$bp-larger-than-tablet}) {
+	@media (#{$bp-larger-than-narrow-desktop}) {
 		left: auto;
 		right: $body-margin;
 		transform: none;
@@ -33,14 +33,14 @@
 	text-transform: uppercase;
 	width: 160px;
 
-	@media (#{$bp-larger-than-tablet}) {
+	@media (#{$bp-larger-than-narrow-desktop}) {
 		float: none;
 	}
 
 	&:first-of-type {
 		margin-right: 5px;
 
-		@media (#{$bp-larger-than-tablet}) {
+		@media (#{$bp-larger-than-narrow-desktop}) {
 			margin-right: 0;
 			margin-bottom: 5px;
 		}
@@ -55,7 +55,7 @@
 .map-page-toggle-btn-fulltext {
 	display: none;
 
-	@media (#{$bp-larger-than-tablet}) {
+	@media (#{$bp-larger-than-narrow-desktop}) {
 		display: inline;
 	}
 }
