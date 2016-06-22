@@ -235,12 +235,12 @@ export default class LeafletMap extends React.Component {
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-
+		/*
 		// TEMP FOR TESTING
 		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
 		layerData = layerData.concat();
 		layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
-
+		*/
 
 		let markers = [];
 		layerData.forEach(item => {
