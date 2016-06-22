@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import slug from 'slug';
 
 const Story = (props) => {
 	const {
@@ -33,7 +34,7 @@ const Story = (props) => {
 			style={ images.length ? { backgroundImage: `url(${images[0].src})` } : {} }
 		>
 			<div className='story-shade'>
-				<div className="story-category">{ category }</div>
+				<div className={"story-category story-category-" + slug(category).toLowerCase()}>{ category }</div>
 				<div className="story-text">
 					<div className="story-title">{ title.replace(/_/g, ' ') }</div>
 					<div className="story-body" dangerouslySetInnerHTML={ { __html: body} }></div>

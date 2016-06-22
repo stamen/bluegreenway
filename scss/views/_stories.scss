@@ -53,6 +53,20 @@
 	position: absolute;
 	text-transform: uppercase;
 	top: 10px;
+
+	// Add background color based on slugified category name
+	&-general-stories-history {
+		background: #b895c9;
+	}
+	&-points-of-interest {
+		background: #49a3be;
+	}
+	&-people-of-the-blue-greenway {
+		background: #8bc954;
+	}
+	&-blue-greenway-highlights {
+		background: #2e7042;
+	}
 }
 
 .story-text {
