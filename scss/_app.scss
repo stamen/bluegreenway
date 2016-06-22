@@ -185,7 +185,12 @@ a:active {
 	.popup-content {
 		width: $row-height;
 
+		.story-cell {
+			width: 2 * $row-height;
+			height: $row-height;
+		}
 		.event-cell {
+			width: $row-height;
 			height: $row-height;
 		}
 	}

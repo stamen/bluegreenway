@@ -242,8 +242,8 @@ export default class LeafletMap extends React.Component {
 
 		// TEMP FOR TESTING
 		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
-		layerData = layerData.concat();
-		layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
+		// layerData = layerData.concat();
+		// layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
 
 
 		let markers = [];
@@ -266,11 +266,10 @@ export default class LeafletMap extends React.Component {
 				let icon = L.divIcon({
 					className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
 					iconSize: null,
-					html: `
-						<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
+					html:
+						`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
 							<use xlink:href='#${ svgSymbolId }' />
-						</svg>
-					`
+						</svg>`
 				});
 
 				let marker = L.marker([centroidResult[1], centroidResult[0]], {
@@ -298,10 +297,9 @@ export default class LeafletMap extends React.Component {
 				ReactDOM.render((
 					<Story
 						{ ...data }
+						homepage={ true }
 						onClick={ this.props.actions.updateSelectedStory }
 						router={ this.props.router }
-						mode={ this.props.params.mode }
-						homepage={ true }
 					/>
 				), container);
 				return container;
@@ -311,9 +309,8 @@ export default class LeafletMap extends React.Component {
 						{ ...data }
 						homepage={ true }
 						defaultImageIndex={ (index + 1) % 6 }
-						onClick={ this.props.actions.updateSelectedStory }
+						// onClick={ this.props.actions.updateSelectedStory }
 						// router={ this.props.router }
-						// mode={ this.props.params.mode }
 					/>
 				), container);
 				return container;
