@@ -9,6 +9,8 @@ import { get } from 'lodash';
 // dataUrls.json = for use in production
 import dataUrls from '../static/dataUrls.json';
 
+export const MENU_TOGGLE = 'MENU_TOGGLE';
+
 export const SET_STATE = 'SET_STATE';
 // export const MODE_CHANGED = 'MODE_CHANGED';
 export const MAP_MOVED = 'MAP_MOVED';
@@ -51,6 +53,12 @@ export const UPDATE_SELECTED_PROJECT = 'UPDATE_SELECTED_PROJECT';
 export default function (store) {
 
 	return {
+
+		menuToggle () {
+			store.dispatch({
+				type: MENU_TOGGLE
+			});
+		},
 
 		setState (state) {
 			store.dispatch({

@@ -19,6 +19,15 @@ export default {
 	},
 	*/
 
+	menuOpen (state = false, action) {
+		switch (action.type) {
+			case actions.MENU_TOGGLE:
+				return !state;
+			default:
+				return state;
+		};
+	},
+
 	map (state = {}, action) {
 		switch (action.type) {
 			case actions.MAP_MOVED:
@@ -444,6 +453,8 @@ export const initialState = {
 			geojson: {},
 			error: null
 		}
-	}
+	},
+
+	menuOpen: false
 
 };

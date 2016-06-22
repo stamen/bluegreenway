@@ -61,6 +61,7 @@ class App extends React.Component {
 		let mode = this.props.params.mode || 'page';
 		componentState.mode = mode;
 		componentState.showFooter = mode === 'page';
+		componentState.menuOpen = storeState.menuOpen;
 
 		// Call `setState()` with the updated data, which causes a re-`render()`
 		this.setState(componentState);
@@ -77,7 +78,7 @@ class App extends React.Component {
 				<div className={ 'background-container' + (mode === 'map' ? '' : ' blurred') }>
 					<LeafletMap { ...this.props } />
 				</div>
-				<Header { ...this.state.header } />
+				<Header actions={this.props.actions} menuOpen={this.state.menuOpen} { ...this.state.header } />
 
 				<div ref='contentContainer' className='content-container'>
 					{ childrenWithProps }

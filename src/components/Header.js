@@ -51,16 +51,28 @@ export default class Header extends React.Component {
 		this.lastScrollTop = scrollPos;
 	}
 
+	toggleMenu () {
+		this.props.actions.menuToggle();
+	}
+
 	render () {
+		// Don't let the body scroll if menu open
+		document.body.style.overflow = (this.props.menuOpen ? 'hidden' : 'auto');
+
 		return (
-			<header ref='header' className='site-header'>
+			<header ref='header' className={'site-header' + (this.props.menuOpen ? ' menu-open' : '')}>
 				<h1><Link to='/'>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
 				<ul>
-					<li><Link to={`/stories`} activeClassName='active'>Stories</Link></li>
-					<li><Link to='/events' activeClassName='active'>Events</Link></li>
-					<li><Link to='/projects' activeClassName='active'>Projects</Link></li>
-					<li><Link to='/about' activeClassName='active'>About</Link></li>
+					<li><Link to={`/stories`} onClick={this.toggleMenu.bind(this)} activeClassName='active'>Stories</Link></li>
+					<li><Link to='/events' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Events</Link></li>
+					<li><Link to='/projects' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Projects</Link></li>
+					<li><Link to='/about' onClick={this.toggleMenu.bind(this)} activeClassName='active'>About</Link></li>
 				</ul>
+				<a className='site-header-show-menu' onClick={this.toggleMenu.bind(this)}>
+					<div className='site-header-show-menu-bar'></div>
+					<div className='site-header-show-menu-bar'></div>
+					<div className='site-header-show-menu-bar'></div>
+				</a>
 			</header>
 		);
 	}

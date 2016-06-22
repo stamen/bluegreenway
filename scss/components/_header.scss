@@ -30,13 +30,37 @@
 		a {
 			color: $light-blue;
 		}
+
+		@include respond-to('small') {
+			float: left;
+		}
 	}
 
 	.site-header-green {
 		color: $green;
 	}
 
+	.site-header-show-menu {
+		display: none;
+		float: right;
+		margin-right: .5rem;
+		padding: .5rem;
+		width: 3rem;
+
+		@include respond-to('small') {
+			display: block;
+		}
+
+		&-bar {
+			background-color: $blue;
+			height: 2px;
+			margin: .5rem;
+			width: 100%;
+		}
+	}
+
 	ul {
+		background-color: rgba($background-color, 0.9);
 		position: absolute;
 		height: 100%;
 		top: 0;
@@ -46,6 +70,16 @@
 
 		@include respond-to('small') {
 			display: none;
+			font-size: 3rem;
+			height: 100vh;
+			margin-top: $header-height;
+			width: 100%;
+		}
+	}
+
+	&.menu-open {
+		ul {
+			display: block;
 		}
 	}
 
@@ -53,9 +87,20 @@
 		display: inline-block;
 		height: 100%;
 
+		@include respond-to('small') {
+			display: block;
+			height: auto;
+			text-align: center;
+			width: 100%;
+		}
+
 		a {
 			display: block;
-			padding: 1.5em 2.5em 0 2.5em;
+			padding: 1.5rem 2.5rem 0 2.5rem;
+
+			@include respond-to('small') {
+				padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+			}
 
 			&:hover,
 			&:active,
