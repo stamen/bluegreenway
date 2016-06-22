@@ -19,16 +19,16 @@ $page-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.25);
 $text-color: $white;
 $text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.25);
 
-$header-height: 3.75em;
+$header-height: 3.75rem;
 $row-height: 13.6em;
-$footer-height: 30em;
-$footer-height-larger-than-tablet: 14em;
+$footer-height: 30rem;
+$footer-height-larger-than-tablet: 14rem;
 $header-z-index: 1;
 $footer-z-index: 2;
 $grid-spacing-large: 1em;
 $grid-spacing-small: 0.5em;
-$body-margin: 1em;
-$mode-toggle-btn-height: 2em;
+$body-margin: 2.5rem;
+$mode-toggle-btn-height: 2rem;
 
 $bp-high-pixel-density: '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)';
 
@@ -46,7 +46,7 @@ $bp-larger-than-mobile: 'min-width: 768px';
 $bp-larger-than-tablet: 'min-width: 1025px';
 // This breakpoint is specific to the moment where the mapPageToggle starts
 // to collide with the grid
-$bp-larger-than-narrow-desktop: 'min-width: 1248px';
+$bp-larger-than-narrow-desktop: 'min-width: 1300px';
 
 // grid-container at 1010 (75px col + 10px gutter)
 // for large screens, 100% for smaller screens
