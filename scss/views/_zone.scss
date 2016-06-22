@@ -41,6 +41,10 @@
 			position: relative;
 			background-repeat: no-repeat;
 		}
+
+		p {
+			line-height: 1.5em;
+		}
 	}
 
 	.title {
@@ -104,6 +108,7 @@
 	}
 
 	.item-description {
+		line-height: 1.5em;
 		margin-bottom: 0;
 
 		p,
