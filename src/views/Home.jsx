@@ -152,8 +152,6 @@ class Home extends React.Component {
 				defaultImageIndex -= 1;
 				if (defaultImageIndex === 0) defaultImageIndex = 6;
 
-				console.log(">>>>> item.event:", item.event);
-
 				return (
 					<div className='grid-item three columns' key={ item.event.startDate.format('YYYYMMDD') + item.event.id }>
 						<Event

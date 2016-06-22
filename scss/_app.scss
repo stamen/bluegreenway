@@ -2,8 +2,12 @@
 // APP
 // ============================================================
 html {
-	font-size: 12px;
 	box-sizing: border-box;
+}
+
+html,
+.leaflet-container {
+	font-size: 12px;
 
 	@media (#{$bp-larger-than-mobile}) {
 		font-size: 18px;
@@ -17,7 +21,8 @@ html {
 }
 
 body,
-svg text {
+svg text,
+.leaflet-container {
 	font-family: 'NeutrafaceText';
 }
 
@@ -160,6 +165,28 @@ a:active {
 			&.type-6 {
 				fill: #043d58;
 			}
+		}
+	}
+
+	.leaflet-popup-content-wrapper {
+		background: none;
+		box-shadow: none;
+		padding: 0;
+		border-radius: 0;
+	}
+	.leaflet-popup-content {
+		margin: 0;
+		line-height: 1.0;
+	}
+	.leaflet-popup-tip-container {
+		display: none;
+	}
+
+	.popup-content {
+		width: $row-height;
+
+		.event-cell {
+			height: $row-height;
 		}
 	}
 }

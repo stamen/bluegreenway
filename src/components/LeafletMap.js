@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { get } from 'lodash';
-import { vizJSON } from '../models/common.js';
-import sassVars from '../../scss/variables.json';
 import centroid from 'turf-centroid';
 import slug from 'slug';
+import ReactDOM from 'react-dom';
+
+import { vizJSON } from '../models/common.js';
+import Event from './Event';
+import Story from './Story';
+import sassVars from '../../scss/variables.json';
 
 export default class LeafletMap extends React.Component {
 	constructor (props) {
@@ -235,15 +239,15 @@ export default class LeafletMap extends React.Component {
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-		/*
+
 		// TEMP FOR TESTING
 		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
 		layerData = layerData.concat();
 		layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
-		*/
+
 
 		let markers = [];
-		layerData.forEach(item => {
+		layerData.forEach((item, i) => {
 			// TODO: can be > 1 location; create a marker for each
 			let locationId;
 			if (Array.isArray(item[locationsField])) {
@@ -272,7 +276,9 @@ export default class LeafletMap extends React.Component {
 				let marker = L.marker([centroidResult[1], centroidResult[0]], {
 						icon: icon
 					})
-					.bindPopup(this.initMarkerPopup(type, item));
+					.bindPopup(this.initMarkerPopup(type, item, i), {
+						closeButton: false
+					});
 				markers.push(marker);
 			} else {
 				console.warn(`Could not derive centroid for project[${ locationId }]:`, project);
@@ -284,9 +290,36 @@ export default class LeafletMap extends React.Component {
 		this.mapState.layers[type] = L.layerGroup(markers);
 	}
 
-	initMarkerPopup (type, data) {
-		console.log(">>>>> create popup with data:", data);
-		return `${ type } placeholder popup`;
+	initMarkerPopup (type, data, index) {
+		let container = document.createElement('div');
+		container.classList.add('popup-content');
+		switch (type) {
+			case 'stories':
+				ReactDOM.render((
+					<Story
+						{ ...data }
+						onClick={ this.props.actions.updateSelectedStory }
+						router={ this.props.router }
+						mode={ this.props.params.mode }
+						homepage={ true }
+					/>
+				), container);
+				return container;
+			case 'events':
+				ReactDOM.render((
+					<Event
+						{ ...data }
+						homepage={ true }
+						defaultImageIndex={ (index + 1) % 6 }
+						onClick={ this.props.actions.updateSelectedStory }
+						// router={ this.props.router }
+						// mode={ this.props.params.mode }
+					/>
+				), container);
+				return container;
+			default:
+				return null;
+		}
 	}
 
 	createProjectsMapLayer (projectsGeoJSON) {
