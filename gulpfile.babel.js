@@ -190,6 +190,14 @@ function addHtmlBaseTask (options) {
 	.pipe(gulp.dest(options.dest));
 }
 
+function svgTask (options) {
+	return gulp.src(options.src)
+		.pipe($.svgmin())
+		.pipe($.svgstore())
+		.pipe($.rename('icons.svg'))
+		.pipe(gulp.dest(options.dest));
+}
+
 function lintTask (options) {
 	console.log('ESLinting...');
 	return gulp.src(options.lintsrc)
@@ -255,6 +263,11 @@ gulp.task('default', () => {
 			"src"			: "./node_modules/@stamen/panorama/dist/*.css*",
 			"dest"			: "./build",
 			"pathDepth"		: 4
+		});
+
+		svgTask({
+			'src': './static/**/*.svg',
+			dest: dest + '/img'
 		});
 
 		// set NODE_ENV in gulp and local server
@@ -330,6 +343,11 @@ gulp.task('dist', () => {
 			"src"			: "./node_modules/@panorama/toolkit/dist/*.css*",
 			"dest"			: "./dist",
 			"pathDepth"		: 4
+		});
+
+		svgTask({
+			'src': './static/**/*.svg',
+			dest: dest + '/img'
 		});
 
 		// set NODE_ENV in gulp; default to false, unless run with --dev

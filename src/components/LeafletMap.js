@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import { vizJSON } from '../models/common.js';
 import sassVars from '../../scss/variables.json';
 import centroid from 'turf-centroid';
+import slug from 'slug';
 
 export default class LeafletMap extends React.Component {
 	constructor (props) {
@@ -215,14 +216,20 @@ export default class LeafletMap extends React.Component {
 		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
 		if (!projectsGeoJSON.length) return null;
 
-		let locationsField;
+		let locationsField,
+			svgSize,
+			svgSymbolId;
 
 		switch (type) {
 			case 'stories':
 				locationsField = 'relatedLocations';
+				svgSize = [20, 30];
+				svgSymbolId = 'icon_marker-eyedrop';
 				break;
 			case 'events':
 				locationsField = 'location';
+				svgSize = [20, 30];
+				svgSymbolId = 'icon_marker-pushpin';
 				break;
 			default:
 				throw new Error('Cannot create map layer for type:', type);
@@ -231,10 +238,8 @@ export default class LeafletMap extends React.Component {
 		/*
 		// TEMP FOR TESTING
 		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
-		if (type === 'stories') {
-			layerData = layerData.concat();
-			layerData[0].relatedLocations = [ 5951 ];	// test against Heron's Head Park
-		}
+		layerData = layerData.concat();
+		layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
 		*/
 
 		let markers = [];
@@ -254,7 +259,19 @@ export default class LeafletMap extends React.Component {
 
 			let centroidResult = get(centroid(project), 'geometry.coordinates');
 			if (centroidResult) {
-				let marker = L.marker([centroidResult[1], centroidResult[0]])
+				let icon = L.divIcon({
+					className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
+					iconSize: null,
+					html: `
+						<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
+							<use xlink:href='#${ svgSymbolId }' />
+						</svg>
+					`
+				});
+
+				let marker = L.marker([centroidResult[1], centroidResult[0]], {
+						icon: icon
+					})
 					.bindPopup(this.initMarkerPopup(type, item));
 				markers.push(marker);
 			} else {

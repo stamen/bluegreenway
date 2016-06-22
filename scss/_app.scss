@@ -86,20 +86,6 @@ a:active {
 // COMPONENTS
 // ============================================================
 
-//
-// Override styles from @stamen/panorama and other libs
-//
-.panorama {
-	&.item-selector {
-		h3 {
-			font-family: 'NeutrafaceText';
-		}
-		ul {
-			height: 4.5em;
-		}
-	}
-}
-
 .leaflet-container, .map-container, #bgw-map {
 	width: 100%;
 	height: 100%;
@@ -109,6 +95,68 @@ a:active {
 	}
 }
 
-// .leaflet-bottom {
-// 	bottom: 195px;
-// }
+// general map styles
+.map-container {
+	.marker {
+		&.stories,
+		&.events {
+			stroke: white;
+			stroke-width: 1px;
+		}
+
+		&.stories {
+			// position origin at bottom-center of svg
+			left: -10px;
+			top: -30px;
+
+			// Add background color based on slugified category name
+			&.general-stories-history {
+				fill: #b895c9;
+			}
+			&.points-of-interest {
+				fill: #49a3be;
+			}
+			&.people-of-the-blue-greenway {
+				fill: #8bc954;
+			}
+			&.blue-greenway-highlights {
+				fill: #2e7042;
+			}
+			&.unused-type-5 {
+				fill: #ffb933;
+			}
+			&.unused-type-6 {
+				fill: #043d58;
+			}
+		}
+
+		&.events {
+			// position origin at bottom-center of svg
+			left: -10px;
+			top: -27px;
+
+			stroke: white;
+			stroke-width: 1px;
+
+			// Add background color based on event type
+			&.type-1 {
+				fill: #b895c9;
+			}
+			&.type-2 {
+				fill: #49a3be;
+			}
+			&.type-3 {
+				fill: #8bc954;
+			}
+			&.type-4 {
+				fill: #2e7042;
+			}
+			&.type-5 {
+				fill: #ffb933;
+			}
+			&.type-6 {
+				fill: #043d58;
+			}
+		}
+	}
+}
