@@ -153,13 +153,6 @@ function cssTask (options) {
 				.pipe($.autoprefixer({
 					browsers: ['> 1%', 'last 2 versions']
 				}))
-				/*
-				// trying to enable CSS styling of background-image SVGs,
-				// but it didn't work...
-				.pipe($.postcss([
-					require('postcss-svg-fragments')({})
-				]))
-				*/
 				.pipe(gulp.dest(options.dest))
 				.pipe($.if(options.reload, $.connect.reload()))
 				.pipe($.notify({
@@ -177,13 +170,6 @@ function cssTask (options) {
 			.pipe($.autoprefixer({
 				browsers: ['> 1%', 'last 2 versions']
 			}))
-			/*
-			// trying to enable CSS styling of background-image SVGs,
-			// but it didn't work...
-			.pipe($.postcss([
-				require('postcss-svg-fragments')({})
-			]))
-			*/
 			.pipe($.cssmin())
 			.pipe(gulp.dest(options.dest));
 	}

@@ -98,37 +98,65 @@ a:active {
 // general map styles
 .map-container {
 	.marker {
+		&.stories,
+		&.events {
+			stroke: white;
+			stroke-width: 1px;
+		}
+
 		&.stories {
-			background-image: url('icons/icon_marker-eyedrop.svg');
-			width: 20px;
-			height: 30px;
+			// position origin at bottom-center of svg
 			left: -10px;
 			top: -30px;
 
-			&.ltgreen { background-image: url('icons/icon_marker-eyedrop-ltgreen.svg'); }
-			&.dkgreen { background-image: url('icons/icon_marker-eyedrop-dkgreen.svg'); }
-			&.ltblue { background-image: url('icons/icon_marker-eyedrop-ltblue.svg'); }
-			&.dkblue { background-image: url('icons/icon_marker-eyedrop-dkblue.svg'); }
-			&.purple { background-image: url('icons/icon_marker-eyedrop-purple.svg'); }
-			&.orange { background-image: url('icons/icon_marker-eyedrop-orange.svg'); }
-
-			/*
-			
-			fill: #b895c9;
-			fill: #49a3be;
-			fill: #8bc954;
-			fill: #043d58;
-			fill: #2e7042;
-			fill: #ffb933;
-			*/
+			// Add background color based on slugified category name
+			&.general-stories-history {
+				fill: #b895c9;
+			}
+			&.points-of-interest {
+				fill: #49a3be;
+			}
+			&.people-of-the-blue-greenway {
+				fill: #8bc954;
+			}
+			&.blue-greenway-highlights {
+				fill: #2e7042;
+			}
+			&.unused-type-5 {
+				fill: #ffb933;
+			}
+			&.unused-type-6 {
+				fill: #043d58;
+			}
 		}
 
 		&.events {
-			background-image: url('icons/icon_marker-pushpin.svg');
-			width: 20px;
-			height: 27px;
+			// position origin at bottom-center of svg
 			left: -10px;
 			top: -27px;
+
+			stroke: white;
+			stroke-width: 1px;
+
+			// Add background color based on event type
+			&.type-1 {
+				fill: #b895c9;
+			}
+			&.type-2 {
+				fill: #49a3be;
+			}
+			&.type-3 {
+				fill: #8bc954;
+			}
+			&.type-4 {
+				fill: #2e7042;
+			}
+			&.type-5 {
+				fill: #ffb933;
+			}
+			&.type-6 {
+				fill: #043d58;
+			}
 		}
 	}
 }

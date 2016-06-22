@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import { vizJSON } from '../models/common.js';
 import sassVars from '../../scss/variables.json';
 import centroid from 'turf-centroid';
+import slug from 'slug';
 
 export default class LeafletMap extends React.Component {
 	constructor (props) {
@@ -215,26 +216,31 @@ export default class LeafletMap extends React.Component {
 		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
 		if (!projectsGeoJSON.length) return null;
 
-		let locationsField;
+		let locationsField,
+			svgSize,
+			svgSymbolId;
 
 		switch (type) {
 			case 'stories':
 				locationsField = 'relatedLocations';
+				svgSize = [20, 30];
+				svgSymbolId = 'icon_marker-eyedrop';
 				break;
 			case 'events':
 				locationsField = 'location';
-				colorStyle = '';	// TODO
+				svgSize = [20, 30];
+				svgSymbolId = 'icon_marker-pushpin';
 				break;
 			default:
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-		
+
 		// TEMP FOR TESTING
 		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
 		layerData = layerData.concat();
-		layerData[0].relatedLocations = [ 5951 ];	// test against Heron's Head Park
-		
+		layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
+
 
 		let markers = [];
 		layerData.forEach(item => {
@@ -254,8 +260,13 @@ export default class LeafletMap extends React.Component {
 			let centroidResult = get(centroid(project), 'geometry.coordinates');
 			if (centroidResult) {
 				let icon = L.divIcon({
-					className: `marker ${ type } ${ this.getMarkerColorStyle(type, item) }`,
-					iconSize: null
+					className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
+					iconSize: null,
+					html: `
+						<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
+							<use xlink:href='#${ svgSymbolId }' />
+						</svg>
+					`
 				});
 
 				let marker = L.marker([centroidResult[1], centroidResult[0]], {
@@ -271,25 +282,6 @@ export default class LeafletMap extends React.Component {
 		if (!markers.length) return null;
 
 		this.mapState.layers[type] = L.layerGroup(markers);
-	}
-
-	getMarkerColorStyle (type, data) {
-		switch (type) {
-			case 'stories':
-				const colorMap = {
-					'Points of Interest': 'purple',
-					'Blue Greenway Highlights': 'ltgreen',
-					'General Stories / History': 'ltblue',
-					'People of the Blue Greenway': 'orange'/*,
-					'': 'dkgreen',
-					'': 'dkblue'*/
-				};
-				return colorMap[data.category] || '';
-			case 'events':
-				
-			default:
-				return '';
-		}
 	}
 
 	initMarkerPopup (type, data) {
