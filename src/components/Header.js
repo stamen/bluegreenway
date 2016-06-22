@@ -12,7 +12,7 @@ export default class Header extends React.Component {
 	constructor (props) {
 		super(props);
 		this.onScroll = throttle(this.onScroll, 100);
-    this.lastScrollTop = 0;
+		this.lastScrollTop = 0;
 	}
 
 	componentWillMount () {
@@ -23,7 +23,7 @@ export default class Header extends React.Component {
 
 	componentDidMount () {
 		let headerHeight = this.refs.header.offsetHeight;
-    this.lastScrollTop = window.scrollY;
+		this.lastScrollTop = window.scrollY;
 		const delta = 5;
 
 		if (!this.state.headerHeight || headerHeight !== this.state.headerHeight ) {
@@ -63,7 +63,6 @@ export default class Header extends React.Component {
 				</ul>
 			</header>
 		);
-
 	}
 
 }
