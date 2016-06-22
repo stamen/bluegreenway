@@ -360,8 +360,8 @@ export default function (store) {
 		},
 
 		receiveProjectsGeoData (geojson) {
-			// log all the project names and ids:
-			// console.log("projects geojson:", geojson.features.map(f => `${ f.properties.name }: ${ f.properties.bgw_id }`));
+			// log all the project names and ids, sorted by id:
+			// console.log("projects geojson:", geojson.features.sort((a, b) => +a.properties.bgw_id - +b.properties.bgw_id).map(f => `[${ f.properties.bgw_id }] ${ f.properties.name }`));
 			
 			return {
 				type: PROJECTS_GEODATA_RESPONSE,
