@@ -86,20 +86,6 @@ a:active {
 // COMPONENTS
 // ============================================================
 
-//
-// Override styles from @stamen/panorama and other libs
-//
-.panorama {
-	&.item-selector {
-		h3 {
-			font-family: 'NeutrafaceText';
-		}
-		ul {
-			height: 4.5em;
-		}
-	}
-}
-
 .leaflet-container, .map-container, #bgw-map {
 	width: 100%;
 	height: 100%;
@@ -109,6 +95,40 @@ a:active {
 	}
 }
 
-// .leaflet-bottom {
-// 	bottom: 195px;
-// }
+// general map styles
+.map-container {
+	.marker {
+		&.stories {
+			background-image: url('icons/icon_marker-eyedrop.svg');
+			width: 20px;
+			height: 30px;
+			left: -10px;
+			top: -30px;
+
+			&.ltgreen { background-image: url('icons/icon_marker-eyedrop-ltgreen.svg'); }
+			&.dkgreen { background-image: url('icons/icon_marker-eyedrop-dkgreen.svg'); }
+			&.ltblue { background-image: url('icons/icon_marker-eyedrop-ltblue.svg'); }
+			&.dkblue { background-image: url('icons/icon_marker-eyedrop-dkblue.svg'); }
+			&.purple { background-image: url('icons/icon_marker-eyedrop-purple.svg'); }
+			&.orange { background-image: url('icons/icon_marker-eyedrop-orange.svg'); }
+
+			/*
+			
+			fill: #b895c9;
+			fill: #49a3be;
+			fill: #8bc954;
+			fill: #043d58;
+			fill: #2e7042;
+			fill: #ffb933;
+			*/
+		}
+
+		&.events {
+			background-image: url('icons/icon_marker-pushpin.svg');
+			width: 20px;
+			height: 27px;
+			left: -10px;
+			top: -27px;
+		}
+	}
+}

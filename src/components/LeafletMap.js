@@ -223,19 +223,18 @@ export default class LeafletMap extends React.Component {
 				break;
 			case 'events':
 				locationsField = 'location';
+				colorStyle = '';	// TODO
 				break;
 			default:
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-		/*
+		
 		// TEMP FOR TESTING
 		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
-		if (type === 'stories') {
-			layerData = layerData.concat();
-			layerData[0].relatedLocations = [ 5951 ];	// test against Heron's Head Park
-		}
-		*/
+		layerData = layerData.concat();
+		layerData[0].relatedLocations = [ 5951 ];	// test against Heron's Head Park
+		
 
 		let markers = [];
 		layerData.forEach(item => {
@@ -254,7 +253,14 @@ export default class LeafletMap extends React.Component {
 
 			let centroidResult = get(centroid(project), 'geometry.coordinates');
 			if (centroidResult) {
-				let marker = L.marker([centroidResult[1], centroidResult[0]])
+				let icon = L.divIcon({
+					className: `marker ${ type } ${ this.getMarkerColorStyle(type, item) }`,
+					iconSize: null
+				});
+
+				let marker = L.marker([centroidResult[1], centroidResult[0]], {
+						icon: icon
+					})
 					.bindPopup(this.initMarkerPopup(type, item));
 				markers.push(marker);
 			} else {
@@ -265,6 +271,25 @@ export default class LeafletMap extends React.Component {
 		if (!markers.length) return null;
 
 		this.mapState.layers[type] = L.layerGroup(markers);
+	}
+
+	getMarkerColorStyle (type, data) {
+		switch (type) {
+			case 'stories':
+				const colorMap = {
+					'Points of Interest': 'purple',
+					'Blue Greenway Highlights': 'ltgreen',
+					'General Stories / History': 'ltblue',
+					'People of the Blue Greenway': 'orange'/*,
+					'': 'dkgreen',
+					'': 'dkblue'*/
+				};
+				return colorMap[data.category] || '';
+			case 'events':
+				
+			default:
+				return '';
+		}
 	}
 
 	initMarkerPopup (type, data) {

@@ -93,3 +93,17 @@ render((
 		<Route path='*' component={ RouteNotFound } />
 	</Router>
 ), document.getElementById('app'));
+
+// Inject SVG (compiled in build step) into document, for cross-browser support.
+// Some day, there will be a better way.
+// https://css-tricks.com/ajaxing-svg-sprite/
+let xhr = new XMLHttpRequest();
+xhr.open('GET', './img/icons.svg', true);
+xhr.addEventListener('load', event => {
+	let svgContainer = document.createElement('div');
+	svgContainer.classList.add('icons-svg');
+	svgContainer.style.display = 'none';
+	svgContainer.innerHTML = xhr.responseText;
+	document.body.insertBefore(svgContainer, document.body.firstChild);
+});
+xhr.send();
