@@ -82,7 +82,9 @@ a:active {
 	}
 
 	.row {
-		margin-bottom: $grid-spacing-small;
+		@media (#{$bp-larger-than-mobile}) {
+			margin-bottom: $grid-spacing-small;
+		}
 
 		> div {
 			height: $row-height;

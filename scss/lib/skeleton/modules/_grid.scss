@@ -19,12 +19,28 @@
 
 .column,
 .columns {
+  margin-bottom: $column-margin / 2;
   width: 100%;
   float: left;
   box-sizing: border-box;
 }
 
+// On mobile, three columns takes up half of screen
+.three.columns {
+  margin-left: $column-margin / 2;
+  width: grid-column-width(6);
+}
+
 @media (#{$bp-larger-than-mobile}) {
+  .column,
+  .columns {
+	margin-bottom: 0;
+  }
+
+  .three.columns {
+	margin-left: $column-margin;
+  }
+
   .grid-container {
     width: $container-width-larger-than-mobile;
     padding: $container-padding-larger-than-mobile;
