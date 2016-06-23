@@ -23,8 +23,16 @@
 
 	.zone-header {
 		.button {
-			position: absolute;
-			bottom: $zone-margin-vert;
+			font-size: 1.5em;
+			margin: 0 auto;
+			position: relative;
+
+			@media (#{$bp-larger-than-mobile}) {
+				bottom: $zone-margin-vert;
+				font-size: inherit;
+				margin: inherit;
+				position: absolute;
+			}
 		}
 	}
 
@@ -44,13 +52,20 @@
 		}
 
 		p {
-			line-height: 1.5em;
+			font-size: 1.5em;
+			line-height: 1.25em;
+
+			@media (#{$bp-larger-than-mobile}) {
+				font-size: inherit;
+				line-height: 1.5em;
+			}
 		}
 	}
 
 	.title {
 		@extend %neutra-bold;
 		font-size: 2em;
+		margin-bottom: 0;
 		text-transform: capitalize;
 		display: inline-block;
 	}
