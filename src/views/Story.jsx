@@ -68,10 +68,10 @@ class Story extends React.Component {
 		if (body) {
 			// write to offscreen DOM in order to do some manipulation...
 			let storyDoc = new DOMParser().parseFromString(body, 'text/html'),
-				storyDocBody = storyDoc.querySelector('body');
+				storyDocBody = storyDoc.querySelector('body'),
+				secondParagraph = storyDoc.querySelector('p:nth-of-type(2n+0)');
 
 			if (storyDocBody) {
-
 				// Insert title at the top
 				let titleContainer = document.createElement('div');
 				titleContainer.classList.add('story-title');
@@ -84,7 +84,7 @@ class Story extends React.Component {
 					imageContainer.classList.add('image-container');
 
 					// insert after subtitle element
-					storyDocBody.insertBefore(imageContainer, storyDocBody.firstChild);
+					storyDocBody.insertBefore(imageContainer, secondParagraph);
 					storyData.images.forEach(image => {
 						let img = document.createElement('img');
 						img.setAttribute('src', image.src);
