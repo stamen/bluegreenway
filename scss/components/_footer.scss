@@ -3,13 +3,13 @@
 	box-shadow: $page-shadow;
 	color: $blue;
 	font-size: 0.77em;
-	padding-bottom: 60px;
-	padding-top: 60px;
+	padding-bottom: 3rem;
+	padding-top: 3rem;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: auto;
+	height: $footer-height;
 	z-index: $footer-z-index;
 
 	@media (#{$bp-larger-than-tablet}) {
