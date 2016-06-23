@@ -1,20 +1,20 @@
 .map-page-toggle {
 	position: absolute;
-	left: 50%;
-	top: $header-height + $body-margin;
-	transform: translate(-50%, 0);
+	top: $header-height + $body-margin-smaller-than-narrow-desktop;
+	left: 6%;
+	transform: none;
 	z-index: 1;
+
+	@media (#{$bp-larger-than-mobile}) {
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
 
 	@media (#{$bp-larger-than-narrow-desktop}) {
 		left: auto;
 		right: $body-margin;
 		transform: none;
-	}
-
-	// target mobile specific
-	@include respond-to('small') {
-		left: 6%;
-		transform: none;
+		top: $header-height + $body-margin;
 	}
 }
 

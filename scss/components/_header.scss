@@ -20,6 +20,7 @@
 	}
 
 	h1 {
+		float: left;
 		font-size: 2.5rem;
 		font-weight: bold;
 		line-height: 1.6;
@@ -31,8 +32,8 @@
 			color: $light-blue;
 		}
 
-		@include respond-to('small') {
-			float: left;
+		@media (#{$bp-larger-than-mobile}) {
+			float: none;
 		}
 	}
 
@@ -41,14 +42,14 @@
 	}
 
 	.site-header-toggle-menu {
-		display: none;
+		display: block;
 		float: right;
 		margin-right: .5rem;
 		padding: .5rem;
 		width: 3rem;
 
-		@include respond-to('small') {
-			display: block;
+		@media (#{$bp-larger-than-mobile}) {
+			display: none;
 		}
 
 		.site-header-show-menu {
@@ -77,10 +78,14 @@
 
 	.menu {
 		background-color: rgba($background-color, 0.9);
-		height: 100%;
+		display: none;
+		font-size: 3rem;
+		height: 100vh;
+		margin-top: $header-height;
 		position: absolute;
-		top: 0;
 		right: 0;
+		top: 0;
+		width: 100%;
 
 		ul {
 			height: 100%;
@@ -88,12 +93,12 @@
 			padding: 0;
 		}
 
-		@include respond-to('small') {
-			display: none;
-			font-size: 3rem;
-			height: 100vh;
-			margin-top: $header-height;
-			width: 100%;
+		@media (#{$bp-larger-than-mobile}) {
+			display: block;
+			font-size: inherit;
+			height: 100%;
+			margin-top: inherit;
+			width: auto;
 		}
 	}
 
@@ -106,14 +111,14 @@
 	.menu-social-media {
 		background-color: $white;
 		bottom: $header-height;
-		display: none;
+		display: block;
 		height: 8rem;
 		left: 0;
 		position: absolute;
 		width: 100%;
 
-		@include respond-to('small') {
-			display: block;
+		@media (#{$bp-larger-than-mobile}) {
+			display: none;
 		}
 
 		&-buttons {
@@ -159,22 +164,23 @@
 	}
 
 	li {
-		display: inline-block;
-		height: 100%;
+		display: block;
+		height: auto;
+		text-align: center;
+		width: 100%;
 
-		@include respond-to('small') {
-			display: block;
-			height: auto;
-			text-align: center;
-			width: 100%;
+		@media (#{$bp-larger-than-mobile}) {
+			display: inline-block;
+			height: 100%;
+			width: auto;
 		}
 
 		a {
 			display: block;
-			padding: 1.5rem 2.5rem 0 2.5rem;
+			padding: 1.5rem 2.5rem 1.5rem 2.5rem;
 
-			@include respond-to('small') {
-				padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+			@media (#{$bp-larger-than-mobile}) {
+				padding: 1.5rem 2.5rem 0 2.5rem;
 			}
 
 			&:hover,
