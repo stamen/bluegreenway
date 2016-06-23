@@ -4,10 +4,15 @@
 #story {
 	height: auto;
 	color: $blue;
-	margin-left: 1em;
 
-	.grid-container {
+	@media (#{$bp-larger-than-mobile}) {
+		margin-left: 1em;
+	}
+
+	&.grid-container {
 		height: auto;
+		max-width: 100%;
+		width: auto;
 	}
 
 	.row {
@@ -68,18 +73,21 @@
 	}
 
 	.image-container {
-		position: relative;
-		float: right;
-		width: 60%;
-
-		margin-right: -10rem;	// make & break the grid.
-		padding-left: 20px;
+		width: 100%;
 
 		img {
 			width: 100%;
 			height: auto;
 			margin: 0 0 20px 0 !important;
 			padding: 0 !important;
+		}
+
+		@media (#{$bp-larger-than-mobile}) {
+			float: right;
+			position: relative;
+			margin-right: -10rem;	// make & break the grid.
+			padding-left: 20px;
+			width: 60%;
 		}
 	}
 }
