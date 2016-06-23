@@ -18,8 +18,12 @@
 	}
 
 	.story-title {
-		font-size: 1.75rem !important;
+		font-size: 2.25rem !important;
 		margin: 0 0 0.5rem 0 !important;
+
+		@media (#{$bp-larger-than-mobile}) {
+			font-size: 1.75rem !important;
+		}
 	}
 
 	.story-post {
@@ -33,10 +37,15 @@
 
 		p,
 		p > span {
-			font-size: 1rem !important;
+			font-size: 1.5rem !important;
 			font-family: NeutrafaceText !important;
 			color: $blue !important;
-			line-height: 1.3rem !important;
+			line-height: 2rem !important;
+
+			@media (#{$bp-larger-than-mobile}) {
+				font-size: 1rem !important;
+				line-height: 1.3rem !important;
+			}
 		}
 
 		img {
@@ -47,9 +56,14 @@
 
 		p:first-of-type,
 		p:first-of-type > span {
-			font-size: 1.25rem !important;
-			font-weight: bold;
-			line-height: 1.5rem !important;
+			font-size: 1.75rem !important;
+			font-weight: bold !important;
+			line-height: 2.25rem !important;
+
+			@media (#{$bp-larger-than-mobile}) {
+				font-size: 1.25rem !important;
+				line-height: 1.5rem !important;
+			}
 		}
 	}
 
