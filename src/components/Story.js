@@ -36,7 +36,7 @@ const Story = (props) => {
 };
 
 Story.propTypes = {
-	id: PropTypes.string,
+	id: PropTypes.number,
 	title: PropTypes.string,
 	images: PropTypes.array,
 	category: PropTypes.string,
