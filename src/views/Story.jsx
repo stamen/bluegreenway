@@ -57,7 +57,7 @@ class Story extends React.Component {
 	renderPageView () {
 		const storeState = this.props.store.getState();
 		if (!storeState.stories.data.items.length || !storeState.stories.selectedStory) {
-			 return null;
+			return null;
 		}
 
 		const stories = get(storeState, 'stories.data.items'),
