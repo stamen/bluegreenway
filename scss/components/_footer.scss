@@ -2,7 +2,7 @@
 	background-color: rgba($background-color, 0.9);
 	box-shadow: $page-shadow;
 	color: $blue;
-	font-size: 0.77em;
+	font-size: 1.5rem;
 	padding-bottom: 3rem;
 	padding-top: 3rem;
 	position: absolute;
@@ -11,6 +11,10 @@
 	width: 100%;
 	height: $footer-height;
 	z-index: $footer-z-index;
+
+	@media (#{$bp-larger-than-mobile}) {
+		font-size: 0.77rem;
+	}
 
 	@media (#{$bp-larger-than-tablet}) {
 		height: $footer-height-larger-than-tablet;
