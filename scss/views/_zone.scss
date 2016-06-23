@@ -99,8 +99,14 @@
 		}
 
 		.button {
-			margin: $zone-margin-vert 0;
+			font-size: 1.5em;
+			margin: .5em auto;
 			position: relative;
+
+			@media (#{$bp-larger-than-mobile}) {
+				font-size: inherit;
+				margin: $zone-margin-vert 0;
+			}
 		}
 	}
 
@@ -136,8 +142,11 @@
 			font-family: 'NeutrafaceText', sans-serif !important;
 			font-weight: normal !important;
 			font-style: normal !important;
-			font-size: 1em !important;
+			font-size: 1.25em !important;
 
+			@media (#{$bp-larger-than-mobile}) {
+				font-size: 1em !important;
+			}
 		}
 	}
 
