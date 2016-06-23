@@ -3,6 +3,8 @@ import { throttle } from 'lodash';
 
 import { Link } from 'react-router';
 
+import socialMediaLinks from '../../static/socialMediaLinks.json';
+
 /**
  * Header block at top of site, with logo and nav links
  */
@@ -62,12 +64,21 @@ export default class Header extends React.Component {
 		return (
 			<header ref='header' className={'site-header' + (this.props.menuOpen ? ' menu-open' : '')}>
 				<h1><Link to='/'>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
-				<ul>
-					<li><Link to={`/stories`} onClick={this.toggleMenu.bind(this)} activeClassName='active'>Stories</Link></li>
-					<li><Link to='/events' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Events</Link></li>
-					<li><Link to='/projects' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Projects</Link></li>
-					<li><Link to='/about' onClick={this.toggleMenu.bind(this)} activeClassName='active'>About</Link></li>
-				</ul>
+				<div className='menu'>
+					<ul>
+						<li><Link to={`/stories`} onClick={this.toggleMenu.bind(this)} activeClassName='active'>Stories</Link></li>
+						<li><Link to='/events' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Events</Link></li>
+						<li><Link to='/projects' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Projects</Link></li>
+						<li><Link to='/about' onClick={this.toggleMenu.bind(this)} activeClassName='active'>About</Link></li>
+					</ul>
+					<div className='menu-social-media'>
+						<div className='menu-social-media-buttons'>
+							<a href={socialMediaLinks.facebook} className='menu-social-media-button menu-social-media-facebook'></a>
+							<a href={socialMediaLinks.twitter} className='menu-social-media-button menu-social-media-twitter'></a>
+							<a href={socialMediaLinks.instagram} className='menu-social-media-button menu-social-media-instagram'></a>
+						</div>
+					</div>
+				</div>
 				<a className='site-header-toggle-menu' onClick={this.toggleMenu.bind(this)}>
 					<div className='site-header-show-menu'>
 						<div className='site-header-show-menu-bar'></div>
