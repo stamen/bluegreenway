@@ -68,10 +68,13 @@ export default class Header extends React.Component {
 					<li><Link to='/projects' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Projects</Link></li>
 					<li><Link to='/about' onClick={this.toggleMenu.bind(this)} activeClassName='active'>About</Link></li>
 				</ul>
-				<a className='site-header-show-menu' onClick={this.toggleMenu.bind(this)}>
-					<div className='site-header-show-menu-bar'></div>
-					<div className='site-header-show-menu-bar'></div>
-					<div className='site-header-show-menu-bar'></div>
+				<a className='site-header-toggle-menu' onClick={this.toggleMenu.bind(this)}>
+					<div className='site-header-show-menu'>
+						<div className='site-header-show-menu-bar'></div>
+						<div className='site-header-show-menu-bar'></div>
+						<div className='site-header-show-menu-bar'></div>
+					</div>
+					<div className='site-header-hide-menu'>&#10005;</div>
 				</a>
 			</header>
 		);

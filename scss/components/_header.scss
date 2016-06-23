@@ -40,7 +40,7 @@
 		color: $green;
 	}
 
-	.site-header-show-menu {
+	.site-header-toggle-menu {
 		display: none;
 		float: right;
 		margin-right: .5rem;
@@ -51,11 +51,27 @@
 			display: block;
 		}
 
-		&-bar {
-			background-color: $blue;
-			height: 2px;
-			margin: .5rem;
-			width: 100%;
+		.site-header-show-menu {
+			&-bar {
+				background-color: $blue;
+				height: 2px;
+				margin: .5rem;
+				width: 100%;
+			}
+		}
+
+		.site-header-hide-menu {
+			display: none;
+			font-size: 3rem;
+		}
+	}
+
+	&.menu-open {
+		.site-header-show-menu {
+			display: none;
+		}
+		.site-header-hide-menu {
+			display: block;
 		}
 	}
 
