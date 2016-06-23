@@ -10,8 +10,6 @@ import MapOverlay from '../components/MapOverlay';
 import Event from '../components/Event';
 import Story from '../components/Story';
 
-let defaultImageIndex = 6;
-
 class Home extends React.Component {
 
 	constructor (props) {
@@ -117,7 +115,8 @@ class Home extends React.Component {
 
 		// create divs with corresponding classNames that determine width & height for use with Packery & Skeleton grid
 		// inside divs reside a corresponding story or event component
-		let isPeople;
+		let isPeople,
+			defaultImageIndex = 0;
 		let divs = items.map((item, idx) => {
 			isPeople = item.people;
 			if (isPeople) {
@@ -125,7 +124,6 @@ class Home extends React.Component {
 			}
 
 			if (item.story) {
-				item.story.homepage = true;
 				// assign a class for the grid item to be taller
 				let storyClassNames;
 
@@ -138,24 +136,26 @@ class Home extends React.Component {
 				}
 
 				return (
-					<div className={storyClassNames} key={item.story.id}>
+					<div className={ storyClassNames } key={ item.story.id }>
 						<Story
-							{...item.story}
-							onClick={this.props.actions.updateSelectedStory}
-							router={this.props.router}
-							mode={this.props.params.mode} />
+							{ ...item.story }
+							homepage={ true }
+							onClick={ this.props.actions.updateSelectedStory }
+							router={ this.props.router }
+							mode={ this.props.params.mode } />
 					</div>
 				);
 			} else if (item.event) {
-				item.event.homepage = true;
-				item.event.defaultImageIndex = defaultImageIndex;
-				defaultImageIndex -= 1;
-				if (defaultImageIndex === 0) defaultImageIndex = 6;
-
+				if (!item.event.photoURL) {
+					defaultImageIndex = ++defaultImageIndex % 6;
+				}
+				
 				return (
 					<div className='grid-item three columns' key={ item.event.startDate.format('YYYYMMDD') + item.event.id }>
 						<Event
-						{...item.event }
+							{ ...item.event }
+							homepage={ true }
+							defaultImageIndex={ defaultImageIndex }
 						/>
 					</div>
 				);

@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const Event = (event) => {
+const Event = (props) => {
+
 	let eventStyle = { backgroundImage: '' };
 	let eventClassName = '';
 
-	if (event.photoURL) {
-		eventStyle.backgroundImage = `url(${event.photoURL})`;
+	if (props.photoURL) {
+		eventStyle.backgroundImage = `url(${props.photoURL})`;
 	} else {
-		eventStyle.backgroundImage = `url(img/events-default-${event.defaultImageIndex}.jpg)`;
+		eventStyle.backgroundImage = `url(img/events-default-${props.defaultImageIndex}.jpg)`;
 	}
 
 	// if the event is on the homepage ditch extra classes
-	if (event.homepage) {
+	if (props.homepage) {
 		eventClassName='event-cell';
 	} else {
 		eventClassName='event-cell three columns';
@@ -22,31 +23,41 @@ const Event = (event) => {
 			className={ eventClassName }
 			style={ eventStyle }>
 			<div className='event-shade'>
-				{ (event.startDate.format('D-MMM') === event.endDate.format('D-MMM')) ?
+				{ (props.startDate.format('D-MMM') === props.endDate.format('D-MMM')) ?
 					(<div className='event-date'>
-						<span>{ event.startDate.format('MMM') }</span>
-						<span>{ event.startDate.format('D') }</span>
+						<span>{ props.startDate.format('MMM') }</span>
+						<span>{ props.startDate.format('D') }</span>
 					</div>) :
 					(<div className='event-date-range'>
 						<div>
-							<span className="event-date-range-month">{ event.startDate.format('MMM') }</span>
-							<span className="event-date-range-day">{ event.startDate.format('D') }</span>
+							<span className="event-date-range-month">{ props.startDate.format('MMM') }</span>
+							<span className="event-date-range-day">{ props.startDate.format('D') }</span>
 						</div>
 						<div className="event-date-range-separator">&mdash;</div>
 						<div>
-							<span className="event-date-range-month">{ event.endDate.format('MMM') }</span>
-							<span className="event-date-range-day">{ event.endDate.format('D') }</span>
+							<span className="event-date-range-month">{ props.endDate.format('MMM') }</span>
+							<span className="event-date-range-day">{ props.endDate.format('D') }</span>
 						</div>
 					</div>)
 				}
 				<div className='event-details'>
-					<p className='event-title'>{ event.title }</p>
-					<p>Time: <span>{ (event.startDate.hour() === 0 && event.startDate.minute() === 0) ? 'all day' :  event.startDate.format('h:mm a') }</span></p>
-					<p>Cost: <span>{ event.cost }</span></p>
+					<p className='event-title'>{ props.title }</p>
+					<p>Time: <span>{ (props.startDate.hour() === 0 && props.startDate.minute() === 0) ? 'all day' :  props.startDate.format('h:mm a') }</span></p>
+					<p>Cost: <span>{ props.cost }</span></p>
 				</div>
 			</div>
 		</div>
 	);
+};
+
+Event.propTypes = {
+	photoUrl: PropTypes.string,
+	startDate: PropTypes.object,
+	endDate: PropTypes.object,
+	title: PropTypes.string,
+	cost: PropTypes.string,
+	defaultImageIndex: PropTypes.number,
+	homepage: PropTypes.bool
 };
 
 export default Event;
