@@ -12,6 +12,10 @@
 		line-height: 1.5em;
 	}
 
+	.page-header p {
+		line-height: inherit;
+	}
+
 	.twitter-timeline {
 		box-shadow: $page-shadow;
 	}
