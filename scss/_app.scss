@@ -58,7 +58,7 @@ a:active {
 .content-container {
 	position: absolute;
 	left: 0;
-	top: $header-height + $mode-toggle-btn-height + $body-margin;
+	top: $header-height + $mode-toggle-btn-height + $body-margin-smaller-than-narrow-desktop;
 	width: 100%;
 	min-height: calc(100vh - #{$header-height});
 
