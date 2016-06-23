@@ -34,11 +34,11 @@
 @media (#{$bp-larger-than-mobile}) {
   .column,
   .columns {
-	margin-bottom: 0;
+    margin-bottom: 0;
   }
 
   .three.columns {
-	margin-left: $column-margin;
+    margin-left: $column-margin;
   }
 
   .grid-container {
