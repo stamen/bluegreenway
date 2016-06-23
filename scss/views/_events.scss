@@ -8,6 +8,11 @@ $events-padding: 0.5em;
 	.date-picker-cell,
 	.filter-cell {
 		box-shadow: $page-shadow;
+		height: 20rem;
+
+		@media (#{$bp-larger-than-mobile}) {
+			height: $row-height;
+		}
 	}
 }
 
