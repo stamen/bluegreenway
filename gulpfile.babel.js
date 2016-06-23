@@ -37,8 +37,7 @@ function browserifyTask (options) {
 		entries: [options.src],			// Application entry point; browserify finds and bundles all dependencies from there
 		transform: [[babelify],			// Convert ES6 and React .jsx -> vanilla, ES5-compliant .js
 			[looseEnvify, {
-				NODE_ENV: options.development ? 'development' : 'production',	// set NODE_ENV in compiled code (to optimize react-redux)
-				BASE_URL: baseUrl							// set BASE_URL for react-router path resolution (default: '/')
+				NODE_ENV: options.development ? 'development' : 'production'	// set NODE_ENV in compiled code (to optimize react-redux)
 			}]
 		],
 		debug: options.development,		// Gives us sourcemapping
