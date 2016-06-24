@@ -74,12 +74,16 @@ $events-padding: 0.5em;
 .event-details {
 	position: absolute;
 	bottom: $events-padding;
-	font-size: 0.83em;
+	font-size: 1.1em;
 	line-height: 1.11em;
 	color: #fff;
 
 	p {
 		margin: 0;
+	}
+
+	@media (#{$bp-larger-than-mobile}) {
+		font-size: 0.83em;
 	}
 }
 
