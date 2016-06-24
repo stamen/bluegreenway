@@ -1,11 +1,4 @@
 #projects {
-	.projects-map-overlay {
-		position: absolute;
-		left: $body-margin;
-		top: $body-margin;
-		z-index: 1;
-	}
-
 	.zone-cell {
 		box-shadow: $page-shadow;
 		height: 500px;

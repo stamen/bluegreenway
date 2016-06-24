@@ -1,7 +1,6 @@
 $events-padding: 0.5em;
 
 #events {
-	position: relative;
 	@include colorize-grid(20, 4, 1, null);
 	color: $text-color;
 
@@ -82,13 +81,6 @@ $events-padding: 0.5em;
 	p {
 		margin: 0;
 	}
-}
-
-.events-map-overlay {
-	position: absolute;
-	left: $body-margin;
-	top: $body-margin;
-	z-index: 1;
 }
 
 .events-data-load-error {

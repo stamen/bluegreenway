@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { Timeline } from 'react-twitter-widgets';
 
 import MapLayersPicker from '../components/MapLayersPicker';
-import MapOverlay from '../components/MapOverlay';
+import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 
 class About extends React.Component {
@@ -37,7 +37,7 @@ class About extends React.Component {
 
 	renderMapView () {
 		return (
-			<div className='stories-map-overlay'>
+			<MapOverlayContainer className='stories-map-overlay'>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
@@ -52,7 +52,7 @@ class About extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-			</div>
+			</MapOverlayContainer>
 		);
 	}
 

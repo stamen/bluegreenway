@@ -2,8 +2,73 @@
 	background: $white;
 	box-shadow: $page-shadow;
 	color: $blue;
+	min-width: 14rem;
 
 	&:not(:last-of-type) {
 		margin-bottom: 10px;
+	}
+}
+
+.map-overlay-container {
+	left: $body-margin;
+	position: static;
+	top: $body-margin;
+	z-index: 1;
+
+	@media (#{$bp-larger-than-mobile}) {
+		position: absolute;
+	}
+
+	.map-overlay-container-contents {
+		display: none;
+		background-color: rgba($background-color, 0.9);
+		height: 100%;
+		padding-top: $header-height;
+		position: absolute;
+		width: 100%;
+		z-index: $header-z-index - 1;
+
+		@media (#{$bp-larger-than-mobile}) {
+			background-color: inherit;
+			height: inherit;
+			padding-top: 0;
+			width: inherit;
+		}
+	}
+
+	&.filters-open {
+		.map-overlay-container-contents {
+			display: block;
+		}
+	}
+
+	@media (#{$bp-larger-than-mobile}) {
+		.map-overlay-container-contents {
+			display: block;
+		}
+	}
+
+	&-toggle-filters {
+		background: $green;
+		bottom: 1rem;
+		color: white;
+		font-size: 1.5rem;
+		font-weight: bold;
+		left: 50%;
+		padding: 1rem 5rem;
+		position: absolute;
+		text-transform: uppercase;
+		transform: translateX(-50%);
+		z-index: $header-z-index - 1;
+
+		&:focus,
+		&:hover,
+		&:active {
+			color: white;
+		}
+
+		@media (#{$bp-larger-than-mobile}) {
+			display: none;
+		}
 	}
 }

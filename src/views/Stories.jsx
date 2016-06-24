@@ -5,7 +5,7 @@ import moment from 'moment';
 import Story from '../components/Story';
 import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
-import MapOverlay from '../components/MapOverlay';
+import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import StoryFilters from '../components/StoryFilters';
 import { getCategoryOptions } from '../models/stories';
@@ -145,7 +145,7 @@ class Stories extends React.Component {
 	renderMapView () {
 		const storeState = this.props.store.getState();
 		return (
-			<div className="stories-map-overlay">
+			<MapOverlayContainer className="stories-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
@@ -160,7 +160,7 @@ class Stories extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-			</div>
+			</MapOverlayContainer>
 		);
 	}
 

@@ -68,7 +68,14 @@ a:active {
 
 	&.map-view-enabled {
 		// when the user toggles the map-view, we don't want to cover the background-container
+		min-height: auto;
+		position: static;
 		width: 250px;
+
+		@media (#{$bp-larger-than-mobile}) {
+			min-height: calc(100vh - #{$header-height});
+			position: absolute;
+		}
 	}
 
 	@media (#{$bp-larger-than-narrow-desktop}) {

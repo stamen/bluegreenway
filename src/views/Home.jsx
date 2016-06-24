@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
-import MapOverlay from '../components/MapOverlay';
+import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import Event from '../components/Event';
 import Story from '../components/Story';
 
@@ -42,7 +42,7 @@ class Home extends React.Component {
 
 	componentDidUpdate (prevProps) {
 		// init packery after dom elements are rendered
-		if (this.refs.gridContainer.children.length > 3) {
+		if (this.refs.gridContainer && this.refs.gridContainer.children.length > 3) {
 			this.initPackery();
 		}
 	}
@@ -168,7 +168,7 @@ class Home extends React.Component {
 	renderMapView () {
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
-			<div className="projects-map-overlay">
+			<MapOverlayContainer className="projects-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
@@ -183,7 +183,7 @@ class Home extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-			</div>
+			</MapOverlayContainer>
 		);
 	}
 

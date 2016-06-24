@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import slug from 'slug';
 
 import MapLayersPicker from '../components/MapLayersPicker';
-import MapOverlay from '../components/MapOverlay';
+import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import * as tileLayers from '../../static/tileLayers.json';
 import { vizJSON } from '../models/common.js';
@@ -176,7 +176,7 @@ class Projects extends React.Component {
 	renderMapView () {
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
-			<div className="projects-map-overlay">
+			<MapOverlayContainer className="projects-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
@@ -191,7 +191,7 @@ class Projects extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-			</div>
+			</MapOverlayContainer>
 		);
 	}
 

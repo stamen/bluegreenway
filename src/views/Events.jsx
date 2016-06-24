@@ -8,7 +8,7 @@ import Event from '../components/Event';
 import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
 import MapLayersPicker from '../components/MapLayersPicker';
-import MapOverlay from '../components/MapOverlay';
+import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import {
 	getAgeRangesOptions,
@@ -103,7 +103,7 @@ class Events extends React.Component {
 
 	renderMapView () {
 		return (
-			<div className="events-map-overlay">
+			<MapOverlayContainer className="events-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
@@ -126,7 +126,7 @@ class Events extends React.Component {
 						initialEndDate={this.state.events.endDate}
 						onRangeChange={(range) => this.handleRangeChange(range)} />
 				</MapOverlay>
-			</div>
+			</MapOverlayContainer>
 		);
 	}
 

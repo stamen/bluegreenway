@@ -2,7 +2,42 @@ import * as React from 'react';
 
 import Collapse from 'react-collapse';
 
-export default class MapOverlay extends React.Component {
+export class MapOverlayContainer extends React.Component {
+	constructor (props) {
+		super(props);
+	}
+
+	componentWillMount () {
+		this.setState({
+			filtersOpen: false
+		});
+	}
+
+	componentDidMount () {
+	}
+
+	componentWillUnmount () {
+	}
+
+	componentDidUpdate () {
+	}
+
+	render () {
+		let filtersOpen = this.state.filtersOpen;
+		return (
+			<div className={'map-overlay-container ' + this.props.className + (filtersOpen ? ' filters-open' : '')}>
+				<div className='map-overlay-container-contents'>
+					{this.props.children}
+				</div>
+				<a className="map-overlay-container-toggle-filters" onClick={() => { this.setState({ filtersOpen: !filtersOpen }); }}>
+					{ filtersOpen ? 'select' : 'filters' }
+				</a>
+			</div>
+		);
+	}
+}
+
+export class MapOverlay extends React.Component {
 
 	constructor (props) {
 		super(props);
