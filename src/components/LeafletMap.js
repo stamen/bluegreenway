@@ -239,7 +239,10 @@ export default class LeafletMap extends React.Component {
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-		// console.log(`>>>>> ${ type }:`, layerData.map(i => `[${ i.id }](${ i.name }) ${ i[locationsField].join(',') }`));
+		// console.log(`>>>>> ${ type }:`, layerData.reduce((acc, i) => {
+		// 	acc[i.id] = `${ i.title }: ${ i[locationsField].join(',') }`;
+		// 	return acc;
+		// }, {}));
 
 		let markers = [];
 		layerData.forEach((item, i) => {
