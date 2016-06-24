@@ -12,6 +12,13 @@
 		width: 1%;
 	}
 
+	@include respond-to('small') {
+		.column,
+		.columns {
+			width: 97%;
+		}
+	}
+
 	.grid-sizer,
 	.grid-item {
 		position: relative;
