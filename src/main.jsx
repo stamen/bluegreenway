@@ -8,8 +8,10 @@ import { Redirect,
 	Route,
 	IndexRedirect,
 	IndexRoute,
+	applyRouterMiddleware,
 	useRouterHistory,
 	hashHistory } from 'react-router';
+import useScroll from 'react-router-scroll';
 import { createHashHistory } from 'history';
 
 import App from './views/App.jsx';
@@ -59,7 +61,7 @@ const createReduxComponent = (Component, props) => {
 
 // Render the app as `react-router` <Route>s, within a <Router>
 render((
-	<Router history={ appHistory } createElement={ createReduxComponent }>
+	<Router history={ appHistory } createElement={ createReduxComponent } render={applyRouterMiddleware(useScroll())}>
 		<Route path='/' component={ App }>
 			<IndexRedirect to='home' />
 			<Route path='home'>
