@@ -6,7 +6,6 @@
   "scripts": {
     "start": "gulp",
     "dist": "gulp dist",
-    "dist-studio": "gulp dist --dev --baseUrl '/bluegreenway/show/latest/' && scp -rq ./dist/. studio.stamen.com:www/bluegreenway/show/latest",
     "lint": "eslint ./src",
     "gh-deploy": "npm run dist && git-directory-deploy --directory dist/"
   },
