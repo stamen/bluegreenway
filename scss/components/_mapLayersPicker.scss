@@ -1,7 +1,10 @@
 .map-layers-picker {
-	padding: 10px;
+	padding: 0;
 
-	background-color: white;
+	@media (#{$bp-larger-than-mobile}) {
+		background-color: white;
+		padding: 10px;
+	}
 }
 
 .map-layers-picker-section {
@@ -11,18 +14,37 @@
 }
 
 .map-layers-picker-header {
+	background-color: $blue;
+	color: $white;
 	font-size: 14px;
 	font-weight: bold;
+	padding: .5rem 3rem;
 	text-transform: uppercase;
+
+	@media (#{$bp-larger-than-mobile}) {
+		color: $blue;
+		background: none;
+		padding: 0;
+	}
 }
 
 .map-layers-picker-checkbox {
-	margin-top: 5px;
+	margin: .5rem 3rem;
+
+	@media (#{$bp-larger-than-mobile}) {
+		margin: 0;
+	}
 
 	label {
-		color: $dark-gray;
+		color: $blue;
 		font-size: 12px;
-		margin-left: 5px;
+		font-weight: bold;
+		margin-left: .5rem;
 		text-transform: uppercase;
+
+		@media (#{$bp-larger-than-mobile}) {
+			color: $dark-gray;
+			font-weight: normal;
+		}
 	}
 }
