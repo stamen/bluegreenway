@@ -59,7 +59,7 @@ export default class Header extends React.Component {
 
 	render () {
 		// Don't let the body scroll if menu open
-		document.body.style.overflow = (this.props.menuOpen ? 'hidden' : 'auto');
+		document.body.classList.toggle('mobile-menu-open', this.props.menuOpen);
 
 		return (
 			<header ref='header' className={'site-header' + (this.props.menuOpen ? ' menu-open' : '')}>

@@ -26,6 +26,10 @@ svg text,
 	font-family: 'NeutrafaceText';
 }
 
+body.mobile-menu-open {
+	overflow: hidden;
+}
+
 a,
 a:link,
 a:visited,
