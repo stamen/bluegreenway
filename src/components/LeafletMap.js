@@ -239,49 +239,46 @@ export default class LeafletMap extends React.Component {
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-
-		// TEMP FOR TESTING
-		console.log(`>>>>> ${ type }:`, layerData.map(i => i[locationsField]));
-		// layerData = layerData.concat();
-		// layerData[0][locationsField] = [ 5951 ];	// test against Heron's Head Park
-
+		// console.log(`>>>>> ${ type }:`, layerData.map(i => `[${ i.id }](${ i.name }) ${ i[locationsField].join(',') }`));
 
 		let markers = [];
 		layerData.forEach((item, i) => {
-			// TODO: can be > 1 location; create a marker for each
-			let locationId;
+			// can be > 1 location; create a marker for each
+			let locationIds;
 			if (Array.isArray(item[locationsField])) {
-				if (!item[locationsField].length) return;
-				locationId = item[locationsField] && item[locationsField][0];
+				locationIds = item[locationsField];
 			} else {
-				locationId = item[locationsField] && item[locationsField].split(',')[0];
+				locationIds = item[locationsField] && item[locationsField].split(','); 
 			}
-			if (!locationId) return;
 
-			let project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
-			if (!project) return;
+			if (!locationIds || !locationIds.length) return;
 
-			let centroidResult = get(centroid(project), 'geometry.coordinates');
-			if (centroidResult) {
-				let icon = L.divIcon({
-					className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
-					iconSize: null,
-					html:
-						`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
-							<use xlink:href='#${ svgSymbolId }' />
-						</svg>`
-				});
+			locationIds.forEach(locationId => {
+				let project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
+				if (!project) return;
 
-				let marker = L.marker([centroidResult[1], centroidResult[0]], {
-						icon: icon
-					})
-					.bindPopup(this.initMarkerPopup(type, item, i), {
-						closeButton: false
+				let centroidResult = get(centroid(project), 'geometry.coordinates');
+				if (centroidResult) {
+					let icon = L.divIcon({
+						className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
+						iconSize: null,
+						html:
+							`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
+								<use xlink:href='#${ svgSymbolId }' />
+							</svg>`
 					});
-				markers.push(marker);
-			} else {
-				console.warn(`Could not derive centroid for project[${ locationId }]:`, project);
-			}
+
+					let marker = L.marker([centroidResult[1], centroidResult[0]], {
+							icon: icon
+						})
+						.bindPopup(this.initMarkerPopup(type, item, i), {
+							closeButton: false
+						});
+					markers.push(marker);
+				} else {
+					console.warn(`Could not derive centroid for project[${ locationId }]:`, project);
+				}
+			});
 		});
 
 		if (!markers.length) return null;
