@@ -322,7 +322,18 @@ export default class LeafletMap extends React.Component {
 	createProjectsMapLayer (projectsGeoJSON) {
 		return L.geoJson(projectsGeoJSON, {
 			style: feature => {
-				// to do: style features based on a bgw_zone_id
+				switch (feature.properties.category) {
+					case 'open space': return {
+						"weight": 1.5,
+						"opacity": 0.9,
+						"color": "#136400"
+					};
+					case 'project': return {
+						"weight": 1.5,
+						"opacity": 0.9,
+						"color": "#1F78B4"
+					};
+				}
 			},
 
 			// Project data load from the CMS separately from the project geojson.
