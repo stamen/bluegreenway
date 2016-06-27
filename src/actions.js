@@ -9,7 +9,8 @@ import { get } from 'lodash';
 // dataUrls.json = for use in production
 import dataUrls from '../static/dataUrls.json';
 
-export const MENU_TOGGLE = 'MENU_TOGGLE';
+export const MENU_HIDDEN = 'MENU_HIDDEN';
+export const MENU_TOGGLED = 'MENU_TOGGLED';
 
 export const SET_STATE = 'SET_STATE';
 // export const MODE_CHANGED = 'MODE_CHANGED';
@@ -54,9 +55,15 @@ export default function (store) {
 
 	return {
 
-		menuToggle () {
+		menuToggled () {
 			store.dispatch({
-				type: MENU_TOGGLE
+				type: MENU_TOGGLED
+			});
+		},
+
+		menuHidden () {
+			store.dispatch({
+				type: MENU_HIDDEN
 			});
 		},
 

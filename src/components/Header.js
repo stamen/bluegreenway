@@ -53,23 +53,19 @@ export default class Header extends React.Component {
 		this.lastScrollTop = scrollPos;
 	}
 
-	toggleMenu () {
-		this.props.actions.menuToggle();
-	}
-
 	render () {
 		// Don't let the body scroll if menu open
 		document.body.classList.toggle('mobile-menu-open', this.props.menuOpen);
 
 		return (
 			<header ref='header' className={'site-header' + (this.props.menuOpen ? ' menu-open' : '')}>
-				<h1><Link to='/'>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
+				<h1><Link to='/' onClick={this.props.actions.menuHidden}>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
 				<div className='menu'>
 					<ul>
-						<li><Link to={`/stories`} onClick={this.toggleMenu.bind(this)} activeClassName='active'>Stories</Link></li>
-						<li><Link to='/events' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Events</Link></li>
-						<li><Link to='/projects' onClick={this.toggleMenu.bind(this)} activeClassName='active'>Projects</Link></li>
-						<li><Link to='/about' onClick={this.toggleMenu.bind(this)} activeClassName='active'>About</Link></li>
+						<li><Link to={`/stories`} onClick={this.props.actions.menuHidden} activeClassName='active'>Stories</Link></li>
+						<li><Link to='/events' onClick={this.props.actions.menuHidden} activeClassName='active'>Events</Link></li>
+						<li><Link to='/projects' onClick={this.props.actions.menuHidden} activeClassName='active'>Projects</Link></li>
+						<li><Link to='/about' onClick={this.props.actions.menuHidden} activeClassName='active'>About</Link></li>
 					</ul>
 					<div className='menu-social-media'>
 						<div className='menu-social-media-buttons'>
@@ -79,7 +75,7 @@ export default class Header extends React.Component {
 						</div>
 					</div>
 				</div>
-				<a className='site-header-toggle-menu' onClick={this.toggleMenu.bind(this)}>
+				<a className='site-header-toggle-menu' onClick={this.props.actions.menuToggled}>
 					<div className='site-header-show-menu'>
 						<div className='site-header-show-menu-bar'></div>
 						<div className='site-header-show-menu-bar'></div>

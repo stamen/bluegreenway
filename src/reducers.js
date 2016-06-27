@@ -21,7 +21,9 @@ export default {
 
 	menuOpen (state = false, action) {
 		switch (action.type) {
-			case actions.MENU_TOGGLE:
+			case actions.MENU_HIDDEN:
+				return false;
+			case actions.MENU_TOGGLED:
 				return !state;
 			default:
 				return state;
