@@ -62,7 +62,7 @@ export default class Header extends React.Component {
 				<h1><Link to='/' onClick={this.props.actions.menuHidden}>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
 				<div className='menu'>
 					<ul>
-						<li><Link to={`/stories`} onClick={this.props.actions.menuHidden} activeClassName='active'>Stories</Link></li>
+						<li><Link to='/stories' onClick={this.props.actions.menuHidden} activeClassName='active'>Stories</Link></li>
 						<li><Link to='/events' onClick={this.props.actions.menuHidden} activeClassName='active'>Events</Link></li>
 						<li><Link to='/projects' onClick={this.props.actions.menuHidden} activeClassName='active'>Projects</Link></li>
 						<li><Link to='/about' onClick={this.props.actions.menuHidden} activeClassName='active'>About</Link></li>
