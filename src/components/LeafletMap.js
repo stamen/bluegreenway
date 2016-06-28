@@ -394,7 +394,7 @@ export default class LeafletMap extends React.Component {
 		this.mapState.projects.popups[project.id] = L.popup({
 				closeButton: false,
 				autoPanPaddingTopLeft: [0, sassVars.header.height],
-				offset: L.Point(-20, 0)
+				offset: new L.Point(-20, 0)
 			})
 			.setLatLng(layer.getBounds().getCenter())
 			.setContent(popupContent);
