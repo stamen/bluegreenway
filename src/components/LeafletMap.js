@@ -9,6 +9,28 @@ import Event from './Event';
 import Story from './Story';
 import sassVars from '../../scss/variables.json';
 
+// TODO: move these to variables.json
+const layerStyles = {
+	'open space': {
+		weight: 1.5,
+		opacity: 0,
+		color: '#46beae',
+		fillOpacity: 0
+	},
+	'project': {
+		weight: 1.5,
+		opacity: 0,
+		color: '#2e7042',
+		fillOpacity: 0
+	},
+	'highlighted': {
+		opacity: 0.75,
+		color: '#000000',
+		fillColor: '#ffffff',
+		fillOpacity: 0.75
+	}
+};
+
 export default class LeafletMap extends React.Component {
 	constructor (props) {
 		super(props);
@@ -111,6 +133,20 @@ export default class LeafletMap extends React.Component {
 				popup.openOn(this.mapState.map);
 			}
 		}
+
+		// set layer highlights
+		let selectedProjectId = projects.selectedProject && projects.selectedProject.id,
+			projectFeature,
+			projectStyle;
+		Object.keys(this.mapState.projects.layerData).forEach(projectId => {
+			projectFeature = this.mapState.projects.layerData[projectId];
+			if (projectId == selectedProjectId) {
+				projectStyle = layerStyles.highlighted;
+			} else {
+				projectStyle = layerStyles[projectFeature.feature.properties.category];
+			}
+			projectFeature.layer.setStyle(projectStyle);
+		});
 	}
 
 	initMap (projectsGeoJSON) {
@@ -321,20 +357,7 @@ export default class LeafletMap extends React.Component {
 
 	createProjectsMapLayer (projectsGeoJSON) {
 		return L.geoJson(projectsGeoJSON, {
-			style: feature => {
-				switch (feature.properties.category) {
-					case 'open space': return {
-						"weight": 1.5,
-						"opacity": 0,
-						"color": "#46beae"
-					};
-					case 'project': return {
-						"weight": 1.5,
-						"opacity": 0,
-						"color": "#2e7042"
-					};
-				}
-			},
+			style: feature => layerStyles[feature.properties.category],
 
 			// Project data load from the CMS separately from the project geojson.
 			// So, we store the geojson feature and map layer to use for creating a popup
@@ -370,7 +393,8 @@ export default class LeafletMap extends React.Component {
 
 		this.mapState.projects.popups[project.id] = L.popup({
 				closeButton: false,
-				autoPanPaddingTopLeft: [0, sassVars.header.height]
+				autoPanPaddingTopLeft: [0, sassVars.header.height],
+				offset: L.Point(-20, 0)
 			})
 			.setLatLng(layer.getBounds().getCenter())
 			.setContent(popupContent);
