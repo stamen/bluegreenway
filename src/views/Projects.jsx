@@ -2,12 +2,13 @@ import * as React from 'react';
 import { withRouter } from 'react-router';
 import { get } from 'lodash';
 import slug from 'slug';
+import { queue } from 'd3-queue';
 
 import MapLayersPicker from '../components/MapLayersPicker';
 import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import * as tileLayers from '../../static/tileLayers.json';
-import { vizJSON } from '../models/common.js';
+import * as dataURLs from '../../static/dataUrls.json';
 
 /**
  * This component draws the page displayed when the 'Projects' link in the top navbar is clicked.
@@ -44,17 +45,26 @@ class Projects extends React.Component {
 		this.createMiniMaps(get(this.props.store.getState().geodata, 'zones.geojson'));
 	}
 
-	componentWillUpdate (nextProps, nextState) {
-		const storeState = nextProps.store.getState(),
-			{ mode } = nextProps.params,
-			geodata = get(storeState.geodata, 'zones.geojson');
+  componentWillReceiveProps(nextProps, nextState) {
+    //
+  }
 
-		if (mode === 'page') {
-			this.createMiniMaps(geodata);
-		} else {
-			this.destroyMaps();
-		}
+	componentWillUpdate (nextProps, nextState) {
+    //
 	}
+
+  componentDidUpdate (prevProps) {
+    const storeState = this.props.store.getState(),
+      { mode } = this.props.params,
+      geodata = get(storeState.geodata, 'zones.geojson');
+
+    // only call createMiniMaps() after React has rendered DOM divs for each map
+    if (mode === 'page' && this.refs.mb && this.refs.ib && this.refs.p70 && this.refs.sc) {
+      this.createMiniMaps(geodata);
+    } else {
+      this.destroyMaps();
+    }
+  }
 
 	destroyMaps () {
 		if (!this.miniMaps) return;
@@ -89,7 +99,7 @@ class Projects extends React.Component {
 	}
 
 	renderMap (layerId, zoneFeatures) {
-		let map,
+    let map,
 			basemap = L.tileLayer(tileLayers.layers[1].url),
 			zoneFeaturesLayer = L.geoJson(zoneFeatures),
 			zoneLayer = L.geoJson(zoneFeatures, {
@@ -104,53 +114,81 @@ class Projects extends React.Component {
 				}
 			});
 
-		const options = {
-			attributionControl: false,
-			cartodb_logo: false,
-			center: [37.757450, -122.406235],
-			description: false,
-			doubleClickZoom: false,
-			dragging: false,
-			fullscreen: false,
-			infowindow: false,
-			keyboard: false,
-			layer_selector: false,
-			legends: false,
-			loaderControl: false,
-			shareable: false,
-			search: false,
-			scrollwheel: false,
-			search: false,
-			scrollWheelZoom: false,
-			touchZoom: false,
-			zoom: 12,
-			zoomAnimation: false,
-			zoomControl: false
-		};
+    // cartodb viz.json urls
+    const vizJSONURLs = [
+      dataURLs.mapBasemap,
+      dataURLs.mapGreenConnections,
+      dataURLs.mapBicycleRoutes,
+      dataURLs.mapBGWLine,
+      dataURLs.mapPOIs,
+      dataURLs.mapLabels
+    ];
 
-		cartodb.createVis(`map-${ layerId }`, vizJSON, options)
-			.on('done', (vis, layers) => {
+    const mapOptions = {
+      center: [37.757450, -122.406235],
+      zoom: 12,
+      zoomControl: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      boxZoom: false,
+      tap: false,
+      dragging: false,
+      touchZoom: false
+    };
 
-				// don't show POIs on minimaps
-				let layer = layers[1],
-					poisLayer = layer.getSubLayer(3);
-				poisLayer.hide();
+    const layerOptions = {
+      tooltip: false,
+      legends: false,
+      infowindow: false,
+      cartodb_logo: false
+    };
 
-				map = vis.getNativeMap();
-				map.addLayer(zoneLayer);
-				map.fitBounds(zoneFeaturesLayer.getBounds(), {
-					paddingTopLeft: [0, 100],
-					paddingBottomRight: [0, 0]
-				});
-				zoneLayer.bringToFront();
+    map = L.map(`map-${layerId}`, mapOptions);
 
-				if (!this.miniMaps) this.miniMaps = [];
-				this.miniMaps.push(map);
-			})
-			.on('error', err => {
-				console.warn(err);
-			});
+    const q = queue(vizJSONURLs.length + 1);
 
+    vizJSONURLs.forEach(vizJSON => {
+      q.defer((vizJSON, callback) => {
+        cartodb.createLayer(map, vizJSON, layerOptions, (layer) => {
+          callback(null, layer);
+        });
+      }, vizJSON);
+    });
+
+    q.await(function (error, arvg) {
+      if (error) throw error;
+      let cartodbLayers = Array.prototype.slice.call(arguments, 1);
+      cartodbLayers.forEach((layer, index) => {
+        // make labels & BGW line are always on top
+        if (index === 5) index = 10;
+        layer.addTo(map, index);
+      });
+      configMap(cartodbLayers);
+    });
+
+    // stuff to do after cartodb layers have loaded...
+    const configMap = (cartodbLayers) => {
+      let sublayers = {};
+      sublayers.zones = cartodbLayers[0];
+      sublayers.green_connections = cartodbLayers[1];
+      sublayers.green_connections.hide();
+      sublayers.biking = cartodbLayers[2];
+      sublayers.biking.hide();
+      sublayers.bgwLine = cartodbLayers[3];
+      sublayers.pois = cartodbLayers[4];
+      sublayers.pois.hide();
+      sublayers.mapLabels = cartodbLayers[5];
+
+      map.addLayer(zoneLayer);
+      map.fitBounds(zoneFeaturesLayer.getBounds(), {
+        paddingTopLeft: [0, 50],
+        paddingBottomRight: [0, 0]
+      });
+      zoneLayer.bringToFront();
+
+      if (!this.miniMaps) this.miniMaps = [];
+      this.miniMaps.push(map);
+    };
 	}
 
 	renderPageView () {
@@ -161,7 +199,7 @@ class Projects extends React.Component {
 				<div className='row'>
 					{ zoneConfigs.map(zoneConfig => {
 						return (
-							<div className='three columns zone-cell' key={ zoneConfig.id }>
+							<div ref={ zoneConfig.id } className='three columns zone-cell' key={ zoneConfig.id }>
 								<h4 className='title'>{ zoneConfig.title }</h4>
 								<div id={ `map-${ zoneConfig.id }` }></div>
 								<div className='learn-more' onClick={ this.onLearnMoreClick.bind(this, zoneConfig.id) }>
