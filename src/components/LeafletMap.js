@@ -28,8 +28,9 @@ const layerStyles = {
 	'highlighted': {
 		opacity: 0.75,
 		color: '#000000',
-		fillColor: '#ffffff',
-		fillOpacity: 0.75
+		weight: 2,
+		fillColor: '#ffff66',
+		fillOpacity: 0.8
 	}
 };
 
