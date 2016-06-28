@@ -188,9 +188,10 @@ export default class LeafletMap extends React.Component {
 
     const q = queue(vizJSONURLs.length + 1);
 
-    vizJSONURLs.forEach(vizJSON => {
+    vizJSONURLs.forEach((vizJSON, index) => {
       q.defer((vizJSON, callback) => {
         cartodb.createLayer(map, vizJSON, layerOptions, (layer) => {
+          layer.CORRECT_INDEX = index;
           callback(null, layer);
         });
       }, vizJSON);
@@ -200,8 +201,9 @@ export default class LeafletMap extends React.Component {
       if (error) throw error;
       let cartodbLayers = Array.prototype.slice.call(arguments, 1);
       cartodbLayers.forEach((layer, index) => {
+        console.log(layer.CORRECT_INDEX);
         // labels & BGW line are always on top of other basemap layers
-        if (index === 5 || index === 3) index = 10;
+        if (layer.CORRECT_INDEX === 5 || layer.CORRECT_INDEX === 3) index = 10;
         layer.addTo(map, index);
       });
       configMap(cartodbLayers);
