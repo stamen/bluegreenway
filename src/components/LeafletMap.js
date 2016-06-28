@@ -3,11 +3,13 @@ import { get } from 'lodash';
 import centroid from 'turf-centroid';
 import slug from 'slug';
 import ReactDOM from 'react-dom';
+import { queue } from 'd3-queue';
 
 import { vizJSON } from '../models/common.js';
 import Event from './Event';
 import Story from './Story';
 import sassVars from '../../scss/variables.json';
+import * as dataURLs from '../../static/dataUrls.json';
 
 export default class LeafletMap extends React.Component {
 	constructor (props) {
@@ -113,101 +115,94 @@ export default class LeafletMap extends React.Component {
 		}
 	}
 
-	initMap (projectsGeoJSON) {
-		// if already inited, or begun initing, bail
-		if (this.mapState.initing || this.mapState.map) return;
+  initMap (projectsGeoJSON) {
+    // if already inited, or begun initing, bail
+    if (this.mapState.initing || this.mapState.map) return;
 
-		// invalid geojson
-		if (!projectsGeoJSON || !projectsGeoJSON.features) return;
+    // invalid geojson
+    if (!projectsGeoJSON || !projectsGeoJSON.features) return;
 
-		this.mapState.initing = true;
+    this.mapState.initing = true;
 
-		const options = {
-			cartodb_logo: false,
-			center: [37.757450, -122.406235],
-			dragging: true,
-			infowindow: false,
-			legends: false,
-			scrollwheel: true,
-			search: false,
-			shareable: false,
-			zoom: 13,
-			zoomControl: false
-		};
+    // cartodb viz.json urls
+    const vizJSONURLs = [
+      dataURLs.mapBasemap,
+      dataURLs.mapGreenConnections,
+      dataURLs.mapBicycleRoutes,
+      dataURLs.mapPOIs,
+      dataURLs.mapLabelsBGWLine
+    ];
 
-		let projectsLayer = this.createProjectsMapLayer(projectsGeoJSON);
+    const mapOptions = {
+      center: [37.757450, -122.406235],
+      zoom: 13
+    };
 
-		cartodb.createVis('bgw-map', vizJSON, options)
-			.on('done', (vis, layers) => {
+    const layerOptions = {
+      tooltip: false,
+      legends: false,
+      infowindow: false
+    };
 
-				// to get the Leaflet map object
-				let map = vis.getNativeMap();
+    let projectsLayer = this.createProjectsMapLayer(projectsGeoJSON);
 
-				const initMap = () => {
-					// console.log(vis, layers);
-					// the first layer (layers[0]) is typically the basemap used in the visualization
-					// the second layer is the one containing the actual styled geodata layers
-					// cartodb.js refers to these as "subLayers", yes it's confusing!
-					const layer = layers[1];
-					const sublayerCount = layer.getSubLayerCount();
-					let sublayers = {};
+    const map = L.map('bgw-map', mapOptions);
 
-					// we can iterate over subLayers like this
-					for (let i = 0; i < sublayerCount; i++) {
-						// layer.getSubLayer(i).hide();
-					}
+    const q = queue(vizJSONURLs.length + 1);
 
-					// typically it's useful to store them like so:
-					sublayers.pois = layer.getSubLayer(3);
-					sublayers.biking = layer.getSubLayer(2);
-					sublayers.green_connections = layer.getSubLayer(1);
-					sublayers.zones = layer.getSubLayer(0);
+    vizJSONURLs.forEach(vizJSON => {
+      q.defer((vizJSON, callback) => {
+        cartodb.createLayer(map, vizJSON, layerOptions, (layer) => {
+          callback(null, layer);
+        });
+      }, vizJSON);
+    });
 
-					this.setMapControls(map);
+    q.await(function (error, arvg) {
+      if (error) throw error;
+      let cartodbLayers = Array.prototype.slice.call(arguments, 1);
+      cartodbLayers.forEach((layer, index) => {
+        // make labels & BGW line are always on top
+        if (index === 4) index = 10;
+        layer.addTo(map, index);
+      });
+      configMap(cartodbLayers);
+    });
 
-					// fit map to encompass projects bounds,
-					// and nudge it below header and to right of page content
-					// note: stories/events/projects layers are added/removed via actions, not here.
-					let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
-					map.fitBounds(projectsLayer.getBounds(), {
-						paddingTopLeft: [leftPadding, sassVars.header.height],
-						paddingBottomRight: [0, 0],
-						animate: false
-					});
+    // stuff to do after cartodb layers have loaded...
+    const configMap = (cartodbLayers) => {
+      let sublayers = {};
+      sublayers.pois = cartodbLayers[3];
+      sublayers.biking = cartodbLayers[2];
+      sublayers.green_connections = cartodbLayers[1];
+      sublayers.zones = cartodbLayers[0];
+      sublayers.mapLabelsBGWLine = cartodbLayers[4];
+      this.setMapControls(map);
 
-					this.mapState.initing = false;
-					this.mapState.map = map;
-					this.mapState.layers = sublayers;
+      let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
+      map.fitBounds(projectsLayer.getBounds(), {
+        paddingTopLeft: [leftPadding, sassVars.header.height],
+        paddingBottomRight: [0, 0],
+        animate: false
+      });
 
-					// If projects geojson loads after stories and events CMS data,
-					// create Stories and Events map layers now.
-					// Otherwise, they're created when stories/events data load, in updateMapLayers.
-					if (!this.mapState.layers.stories) {
-						this.createMarkerMapLayer('stories');
-					}
-					if (!this.mapState.layers.events) {
-						this.createMarkerMapLayer('events');
-					}
+      this.mapState.initing = false;
+      this.mapState.map = map;
+      this.mapState.layers = sublayers;
 
-					this.mapState.layers.projects = projectsLayer;
+      if (!this.mapState.layers.stories) {
+        this.createMarkerMapLayer('stories');
+      }
+      if (!this.mapState.layers.events) {
+        this.createMarkerMapLayer('events');
+      }
 
-					this.forceUpdate();
+      this.mapState.layers.projects = projectsLayer;
 
-				};
+      this.forceUpdate();
+    };
 
-				// wait to intiialize until Leaflet is ready.
-				if (map._loaded) {
-					initMap();
-				} else {
-					map.on('load', initMap);
-				}
-
-			})
-
-			.on('error', err => {
-				console.warn(err);
-			});
-	}
+  }
 
 	createMarkerMapLayer (type) {
 		const storeState = this.props.store.getState();
@@ -251,7 +246,7 @@ export default class LeafletMap extends React.Component {
 			if (Array.isArray(item[locationsField])) {
 				locationIds = item[locationsField];
 			} else {
-				locationIds = item[locationsField] && item[locationsField].split(','); 
+				locationIds = item[locationsField] && item[locationsField].split(',');
 			}
 
 			if (!locationIds || !locationIds.length) return;
