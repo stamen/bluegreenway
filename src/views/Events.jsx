@@ -168,8 +168,8 @@ class Events extends React.Component {
 				<div className='row'>
 					<div className='three columns date-picker-cell' style={{ background: 'white' }}>
 						<DateRange
-							minDate={moment('1/1/2016', 'M/D/YYYY')}
-							maxDate={moment()}
+							minDate={moment()}
+							maxDate={moment().add(3, 'months')}
 							initialStartDate={this.state.events.startDate}
 							initialEndDate={this.state.events.endDate}
 							onRangeChange={(range) => this.handleRangeChange(range)} />
