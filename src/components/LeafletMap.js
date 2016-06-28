@@ -129,13 +129,15 @@ export default class LeafletMap extends React.Component {
       dataURLs.mapBasemap,
       dataURLs.mapGreenConnections,
       dataURLs.mapBicycleRoutes,
+      dataURLs.mapBGWLine,
       dataURLs.mapPOIs,
-      dataURLs.mapLabelsBGWLine
+      dataURLs.mapLabels
     ];
 
     const mapOptions = {
       center: [37.757450, -122.406235],
-      zoom: 13
+      zoom: 13,
+      zoomControl: false
     };
 
     const layerOptions = {
@@ -163,7 +165,7 @@ export default class LeafletMap extends React.Component {
       let cartodbLayers = Array.prototype.slice.call(arguments, 1);
       cartodbLayers.forEach((layer, index) => {
         // make labels & BGW line are always on top
-        if (index === 4) index = 10;
+        if (index === 5) index = 10;
         layer.addTo(map, index);
       });
       configMap(cartodbLayers);
@@ -172,11 +174,12 @@ export default class LeafletMap extends React.Component {
     // stuff to do after cartodb layers have loaded...
     const configMap = (cartodbLayers) => {
       let sublayers = {};
-      sublayers.pois = cartodbLayers[3];
-      sublayers.biking = cartodbLayers[2];
-      sublayers.green_connections = cartodbLayers[1];
       sublayers.zones = cartodbLayers[0];
-      sublayers.mapLabelsBGWLine = cartodbLayers[4];
+      sublayers.green_connections = cartodbLayers[1];
+      sublayers.biking = cartodbLayers[2];
+      sublayers.bgwLine = cartodbLayers[3];
+      sublayers.pois = cartodbLayers[4];
+      sublayers.mapLabels = cartodbLayers[5];
       this.setMapControls(map);
 
       let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
