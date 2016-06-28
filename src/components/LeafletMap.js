@@ -118,11 +118,14 @@ export default class LeafletMap extends React.Component {
 			}
 		});
 
+		/*
+		// commented out to always show projects interaction layer
 		if (mapLayersPicker.projects) {
 			this.mapState.map.addLayer(this.mapState.layers.projects);
 		} else {
 			this.mapState.map.removeLayer(this.mapState.layers.projects);
 		}
+		*/
 
 		if (projects.selectedProject) {
 			let popup = this.mapState.projects.popups[projects.selectedProject.id];
@@ -242,6 +245,7 @@ export default class LeafletMap extends React.Component {
 			}
 
 			this.mapState.layers.projects = projectsLayer;
+			projectsLayer.addTo(map);
 
 			this.forceUpdate();
 		};
@@ -359,6 +363,11 @@ export default class LeafletMap extends React.Component {
 	}
 
 	createProjectsMapLayer (projectsGeoJSON) {
+		// projects CMS data needed to wire up popups,
+		// but we're not going to wait for it to load
+		// and hold up loading whatever page we're on.
+		this.props.actions.fetchProjectsData();
+
 		return L.geoJson(projectsGeoJSON, {
 			style: feature => layerStyles[feature.properties.category],
 
