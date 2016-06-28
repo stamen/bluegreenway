@@ -20629,19 +20629,6 @@
     },
     {
       "type": "Feature",
-      "geometry": null,
-      "properties": {
-        "cartodb_id": 47,
-        "name": null,
-        "category": null,
-        "bgw_zone": null,
-        "bgw_id": null,
-        "id_is_fake": null,
-        "pdf_id": null
-      }
-    },
-    {
-      "type": "Feature",
       "geometry": {
         "type": "MultiPolygon",
         "coordinates": [
@@ -21007,19 +20994,6 @@
         "bgw_id": 508,
         "id_is_fake": true,
         "pdf_id": 4
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": null,
-      "properties": {
-        "cartodb_id": 48,
-        "name": null,
-        "category": null,
-        "bgw_zone": null,
-        "bgw_id": null,
-        "id_is_fake": null,
-        "pdf_id": null
       }
     },
     {
@@ -24898,6 +24872,87 @@
           [
             [
               [
+                -122.389766,
+                37.776431
+              ],
+              [
+                -122.389519,
+                37.772988
+              ],
+              [
+                -122.387524,
+                37.773055
+              ],
+              [
+                -122.387599,
+                37.77426
+              ],
+              [
+                -122.386923,
+                37.774327
+              ],
+              [
+                -122.387019,
+                37.775125
+              ],
+              [
+                -122.384841,
+                37.775354
+              ],
+              [
+                -122.385035,
+                37.776329
+              ],
+              [
+                -122.387556,
+                37.77604
+              ],
+              [
+                -122.387609,
+                37.776312
+              ],
+              [
+                -122.387695,
+                37.776414
+              ],
+              [
+                -122.387803,
+                37.776481
+              ],
+              [
+                -122.387921,
+                37.776515
+              ],
+              [
+                -122.388049,
+                37.776532
+              ],
+              [
+                -122.389766,
+                37.776431
+              ]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "cartodb_id": 50,
+        "name": "Mission Rock",
+        "category": "project",
+        "bgw_zone": "mb",
+        "bgw_id": 6384,
+        "id_is_fake": false,
+        "pdf_id": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
                 -122.383408,
                 37.720433
               ],
@@ -25453,6 +25508,47 @@
         "bgw_id": 6382,
         "id_is_fake": false,
         "pdf_id": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -122.389364,
+                37.771096
+              ],
+              [
+                -122.389326,
+                37.770706
+              ],
+              [
+                -122.386639,
+                37.770876
+              ],
+              [
+                -122.386687,
+                37.771241
+              ],
+              [
+                -122.389364,
+                37.771096
+              ]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "cartodb_id": 51,
+        "name": "Mission Bay Commons Park",
+        "category": "open space",
+        "bgw_zone": "mb",
+        "bgw_id": 6387,
+        "id_is_fake": false,
+        "pdf_id": null
       }
     },
     {
