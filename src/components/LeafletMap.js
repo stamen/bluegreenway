@@ -28,8 +28,9 @@ const layerStyles = {
 	'highlighted': {
 		opacity: 0.75,
 		color: '#000000',
-		fillColor: '#ffffff',
-		fillOpacity: 0.75
+		weight: 2,
+		fillColor: '#ffff66',
+		fillOpacity: 0.8
 	}
 };
 
@@ -46,6 +47,8 @@ export default class LeafletMap extends React.Component {
 				popups: {}
 			}
 		};
+
+		this.onMapClicked = this.onMapClicked.bind(this);
 	}
 
 	componentWillMount () {
@@ -115,6 +118,7 @@ export default class LeafletMap extends React.Component {
 			}
 		});
 
+		// commented out to always show projects interaction layer
 		if (mapLayersPicker.projects) {
 			this.mapState.map.addLayer(this.mapState.layers.projects);
 		} else {
@@ -151,99 +155,99 @@ export default class LeafletMap extends React.Component {
 		});
 	}
 
-  initMap (projectsGeoJSON) {
-    // if already inited, or begun initing, bail
-    if (this.mapState.initing || this.mapState.map) return;
+	initMap (projectsGeoJSON) {
+		// if already inited, or begun initing, bail
+		if (this.mapState.initing || this.mapState.map) return;
 
-    // invalid geojson
-    if (!projectsGeoJSON || !projectsGeoJSON.features) return;
+		// invalid geojson
+		if (!projectsGeoJSON || !projectsGeoJSON.features) return;
 
-    this.mapState.initing = true;
+		this.mapState.initing = true;
 
-    // cartodb viz.json urls
-    const vizJSONURLs = [
-      dataURLs.mapBasemap,
-      dataURLs.mapGreenConnections,
-      dataURLs.mapBicycleRoutes,
-      dataURLs.mapBGWLine,
-      dataURLs.mapPOIs,
-      dataURLs.mapLabels
-    ];
+		// cartodb viz.json urls
+		const vizJSONURLs = [
+			dataURLs.mapBasemap,
+			dataURLs.mapGreenConnections,
+			dataURLs.mapBicycleRoutes,
+			dataURLs.mapBGWLine,
+			dataURLs.mapPOIs,
+			dataURLs.mapLabels
+		];
 
-    const mapOptions = {
-      center: [37.757450, -122.406235],
-      zoom: 13,
-      zoomControl: false
-    };
+		const mapOptions = {
+			center: [37.757450, -122.406235],
+			zoom: 13,
+			zoomControl: false
+		};
 
-    const layerOptions = {
-      tooltip: false,
-      legends: false,
-      infowindow: false
-    };
+		const layerOptions = {
+			tooltip: false,
+			legends: false,
+			infowindow: false
+		};
 
-    let projectsLayer = this.createProjectsMapLayer(projectsGeoJSON);
+		let projectsLayer = this.createProjectsMapLayer(projectsGeoJSON);
 
-    const map = L.map('bgw-map', mapOptions);
+		const map = L.map('bgw-map', mapOptions);
 
-    const q = queue(vizJSONURLs.length + 1);
+		const q = queue(vizJSONURLs.length + 1);
 
-    vizJSONURLs.forEach((vizJSON, index) => {
-      q.defer((vizJSON, callback) => {
-        cartodb.createLayer(map, vizJSON, layerOptions, (layer) => {
-          layer.CORRECT_INDEX = index;
-          callback(null, layer);
-        });
-      }, vizJSON);
-    });
+		vizJSONURLs.forEach(vizJSON => {
+			q.defer((vizJSON, callback) => {
+				cartodb.createLayer(map, vizJSON, layerOptions, (layer) => {
+					callback(null, layer);
+				});
+			}, vizJSON);
+		});
 
-    q.await(function (error, arvg) {
-      if (error) throw error;
-      let cartodbLayers = Array.prototype.slice.call(arguments, 1);
-      cartodbLayers.forEach((layer, index) => {
-        console.log(layer.CORRECT_INDEX);
-        // labels & BGW line are always on top of other basemap layers
-        if (layer.CORRECT_INDEX === 5 || layer.CORRECT_INDEX === 3) index = 10;
-        layer.addTo(map, index);
-      });
-      configMap(cartodbLayers);
-    });
+		q.await(function (error, arvg) {
+			if (error) throw error;
+			let cartodbLayers = Array.prototype.slice.call(arguments, 1);
+			cartodbLayers.forEach((layer, index) => {
+				// make labels & BGW line are always on top
+				layer.addTo(map).setZIndex(index);
+			});
+			configMap(cartodbLayers);
+		});
 
-    // stuff to do after cartodb layers have loaded...
-    const configMap = (cartodbLayers) => {
-      let sublayers = {};
-      sublayers.zones = cartodbLayers[0];
-      sublayers.green_connections = cartodbLayers[1];
-      sublayers.biking = cartodbLayers[2];
-      sublayers.bgwLine = cartodbLayers[3];
-      sublayers.pois = cartodbLayers[4];
-      sublayers.mapLabels = cartodbLayers[5];
-      this.setMapControls(map);
+		// stuff to do after cartodb layers have loaded...
+		const configMap = (cartodbLayers) => {
+			let sublayers = {};
+			sublayers.zones = cartodbLayers[0];
+			sublayers.green_connections = cartodbLayers[1];
+			sublayers.biking = cartodbLayers[2];
+			sublayers.bgwLine = cartodbLayers[3];
+			sublayers.pois = cartodbLayers[4];
+			sublayers.mapLabels = cartodbLayers[5];
+			this.setMapControls(map);
 
-      let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
-      map.fitBounds(projectsLayer.getBounds(), {
-        paddingTopLeft: [leftPadding, sassVars.header.height],
-        paddingBottomRight: [0, 0],
-        animate: false
-      });
+			let leftPadding = Math.max(0, (window.innerWidth - sassVars.breakpoints.width.small));
+			map.fitBounds(projectsLayer.getBounds(), {
+				paddingTopLeft: [leftPadding, sassVars.header.height],
+				paddingBottomRight: [0, 0],
+				animate: false
+			});
 
-      this.mapState.initing = false;
-      this.mapState.map = map;
-      this.mapState.layers = sublayers;
+			map.on('click', this.onMapClicked);
 
-      if (!this.mapState.layers.stories) {
-        this.createMarkerMapLayer('stories');
-      }
-      if (!this.mapState.layers.events) {
-        this.createMarkerMapLayer('events');
-      }
+			this.mapState.initing = false;
+			this.mapState.map = map;
+			this.mapState.layers = sublayers;
 
-      this.mapState.layers.projects = projectsLayer;
+			if (!this.mapState.layers.stories) {
+				this.createMarkerMapLayer('stories');
+			}
+			if (!this.mapState.layers.events) {
+				this.createMarkerMapLayer('events');
+			}
 
-      this.forceUpdate();
-    };
+			this.mapState.layers.projects = projectsLayer;
+			projectsLayer.addTo(map);
 
-  }
+			this.forceUpdate();
+		};
+
+	}
 
 	createMarkerMapLayer (type) {
 		const storeState = this.props.store.getState();
@@ -356,6 +360,11 @@ export default class LeafletMap extends React.Component {
 	}
 
 	createProjectsMapLayer (projectsGeoJSON) {
+		// projects CMS data needed to wire up popups,
+		// but we're not going to wait for it to load
+		// and hold up loading whatever page we're on.
+		this.props.actions.fetchProjectsData();
+
 		return L.geoJson(projectsGeoJSON, {
 			style: feature => layerStyles[feature.properties.category],
 
@@ -399,6 +408,10 @@ export default class LeafletMap extends React.Component {
 			.setLatLng(layer.getBounds().getCenter())
 			.setContent(popupContent);
 
+	}
+
+	onMapClicked (event) {
+		this.props.actions.updateSelectedProject(null);
 	}
 
 	/**

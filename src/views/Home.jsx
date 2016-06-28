@@ -22,7 +22,12 @@ class Home extends React.Component {
 		// if (!projects.data.items.length) actions.fetchProjectsData();
 		if (!stories.data.items.length) actions.fetchStoriesData();
 		if (!events.data.items.length) actions.fetchEventsData();
-		actions.mapLayersPickerProjectsChange(false);
+
+		// set map layers
+		actions.mapLayersPickerStoriesChange(true);
+		actions.mapLayersPickerEventsChange(true);
+		actions.mapLayersPickerProjectsChange(true);
+
 		this.setState({
 			packeryLoaded: false
 		});
