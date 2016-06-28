@@ -360,9 +360,18 @@ export default class LeafletMap extends React.Component {
 
 		let { feature, layer } = layerData;
 
-		let popupContent = `<h3>${ project.name }</h3><p>${ project.description }</p>`;
+		// ugh, this is a mess
+		let popupContent = `
+			<div class='project-popup'>
+				<h3>${ project.name }</h3>
+				<p>${ project.description }</p>
+			</div>
+		`;
 
-		this.mapState.projects.popups[project.id] = L.popup()
+		this.mapState.projects.popups[project.id] = L.popup({
+				closeButton: false,
+				autoPanPaddingTopLeft: [0, sassVars.header.height]
+			})
 			.setLatLng(layer.getBounds().getCenter())
 			.setContent(popupContent);
 

@@ -4,7 +4,7 @@
 		height: 500px;
 		position: relative;
 		text-align: center;
-		background-color: #fff;
+		background-color: $white;
 
 		.title {
 			z-index: 1;
@@ -36,7 +36,7 @@
 		p {
 			margin: 0;
 			padding: 0;
-			color: #fff;
+			color: $white;
 			line-height: 60px;
 			background: $green;
 		}
@@ -54,5 +54,22 @@
 
 	.leaflet-control-attribution {
 		display: none;
+	}
+}
+
+.project-popup {
+	width: 15rem;
+	padding: 1rem 0.5rem;
+
+	background-color: $white;
+	color: $blue;
+	box-shadow: $page-shadow;
+
+	h3 {
+		text-align: center;
+	}
+
+	p {
+		padding: 0.5rem 0;
 	}
 }
