@@ -159,9 +159,7 @@ class Projects extends React.Component {
       if (error) throw error;
       let cartodbLayers = Array.prototype.slice.call(arguments, 1);
       cartodbLayers.forEach((layer, index) => {
-        // make labels & BGW line are always on top
-        if (index === 5) index = 10;
-        layer.addTo(map, index);
+        layer.addTo(map).setZIndex(index);
       });
       configMap(cartodbLayers);
     });
