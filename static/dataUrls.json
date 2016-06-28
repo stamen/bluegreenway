@@ -3,5 +3,11 @@
 	"stories": "http://sfparksalliance.org/feeds/bgw-news.json",
 	"projects": "http://sfparksalliance.org/feeds/locations.json/1",
 	"zones": "https://raw.githubusercontent.com/stamen/bluegreenway/master/data/geodata/bluegreenway_zones.geojson",
-	"projectsGeoData": "https://raw.githubusercontent.com/stamen/bluegreenway/master/data/geodata/bgw_projects.geojson"
+	"projectsGeoData": "https://raw.githubusercontent.com/stamen/bluegreenway/master/data/geodata/bgw_projects.geojson",
+  "mapLabels": "https://bluegreenway.cartodb.com/api/v2/viz/5b9d66e2-2c57-423c-a594-f06704c5d9b4/viz.json",
+  "mapBGWLine": "https://bluegreenway.cartodb.com/api/v2/viz/7063f2fc-96ab-4b2e-9505-e34c77b3fd80/viz.json",
+  "mapPOIs": "https://bluegreenway.cartodb.com/api/v2/viz/536ca7e4-54e1-4608-a6d6-1fd81cd51703/viz.json",
+  "mapBicycleRoutes": "https://bluegreenway.cartodb.com/api/v2/viz/7136fdf4-5972-488c-97fd-12062e6950fb/viz.json",
+  "mapGreenConnections": "https://bluegreenway.cartodb.com/api/v2/viz/97832533-8ab7-4b22-8164-1f1fc6a37885/viz.json",
+  "mapBasemap": "https://bluegreenway.cartodb.com/api/v2/viz/81e43dc0-f481-46e8-ad8f-9794ca285e55/viz.json"
 }
