@@ -94,10 +94,11 @@ class Projects extends React.Component {
 			zoneLayer = L.geoJson(zoneFeatures, {
 				filter: (feature, layer) => feature.properties.map_id === layerId,
 				style: {
-					color: '#4DA3BC',
-					weight: 0,
-					fillColor: '#4DA3BC',
-					fillOpacity: 1,
+					color: '#17445F',
+					weight: 4,
+					opacity: 1,
+					fillColor: '#17445F',
+					fillOpacity: 0.2,
 					clickable: false
 				}
 			});
