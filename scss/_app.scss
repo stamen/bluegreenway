@@ -190,6 +190,11 @@ a:active {
 	.leaflet-popup-content {
 		margin: 0;
 		line-height: 1.0;
+
+		// fuck you, cartodb.js!!
+		p {
+			margin: 0;
+		}
 	}
 	.leaflet-popup-tip-container {
 		display: none;

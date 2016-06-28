@@ -65,8 +65,20 @@
 	color: $blue;
 	box-shadow: $page-shadow;
 
+	// override inline styles from CMS
+	* {
+		color: $blue !important;
+		font-family: 'NeutrafaceText' !important;
+		font-size: 1rem !important;
+		line-height: 1.25rem !important;
+	}
+
 	h3 {
-		text-align: center;
+		text-align: center !important;
+		color: $blue !important;
+		font-weight: bold !important;
+		font-size: 2rem !important;
+		line-height: 2.5rem !important;
 	}
 
 	p {
