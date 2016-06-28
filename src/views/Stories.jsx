@@ -17,9 +17,10 @@ class Stories extends React.Component {
 	}
 
 	componentWillMount () {
+		// set map layers
 		this.props.actions.mapLayersPickerStoriesChange(true);
 		this.props.actions.mapLayersPickerEventsChange(false);
-		this.props.actions.mapLayersPickerProjectsChange(false);
+		this.props.actions.mapLayersPickerProjectsChange(true);
 
 		// Fetch data if we need to
 		const storeState = this.props.store.getState();

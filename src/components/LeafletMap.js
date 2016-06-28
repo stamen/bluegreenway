@@ -118,14 +118,12 @@ export default class LeafletMap extends React.Component {
 			}
 		});
 
-		/*
 		// commented out to always show projects interaction layer
 		if (mapLayersPicker.projects) {
 			this.mapState.map.addLayer(this.mapState.layers.projects);
 		} else {
 			this.mapState.map.removeLayer(this.mapState.layers.projects);
 		}
-		*/
 
 		if (projects.selectedProject) {
 			let popup = this.mapState.projects.popups[projects.selectedProject.id];

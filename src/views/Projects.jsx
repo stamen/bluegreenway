@@ -26,6 +26,7 @@ class Projects extends React.Component {
 			geodata = get(storeState.geodata, 'zones.geojson'),
 			projects = get(storeState.projects, 'data.items');
 
+		// set map layers
 		this.props.actions.mapLayersPickerStoriesChange(false);
 		this.props.actions.mapLayersPickerEventsChange(false);
 		this.props.actions.mapLayersPickerProjectsChange(true);
