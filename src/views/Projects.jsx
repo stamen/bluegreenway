@@ -44,17 +44,26 @@ class Projects extends React.Component {
 		this.createMiniMaps(get(this.props.store.getState().geodata, 'zones.geojson'));
 	}
 
-	componentWillUpdate (nextProps, nextState) {
-		const storeState = nextProps.store.getState(),
-			{ mode } = nextProps.params,
-			geodata = get(storeState.geodata, 'zones.geojson');
+  componentWillReceiveProps(nextProps, nextState) {
+    //
+  }
 
-		if (mode === 'page') {
-			this.createMiniMaps(geodata);
-		} else {
-			this.destroyMaps();
-		}
+	componentWillUpdate (nextProps, nextState) {
+    //
 	}
+
+  componentDidUpdate (prevProps) {
+    const storeState = this.props.store.getState(),
+      { mode } = this.props.params,
+      geodata = get(storeState.geodata, 'zones.geojson');
+
+    // only call createMiniMaps() after React has rendered DOM divs for each map
+    if (mode === 'page' && this.refs.mb && this.refs.ib && this.refs.p70 && this.refs.sc) {
+      this.createMiniMaps(geodata);
+    } else {
+      this.destroyMaps();
+    }
+  }
 
 	destroyMaps () {
 		if (!this.miniMaps) return;
@@ -89,7 +98,7 @@ class Projects extends React.Component {
 	}
 
 	renderMap (layerId, zoneFeatures) {
-		let map,
+    let map,
 			basemap = L.tileLayer(tileLayers.layers[1].url),
 			zoneFeaturesLayer = L.geoJson(zoneFeatures),
 			zoneLayer = L.geoJson(zoneFeatures, {
@@ -133,7 +142,7 @@ class Projects extends React.Component {
       cartodb_logo: false
     };
 
-    map = L.map(`map-${ layerId }`, mapOptions);
+    map = L.map(`map-${layerId}`, mapOptions);
 
     const q = queue(vizJSONURLs.length + 1);
 
@@ -161,7 +170,9 @@ class Projects extends React.Component {
       let sublayers = {};
       sublayers.zones = cartodbLayers[0];
       sublayers.green_connections = cartodbLayers[1];
+      sublayers.green_connections.hide();
       sublayers.biking = cartodbLayers[2];
+      sublayers.biking.hide();
       sublayers.bgwLine = cartodbLayers[3];
       sublayers.pois = cartodbLayers[4];
       sublayers.pois.hide();
@@ -169,7 +180,7 @@ class Projects extends React.Component {
 
       map.addLayer(zoneLayer);
       map.fitBounds(zoneFeaturesLayer.getBounds(), {
-        paddingTopLeft: [0, 100],
+        paddingTopLeft: [0, 50],
         paddingBottomRight: [0, 0]
       });
       zoneLayer.bringToFront();
@@ -187,7 +198,7 @@ class Projects extends React.Component {
 				<div className='row'>
 					{ zoneConfigs.map(zoneConfig => {
 						return (
-							<div className='three columns zone-cell' key={ zoneConfig.id }>
+							<div ref={ zoneConfig.id } className='three columns zone-cell' key={ zoneConfig.id }>
 								<h4 className='title'>{ zoneConfig.title }</h4>
 								<div id={ `map-${ zoneConfig.id }` }></div>
 								<div className='learn-more' onClick={ this.onLearnMoreClick.bind(this, zoneConfig.id) }>
