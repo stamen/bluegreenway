@@ -325,13 +325,13 @@ export default class LeafletMap extends React.Component {
 				switch (feature.properties.category) {
 					case 'open space': return {
 						"weight": 1.5,
-						"opacity": 0.9,
-						"color": "#136400"
+						"opacity": 0,
+						"color": "#46beae"
 					};
 					case 'project': return {
 						"weight": 1.5,
-						"opacity": 0.9,
-						"color": "#1F78B4"
+						"opacity": 0,
+						"color": "#2e7042"
 					};
 				}
 			},
