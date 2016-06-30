@@ -44,7 +44,7 @@ const Event = (props) => {
 };
 
 function renderBody (props) {
-	let categorySlug = slug(props.category).toLowerCase();
+	let categorySlug = props.category ? slug(props.category).toLowerCase() : '';
 	return (
 		<div className={ 'event-shade ' + categorySlug }>
 			{ (props.startDate.format('D-MMM') === props.endDate.format('D-MMM')) ?

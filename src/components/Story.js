@@ -18,7 +18,7 @@ const Story = (props) => {
 		props.router.push(path);
 	}
 
-	let categorySlug = slug(props.category).toLowerCase();
+	let categorySlug = props.category ? slug(props.category).toLowerCase() : '';
 
 	return (
 		<div

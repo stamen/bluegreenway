@@ -11,6 +11,12 @@ import socialMediaLinks from '../../static/socialMediaLinks.json';
 
 export default class Header extends React.Component {
 
+	static propTypes = {
+		actions: PropTypes.object,
+		menuOpen: PropTypes.bool,
+		mode: PropTypes.string
+	}
+
 	constructor (props) {
 		super(props);
 		this.onScroll = throttle(this.onScroll, 100);
@@ -59,13 +65,13 @@ export default class Header extends React.Component {
 
 		return (
 			<header ref='header' className={'site-header' + (this.props.menuOpen ? ' menu-open' : '')}>
-				<h1><Link to='/' onClick={this.props.actions.menuHidden}>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
+				<h1><Link to={ `/home/${ this.props.mode }` } onClick={this.props.actions.menuHidden}>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
 				<div className='menu'>
 					<ul>
-						<li><Link to='/stories' onClick={this.props.actions.menuHidden} activeClassName='active'>Stories</Link></li>
-						<li><Link to='/events' onClick={this.props.actions.menuHidden} activeClassName='active'>Events</Link></li>
-						<li><Link to='/projects' onClick={this.props.actions.menuHidden} activeClassName='active'>Projects</Link></li>
-						<li><Link to='/about' onClick={this.props.actions.menuHidden} activeClassName='active'>About</Link></li>
+						<li><Link to={ `/stories/${ this.props.mode }` } onClick={this.props.actions.menuHidden} activeClassName='active'>Stories</Link></li>
+						<li><Link to={ `/events/${ this.props.mode }` } onClick={this.props.actions.menuHidden} activeClassName='active'>Events</Link></li>
+						<li><Link to={ `/projects/${ this.props.mode }` } onClick={this.props.actions.menuHidden} activeClassName='active'>Projects</Link></li>
+						<li><Link to={ `/about/${ this.props.mode }` } onClick={this.props.actions.menuHidden} activeClassName='active'>About</Link></li>
 					</ul>
 					<div className='menu-social-media'>
 						<div className='menu-social-media-buttons'>
