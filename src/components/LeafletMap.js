@@ -279,19 +279,13 @@ export default class LeafletMap extends React.Component {
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
+		/*
 		console.log(`>>>>> ${ type }:`, layerData.reduce((acc, item) => {
 			let locationIds = Array.isArray(item[locationsField]) ? item[locationsField] : item[locationsField] && item[locationsField].split(',');
 			acc[item.id] = `${ item.title }: ${ locationIds && locationIds.join(',') || null }`;
 			return acc;
 		}, {}));
-
-		//
-		// TODO after lunch:
-		// loop over projects geojson and find all markers for each project
-		// make one single marker for each project (one for stories, one for events)
-		// 		and keep track of all stories/events at that location
-		// create one popup with all stories/events within scrolling div
-		// 
+		*/
 
 		let markerObjs = [];
 		projectsGeoJSON.forEach(project => {
@@ -312,6 +306,7 @@ export default class LeafletMap extends React.Component {
 					item[locationsField] && item[locationsField].split(',');
 
 				if (!locationIds || !locationIds.length) return;
+				locationIds = locationIds.map(id => +id);
 
 				if (~locationIds.indexOf(projectId)) {
 					renderedItemsForProject.push(this.initMarkerPopup(type, item, i));
