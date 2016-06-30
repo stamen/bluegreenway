@@ -24,21 +24,8 @@
 	width: 100%;
 	height: 100%;
 
-	/*
 	// Set background color based on slugified category name
-	&.general-stories-history {
-		background-color: rgba($purple, 0.15);
-	}
-	&.points-of-interest {
-		background-color: rgba($med-blue, 0.15);
-	}
-	&.people-of-the-blue-greenway {
-		background-color: rgba($green, 0.15);
-	}
-	&.blue-greenway-highlights {
-		background-color: rgba($dark-green, 0.15);
-	}
-	*/
+	// @include story-background-color(0.15);
 }
 
 .story-body {
@@ -69,18 +56,7 @@
 	top: 10px;
 
 	// Add background color based on slugified category name
-	&-general-stories-history {
-		background: $purple;
-	}
-	&-points-of-interest {
-		background: $med-blue;
-	}
-	&-people-of-the-blue-greenway {
-		background: $green;
-	}
-	&-blue-greenway-highlights {
-		background: $dark-green;
-	}
+	@include story-background-color(1.0);
 }
 
 .story-text {

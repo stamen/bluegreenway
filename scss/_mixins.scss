@@ -45,3 +45,87 @@
          + 'Please make sure it is defined in `$breakpoints` map.';
   }
 }
+
+@mixin story-background-color ($opacity) {
+	&.general-stories-history {
+		background-color: rgba($purple, $opacity);
+	}
+	&.points-of-interest {
+		background-color: rgba($med-blue, $opacity);
+	}
+	&.people-of-the-blue-greenway {
+		background-color: rgba($green, $opacity);
+	}
+	&.blue-greenway-highlights {
+		background-color: rgba($dark-green, $opacity);
+	}
+	&.unused-type-5 {
+		background-color: rgba($orange, $opacity);
+	}
+	&.unused-type-6 {
+		background-color: rgba($blue, $opacity);
+	}
+}
+
+@mixin story-fill-color ($opacity) {
+	&.general-stories-history {
+		fill: rgba($purple, $opacity);
+	}
+	&.points-of-interest {
+		fill: rgba($med-blue, $opacity);
+	}
+	&.people-of-the-blue-greenway {
+		fill: rgba($green, $opacity);
+	}
+	&.blue-greenway-highlights {
+		fill: rgba($dark-green, $opacity);
+	}
+	&.unused-type-5 {
+		fill: rgba($orange, $opacity);
+	}
+	&.unused-type-6 {
+		fill: rgba($blue, $opacity);
+	}
+}
+
+@mixin event-background-color ($opacity) {
+	&.special-events {
+		background-color: rgba($green, $opacity);
+	}
+	&.social-activities {
+		background-color: rgba($purple, $opacity);
+	}
+	&.unused-type-3 {
+		background-color: rgba($orange, $opacity);
+	}
+	&.unused-type-4 {
+		background-color: rgba($dark-green, $opacity);
+	}
+	&.unused-type-5 {
+		background-color: rgba($med-blue, $opacity);
+	}
+	&.unused-type-6 {
+		background-color: rgba($blue, $opacity);
+	}
+}
+
+@mixin event-fill-color ($opacity) {
+	&.special-events {
+		fill: rgba($green, $opacity);
+	}
+	&.social-activities {
+		fill: rgba($purple, $opacity);
+	}
+	&.unused-type-3 {
+		fill: rgba($orange, $opacity);
+	}
+	&.unused-type-4 {
+		fill: rgba($dark-green, $opacity);
+	}
+	&.unused-type-5 {
+		fill: rgba($med-blue, $opacity);
+	}
+	&.unused-type-6 {
+		fill: rgba($blue, $opacity);
+	}
+}

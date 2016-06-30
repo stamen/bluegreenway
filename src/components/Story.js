@@ -27,7 +27,7 @@ const Story = (props) => {
 			style={ props.images.length ? { backgroundImage: `url(${ props.images[0].src })` } : {} }
 		>
 			<div className={ 'story-shade ' + categorySlug }>
-				<div className={ 'story-category story-category-' + categorySlug }>{ props.category }</div>
+				<div className={ 'story-category ' + categorySlug }>{ props.category }</div>
 				<div className='story-text'>
 					<div className='story-title'>{ props.title.replace(/_/g, ' ') }</div>
 					<div className='story-body' dangerouslySetInnerHTML={ { __html: props.body } }></div>

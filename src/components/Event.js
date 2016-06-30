@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import slug from 'slug';
 
 const Event = (props) => {
 
@@ -43,8 +44,9 @@ const Event = (props) => {
 };
 
 function renderBody (props) {
+	let categorySlug = slug(props.category).toLowerCase();
 	return (
-		<div className='event-shade'>
+		<div className={ 'event-shade ' + categorySlug }>
 			{ (props.startDate.format('D-MMM') === props.endDate.format('D-MMM')) ?
 				(<div className='event-date'>
 					<span>{ props.startDate.format('MMM') }</span>
