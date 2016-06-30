@@ -167,8 +167,21 @@ a:active {
 		display: none;
 	}
 
-	.popup-content {
-		width: $row-height;
+	$popup-padding: 0.5em;
+	.popup-item-container {
+		width: 2 * ($row-height + $popup-padding);
+		max-height: 3 * $row-height;
+
+		padding: $popup-padding;
+		overflow-x: hidden;
+		overflow-y: auto;
+
+		background-color: $white;
+		box-shadow: $page-shadow;
+	}
+	.popup-item {
+		width: 100%;
+		margin: 0.5rem 0;
 
 		.story-cell {
 			width: 2 * $row-height;

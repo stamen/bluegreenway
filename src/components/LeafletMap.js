@@ -279,20 +279,85 @@ export default class LeafletMap extends React.Component {
 				throw new Error('Cannot create map layer for type:', type);
 		}
 
-		// console.log(`>>>>> ${ type }:`, layerData.reduce((acc, i) => {
-		// 	acc[i.id] = `${ i.title }: ${ i[locationsField].join(',') }`;
-		// 	return acc;
-		// }, {}));
+		console.log(`>>>>> ${ type }:`, layerData.reduce((acc, item) => {
+			let locationIds = Array.isArray(item[locationsField]) ? item[locationsField] : item[locationsField] && item[locationsField].split(',');
+			acc[item.id] = `${ item.title }: ${ locationIds && locationIds.join(',') || null }`;
+			return acc;
+		}, {}));
+
+		//
+		// TODO after lunch:
+		// loop over projects geojson and find all markers for each project
+		// make one single marker for each project (one for stories, one for events)
+		// 		and keep track of all stories/events at that location
+		// create one popup with all stories/events within scrolling div
+		// 
+
+		let markerObjs = [];
+		projectsGeoJSON.forEach(project => {
+			// find project centroid
+			let centroidResult = get(centroid(project), 'geometry.coordinates');
+
+			// if project centroid could not be calculated, no marker can be created.
+			if (!centroidResult) return;
+
+			let renderedItemsForProject = [];
+
+			// iterate items to find those associated with this project
+			let projectId = project.properties.bgw_id;
+			layerData.forEach((item, i) => {
+				// can be > 1 location; create a marker for each
+				let locationIds = Array.isArray(item[locationsField]) ?
+					item[locationsField] :
+					item[locationsField] && item[locationsField].split(',');
+
+				if (!locationIds || !locationIds.length) return;
+
+				if (~locationIds.indexOf(projectId)) {
+					renderedItemsForProject.push(this.initMarkerPopup(type, item, i));
+				}
+
+			});
+
+			if (renderedItemsForProject.length) {
+				markerObjs.push({
+					centroidResult,
+					renderedItemsForProject
+				});
+			}
+		});
 
 		let markers = [];
+		markerObjs.forEach(markerObj => {
+			let icon = L.divIcon({
+				// className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
+				className: `marker ${ type }`,
+				iconSize: null,
+				html:
+					`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
+						<use xlink:href='#${ svgSymbolId }' />
+					</svg>`
+			});
+
+			let popupContentContainer = document.createElement('div');
+			popupContentContainer.classList.add('popup-item-container');
+			markerObj.renderedItemsForProject.forEach(item => popupContentContainer.appendChild(item));
+
+			let marker = L.marker(markerObj.centroidResult.reverse(), {
+					icon: icon
+				})
+				.bindPopup(popupContentContainer, {
+					closeButton: false
+				});
+			markers.push(marker);
+		});
+
+		/*
 		layerData.forEach((item, i) => {
 			// can be > 1 location; create a marker for each
-			let locationIds;
-			if (Array.isArray(item[locationsField])) {
-				locationIds = item[locationsField];
-			} else {
-				locationIds = item[locationsField] && item[locationsField].split(',');
-			}
+			let locationIds = Array.isArray(item[locationsField]) ?
+				item[locationsField] :
+				item[locationsField] && item[locationsField].split(',');
 
 			if (!locationIds || !locationIds.length) return;
 
@@ -323,6 +388,7 @@ export default class LeafletMap extends React.Component {
 				}
 			});
 		});
+		*/
 
 		if (!markers.length) return null;
 
@@ -331,7 +397,7 @@ export default class LeafletMap extends React.Component {
 
 	initMarkerPopup (type, data, index) {
 		let container = document.createElement('div');
-		container.classList.add('popup-content');
+		container.classList.add('popup-item');
 		switch (type) {
 			case 'stories':
 				ReactDOM.render((
