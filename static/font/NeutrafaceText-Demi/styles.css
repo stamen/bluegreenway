@@ -1,0 +1,8 @@
+
+@font-face {
+  font-family: 'NeutrafaceText-Demi';
+  src: url('NeutrafaceText-Demi.eot?#iefix') format('embedded-opentype'),  url('NeutrafaceText-Demi.otf')  format('opentype'),
+	     url('NeutrafaceText-Demi.woff') format('woff'), url('NeutrafaceText-Demi.ttf')  format('truetype'), url('NeutrafaceText-Demi.svg#NeutrafaceText-Demi') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
