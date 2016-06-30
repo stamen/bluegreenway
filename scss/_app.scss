@@ -127,8 +127,8 @@ a:active {
 		}
 
 		&.stories {
-			// position origin at bottom-center of svg
-			left: -10px;
+			// position origin at bottom-center of svg, to the left
+			left: -10px - 10px;
 			top: -30px;
 
 			// Add background color based on slugified category name
@@ -136,8 +136,8 @@ a:active {
 		}
 
 		&.events {
-			// position origin at bottom-center of svg
-			left: -10px;
+			// position origin at bottom-center of svg, to the right
+			left: -10px + 10px;
 			top: -27px;
 
 			stroke: white;
