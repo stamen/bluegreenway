@@ -18,17 +18,19 @@ const Story = (props) => {
 		props.router.push(path);
 	}
 
+	let categorySlug = slug(props.category).toLowerCase();
+
 	return (
 		<div
 			className={ storyClassName }
 			onClick={ () => viewStory() }
 			style={ props.images.length ? { backgroundImage: `url(${ props.images[0].src })` } : {} }
 		>
-			<div className='story-shade'>
-				<div className={ "story-category story-category-" + slug(props.category).toLowerCase() }>{ props.category }</div>
-				<div className="story-text">
-					<div className="story-title">{ props.title.replace(/_/g, ' ') }</div>
-					<div className="story-body" dangerouslySetInnerHTML={ { __html: props.body } }></div>
+			<div className={ 'story-shade ' + categorySlug }>
+				<div className={ 'story-category story-category-' + categorySlug }>{ props.category }</div>
+				<div className='story-text'>
+					<div className='story-title'>{ props.title.replace(/_/g, ' ') }</div>
+					<div className='story-body' dangerouslySetInnerHTML={ { __html: props.body } }></div>
 				</div>
 			</div>
 		</div>
