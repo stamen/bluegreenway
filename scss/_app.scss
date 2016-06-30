@@ -133,22 +133,22 @@ a:active {
 
 			// Add background color based on slugified category name
 			&.general-stories-history {
-				fill: #b895c9;
+				fill: $purple;
 			}
 			&.points-of-interest {
-				fill: #49a3be;
+				fill: $med-blue;
 			}
 			&.people-of-the-blue-greenway {
-				fill: #8bc954;
+				fill: $green;
 			}
 			&.blue-greenway-highlights {
-				fill: #2e7042;
+				fill: $dark-green;
 			}
 			&.unused-type-5 {
-				fill: #ffb933;
+				fill: $orange;
 			}
 			&.unused-type-6 {
-				fill: #043d58;
+				fill: $blue;
 			}
 		}
 
@@ -161,23 +161,23 @@ a:active {
 			stroke-width: 1px;
 
 			// Add background color based on event type
-			&.type-1 {
-				fill: #b895c9;
+			&.special-events {
+				fill: $green;
 			}
-			&.type-2 {
-				fill: #49a3be;
+			&.social-activities {
+				fill: $purple;
 			}
-			&.type-3 {
-				fill: #8bc954;
+			&.unused-type-3 {
+				fill: $orange;
 			}
-			&.type-4 {
-				fill: #2e7042;
+			&.unused-type-4 {
+				fill: $dark-green;
 			}
-			&.type-5 {
-				fill: #ffb933;
+			&.unused-type-5 {
+				fill: $med-blue;
 			}
-			&.type-6 {
-				fill: #043d58;
+			&.unused-type-6 {
+				fill: $blue;
 			}
 		}
 	}

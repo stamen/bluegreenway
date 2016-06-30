@@ -27,16 +27,16 @@
 	/*
 	// Set background color based on slugified category name
 	&.general-stories-history {
-		background-color: rgba(#b895c9, 0.15);
+		background-color: rgba($purple, 0.15);
 	}
 	&.points-of-interest {
-		background-color: rgba(#49a3be, 0.15);
+		background-color: rgba($med-blue, 0.15);
 	}
 	&.people-of-the-blue-greenway {
-		background-color: rgba(#8bc954, 0.15);
+		background-color: rgba($green, 0.15);
 	}
 	&.blue-greenway-highlights {
-		background-color: rgba(#2e7042, 0.15);
+		background-color: rgba($dark-green, 0.15);
 	}
 	*/
 }
@@ -70,16 +70,16 @@
 
 	// Add background color based on slugified category name
 	&-general-stories-history {
-		background: #b895c9;
+		background: $purple;
 	}
 	&-points-of-interest {
-		background: #49a3be;
+		background: $med-blue;
 	}
 	&-people-of-the-blue-greenway {
-		background: #8bc954;
+		background: $green;
 	}
 	&-blue-greenway-highlights {
-		background: #2e7042;
+		background: $dark-green;
 	}
 }
 
