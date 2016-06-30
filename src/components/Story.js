@@ -12,7 +12,7 @@ const Story = (props) => {
 	}
 
 	function viewStory () {
-		const path = `/stories/${ props.mode }/${ props.title }?id=${ props.id }`;
+		const path = `/stories/${ props.mode || 'page' }/${ props.title }?id=${ props.id }`;
 		let { title, id } = props; 
 		props.onClick({ title, id });
 		props.router.push(path);
