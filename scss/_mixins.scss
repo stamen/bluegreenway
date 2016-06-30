@@ -54,7 +54,7 @@
 		background-color: rgba($med-blue, $opacity);
 	}
 	&.people-of-the-blue-greenway {
-		background-color: rgba($green, $opacity);
+		background-color: rgba($blue, $opacity);
 	}
 	&.blue-greenway-highlights {
 		background-color: rgba($dark-green, $opacity);
@@ -63,7 +63,49 @@
 		background-color: rgba($orange, $opacity);
 	}
 	&.unused-type-6 {
-		background-color: rgba($blue, $opacity);
+		background-color: rgba($green, $opacity);
+	}
+}
+
+@mixin story-background-gradient ($mid-stop) {
+	&.general-stories-history {
+		background: linear-gradient(to top, rgba($purple, 0.65), rgba($purple, 0.65) $mid-stop, rgba($white, 0));
+	}
+	&.points-of-interest {
+		background: linear-gradient(to top, rgba($med-blue, 0.65), rgba($med-blue, 0.65) $mid-stop, rgba($white, 0));
+	}
+	&.people-of-the-blue-greenway {
+		background: linear-gradient(to top, rgba($blue, 0.65), rgba($blue, 0.65) $mid-stop, rgba($white, 0));
+	}
+	&.blue-greenway-highlights {
+		background: linear-gradient(to top, rgba($dark-green, 0.65), rgba($dark-green, 0.65) $mid-stop, rgba($white, 0));
+	}
+	&.unused-type-5 {
+		background: linear-gradient(to top, rgba($orange, 0.65), rgba($orange, 0.65) $mid-stop, rgba($white, 0));
+	}
+	&.unused-type-6 {
+		background: linear-gradient(to top, rgba($green, 0.65), rgba($green, 0.65) $mid-stop, rgba($white, 0));
+	}
+}
+
+@mixin story-background-gradient-tall ($stop1, $stop2) {
+	&.general-stories-history {
+		background: linear-gradient(to top, rgba($purple, 0.65), rgba($purple, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
+	}
+	&.points-of-interest {
+		background: linear-gradient(to top, rgba($med-blue, 0.65), rgba($med-blue, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
+	}
+	&.people-of-the-blue-greenway {
+		background: linear-gradient(to top, rgba($blue, 0.65), rgba($blue, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
+	}
+	&.blue-greenway-highlights {
+		background: linear-gradient(to top, rgba($dark-green, 0.65), rgba($dark-green, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
+	}
+	&.unused-type-5 {
+		background: linear-gradient(to top, rgba($orange, 0.65), rgba($orange, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
+	}
+	&.unused-type-6 {
+		background: linear-gradient(to top, rgba($green, 0.65), rgba($green, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
 	}
 }
 
@@ -75,7 +117,7 @@
 		fill: rgba($med-blue, $opacity);
 	}
 	&.people-of-the-blue-greenway {
-		fill: rgba($green, $opacity);
+		fill: rgba($blue, $opacity);
 	}
 	&.blue-greenway-highlights {
 		fill: rgba($dark-green, $opacity);
@@ -84,7 +126,7 @@
 		fill: rgba($orange, $opacity);
 	}
 	&.unused-type-6 {
-		fill: rgba($blue, $opacity);
+		fill: rgba($green, $opacity);
 	}
 }
 

@@ -78,9 +78,12 @@ $events-padding: 0.5em;
 .event-details {
 	position: absolute;
 	bottom: $events-padding;
-	font-size: 1.1em;
 	line-height: 1.11em;
+
 	color: #fff;
+	font-size: 1.1em;
+	font-family: 'NeutrafaceDemi';
+	text-shadow: 0 0 2px rgba(0,0,0,0.75);
 
 	p {
 		margin: 0;

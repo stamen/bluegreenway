@@ -52,15 +52,18 @@
 		.story-title {
 			font-size: 2em;
 		}
+		.story-shade {
+			@include story-background-gradient-tall(12%, 36%);
+		}
 
-		$font-size: 1.25em;
-		$line-height: 1.8em;
-		$lines-to-show: 7;
+		$font-size: 1rem;
+		$line-height: 1.33rem;
+		$lines-to-show: 5;
 		.story-body {
 			position: absolute;
 			bottom: $cell-margin;
 			width: calc(100% - #{2 * $cell-margin});
-			max-height: $row-height - $cell-margin;
+			max-height: 6.5rem;
 			overflow: hidden;
 
 			// multiline ellipsis (webkit-only), per
@@ -68,7 +71,7 @@
 			display: block;												// Fallback for non-webkit
 			display: -webkit-box;
 			max-width: calc(100% - #{2 * $cell-margin});
-			height: $font-size * $line-height * $lines-to-show / 1em;	// Fallback for non-webkit; divide by 1em to clear up em*em units
+			height: $font-size * $line-height * $lines-to-show / 1rem;	// Fallback for non-webkit; divide by 1rem to clear up rem*rem units
 			margin: 0 auto;
 			// font-size: $font-size;
 			line-height: $line-height;
