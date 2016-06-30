@@ -169,8 +169,13 @@ a:active {
 
 	$popup-padding: 0.5em;
 	.popup-item-container {
-		width: 2 * ($row-height + $popup-padding);
-		max-height: 3 * $row-height;
+		&.events {
+			width: $row-height + 2 * $popup-padding;
+		}
+		&.stories {
+			width: 2 * ($row-height + $popup-padding);
+		}
+		max-height: 3 * $row-height + 4 * $popup-padding;
 
 		padding: $popup-padding;
 		overflow-x: hidden;
@@ -191,5 +196,13 @@ a:active {
 			width: $row-height;
 			height: $row-height;
 		}
+
+		&:first-of-type {
+			margin-top: 0;
+		}
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+
 	}
 }

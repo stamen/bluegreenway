@@ -295,7 +295,8 @@ export default class LeafletMap extends React.Component {
 			// if project centroid could not be calculated, no marker can be created.
 			if (!centroidResult) return;
 
-			let renderedItemsForProject = [];
+			let items = [],
+				elements = [];
 
 			// iterate items to find those associated with this project
 			let projectId = project.properties.bgw_id;
@@ -309,15 +310,16 @@ export default class LeafletMap extends React.Component {
 				locationIds = locationIds.map(id => +id);
 
 				if (~locationIds.indexOf(projectId)) {
-					renderedItemsForProject.push(this.initMarkerPopup(type, item, i));
+					items.push(item);
+					elements.push(this.initMarkerPopup(type, item, i));
 				}
-
 			});
 
-			if (renderedItemsForProject.length) {
+			if (elements.length) {
 				markerObjs.push({
 					centroidResult,
-					renderedItemsForProject
+					items,
+					elements
 				});
 			}
 		});
@@ -325,8 +327,7 @@ export default class LeafletMap extends React.Component {
 		let markers = [];
 		markerObjs.forEach(markerObj => {
 			let icon = L.divIcon({
-				// className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
-				className: `marker ${ type }`,
+				className: `marker ${ type } ${ slug(markerObj.items[0].category, { lower: true }) }`,
 				iconSize: null,
 				html:
 					`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
@@ -335,55 +336,28 @@ export default class LeafletMap extends React.Component {
 			});
 
 			let popupContentContainer = document.createElement('div');
-			popupContentContainer.classList.add('popup-item-container');
-			markerObj.renderedItemsForProject.forEach(item => popupContentContainer.appendChild(item));
+			popupContentContainer.classList.add('popup-item-container', type);
+			markerObj.elements.forEach(item => popupContentContainer.appendChild(item));
+
+			let w = type === 'events' ? 265 : 510,
+				h = 265;
 
 			let marker = L.marker(markerObj.centroidResult.reverse(), {
 					icon: icon
 				})
 				.bindPopup(popupContentContainer, {
-					closeButton: false
+					closeButton: false,
+
+					// hardcoded based on values in _app.scss::.popup-item-container,
+					// required for auto panning and offset to work correctly
+					maxWidth: w,
+
+					offset: [-w/2 - 24, h/2],
+					autoPanPaddingTopLeft: [24, sassVars.header.height],
+					autoPanPaddingBottomRight: [24, 24]
 				});
 			markers.push(marker);
 		});
-
-		/*
-		layerData.forEach((item, i) => {
-			// can be > 1 location; create a marker for each
-			let locationIds = Array.isArray(item[locationsField]) ?
-				item[locationsField] :
-				item[locationsField] && item[locationsField].split(',');
-
-			if (!locationIds || !locationIds.length) return;
-
-			locationIds.forEach(locationId => {
-				let project = projectsGeoJSON.find(feature => feature.properties.bgw_id == locationId);
-				if (!project) return;
-
-				let centroidResult = get(centroid(project), 'geometry.coordinates');
-				if (centroidResult) {
-					let icon = L.divIcon({
-						className: `marker ${ type } ${ slug(item.category, { lower: true }) }`,
-						iconSize: null,
-						html:
-							`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
-								<use xlink:href='#${ svgSymbolId }' />
-							</svg>`
-					});
-
-					let marker = L.marker([centroidResult[1], centroidResult[0]], {
-							icon: icon
-						})
-						.bindPopup(this.initMarkerPopup(type, item, i), {
-							closeButton: false
-						});
-					markers.push(marker);
-				} else {
-					console.warn(`Could not derive centroid for project[${ locationId }]:`, project);
-				}
-			});
-		});
-		*/
 
 		if (!markers.length) return null;
 
@@ -409,7 +383,7 @@ export default class LeafletMap extends React.Component {
 					<Event
 						{ ...data }
 						homepage={ true }
-						defaultImageIndex={ (index + 1) % 6 }
+						defaultImageIndex={ (index % 6) + 1 }
 						// onClick={ this.props.actions.updateSelectedStory }
 						// router={ this.props.router }
 					/>
@@ -461,10 +435,18 @@ export default class LeafletMap extends React.Component {
 			</div>
 		`;
 
+		// hardcoded based on values in projects.scss::.project-popup
+		let w = 270;
+
 		this.mapState.projects.popups[project.id] = L.popup({
+				// hardcoded based on values in _app.scss::.popup-item-container,
+				// required for auto panning and offset to work correctly
+				maxWidth: w,
+
+				offset: [-0.75*w, w/2],
 				closeButton: false,
-				autoPanPaddingTopLeft: [0, sassVars.header.height],
-				offset: new L.Point(-20, 0)
+				autoPanPaddingTopLeft: [24, sassVars.header.height],
+				autoPanPaddingBottomRight: [24, 24]
 			})
 			.setLatLng(layer.getBounds().getCenter())
 			.setContent(popupContent);
