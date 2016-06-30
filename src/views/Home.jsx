@@ -121,7 +121,7 @@ class Home extends React.Component {
 		// create divs with corresponding classNames that determine width & height for use with Packery & Skeleton grid
 		// inside divs reside a corresponding story or event component
 		let isPeople,
-			defaultImageIndex = 0;
+			defaultImageIndex = 1;
 		let divs = items.map((item, idx) => {
 			isPeople = item.people;
 			if (isPeople) {
@@ -152,7 +152,7 @@ class Home extends React.Component {
 				);
 			} else if (item.event) {
 				if (!item.event.photoURL) {
-					defaultImageIndex = ++defaultImageIndex % 6;
+					defaultImageIndex = (defaultImageIndex++ % 6) + 1;
 				}
 				
 				return (
