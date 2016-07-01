@@ -3,7 +3,7 @@ $button-font-size: 1.5rem;
 #zone {
 	color: $blue;
 
-	$zone-margin-horiz: 1rem;
+	$zone-margin-horiz: 2.5rem;
 	$zone-margin-vert: 1rem;
 
 	.accordian-wrapper {
@@ -80,7 +80,7 @@ $button-font-size: 1.5rem;
 
 	.section-title {
 		margin-bottom: 0;
-		padding: .25em 0 .25em .5em;
+		padding: .25em $zone-margin-horiz;
 
 		@extend %neutra-demi;
 		color: #fff;
