@@ -69,16 +69,22 @@
 	* {
 		color: $blue !important;
 		font-family: 'NeutrafaceText' !important;
-		font-size: 1rem !important;
-		line-height: 1.25rem !important;
+		font-size: 0.89rem !important;
+		line-height: 1.15rem !important;
 	}
 
 	h3 {
-		text-align: center !important;
+		margin-bottom: 1.5rem;
 		color: $blue !important;
 		font-weight: bold !important;
 		font-size: 2rem !important;
 		line-height: 2.5rem !important;
+		text-align: center !important;
+	}
+
+	img {
+		max-width: 100%;
+		margin-bottom: 0.5rem;
 	}
 
 	p {

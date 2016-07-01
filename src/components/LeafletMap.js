@@ -425,13 +425,18 @@ export default class LeafletMap extends React.Component {
 		let layerData = this.mapState.projects.layerData[project.id];
 		if (!layerData) return null;
 
-		let { feature, layer } = layerData;
+		let { feature, layer } = layerData,
+			{ description } = project;
+
+		console.log(">>>>> description:", description);
+		description = description.replace('<p></p>', '');
 
 		// ugh, this is a mess
 		let popupContent = `
 			<div class='project-popup'>
 				<h3>${ project.name }</h3>
-				<p>${ project.description }</p>
+				<img src=${ project.images.src } alt=${ project.images.alt }/>
+				${ description }
 			</div>
 		`;
 
