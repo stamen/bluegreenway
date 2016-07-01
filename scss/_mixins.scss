@@ -67,28 +67,7 @@
 	}
 }
 
-@mixin story-background-gradient ($mid-stop) {
-	&.general-stories-history {
-		background: linear-gradient(to top, rgba($purple, 0.65), rgba($purple, 0.65) $mid-stop, rgba($white, 0));
-	}
-	&.points-of-interest {
-		background: linear-gradient(to top, rgba($med-blue, 0.65), rgba($med-blue, 0.65) $mid-stop, rgba($white, 0));
-	}
-	&.people-of-the-blue-greenway {
-		background: linear-gradient(to top, rgba($blue, 0.65), rgba($blue, 0.65) $mid-stop, rgba($white, 0));
-	}
-	&.blue-greenway-highlights {
-		background: linear-gradient(to top, rgba($dark-green, 0.65), rgba($dark-green, 0.65) $mid-stop, rgba($white, 0));
-	}
-	&.unused-type-5 {
-		background: linear-gradient(to top, rgba($orange, 0.65), rgba($orange, 0.65) $mid-stop, rgba($white, 0));
-	}
-	&.unused-type-6 {
-		background: linear-gradient(to top, rgba($green, 0.65), rgba($green, 0.65) $mid-stop, rgba($white, 0));
-	}
-}
-
-@mixin story-background-gradient-tall ($stop1, $stop2) {
+@mixin story-background-gradient ($stop1, $stop2) {
 	&.general-stories-history {
 		background: linear-gradient(to top, rgba($purple, 0.65), rgba($purple, 0.65) $stop1, rgba($white, 0) $stop2, rgba($white, 0));
 	}

@@ -25,7 +25,7 @@
 	height: 100%;
 
 	// Set background color based on slugified category name
-	@include story-background-gradient(20%);
+	@include story-background-gradient(20%, 100%);
 }
 
 .story-body {
