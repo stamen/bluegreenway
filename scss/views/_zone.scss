@@ -79,12 +79,13 @@ $button-font-size: 1.5rem;
 	}
 
 	.section-title {
-		background: $blue;
+		margin-bottom: 0;
+		padding: .25em 0 .25em .5em;
+
+		@extend %neutra-demi;
 		color: #fff;
 		font-size: 1.3rem;
-		padding: .25em 0 .25em .5em;
-		@extend %neutra-bold;
-			margin-bottom: 0;
+		background: $blue;
 	}
 
 	.loading {
@@ -118,10 +119,12 @@ $button-font-size: 1.5rem;
 	}
 
 	.item-name {
-		font-size: 1.3rem;
-		margin: 0.5em 0;
 		display: inline-block;
 		width: 100%;
+		margin: 0.5em 0;
+
+		@extend %neutra-demi;
+		font-size: 1.3rem;
 
 		&:after {
 			content: '\02795';

@@ -37,9 +37,9 @@ export default class ProjectItem extends Component {
 				className='item'
 				onClick={ this.handleClick.bind(this) }
 				>
-				<h5 className={ this.state.isOpened ? 'active item-name': 'item-name'}>
+				<h4 className={ this.state.isOpened ? 'active item-name': 'item-name'}>
 					{ this.props.project.name }
-				</h5>
+				</h4>
 				<Collapse
 					isOpened={ this.state.isOpened }
 					springConfig={ {
