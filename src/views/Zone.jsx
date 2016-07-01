@@ -88,7 +88,7 @@ class Zone extends Component {
 						<div className='six columns zone-header'>
 							<h2 className='title'>{ name }</h2>
 							<p>{ (description || 'Zone placeholder description text') + (image ? '' : ' (and placeholder image at right)') }</p>
-							<Link className='button' onClick={ () => this.onZoneMapLinkClicked(zone) } to={ mapUrl }>View on Map</Link>
+							{/* <Link className='button' onClick={ () => this.onZoneMapLinkClicked(zone) } to={ mapUrl }>View on Map</Link> */}
 						</div>
 						<div
 							className='six columns zone-img'

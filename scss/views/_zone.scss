@@ -52,9 +52,11 @@
 		}
 
 		p {
+			max-height: 75%;
+			overflow-y: hidden;
 			font-size: 1.5em;
 			line-height: 1.25em;
-
+			
 			@media (#{$bp-larger-than-mobile}) {
 				font-size: inherit;
 				line-height: 1.5em;
@@ -94,19 +96,26 @@
 		padding: 0 $zone-margin-horiz;
 
 		// this is causing a jump when the div is removed, how to avoid?
-		> div {
-			margin-bottom: 0.5em;
-		}
+		// > div {
+		// 	margin-bottom: 0.5em;
+		// }
 
 		.button {
 			font-size: 1.5em;
-			margin: .5em auto;
+			margin: .5em auto 0 auto;
+			margin: 0;
 			position: relative;
 
 			@media (#{$bp-larger-than-mobile}) {
 				font-size: inherit;
-				margin: $zone-margin-vert 0;
+				margin: $zone-margin-vert 0 0 0;
 			}
+		}
+
+		.collapse-spacer {
+			opacity: 0;
+			width: $zone-margin-vert;
+			height: $zone-margin-vert;
 		}
 	}
 

@@ -40,7 +40,13 @@ export default class ProjectItem extends Component {
 				<h5 className={ this.state.isOpened ? 'active item-name': 'item-name'}>
 					{ this.props.project.name }
 				</h5>
-				<Collapse isOpened={ this.state.isOpened }>
+				<Collapse
+					isOpened={ this.state.isOpened }
+					springConfig={ {
+						stiffness: 600,
+						damping: 50,
+						precision: 0.01
+					} }>
 					{ this.renderProject() }
 				</Collapse>
 			</div>
@@ -55,6 +61,7 @@ export default class ProjectItem extends Component {
 			<div className='item-content'>
 				<div className='item-description' dangerouslySetInnerHTML={ { __html: this.props.project.description } }></div>
 				<Link className='button' onClick={ this.onMapButtonClick } to={ mapUrl }>View on Map</Link>
+				<div className='collapse-spacer'></div> {/* margin-bottom on .button doesn't work with react-collapse */}
 			</div>
 		);
 	}

@@ -12,6 +12,7 @@ export function cleanProjectItem (item) {
 	cleaned.description = item.Description;
 	cleaned.facilities = item.Facilities;
 	cleaned.hours = item.Hours;
+	cleaned.images = item.Images;
 	cleaned.id = +item.id;
 	cleaned.links = item.Links;
 	cleaned.locationCategory = item['Location Category'];
