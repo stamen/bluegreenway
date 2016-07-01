@@ -5,7 +5,7 @@ export default class MapLayersPicker extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
 		layers: PropTypes.array.isRequired,
-		onLayerChange: PropTypes.function
+		onLayerChange: PropTypes.func
 	};
 
 	static defaultProps = {
