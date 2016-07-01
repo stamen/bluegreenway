@@ -58,8 +58,17 @@ export default class ProjectItem extends Component {
 		let mapUrl = 'projects/map';
 		
 		return (
-			<div className='item-content'>
-				<div className='item-description' dangerouslySetInnerHTML={ { __html: this.props.project.description } }></div>
+			<div className='item-container'>
+				<div className='item-content'>
+					<div className='item-description' dangerouslySetInnerHTML={ { __html: this.props.project.description } }></div>
+				</div>
+				{
+					this.props.project.images && this.props.project.images.src ?
+					<div className='item-img'>
+						<img src={ this.props.project.images.src } alt={ this.props.project.images.alt }/>
+					</div>
+					: null
+				}
 				<Link className='button' onClick={ this.onMapButtonClick } to={ mapUrl }>View on Map</Link>
 				<div className='collapse-spacer'></div> {/* margin-bottom on .button doesn't work with react-collapse */}
 			</div>

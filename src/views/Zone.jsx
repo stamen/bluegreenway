@@ -67,7 +67,7 @@ class Zone extends Component {
 				<div className='grid-container'>
 					<div className='accordian-wrapper row'>
 						<div className='title-container'>
-							<div className='six columns zone-header'>
+							<div className='eight columns zone-header'>
 								<h2 className='title'>{ title }</h2>
 								<p>{ message }</p>
 								{ zoneAndProjectDataLoaded ? <a className='button' href='#'>Return to Projects</a> : '' }
@@ -85,13 +85,13 @@ class Zone extends Component {
 			<div className='grid-container'>
 				<div className='accordian-wrapper row'>
 					<div className='title-container'>
-						<div className='six columns zone-header'>
+						<div className='eight columns zone-header'>
 							<h2 className='title'>{ name }</h2>
 							<p>{ (description || 'Zone placeholder description text') + (image ? '' : ' (and placeholder image at right)') }</p>
 							{/* <Link className='button' onClick={ () => this.onZoneMapLinkClicked(zone) } to={ mapUrl }>View on Map</Link> */}
 						</div>
 						<div
-							className='six columns zone-img'
+							className='four columns zone-img'
 							style={ {
 								backgroundImage:`url('img/${ image || 'zone-placeholder.jpg' }')`
 							} }

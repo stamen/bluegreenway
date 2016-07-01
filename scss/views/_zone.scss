@@ -1,8 +1,10 @@
+$button-font-size: 1.5rem;
+
 #zone {
 	color: $blue;
 
-	$zone-margin-horiz: 1em;
-	$zone-margin-vert: 1em;
+	$zone-margin-horiz: 1rem;
+	$zone-margin-vert: 1rem;
 
 	.accordian-wrapper {
 		background: #fff;
@@ -23,7 +25,7 @@
 
 	.zone-header {
 		.button {
-			font-size: 1.5em;
+			font-size: $button-font-size;
 			margin: 0 auto;
 			position: relative;
 
@@ -56,7 +58,7 @@
 			overflow-y: hidden;
 			font-size: 1.5em;
 			line-height: 1.25em;
-			
+
 			@media (#{$bp-larger-than-mobile}) {
 				font-size: inherit;
 				line-height: 1.5em;
@@ -95,16 +97,12 @@
 		cursor: pointer;
 		padding: 0 $zone-margin-horiz;
 
-		// this is causing a jump when the div is removed, how to avoid?
-		// > div {
-		// 	margin-bottom: 0.5em;
-		// }
-
 		.button {
-			font-size: 1.5em;
-			margin: .5em auto 0 auto;
-			margin: 0;
 			position: relative;
+			margin: $zone-margin-vert/2 auto 0 auto;
+			margin: 0;
+			clear: both;
+			font-size: $button-font-size;
 
 			@media (#{$bp-larger-than-mobile}) {
 				font-size: inherit;
@@ -138,6 +136,16 @@
 		}
 	}
 
+	.item-container {
+		position: relative;
+	}
+
+	.item-content {
+		float: left;
+		width: 60%;
+		margin-bottom: $zone-margin-vert;
+	}
+
 	.item-description {
 		line-height: 1.5em;
 		margin-bottom: 0;
@@ -147,7 +155,8 @@
 			// override inline styles from CMS
 			margin: 0 !important;
 
-			// @extend %neutra;
+			// @extend %neutra;	// can't specify !important this way
+			
 			font-family: 'NeutrafaceText', sans-serif !important;
 			font-weight: normal !important;
 			font-style: normal !important;
@@ -156,6 +165,19 @@
 			@media (#{$bp-larger-than-mobile}) {
 				font-size: 1em !important;
 			}
+		}
+	}
+
+	.item-img {
+		float: right;
+		width: 35%;
+		height: calc(100% - #{$button-font-size + $zone-margin-vert});
+		margin-bottom: $zone-margin-vert;
+		text-align: right;
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
 		}
 	}
 
