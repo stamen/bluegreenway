@@ -1,4 +1,7 @@
 $button-font-size: 1.5rem;
+$zone-content-width: 60%;
+$zone-image-width: 35%;
+$zone-title-size: 2rem;
 
 #zone {
 	color: $blue;
@@ -23,34 +26,28 @@ $button-font-size: 1.5rem;
 		text-align: center;
 	}
 
-	.zone-header {
-		.button {
-			font-size: $button-font-size;
-			margin: 0 auto;
-			position: relative;
-
-			@media (#{$bp-larger-than-mobile}) {
-				bottom: $zone-margin-vert;
-				font-size: inherit;
-				margin: inherit;
-				position: absolute;
-			}
-		}
-	}
-
-	.zone-img {
-		background-size: contain;
-	}
-
 	.title-container {
 		height: 300px;
-		padding-left: $zone-margin-horiz;
-		padding-top: $zone-margin-vert;
+		padding: $zone-margin-vert $zone-margin-horiz 0 $zone-margin-horiz;
 
-		div {
-			height: 100%;
-			position: relative;
-			background-repeat: no-repeat;
+		.item-img {
+			margin-top: $zone-title-size;
+		}
+		
+	}
+
+	.zone-header {
+		position: relative;
+		float: left;
+		width: $zone-content-width;
+		height: 100%;
+
+		.title {
+			@extend %neutra-bold;
+			font-size: $zone-title-size;
+			margin-bottom: 0;
+			text-transform: capitalize;
+			display: inline-block;
 		}
 
 		p {
@@ -64,14 +61,19 @@ $button-font-size: 1.5rem;
 				line-height: 1.5em;
 			}
 		}
-	}
+		
+		.button {
+			font-size: $button-font-size;
+			margin: 0 auto;
+			position: relative;
 
-	.title {
-		@extend %neutra-bold;
-		font-size: 2em;
-		margin-bottom: 0;
-		text-transform: capitalize;
-		display: inline-block;
+			@media (#{$bp-larger-than-mobile}) {
+				bottom: $zone-margin-vert;
+				font-size: inherit;
+				margin: inherit;
+				position: absolute;
+			}
+		}
 	}
 
 	.projects-list, .open-spaces-list {
@@ -145,7 +147,7 @@ $button-font-size: 1.5rem;
 
 	.item-content {
 		float: left;
-		width: 60%;
+		width: $zone-content-width;
 		margin-bottom: $zone-margin-vert;
 	}
 
@@ -173,7 +175,7 @@ $button-font-size: 1.5rem;
 
 	.item-img {
 		float: right;
-		width: 35%;
+		width: $zone-image-width;
 		height: calc(100% - #{$button-font-size + $zone-margin-vert});
 		margin-bottom: $zone-margin-vert;
 		text-align: right;
