@@ -122,11 +122,17 @@ class Zone extends Component {
 			}
 		];
 
-		projects = this.props.actions.utils.getProjectsInZone(projects, zone);
-		projects = projects.filter(project => {
+		// filter down to only the projects in this zone
+		projects = this.props.actions.utils.getProjectsInZone(projects, zone)
+
+		// filter down to only projects of the requested category (isOpenSpace)
+		.filter(project => {
 			let locationCategory = locationCategories.find(category => category.id === project.locationCategory);
 			return (locationCategory && locationCategory.openSpace === isOpenSpace);
-		});
+		})
+
+		// remove the project that matches the current zone
+		.filter(project => project.name !== get(zone, 'properties.name'));
 
 		let projectListItems = [];
 
