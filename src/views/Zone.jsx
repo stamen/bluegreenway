@@ -5,7 +5,6 @@ import { get } from 'lodash';
 
 import { zoneConfigs } from './Projects.jsx';
 import ProjectItem from '../components/ProjectItem';
-import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';

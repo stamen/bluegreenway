@@ -130,8 +130,8 @@ class Stories extends React.Component {
 					<div className='three columns date-picker-cell' style={ { background: 'white' } }>
 						<DateRange
 							ref='dateFilter'
-							minDate={ moment('1/1/2016', 'M/D/YYYY') }
-							maxDate={ moment() }
+							minDate={ moment('1/1/2015', 'M/D/YYYY') }
+							maxDate={ moment().add(1, 'year') }
 							initialStartDate={ storeState.stories.startDate }
 							initialEndDate={ storeState.stories.endDate }
 							onRangeChange={ this.updateFilters }

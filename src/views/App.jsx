@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MapPageToggle from '../components/MapPageToggle';
-import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import LeafletMap from '../components/LeafletMap';

@@ -79,24 +79,27 @@ export default class DateRange extends React.Component {
 					<input 
 						className="date-range-input" 
 						type="text" 
-						value={this.state.startDateText}
-						onChange={((e) => this.dateStartChange(e))}
-						placeholder="Date From" />
+						value={ this.state.startDateText }
+						onChange={ ((e) => this.dateStartChange(e)) }
+						placeholder="Date From"
+					/>
 					<input
 						className="date-range-input"
 						type="text"
-						value={this.state.endDateText}
-						onChange={((e) => this.dateEndChange(e))}
-						placeholder="Date To" />
+						value={ this.state.endDateText }
+						onChange={ ((e) => this.dateEndChange(e)) }
+						placeholder="Date To"
+					/>
 				</div>
 				<DatePicker
 					dateFormat='M/D/YYYY'
-					minDate={this.props.minDate}
-					maxDate={this.props.maxDate} 
-					highlightRangeOnMouseMove={true} 
-					range={this.getRange()} 
-					hideFooter={true}
-					onRangeChange={((text, moments) => this.dateRangeChange(text, moments))} />
+					minDate={ this.props.minDate }
+					maxDate={ this.props.maxDate } 
+					highlightRangeOnMouseMove={ true }
+					range={ this.getRange() }
+					hideFooter={ true }
+					onRangeChange={ ((text, moments) => this.dateRangeChange(text, moments)) }
+				/>
 			</div>
 		);
 	}

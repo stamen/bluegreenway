@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import moment from 'moment';
 import { get } from 'lodash';
 
-import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';

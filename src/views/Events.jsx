@@ -67,7 +67,6 @@ class Events extends React.Component {
 
 	updateFilters (range) {
 		this.updatingFilters = true;
-		console.log("updateFilters...");
 
 		const {
 			startDate,
@@ -80,11 +79,31 @@ class Events extends React.Component {
 			filterLocation,
 		} = this.refs.eventFilter.state;
 
-		if (startDate) this.props.actions.eventsMinDateChanged(startDate);
-		// let the last filter change trigger a render
-		this.updatingFilters = false;
+		let filtersToSet = [];
+		if (startDate) {
+			filtersToSet.push({
+				func: this.props.actions.eventsMinDateChanged,
+				args: [startDate]
+			});
+		}
+		if (endDate) {
+			filtersToSet.push({
+				func: this.props.actions.eventsMaxDateChanged,
+				args: [endDate]
+			});
+		}
 
-		if (endDate) this.props.actions.eventsMaxDateChanged(endDate);
+		if (filtersToSet.length) {
+			filtersToSet.forEach((filterObj, i) => {
+				if (i === filtersToSet.length - 1) {
+					// let the last filter change trigger a render
+					this.updatingFilters = false;
+				}
+				filterObj.func(...filterObj.args);
+			});
+		} else {
+			this.updatingFilters = false;
+		}
 	}
 
 	getFilteredEvents () {
@@ -130,11 +149,11 @@ class Events extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-				<MapOverlay collapsible={true}>
+				<MapOverlay collapsible={ true }>
 					<DateRange
 						ref='dateFilter'
-						minDate={ moment('1/1/2016', 'M/D/YYYY') }
-						maxDate={ moment() }
+						minDate={ moment('1/1/2015', 'M/D/YYYY') }
+						maxDate={ moment().add(1, 'year') }
 						initialStartDate={ storeState.events.startDate }
 						initialEndDate={ storeState.events.endDate }
 						onRangeChange={ this.updateFilters }
@@ -194,8 +213,8 @@ class Events extends React.Component {
 					<div className='three columns date-picker-cell' style={{ background: 'white' }}>
 						<DateRange
 							ref='dateFilter'
-							minDate={ moment() }
-							maxDate={ moment().add(3, 'months') }
+							minDate={ moment('1/1/2015', 'M/D/YYYY') }
+							maxDate={ moment().add(1, 'year') }
 							initialStartDate={ storeState.events.startDate }
 							initialEndDate={ storeState.events.endDate }
 							onRangeChange={ this.updateFilters }
