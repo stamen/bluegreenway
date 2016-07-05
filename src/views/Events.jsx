@@ -24,9 +24,6 @@ class Events extends React.Component {
 
 	constructor (props) {
 		super(props);
-
-		this.onStateChange = this.onStateChange.bind(this);
-		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
 	}
 
 	componentWillMount () {
@@ -35,35 +32,10 @@ class Events extends React.Component {
 		this.props.actions.mapLayersPickerEventsChange(true);
 		this.props.actions.mapLayersPickerProjectsChange(true);
 
-		this.onStateChange();
-
 		// Fetch data if we need to
 		if (!this.props.store.getState().events.data.items.length) {
 			this.props.actions.fetchEventsData();
 		}
-	}
-
-	componentDidMount () {
-		//
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		if (nextState.events.data.items.length !== this.state.events.data.items.length) {
-			this.updateFilterOptions(nextState.events);
-		}
-	}
-
-	componentDidUpdate () {
-		//
-	}
-
-	componentWillUnmount () {
-		this.unsubscribeStateChange();
-	}
-
-	onStateChange () {
-		let storeState = this.props.store.getState();
-		this.setState(storeState);
 	}
 
 	updateFilterOptions (events) {
@@ -90,53 +62,57 @@ class Events extends React.Component {
 		);
 	}
 
-	renderPageView () {
-		return (
-			<div className="grid-container">
-				<PageHeader />
-				{ this.state.events.data.error ?
-					<div className="events-data-load-error">"We're having a hard time loading data. Please try again."</div> :
-					null }
-				{ this.renderRows(this.state.events.data.items) }
-			</div>
-		);
-	}
-
 	renderMapView () {
+		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer className="events-map-overlay">
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'
-						layers={ this.state.mapLayersPicker.layers }
+						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Transportation'
-						layers={ this.state.mapLayersPicker.transportation }
+						layers={ storeState.mapLayersPicker.transportation }
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
 				<MapOverlay collapsible={true}>
 					<DateRange
-						minDate={moment('1/1/2016', 'M/D/YYYY')}
-						maxDate={moment()}
-						initialStartDate={this.state.events.startDate}
-						initialEndDate={this.state.events.endDate}
-						onRangeChange={(range) => this.handleRangeChange(range)} />
+						minDate={ moment('1/1/2016', 'M/D/YYYY') }
+						maxDate={ moment() }
+						initialStartDate={ storeState.events.startDate }
+						initialEndDate={ storeState.events.endDate }
+						onRangeChange={ range => this.handleRangeChange(range) }
+					/>
 				</MapOverlay>
 			</MapOverlayContainer>
 		);
 	}
 
+	renderPageView () {
+		const storeState = this.props.store.getState();
+		return (
+			<div className="grid-container">
+				<PageHeader />
+				{ storeState.events.data.error ?
+					<div className="events-data-load-error">"We're having a hard time loading data. Please try again."</div> :
+					null }
+				{ this.renderRows(storeState.events.data.items) }
+			</div>
+		);
+	}
+
 	renderRows (events) {
-		const currentRange = moment.range(this.state.events.startDate, this.state.events.endDate);
+		const storeState = this.props.store.getState(),
+			currentRange = moment.range(storeState.events.startDate, storeState.events.endDate);
+
 		events = events.filter(event => {
 			return moment.range(event.startDate, event.endDate).overlaps(currentRange);
 		});
-
 
 		let firstEvent = events[0],
 			secondEvent = events[1],
@@ -169,19 +145,21 @@ class Events extends React.Component {
 				<div className='row'>
 					<div className='three columns date-picker-cell' style={{ background: 'white' }}>
 						<DateRange
-							minDate={moment()}
-							maxDate={moment().add(3, 'months')}
-							initialStartDate={this.state.events.startDate}
-							initialEndDate={this.state.events.endDate}
-							onRangeChange={(range) => this.handleRangeChange(range)} />
+							minDate={ moment() }
+							maxDate={ moment().add(3, 'months') }
+							initialStartDate={ storeState.events.startDate }
+							initialEndDate={ storeState.events.endDate }
+							onRangeChange={ range => this.handleRangeChange(range) }
+						/>
 					</div>
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Events</div>
 						<EventFilters
-							locationOptions={this.state.events.locationOptions}
-							eventTypeOptions={this.state.events.eventTypeOptions}
-							ageRangeOptions={this.state.events.ageRangeOptions}
-							costOptions={this.state.events.costOptions} />
+							locationOptions={ storeState.events.locationOptions }
+							eventTypeOptions={ storeState.events.eventTypeOptions }
+							ageRangeOptions={ storeState.events.ageRangeOptions }
+							costOptions={ storeState.events.costOptions }
+						/>
 					</div>
 					{ firstEvent ? this.renderEvent(firstEvent) : null }
 					{ secondEvent ? this.renderEvent(secondEvent) : null }
