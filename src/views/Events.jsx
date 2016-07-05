@@ -27,14 +27,27 @@ class Events extends React.Component {
 	}
 
 	componentWillMount () {
+		const storeState = this.props.store.getState();
+
 		// set map layers
 		this.props.actions.mapLayersPickerStoriesChange(false);
 		this.props.actions.mapLayersPickerEventsChange(true);
 		this.props.actions.mapLayersPickerProjectsChange(true);
 
 		// Fetch data if we need to
-		if (!this.props.store.getState().events.data.items.length) {
+		if (!storeState.events.data.items.length) {
+			this.eventsHaveLoaded = false;
 			this.props.actions.fetchEventsData();
+		}
+	}
+
+	componentWillUpdate (nextProps) {
+		const { events } = nextProps.store.getState();
+
+		if (events.data.items.length && !this.eventsHaveLoaded) {
+			// initial events load; set filter options
+			this.eventsHaveLoaded = true;
+			this.updateFilterOptions(events.data.items);
 		}
 	}
 
@@ -54,15 +67,32 @@ class Events extends React.Component {
 		}
 	}
 
+	filterEvents () {
+		// TODO: move filtering into events.js
+		const storeState = this.props.store.getState();
+
+		let { events } = storeState;
+		events = events.data.items;
+		if (!events.length) return [];
+		
+		const currentRange = moment.range(storeState.events.startDate, storeState.events.endDate);
+		events = events.filter(event => {
+			return moment.range(event.startDate, event.endDate).overlaps(currentRange);
+		});
+
+		return events;
+	}
+
 	render () {
+		let eventItems = this.filterEvents();
 		return (
 			<div id="events">
-				{ this.props.params.mode === 'page' ?  this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ?  this.renderPageView(eventItems) : this.renderMapView(eventItems) }
 			</div>
 		);
 	}
 
-	renderMapView () {
+	renderMapView (eventItems) {
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer className="events-map-overlay">
@@ -93,7 +123,7 @@ class Events extends React.Component {
 		);
 	}
 
-	renderPageView () {
+	renderPageView (eventItems) {
 		const storeState = this.props.store.getState();
 		return (
 			<div className="grid-container">
@@ -101,30 +131,27 @@ class Events extends React.Component {
 				{ storeState.events.data.error ?
 					<div className="events-data-load-error">"We're having a hard time loading data. Please try again."</div> :
 					null }
-				{ this.renderRows(storeState.events.data.items) }
+				{ this.renderRows(eventItems) }
 			</div>
 		);
 	}
 
-	renderRows (events) {
+	renderRows (eventItems) {
 		const storeState = this.props.store.getState(),
-			currentRange = moment.range(storeState.events.startDate, storeState.events.endDate);
+			firstRowLength = 2,
+			rowLength = 4;
 
-		events = events.filter(event => {
-			return moment.range(event.startDate, event.endDate).overlaps(currentRange);
-		});
-
-		let firstEvent = events[0],
-			secondEvent = events[1],
+		let firstEvent = eventItems[0],
+			secondEvent = eventItems[1],
 			remainingEventRows;
 
-		// pack events into rows of four
-		if (events.length > 2) {
-			remainingEventRows = events.slice(2).reduce((out, event, i) => {
-				if (i % 4 === 0) {
+		// pack eventItems into rows of four
+		if (eventItems.length > firstRowLength) {
+			remainingEventRows = eventItems.slice(firstRowLength).reduce((out, event, i) => {
+				if (i % rowLength === 0) {
 					out.push([]);
 				}
-				out[Math.floor(i / 4)].push(event);
+				out[Math.floor(i / rowLength)].push(event);
 				return out;
 			}, []);
 		}
@@ -134,7 +161,7 @@ class Events extends React.Component {
 			eventCells = remainingEventRows.map((eventRow, i) => {
 				return (
 					<div className='row' key={ 'row=' + i }>
-						{ eventRow.map(event => this.renderEvent(event)) }
+						{ eventRow.map((event, j) => this.renderEvent(event, firstRowLength + i * rowLength + j)) }
 					</div>
 				);
 			});
@@ -161,8 +188,8 @@ class Events extends React.Component {
 							costOptions={ storeState.events.costOptions }
 						/>
 					</div>
-					{ firstEvent ? this.renderEvent(firstEvent) : null }
-					{ secondEvent ? this.renderEvent(secondEvent) : null }
+					{ firstEvent ? this.renderEvent(firstEvent, 0) : null }
+					{ secondEvent ? this.renderEvent(secondEvent, 1) : null }
 				</div>
 				{ eventCells }
 			</div>
@@ -170,13 +197,13 @@ class Events extends React.Component {
 
 	}
 
-	renderEvent (event) {
-		event.defaultImageIndex = defaultImageIndex;
-		defaultImageIndex -= 1;
-		if (defaultImageIndex === 0) defaultImageIndex = 6;
-
+	renderEvent (event, index) {
 		return (
-			<Event {...event } key={ event.startDate.format('YYYYMMDD') + event.id } />
+			<Event
+				{ ...event }
+				defaultImageIndex={ (index % 6) + 1 }
+				key={ event.startDate.format('YYYYMMDD') + event.id }
+			/>
 		);
 	}
 

@@ -258,7 +258,7 @@ export default class LeafletMap extends React.Component {
 
 		// bail if projects geojson not yet loaded
 		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
-		if (!projectsGeoJSON.length) return null;
+		if (!projectsGeoJSON || !projectsGeoJSON.length) return null;
 
 		let locationsField,
 			svgSize,
