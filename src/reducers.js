@@ -121,6 +121,42 @@ export default {
 			}
 		},
 
+		ageRange (state = '', action) {
+			switch (action.type) {
+				case actions.EVENTS_AGE_RANGE_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		cost (state = '', action) {
+			switch (action.type) {
+				case actions.EVENTS_COST_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		type (state = '', action) {
+			switch (action.type) {
+				case actions.EVENTS_TYPE_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		location (state = '', action) {
+			switch (action.type) {
+				case actions.EVENTS_LOCATION_CHANGED:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
 		ageRangeOptions (state = [], action) {
 			switch (action.type) {
 				case actions.AGE_RANGES_CHANGED:
@@ -150,7 +186,7 @@ export default {
 
 		locationOptions (state = [], action) {
 			switch (action.type) {
-				case actions.LOCATIONS_CHANGED:
+				case actions.EVENT_LOCATIONS_CHANGED:
 					return action.value;
 				default:
 					return state;

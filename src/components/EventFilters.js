@@ -17,8 +17,8 @@ export default class EventFilters extends React.Component {
 
 	componentWillMount () {
 		this.setState({
-			ageRange: '',
 			filterAgeRange: '',
+			filterCost: '',
 			filterEventType: '',
 			filterLocation: ''
 		});

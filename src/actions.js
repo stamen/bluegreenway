@@ -23,10 +23,14 @@ export const MAP_LAYERS_PICKER_PROJECTS_CHANGED = 'MAP_LAYERS_PICKER_PROJECTS_CH
 export const ITEM_SELECTED = 'ITEM_SELECTED';
 export const EVENTS_START_DATE_CHANGED = 'EVENTS_START_DATE_CHANGED';
 export const EVENTS_END_DATE_CHANGED = 'EVENTS_END_DATE_CHANGED';
+export const EVENTS_AGE_RANGE_CHANGED = 'EVENTS_AGE_RANGE_CHANGED';
+export const EVENTS_COST_CHANGED = 'EVENTS_COST_CHANGED';
+export const EVENTS_TYPE_CHANGED = 'EVENTS_TYPE_CHANGED';
+export const EVENTS_LOCATION_CHANGED = 'EVENTS_LOCATION_CHANGED';
 export const AGE_RANGES_CHANGED = 'AGE_RANGES_CHANGED';
 export const COSTS_CHANGED = 'COSTS_CHANGED';
 export const EVENT_TYPES_CHANGED = 'EVENT_TYPES_CHANGED';
-export const LOCATIONS_CHANGED = 'LOCATIONS_CHANGED';
+export const EVENT_LOCATIONS_CHANGED = 'EVENT_LOCATIONS_CHANGED';
 export const STORY_CATEGORY_CHANGE = 'STORY_CATEGORY_CHANGE';
 export const EVENTS_DATA_REQUEST = 'EVENTS_DATA_REQUEST';
 export const EVENTS_DATA_RESPONSE = 'EVENTS_DATA_RESPONSE';
@@ -113,6 +117,34 @@ export default function (store) {
 			});
 		},
 
+		eventsAgeRangeChange (age) {
+			store.dispatch({
+				type: EVENTS_AGE_RANGE_CHANGED,
+				value: age
+			});
+		},
+
+		eventsCostChange (costs) {
+			store.dispatch({
+				type: EVENTS_COST_CHANGED,
+				value: costs
+			});
+		},
+
+		eventsTypeChange (type) {
+			store.dispatch({
+				type: EVENTS_TYPE_CHANGED,
+				value: type
+			});
+		},
+
+		eventsLocationChange (location) {
+			store.dispatch({
+				type: EVENTS_LOCATION_CHANGED,
+				value: location
+			});
+		},
+
 		ageRangesChange (ageRanges) {
 			store.dispatch({
 				type: AGE_RANGES_CHANGED,
@@ -134,9 +166,9 @@ export default function (store) {
 			});
 		},
 
-		locationsChange (locations) {
+		eventLocationsChange (locations) {
 			store.dispatch({
-				type: LOCATIONS_CHANGED,
+				type: EVENT_LOCATIONS_CHANGED,
 				value: locations
 			});
 		},

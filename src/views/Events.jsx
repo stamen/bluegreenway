@@ -59,7 +59,7 @@ class Events extends React.Component {
 	}
 
 	updateFilterOptions (events) {
-		this.props.actions.locationsChange(getLocationsOptions(events));
+		this.props.actions.eventLocationsChange(getLocationsOptions(events));
 		this.props.actions.costsChange(getCostsOptions(events));
 		this.props.actions.eventTypesChange(getTypesOptions(events));
 		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
@@ -73,8 +73,8 @@ class Events extends React.Component {
 			endDate
 		} = this.refs.dateFilter.state;
 		const {
-			ageRange,
 			filterAgeRange,
+			filterCost,
 			filterEventType,
 			filterLocation,
 		} = this.refs.eventFilter.state;
@@ -93,6 +93,24 @@ class Events extends React.Component {
 			});
 		}
 
+		// empty values are allowed here (to clear the filter)
+		filtersToSet.push({
+			func: this.props.actions.eventsAgeRangeChange,
+			args: [filterAgeRange && filterAgeRange.value !== 'Any' ? filterAgeRange.value : '']
+		});
+		filtersToSet.push({
+			func: this.props.actions.eventsCostChange,
+			args: [filterCost && filterCost.value !== 'Any' ? filterCost.value : '']
+		});
+		filtersToSet.push({
+			func: this.props.actions.eventsTypeChange,
+			args: [filterEventType && filterEventType.value !== 'Any' ? filterEventType.value : '']
+		});
+		filtersToSet.push({
+			func: this.props.actions.eventsLocationChange,
+			args: [filterLocation && filterLocation.value !== 'Any' ? filterLocation.value : '']
+		});
+
 		if (filtersToSet.length) {
 			filtersToSet.forEach((filterObj, i) => {
 				if (i === filtersToSet.length - 1) {
@@ -107,19 +125,27 @@ class Events extends React.Component {
 	}
 
 	getFilteredEvents () {
-		// TODO: move filtering into events.js
 		const storeState = this.props.store.getState();
 
-		let { events } = storeState;
-		events = events.data.items;
-		if (!events.length) return [];
+		let { events } = storeState,
+			eventItems = events.data.items;
+		if (!eventItems.length) return [];
+
+		const {
+			ageRange,
+			cost,
+			type,
+			location
+		} = events;
+		console.log({ ageRange, cost, type, location });
 		
 		const currentRange = moment.range(storeState.events.startDate, storeState.events.endDate);
-		events = events.filter(event => {
-			return moment.range(event.startDate, event.endDate).overlaps(currentRange);
-		});
-
-		return events;
+		return eventItems
+			.filter(event => moment.range(event.startDate, event.endDate).overlaps(currentRange))
+			.filter(event => ageRange ? event.ageRange === ageRange : true)
+			.filter(event => cost ? event.cost === cost : true)
+			.filter(event => type ? event.type === type : true)
+			.filter(event => location ? event.location === location : true);
 	}
 
 	render () {
