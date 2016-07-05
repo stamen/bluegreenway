@@ -14,6 +14,8 @@ class Stories extends React.Component {
 
 	constructor (props) {
 		super(props);
+
+		this.updateFilters = this.updateFilters.bind(this);
 	}
 
 	componentWillMount () {
@@ -39,6 +41,10 @@ class Stories extends React.Component {
 		}
 	}
 
+	shouldComponentUpdate () {
+		return !this.updatingFilters;
+	}
+
 	componentWillUpdate (nextProps, nextState) {
 		const storeState = this.props.store.getState();
 		if (storeState.stories.data.items.length &&
@@ -51,13 +57,23 @@ class Stories extends React.Component {
 		this.props.actions.storyCategoryChange(getCategoryOptions(stories));
 	}
 
-	handleRangeChange (range) {
-		if (range[0]) {
-			this.props.actions.storiesMinDateChanged(range[0]);
-		}
-		if (range[1]) {
-			this.props.actions.storiesMaxDateChanged(range[1]);
-		}
+	updateFilters (range) {
+		this.updatingFilters = true;
+
+		const {
+			startDate,
+			endDate
+		} = this.refs.dateFilter.state;
+		const {
+			filterCategory
+		} = this.refs.storyFilter.state;
+
+		if (startDate) this.props.actions.storiesMinDateChanged(startDate);
+		if (endDate) this.props.actions.storiesMaxDateChanged(endDate);
+
+		// let the last filter change trigger a render
+		this.updatingFilters = false;
+		if (filterCategory) this.props.actions.storyCategoryChange(filterCategory);
 	}
 
 	render () {
@@ -113,16 +129,21 @@ class Stories extends React.Component {
 				<div className='row'>
 					<div className='three columns date-picker-cell' style={ { background: 'white' } }>
 						<DateRange
+							ref='dateFilter'
 							minDate={ moment('1/1/2016', 'M/D/YYYY') }
 							maxDate={ moment() }
 							initialStartDate={ storeState.stories.startDate }
 							initialEndDate={ storeState.stories.endDate }
-							onRangeChange={ (range) => this.handleRangeChange(range) } />
+							onRangeChange={ this.updateFilters }
+						/>
 					</div>
 					<div className='three columns filter-cell' style={ { background: 'white' } }>
 						<div className="filter-header">Filter Stories</div>
 						<StoryFilters
-							categoryOptions={ storeState.stories.categoryOptions } />
+							ref='storyFilter'
+							categoryOptions={ storeState.stories.categoryOptions }
+							onFilterChange={ this.updateFilters }
+						/>
 					</div>
 					{ firstStory ? this.renderStory(firstStory, 0) : null }
 				</div>

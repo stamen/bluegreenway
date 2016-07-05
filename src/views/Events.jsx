@@ -24,6 +24,9 @@ class Events extends React.Component {
 
 	constructor (props) {
 		super(props);
+
+		this.updateFilters = this.updateFilters.bind(this);
+		this.updatingFilters = false;
 	}
 
 	componentWillMount () {
@@ -39,6 +42,10 @@ class Events extends React.Component {
 			this.eventsHaveLoaded = false;
 			this.props.actions.fetchEventsData();
 		}
+	}
+
+	shouldComponentUpdate () {
+		return !this.updatingFilters;
 	}
 
 	componentWillUpdate (nextProps) {
@@ -58,16 +65,29 @@ class Events extends React.Component {
 		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
 	}
 
-	handleRangeChange (range) {
-		if (range[0]) {
-			this.props.actions.eventsMinDateChanged(range[0]);
-		}
-		if (range[1]) {
-			this.props.actions.eventsMaxDateChanged(range[1]);
-		}
+	updateFilters (range) {
+		this.updatingFilters = true;
+		console.log("updateFilters...");
+
+		const {
+			startDate,
+			endDate
+		} = this.refs.dateFilter.state;
+		const {
+			ageRange,
+			filterAgeRange,
+			filterEventType,
+			filterLocation,
+		} = this.refs.eventFilter.state;
+
+		if (startDate) this.props.actions.eventsMinDateChanged(startDate);
+		// let the last filter change trigger a render
+		this.updatingFilters = false;
+
+		if (endDate) this.props.actions.eventsMaxDateChanged(endDate);
 	}
 
-	filterEvents () {
+	getFilteredEvents () {
 		// TODO: move filtering into events.js
 		const storeState = this.props.store.getState();
 
@@ -84,7 +104,7 @@ class Events extends React.Component {
 	}
 
 	render () {
-		let eventItems = this.filterEvents();
+		let eventItems = this.getFilteredEvents();
 		return (
 			<div id="events">
 				{ this.props.params.mode === 'page' ?  this.renderPageView(eventItems) : this.renderMapView(eventItems) }
@@ -112,11 +132,12 @@ class Events extends React.Component {
 				</MapOverlay>
 				<MapOverlay collapsible={true}>
 					<DateRange
+						ref='dateFilter'
 						minDate={ moment('1/1/2016', 'M/D/YYYY') }
 						maxDate={ moment() }
 						initialStartDate={ storeState.events.startDate }
 						initialEndDate={ storeState.events.endDate }
-						onRangeChange={ range => this.handleRangeChange(range) }
+						onRangeChange={ this.updateFilters }
 					/>
 				</MapOverlay>
 			</MapOverlayContainer>
@@ -172,20 +193,23 @@ class Events extends React.Component {
 				<div className='row'>
 					<div className='three columns date-picker-cell' style={{ background: 'white' }}>
 						<DateRange
+							ref='dateFilter'
 							minDate={ moment() }
 							maxDate={ moment().add(3, 'months') }
 							initialStartDate={ storeState.events.startDate }
 							initialEndDate={ storeState.events.endDate }
-							onRangeChange={ range => this.handleRangeChange(range) }
+							onRangeChange={ this.updateFilters }
 						/>
 					</div>
 					<div className='three columns filter-cell' style={{ background: 'white' }}>
 						<div className="filter-header">Filter Events</div>
 						<EventFilters
+							ref='eventFilter'
 							locationOptions={ storeState.events.locationOptions }
 							eventTypeOptions={ storeState.events.eventTypeOptions }
 							ageRangeOptions={ storeState.events.ageRangeOptions }
 							costOptions={ storeState.events.costOptions }
+							onFilterChange={ this.updateFilters }
 						/>
 					</div>
 					{ firstEvent ? this.renderEvent(firstEvent, 0) : null }

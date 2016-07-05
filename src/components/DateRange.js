@@ -1,8 +1,15 @@
-import * as React from 'react';
+import React, { PropTypes } from 'react';
 import DatePicker from 'react-date-picker';
 import moment from 'moment';
 
 export default class DateRange extends React.Component {
+	static propTypes = {
+		minDate: PropTypes.object,
+		maxDate: PropTypes.object,
+		initialStartDate: PropTypes.object,
+		initialEndDate: PropTypes.object,
+		onRangeChange: PropTypes.func
+	};
 
 	constructor (props) {
 		super(props);
@@ -15,15 +22,6 @@ export default class DateRange extends React.Component {
 			endDateText: this.props.initialEndDate.format('M/D/YYYY'),
 			endDate: this.props.initialEndDate
 		});
-	}
-
-	componentDidMount () {
-	}
-
-	componentWillUnmount () {
-	}
-
-	componentDidUpdate () {
 	}
 
 	getRange () {
