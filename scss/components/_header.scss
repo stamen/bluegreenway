@@ -167,7 +167,7 @@
 
 	li {
 		display: block;
-		height: auto;
+		height: 20%;
 		text-align: center;
 		width: 100%;
 
@@ -179,7 +179,7 @@
 
 		a {
 			display: block;
-			padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+			padding: 4rem 2.5rem 1.5rem 2.5rem;
 
 			@media (#{$bp-larger-than-mobile}) {
 				padding: 1.5rem 2.5rem 0 2.5rem;
