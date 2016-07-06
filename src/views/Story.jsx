@@ -14,33 +14,14 @@ class Story extends React.Component {
 	}
 
 	componentWillUpdate (nextProps, nextState) {
-		const storeState = nextProps.store.getState();
-		let storyTitle = nextProps.params.title || storeState.stories.selectedStory.title,
-			{ query } = this.props.location,
-			id = query && query.id ? +query.id : null;
-
-		// for when the app loads with the URL of a specific story
-		// if (this.state.stories.data.items !== nextState.stories.data.items &&
-		// 	!storeState.stories.selectedStory) {
-		if (id && !storeState.stories.selectedStory) {
-			this.updateSelectedStory(id, storyTitle, storeState.stories.data.items);
-		}
-	}
-
-	updateSelectedStory (id, title, stories) {
-		stories.forEach(story => {
-			if (story.title === title) {
-				this.props.actions.updateSelectedStory({
-					id,
-					title: story.title
-				});
-			}
-		});
+		this.updateSelectedStory(nextProps);
 	}
 
 	componentWillMount () {
 		if (!this.props.store.getState().stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
+		} else {
+			this.updateSelectedStory(this.props);
 		}
 	}
 
@@ -51,6 +32,32 @@ class Story extends React.Component {
 		if (range[1]) {
 			this.props.actions.storiesMaxDateChanged(range[1]);
 		}
+	}
+
+	updateSelectedStory (props) {
+		const storeState = props.store.getState();
+		let storyTitle = props.params.title || storeState.stories.selectedStory.title,
+			{ query } = props.location,
+			id = query && query.id ? +query.id : null;
+
+		if (id && !storeState.stories.selectedStory) {
+			storeState.stories.data.items.forEach(story => {
+				if (story.title === storyTitle) {
+					this.props.actions.updateSelectedStory({
+						id,
+						title: story.title
+					});
+				}
+			});
+		}
+	}
+
+	render () {
+		return (
+			<div id="story" className='grid-container'>
+				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+			</div>
+		);
 	}
 
 	renderPageView () {
@@ -122,14 +129,6 @@ class Story extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-			</div>
-		);
-	}
-
-	render () {
-		return (
-			<div id="story" className='grid-container'>
-				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
 			</div>
 		);
 	}
