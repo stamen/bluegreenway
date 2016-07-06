@@ -27,20 +27,26 @@ $zone-title-size: 2rem;
 	}
 
 	.title-container {
-		height: 300px;
-		padding: $zone-margin-vert $zone-margin-horiz 0 $zone-margin-horiz;
+		height: auto;
+		padding: $zone-margin-vert $zone-margin-vert 0 $zone-margin-vert;
 
-		.item-img {
-			margin-top: $zone-title-size;
+		@media (#{$bp-larger-than-mobile}) {
+			height: 300px;
+			padding: $zone-margin-vert $zone-margin-horiz 0 $zone-margin-horiz;
+			.item-img {
+				margin-top: $zone-title-size;
+			}
 		}
 		
 	}
 
 	.zone-header {
 		position: relative;
-		float: left;
-		width: $zone-content-width;
 		height: 100%;
+		@media (#{$bp-larger-than-mobile}) {
+			float: left;
+			width: $zone-content-width;
+		}
 
 		.title {
 			@extend %neutra-bold;
@@ -146,8 +152,10 @@ $zone-title-size: 2rem;
 	}
 
 	.item-content {
-		float: left;
-		width: $zone-content-width;
+		@media (#{$bp-larger-than-mobile}) {
+			float: left;
+			width: $zone-content-width;
+		}
 		margin-bottom: $zone-margin-vert;
 	}
 
@@ -174,8 +182,10 @@ $zone-title-size: 2rem;
 	}
 
 	.item-img {
-		float: right;
-		width: $zone-image-width;
+		@media (#{$bp-larger-than-mobile}) {
+			float: right;
+			width: $zone-image-width;
+		}
 		height: calc(100% - #{$button-font-size + $zone-margin-vert});
 		margin-bottom: $zone-margin-vert;
 		text-align: right;
