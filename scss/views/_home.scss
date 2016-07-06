@@ -34,58 +34,60 @@
 	}
 
 	.grid-item.grid-item--tall {
-		> div {
-			height: 2 * $row-height + $grid-spacing-small;
-		}
-		background: #333;
+		@media (#{$bp-larger-than-mobile}) {
+			> div {
+				height: 2 * $row-height + $grid-spacing-small;
+			}
+			background: #333;
 
-		// story item overrides (from stories.scss)
-		.story-category {
-			display: none;
-		}
-		.story-text {
-			position: relative;
-			top: 0;
-			height: 100%;
-			overflow: hiddem;
-		}
-		.story-title {
-			font-size: 2em;
-		}
-		.story-shade {
-			@include story-background-gradient(12%, 36%);
-		}
-
-		$font-size: 1rem;
-		$line-height: 1.33rem;
-		$lines-to-show: 5;
-		.story-body {
-			position: absolute;
-			bottom: $cell-margin;
-			width: calc(100% - #{2 * $cell-margin});
-			max-height: 6.5rem;
-			overflow: hidden;
-
-			// multiline ellipsis (webkit-only), per
-			// https://codepen.io/martinwolf/pen/qlFdp
-			display: block;												// Fallback for non-webkit
-			display: -webkit-box;
-			max-width: calc(100% - #{2 * $cell-margin});
-			height: $font-size * $line-height * $lines-to-show / 1rem;	// Fallback for non-webkit; divide by 1rem to clear up rem*rem units
-			margin: 0 auto;
-			// font-size: $font-size;
-			line-height: $line-height;
-			-webkit-line-clamp: $lines-to-show;
-			-webkit-box-orient: vertical;
-			overflow: hidden;
-			text-overflow: ellipsis;
-
-			p:not(:first-child) {
+			// story item overrides (from stories.scss)
+			.story-category {
 				display: none;
 			}
+			.story-text {
+				position: relative;
+				top: 0;
+				height: 100%;
+				overflow: hiddem;
+			}
+			.story-title {
+				font-size: 2em;
+			}
+			.story-shade {
+				@include story-background-gradient(12%, 36%);
+			}
 
-			& * {
-				font-size: $font-size !important;
+			$font-size: 1rem;
+			$line-height: 1.33rem;
+			$lines-to-show: 5;
+			.story-body {
+				position: absolute;
+				bottom: $cell-margin;
+				width: calc(100% - #{2 * $cell-margin});
+				max-height: 6.5rem;
+				overflow: hidden;
+
+				// multiline ellipsis (webkit-only), per
+				// https://codepen.io/martinwolf/pen/qlFdp
+				display: block;												// Fallback for non-webkit
+				display: -webkit-box;
+				max-width: calc(100% - #{2 * $cell-margin});
+				height: $font-size * $line-height * $lines-to-show / 1rem;	// Fallback for non-webkit; divide by 1rem to clear up rem*rem units
+				margin: 0 auto;
+				// font-size: $font-size;
+				line-height: $line-height;
+				-webkit-line-clamp: $lines-to-show;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+
+				p:not(:first-child) {
+					display: none;
+				}
+
+				& * {
+					font-size: $font-size !important;
+				}
 			}
 		}
 	}
