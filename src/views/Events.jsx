@@ -24,13 +24,11 @@ class Events extends React.Component {
 
 	constructor (props) {
 		super(props);
-
 		this.updateFilters = this.updateFilters.bind(this);
-		this.updatingFilters = false;
 	}
 
 	componentWillMount () {
-		const storeState = this.props.store.getState();
+		const { events } = this.props.store.getState();
 
 		// set map layers
 		this.props.actions.mapLayersPickerStoriesChange(false);
@@ -38,9 +36,14 @@ class Events extends React.Component {
 		this.props.actions.mapLayersPickerProjectsChange(true);
 
 		// Fetch data if we need to
-		if (!storeState.events.data.items.length) {
-			this.eventsHaveLoaded = false;
+		if (!events.data.items.length) {
 			this.props.actions.fetchEventsData();
+		}
+
+		if (events.data.items.length &&
+			!events.eventTypeOptions.length) {
+			// events have loaded but filter options have not yet been derived
+			this.deriveFilterOptions(events.data.items);
 		}
 	}
 
@@ -51,21 +54,21 @@ class Events extends React.Component {
 	componentWillUpdate (nextProps) {
 		const { events } = nextProps.store.getState();
 
-		if (events.data.items.length && !this.eventsHaveLoaded) {
-			// initial events load; set filter options
-			this.eventsHaveLoaded = true;
-			this.updateFilterOptions(events.data.items);
+		if (events.data.items.length &&
+			!events.eventTypeOptions.length) {
+			// events have loaded but filter options have not yet been derived
+			this.deriveFilterOptions(events.data.items);
 		}
 	}
 
-	updateFilterOptions (events) {
+	deriveFilterOptions (events) {
 		this.props.actions.eventLocationsChange(getLocationsOptions(events));
 		this.props.actions.costsChange(getCostsOptions(events));
 		this.props.actions.eventTypesChange(getTypesOptions(events));
 		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
 	}
 
-	updateFilters (range) {
+	updateFilters () {
 		this.updatingFilters = true;
 
 		const {
@@ -127,7 +130,7 @@ class Events extends React.Component {
 	getFilteredEvents () {
 		const storeState = this.props.store.getState();
 
-		let { events } = storeState,
+		const { events } = storeState,
 			eventItems = events.data.items;
 		if (!eventItems.length) return [];
 
@@ -137,9 +140,8 @@ class Events extends React.Component {
 			type,
 			location
 		} = events;
-		console.log({ ageRange, cost, type, location });
 		
-		const currentRange = moment.range(storeState.events.startDate, storeState.events.endDate);
+		const currentRange = moment.range(events.startDate, events.endDate);
 		return eventItems
 			.filter(event => moment.range(event.startDate, event.endDate).overlaps(currentRange))
 			.filter(event => ageRange ? event.ageRange === ageRange : true)

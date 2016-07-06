@@ -32,6 +32,7 @@ export const COSTS_CHANGED = 'COSTS_CHANGED';
 export const EVENT_TYPES_CHANGED = 'EVENT_TYPES_CHANGED';
 export const EVENT_LOCATIONS_CHANGED = 'EVENT_LOCATIONS_CHANGED';
 export const STORY_CATEGORY_CHANGE = 'STORY_CATEGORY_CHANGE';
+export const STORY_CATEGORIES_CHANGE = 'STORY_CATEGORIES_CHANGE';
 export const EVENTS_DATA_REQUEST = 'EVENTS_DATA_REQUEST';
 export const EVENTS_DATA_RESPONSE = 'EVENTS_DATA_RESPONSE';
 export const EVENTS_DATA_ERROR_RESPONSE = 'EVENTS_DATA_ERROR_RESPONSE';
@@ -103,6 +104,7 @@ export default function (store) {
 			});
 		},
 
+		// current filter
 		eventsMinDateChanged (date) {
 			store.dispatch({
 				type: EVENTS_START_DATE_CHANGED,
@@ -110,6 +112,7 @@ export default function (store) {
 			});
 		},
 
+		// current filter
 		eventsMaxDateChanged (date) {
 			store.dispatch({
 				type: EVENTS_END_DATE_CHANGED,
@@ -117,6 +120,7 @@ export default function (store) {
 			});
 		},
 
+		// current filter
 		eventsAgeRangeChange (age) {
 			store.dispatch({
 				type: EVENTS_AGE_RANGE_CHANGED,
@@ -124,6 +128,7 @@ export default function (store) {
 			});
 		},
 
+		// current filter
 		eventsCostChange (costs) {
 			store.dispatch({
 				type: EVENTS_COST_CHANGED,
@@ -131,6 +136,7 @@ export default function (store) {
 			});
 		},
 
+		// current filter
 		eventsTypeChange (type) {
 			store.dispatch({
 				type: EVENTS_TYPE_CHANGED,
@@ -138,6 +144,7 @@ export default function (store) {
 			});
 		},
 
+		// current filter
 		eventsLocationChange (location) {
 			store.dispatch({
 				type: EVENTS_LOCATION_CHANGED,
@@ -145,6 +152,7 @@ export default function (store) {
 			});
 		},
 
+		// filter options
 		ageRangesChange (ageRanges) {
 			store.dispatch({
 				type: AGE_RANGES_CHANGED,
@@ -152,6 +160,7 @@ export default function (store) {
 			});
 		},
 
+		// filter options
 		costsChange (costs) {
 			store.dispatch({
 				type: COSTS_CHANGED,
@@ -159,6 +168,7 @@ export default function (store) {
 			});
 		},
 
+		// filter options
 		eventTypesChange (eventTypes) {
 			store.dispatch({
 				type: EVENT_TYPES_CHANGED,
@@ -166,6 +176,7 @@ export default function (store) {
 			});
 		},
 
+		// filter options
 		eventLocationsChange (locations) {
 			store.dispatch({
 				type: EVENT_LOCATIONS_CHANGED,
@@ -173,9 +184,18 @@ export default function (store) {
 			});
 		},
 
-		storyCategoryChange (categories) {
+		// current filter
+		storyCategoryChange (category) {
 			store.dispatch({
 				type: STORY_CATEGORY_CHANGE,
+				value: category
+			});
+		},
+
+		// filter options
+		storyCategoriesChange (categories) {
+			store.dispatch({
+				type: STORY_CATEGORIES_CHANGE,
 				value: categories
 			});
 		},

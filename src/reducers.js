@@ -103,6 +103,7 @@ export default {
 
 	events: combineReducers({
 
+		// current filter
 		startDate (state = null, action) {
 			switch (action.type) {
 				case actions.EVENTS_START_DATE_CHANGED:
@@ -112,6 +113,7 @@ export default {
 			}
 		},
 
+		// current filter
 		endDate (state = null, action) {
 			switch (action.type) {
 				case actions.EVENTS_END_DATE_CHANGED:
@@ -121,6 +123,7 @@ export default {
 			}
 		},
 
+		// current filter
 		ageRange (state = '', action) {
 			switch (action.type) {
 				case actions.EVENTS_AGE_RANGE_CHANGED:
@@ -130,6 +133,7 @@ export default {
 			}
 		},
 
+		// current filter
 		cost (state = '', action) {
 			switch (action.type) {
 				case actions.EVENTS_COST_CHANGED:
@@ -139,6 +143,7 @@ export default {
 			}
 		},
 
+		// current filter
 		type (state = '', action) {
 			switch (action.type) {
 				case actions.EVENTS_TYPE_CHANGED:
@@ -148,6 +153,7 @@ export default {
 			}
 		},
 
+		// current filter
 		location (state = '', action) {
 			switch (action.type) {
 				case actions.EVENTS_LOCATION_CHANGED:
@@ -157,6 +163,7 @@ export default {
 			}
 		},
 
+		// filter options
 		ageRangeOptions (state = [], action) {
 			switch (action.type) {
 				case actions.AGE_RANGES_CHANGED:
@@ -166,6 +173,7 @@ export default {
 			}
 		},
 
+		// filter options
 		costOptions (state = [], action) {
 			switch (action.type) {
 				case actions.COSTS_CHANGED:
@@ -175,6 +183,7 @@ export default {
 			}
 		},
 
+		// filter options
 		eventTypeOptions (state = [], action) {
 			switch (action.type) {
 				case actions.EVENT_TYPES_CHANGED:
@@ -184,6 +193,7 @@ export default {
 			}
 		},
 
+		// filter options
 		locationOptions (state = [], action) {
 			switch (action.type) {
 				case actions.EVENT_LOCATIONS_CHANGED:
@@ -193,6 +203,7 @@ export default {
 			}
 		},
 
+		// data from CMS
 		data (state = { isFetching: false, items: [] }, action) {
 			switch (action.type) {
 				case actions.EVENTS_DATA_REQUEST:
@@ -220,6 +231,7 @@ export default {
 
 	stories: combineReducers({
 
+		// current filter
 		startDate (state = null, action) {
 			switch (action.type) {
 				case actions.STORIES_START_DATE_CHANGED:
@@ -229,6 +241,7 @@ export default {
 			}
 		},
 
+		// current filter
 		endDate (state = null, action) {
 			switch (action.type) {
 				case actions.STORIES_END_DATE_CHANGED:
@@ -238,6 +251,27 @@ export default {
 			}
 		},
 
+		// current filter
+		category (state = '', action) {
+			switch (action.type) {
+				case actions.STORY_CATEGORY_CHANGE:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		// filter options
+		categoryOptions (state = [], action) {
+			switch (action.type) {
+				case actions.STORY_CATEGORIES_CHANGE:
+					return action.value;
+				default:
+					return state;
+			}
+		},
+
+		// data from CMS
 		data (state = { isFetching: false, items: [] }, action) {
 			switch (action.type) {
 				case actions.STORIES_DATA_REQUEST:
@@ -261,6 +295,7 @@ export default {
 			}
 		},
 
+		// currently selected item
 		selectedStory (state = null, action) {
 			switch (action.type) {
 				case actions.UPDATE_SELECTED_STORY:
@@ -268,16 +303,8 @@ export default {
 				default:
 					return state;
 			}
-		},
-
-		categoryOptions (state = [], action) {
-			switch (action.type) {
-				case actions.STORY_CATEGORY_CHANGE:
-					return action.value;
-				default:
-					return state;
-			}
 		}
+
 	}),
 
 	projects: combineReducers({

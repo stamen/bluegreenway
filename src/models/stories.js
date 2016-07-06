@@ -27,7 +27,7 @@ export function cleanStoryItem (item) {
 		category: item.Category,
 		id: parseInt(item.id),
 		images: parseImages(item.Image),
-		postDate: moment(item['Post Date'], timestampFormat),
+		postDate: moment(item['Post date'], timestampFormat),
 		relatedEvents: parseRelatedIds(item['Related Events']),
 		relatedLocations: parseRelatedIds(item['Related Locations']),
 		title: slug(item.title, '_')
@@ -43,5 +43,6 @@ export function cleanStoriesData (items) {
 export function getCategoryOptions(stories) {
 	let categories = stories.data.items.map(story => story.category);
 	categories = uniq(categories.filter(category => category)).sort();
-	return categories.map(category => ({ value: category, display: category }));
+	categories.unshift('Any');
+	return categories;
 }

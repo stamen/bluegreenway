@@ -14,30 +14,31 @@ class Stories extends React.Component {
 
 	constructor (props) {
 		super(props);
-
 		this.updateFilters = this.updateFilters.bind(this);
 	}
 
 	componentWillMount () {
+		const storeState = this.props.store.getState();
+		
 		// set map layers
 		this.props.actions.mapLayersPickerStoriesChange(true);
 		this.props.actions.mapLayersPickerEventsChange(false);
 		this.props.actions.mapLayersPickerProjectsChange(true);
 
 		// Fetch data if we need to
-		const storeState = this.props.store.getState();
-
 		if (!storeState.stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		}
 
+		// Clear any currently selected story
 		if (storeState.stories.selectedStory) {
 			this.props.actions.updateSelectedStory(null);
 		}
 
 		if (storeState.stories.data.items.length &&
 			!storeState.stories.categoryOptions.length) {
-			this.updateFilterOptions(storeState.stories);
+			// stories have loaded but filter options have not yet been derived
+			this.deriveFilterOptions(storeState.stories);
 		}
 	}
 
@@ -49,15 +50,16 @@ class Stories extends React.Component {
 		const storeState = this.props.store.getState();
 		if (storeState.stories.data.items.length &&
 			!storeState.stories.categoryOptions.length) {
-			this.updateFilterOptions(storeState.stories);
+			// stories have loaded but filter options have not yet been derived
+			this.deriveFilterOptions(storeState.stories);
 		}
 	}
 
-	updateFilterOptions (stories) {
-		this.props.actions.storyCategoryChange(getCategoryOptions(stories));
+	deriveFilterOptions (stories) {
+		this.props.actions.storyCategoriesChange(getCategoryOptions(stories));
 	}
 
-	updateFilters (range) {
+	updateFilters () {
 		this.updatingFilters = true;
 
 		const {
@@ -65,26 +67,69 @@ class Stories extends React.Component {
 			endDate
 		} = this.refs.dateFilter.state;
 		const {
-			filterCategory
+			filterCategory,
 		} = this.refs.storyFilter.state;
 
-		if (startDate) this.props.actions.storiesMinDateChanged(startDate);
-		if (endDate) this.props.actions.storiesMaxDateChanged(endDate);
+		let filtersToSet = [];
+		if (startDate) {
+			filtersToSet.push({
+				func: this.props.actions.eventsMinDateChanged,
+				args: [startDate]
+			});
+		}
+		if (endDate) {
+			filtersToSet.push({
+				func: this.props.actions.eventsMaxDateChanged,
+				args: [endDate]
+			});
+		}
 
-		// let the last filter change trigger a render
-		this.updatingFilters = false;
-		if (filterCategory) this.props.actions.storyCategoryChange(filterCategory);
+		// empty values are allowed here (to clear the filter)
+		filtersToSet.push({
+			func: this.props.actions.storyCategoryChange,
+			args: [filterCategory && filterCategory.value !== 'Any' ? filterCategory.value : '']
+		});
+
+		if (filtersToSet.length) {
+			filtersToSet.forEach((filterObj, i) => {
+				if (i === filtersToSet.length - 1) {
+					// let the last filter change trigger a render
+					this.updatingFilters = false;
+				}
+				filterObj.func(...filterObj.args);
+			});
+		} else {
+			this.updatingFilters = false;
+		}
+	}
+
+	getFilteredStories () {
+		const storeState = this.props.store.getState();
+
+		const { stories } = storeState,
+			storyItems = stories.data.items;
+		if (!storyItems.length) return [];
+
+		const {
+			category
+		} = stories;
+		
+		const currentRange = moment.range(stories.startDate, stories.endDate);
+		return storyItems
+			.filter(story => currentRange.contains(story.postDate))
+			.filter(story => category ? story.category === category : true);
 	}
 
 	render () {
+		let storyItems = this.getFilteredStories();
 		return (
 			<div id="stories">
-				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				{ this.props.params.mode === 'page' ? this.renderPageView(storyItems) : this.renderMapView(storyItems) }
 			</div>
 		);
 	}
 
-	renderPageView () {
+	renderPageView (storyItems) {
 		const storeState = this.props.store.getState();
 		return (
 			<div className="grid-container">
@@ -92,7 +137,7 @@ class Stories extends React.Component {
 				{ storeState.stories.data.error ?
 					<div className="stories-data-load-error">"We're having a hard time loading data. Please try again."</div> :
 					null }
-				{ this.renderRows(storeState.stories.data.items) }
+				{ this.renderRows(storyItems) }
 			</div>
 		);
 	}
@@ -164,7 +209,7 @@ class Stories extends React.Component {
 		);
 	}
 
-	renderMapView () {
+	renderMapView (storyItems) {
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer className="stories-map-overlay">
