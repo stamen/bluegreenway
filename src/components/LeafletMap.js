@@ -426,29 +426,38 @@ export default class LeafletMap extends React.Component {
 		if (!layerData) return null;
 
 		let { feature, layer } = layerData,
-			{ description } = project;
+			{ isPlaceholder, description } = project,
+			popupContent = '';
 
-		console.log(">>>>> description:", description);
-		description = description.replace('<p></p>', '');
-
-		// ugh, this is a mess
-		let popupContent = `
-			<div class='project-popup'>
-				<h3>${ project.name }</h3>
-				<img src=${ project.images.src } alt=${ project.images.alt }/>
-				${ description }
-			</div>
-		`;
+		if (isPlaceholder) {
+			popupContent = `
+				<div class='project-popup placeholder'>
+					<h3>${ project.name }</h3>
+				</div>
+			`;
+		} else {
+			description = description.replace('<p></p>', '');
+			popupContent = `
+				<div class='project-popup'>
+					<h3>${ project.name }</h3>
+					<img src=${ project.images.src } alt=${ project.images.alt }/>
+					${ description }
+				</div>
+			`;
+		}
 
 		// hardcoded based on values in projects.scss::.project-popup
-		let w = 270;
+		let w = 270,
+			offset = isPlaceholder ?
+				[-0.6 * w, 40] :
+				[-0.75 * w, 0.75 * w];
 
 		this.mapState.projects.popups[project.id] = L.popup({
 				// hardcoded based on values in _app.scss::.popup-item-container,
 				// required for auto panning and offset to work correctly
 				maxWidth: w,
 
-				offset: [-0.75*w, w/2],
+				offset: offset,
 				closeButton: false,
 				autoPanPaddingTopLeft: [24, sassVars.header.height],
 				autoPanPaddingBottomRight: [24, 24]
@@ -476,7 +485,12 @@ export default class LeafletMap extends React.Component {
 		if (project) {
 			this.props.actions.updateSelectedProject(project);
 		} else {
-			console.warn(`No project with id ${ projectId } found in projects returned from SFPA CMS.`);
+			// console.warn(`No project with id ${ projectId } found in projects returned from SFPA CMS.`);
+			this.props.actions.updateSelectedProject({
+				isPlaceholder: true,
+				id: projectId,
+				name: feature.properties.name
+			});
 		}
 	}
 

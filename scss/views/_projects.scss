@@ -90,4 +90,10 @@
 	p {
 		padding: 0.5rem 0;
 	}
+
+	&.placeholder {
+		h3 {
+			margin-bottom: 0;
+		}
+	}
 }
