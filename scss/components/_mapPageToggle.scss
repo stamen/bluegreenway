@@ -1,14 +1,10 @@
 .map-page-toggle {
 	position: absolute;
 	top: $header-height + $body-margin-smaller-than-narrow-desktop;
-	left: 6%;
-	transform: none;
+	left: 50%;
+	transform: translate(-50%, 0);
 	z-index: 1;
-
-	@media (#{$bp-larger-than-mobile}) {
-		left: 50%;
-		transform: translate(-50%, 0);
-	}
+	white-space: nowrap;
 
 	@media (#{$bp-larger-than-narrow-desktop}) {
 		left: auto;
@@ -23,10 +19,9 @@
 	box-shadow: $page-shadow;
 	color: $blue;
 	cursor: pointer;
-	display: block;
+	display: inline-block;
 	font-size: 14px;
 	font-weight: bold;
-	float: left;
 	height: $mode-toggle-btn-height;
 	line-height: $mode-toggle-btn-height;
 	text-align: center;
@@ -34,7 +29,7 @@
 	width: 120px;
 
 	@media (#{$bp-larger-than-narrow-desktop}) {
-		float: none;
+		display: block;
 	}
 
 	&:first-of-type {
