@@ -2,14 +2,20 @@
 	color: $blue;
 
 	h2 {
-		font-size: 1.5rem;
+		font-size: 2rem;
 		font-weight: bold;
 		letter-spacing: 0;
 		margin-bottom: 0;
 	}
 
 	p {
-		line-height: 1.5em;
+		font-size: 1.5rem;
+		line-height: 2rem;
+
+		@media (#{$bp-larger-than-mobile}) {
+			font-size: 1.25rem;
+			line-height: 1.5rem;
+		}
 	}
 
 	.page-header p {
