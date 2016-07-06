@@ -80,7 +80,7 @@ class Events extends React.Component {
 			filterCost,
 			filterEventType,
 			filterLocation,
-		} = this.refs.eventFilter.state;
+		} = this.refs.eventFilter ? this.refs.eventFilter.state : {};
 
 		let filtersToSet = [];
 		if (startDate) {
