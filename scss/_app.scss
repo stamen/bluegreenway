@@ -86,10 +86,10 @@ a:active {
 .grid-container {
 	margin: 1em 0 $footer-height 0;
 	@media (#{$bp-larger-than-tablet}) {
-		margin-bottom: ($body-margin + $footer-height-larger-than-tablet);
+		margin-bottom: ($body-margin + $footer-height-larger-than-mobile);
 	}
 	@media (#{$bp-larger-than-narrow-desktop}) {
-		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-tablet) $body-margin;
+		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-mobile) $body-margin;
 	}
 
 	.row {

@@ -13,13 +13,14 @@
 	z-index: $footer-z-index;
 
 	@media (#{$bp-larger-than-mobile}) {
+		height: $footer-height-larger-than-mobile;
+		padding-bottom: 0;
+		padding-top: 0;
 		font-size: 0.77rem;
 	}
 
 	@media (#{$bp-larger-than-tablet}) {
-		height: $footer-height-larger-than-tablet;
-		padding-bottom: 0;
-		padding-top: 0;
+		//
 	}
 }
 
@@ -43,7 +44,7 @@
 	text-align: center;
 	width: 240px;
 
-	@media (#{$bp-larger-than-tablet}) {
+	@media (#{$bp-larger-than-mobile}) {
 		float: left;
 		margin: auto;
 		margin-left: 1%;

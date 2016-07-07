@@ -6,11 +6,11 @@
 	color: $blue;
 
 	@media (#{$bp-larger-than-mobile}) {
-		margin: 1rem $body-margin ($body-margin + $footer-height-larger-than-tablet) $body-margin;
+		margin: 1rem $body-margin ($body-margin + $footer-height-larger-than-mobile) $body-margin;
 	}
 
 	@media (#{$bp-larger-than-narrow-desktop}) {
-		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-tablet) $body-margin;
+		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-mobile) $body-margin;
 	}
 
 	&.grid-container {
