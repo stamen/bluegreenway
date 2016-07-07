@@ -174,11 +174,15 @@ export default class LeafletMap extends React.Component {
 			dataURLs.mapLabels
 		];
 
-		const mapOptions = {
-			center: [37.757450, -122.406235],
-			zoom: 13,
-			zoomControl: false
-		};
+		const mapCenter = [37.757450, -122.406235],
+			mapOptions = {
+				center: mapCenter,
+				zoom: 13,
+				zoomControl: false,
+				minZoom: 12,
+				maxZoom: 16,
+				maxBounds: [[mapCenter[0] - 0.1, mapCenter[1] - 0.1], [mapCenter[0] + 0.1, mapCenter[1] + 0.1]]
+			};
 
 		const layerOptions = {
 			tooltip: false,
