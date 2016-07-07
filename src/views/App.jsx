@@ -77,7 +77,7 @@ class App extends React.Component {
 				<div className={ 'background-container' + (mode === 'map' ? '' : ' blurred') }>
 					<LeafletMap { ...this.props } />
 				</div>
-				<Header actions={this.props.actions} menuOpen={this.state.menuOpen} mode={ mode } />
+				<Header actions={this.props.actions} menuOpen={ this.state.menuOpen } mode={ mode } />
 
 				<div ref='contentContainer' className='content-container'>
 					{ childrenWithProps }

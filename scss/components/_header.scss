@@ -1,3 +1,4 @@
+$social-media-height: 8rem;
 .site-header {
 	box-shadow: $page-shadow;
 	position: fixed;
@@ -14,11 +15,6 @@
 		top: -$header-height;
 	}
 
-	a {
-		width: 100%;
-		height: 100%;
-	}
-
 	h1 {
 		float: left;
 		font-size: 2.5rem;
@@ -32,7 +28,7 @@
 			color: $light-blue;
 		}
 
-		@media (#{$bp-larger-than-mobile}) {
+		@media (#{$bp-larger-than-tablet}) {
 			float: none;
 		}
 	}
@@ -48,7 +44,7 @@
 		padding: .5rem;
 		width: 3rem;
 
-		@media (#{$bp-larger-than-mobile}) {
+		@media (#{$bp-larger-than-tablet}) {
 			display: none;
 		}
 
@@ -88,13 +84,7 @@
 		width: 100%;
 		z-index: -1;
 
-		ul {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
-
-		@media (#{$bp-larger-than-mobile}) {
+		@media (#{$bp-larger-than-tablet}) {
 			display: block;
 			font-size: inherit;
 			height: 100%;
@@ -114,12 +104,12 @@
 		background-color: $blue;
 		bottom: 0;
 		display: block;
-		height: 8rem;
+		height: $social-media-height;
 		left: 0;
 		position: absolute;
 		width: 100%;
 
-		@media (#{$bp-larger-than-mobile}) {
+		@media (#{$bp-larger-than-tablet}) {
 			display: none;
 		}
 
@@ -165,23 +155,49 @@
 		}
 	}
 
-	li {
-		display: block;
-		height: 20%;
-		text-align: center;
-		width: 100%;
+	ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 
-		@media (#{$bp-larger-than-mobile}) {
+		height: calc(100% - #{$social-media-height});
+
+		@media (#{$bp-larger-than-tablet}) {
+			display: block;
+			height: 100%;
+		}
+
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		flex: 1 1 auto;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		// width: 100%;
+		text-align: center;
+
+		@media (#{$bp-larger-than-tablet}) {
 			display: inline-block;
 			height: 100%;
 			width: auto;
 		}
 
 		a {
-			display: block;
-			padding: 4rem 2.5rem 1.5rem 2.5rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 
-			@media (#{$bp-larger-than-mobile}) {
+			flex: 1 1 auto;
+			width: 100%;
+			height: 100%;
+
+			@media (#{$bp-larger-than-tablet}) {
+				display: block;
 				padding: 1.5rem 2.5rem 0 2.5rem;
 			}
 
@@ -191,6 +207,10 @@
 				background-color: $green;
 				color: $white;
 			}
+		}
+
+		span {
+			display: block;
 		}
 	}
 
