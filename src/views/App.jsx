@@ -71,6 +71,8 @@ class App extends React.Component {
 		let childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, ...this.props));
 		let mode = this.props.params.mode || 'page';
 
+		document.querySelector('body').classList[mode === 'map' ? 'add' : 'remove']('no-scroll');
+
 		return (
 			<div>
 			<MapPageToggle currentLocation={ this.props.location } mode={ mode } />

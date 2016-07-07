@@ -26,8 +26,15 @@ svg text,
 	font-family: 'NeutrafaceText';
 }
 
-body.mobile-menu-open {
-	overflow: hidden;
+body {
+	&.no-scroll {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+	&.mobile-menu-open {
+		overflow: hidden;
+	}
 }
 
 a,
