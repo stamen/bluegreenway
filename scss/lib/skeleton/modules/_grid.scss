@@ -43,7 +43,7 @@
 
   .grid-container {
     width: $container-width-larger-than-mobile;
-    padding: $container-padding-larger-than-mobile;
+    padding: $container-padding-larger-than-mobile 0;
   }
 }
 

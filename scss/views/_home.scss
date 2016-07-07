@@ -9,7 +9,7 @@
 	}
 
 	.gutter-sizer {
-		width: 1%;
+		width: $column-margin;
 	}
 
 	@include respond-to('small') {

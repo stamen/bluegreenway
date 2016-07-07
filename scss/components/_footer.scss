@@ -47,7 +47,7 @@
 	@media (#{$bp-larger-than-mobile}) {
 		float: left;
 		margin: auto;
-		margin-left: 1%;
+		margin-left: $column-margin;
 		padding: 30px;
 		text-align: left;
 		width: 24.25%;

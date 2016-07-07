@@ -94,6 +94,7 @@ a:active {
 	margin: 1em 0 $footer-height 0;
 	@media (#{$bp-larger-than-mobile}) {
 		margin-bottom: ($body-margin + $footer-height-larger-than-mobile);
+		margin-left: $column-margin;
 	}
 	@media (#{$bp-larger-than-narrow-desktop}) {
 		margin: $body-margin $body-margin ($body-margin + $footer-height-larger-than-mobile) $body-margin;
