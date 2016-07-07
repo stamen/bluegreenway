@@ -2,7 +2,6 @@
 	color: $text-color;
 	font-family: 'NeutrafaceText';
 	text-shadow: $text-shadow;
-	// margin-bottom: 0;
 
 	.header-shade {
 		height: 100%;
@@ -10,64 +9,36 @@
 		background-color: $header-shade;
 	}
 
+	// specificity WIN!!
+	&.row > div.header-cell {
+		height: 18rem;
+		@media (#{$bp-larger-than-mobile}) {
+			height: $row-height;
+		}
+	}
+
 	.header-cell {
 		width: 100%;
-		height: 245px !important;
-		background-size: cover;
 		margin-bottom: 0;
 
-		@media (#{$bp-larger-than-mobile}) {
-			height: initial;
-		}
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
 
 		#home & {
 			background-image: url('./img/header-home.jpg');
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-
-			@media (#{$bp-larger-than-mobile}) {
-				// background-size: auto;
-			}
-
 		}
 		#stories & {
 			background-image: url('./img/header-stories.jpg');
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-
-			@media (#{$bp-larger-than-mobile}) {
-				background-size: cover;
-			}
-
 		}
 		#events & {
 			background-image: url('./img/header-events.jpg');
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-
-			@media (#{$bp-larger-than-mobile}) {
-				background-size: cover;
-			}
-
 		}
 		#projects & {
 			background-image: url('./img/header-projects.jpg');
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-
-			@media (#{$bp-larger-than-mobile}) {
-				background-size: cover;
-			}
-
 		}
 		#about & {
 			background-image: url('./img/header-about.jpg');
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-
-			@media (#{$bp-larger-than-mobile}) {
-				background-size: cover;
-			}
 		}
 
 		@media #{$bp-high-pixel-density} {
@@ -112,7 +83,8 @@
 		}
 	}
 
-	p {
+	p,
+	#about & p {
 		font-size: 1.89em;
 		font-weight: normal;
 		margin-bottom: 0;
