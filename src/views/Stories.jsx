@@ -212,7 +212,7 @@ class Stories extends React.Component {
 	renderMapView (storyItems) {
 		const storeState = this.props.store.getState();
 		return (
-			<MapOverlayContainer className="stories-map-overlay">
+			<MapOverlayContainer>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'

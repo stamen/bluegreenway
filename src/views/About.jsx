@@ -38,7 +38,7 @@ class About extends React.Component {
 
 	renderMapView () {
 		return (
-			<MapOverlayContainer className='stories-map-overlay'>
+			<MapOverlayContainer>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'

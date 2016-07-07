@@ -214,7 +214,7 @@ class Projects extends React.Component {
 	renderMapView () {
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
-			<MapOverlayContainer className="projects-map-overlay">
+			<MapOverlayContainer>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker
 						title='Recreation'

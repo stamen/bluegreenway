@@ -57,28 +57,28 @@
 			display: block;
 		}
 	}
+}
 
-	&-toggle-filters {
-		background: $green;
-		bottom: 1rem;
+.map-overlay-container-toggle-filters {
+	background: $green;
+	bottom: 1rem;
+	color: white;
+	font-size: 1.5rem;
+	font-weight: bold;
+	left: 50%;
+	padding: 1rem 5rem;
+	position: absolute;
+	text-transform: uppercase;
+	transform: translateX(-50%);
+	z-index: $header-z-index - 1;
+
+	&:focus,
+	&:hover,
+	&:active {
 		color: white;
-		font-size: 1.5rem;
-		font-weight: bold;
-		left: 50%;
-		padding: 1rem 5rem;
-		position: absolute;
-		text-transform: uppercase;
-		transform: translateX(-50%);
-		z-index: $header-z-index - 1;
+	}
 
-		&:focus,
-		&:hover,
-		&:active {
-			color: white;
-		}
-
-		@media (#{$bp-larger-than-mobile}) {
-			display: none;
-		}
+	@media (#{$bp-larger-than-mobile}) {
+		display: none;
 	}
 }

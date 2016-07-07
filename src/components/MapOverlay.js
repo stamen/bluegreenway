@@ -23,13 +23,14 @@ export class MapOverlayContainer extends React.Component {
 	}
 
 	render () {
-		let filtersOpen = this.state.filtersOpen;
+		let { filtersOpen } = this.state;
+
 		return (
-			<div className={'map-overlay-container ' + this.props.className + (filtersOpen ? ' filters-open' : '')}>
+			<div className={ 'map-overlay-container ' + (filtersOpen ? ' filters-open' : '') }>
 				<div className='map-overlay-container-contents'>
-					{this.props.children}
+					{ this.props.children }
 				</div>
-				<a className="map-overlay-container-toggle-filters" onClick={() => { this.setState({ filtersOpen: !filtersOpen }); }}>
+				<a className="map-overlay-container-toggle-filters" onClick={ () => { this.setState({ filtersOpen: !filtersOpen }); } }>
 					{ filtersOpen ? 'select' : 'filters' }
 				</a>
 			</div>
@@ -67,7 +68,7 @@ export class MapOverlay extends React.Component {
 	renderToggle () {
 		if (this.props.collapsible) {
 			return (
-				<span className={"collapse-toggle" + (this.state.expanded ? ' expanded' : ' collapsed')} onClick={this.handleCollapseToggleClick.bind(this)}></span>
+				<span className={ 'collapse-toggle' + (this.state.expanded ? ' expanded' : ' collapsed')} onClick={this.handleCollapseToggleClick.bind(this) }></span>
 			);
 		}
 		return null;
@@ -75,10 +76,10 @@ export class MapOverlay extends React.Component {
 
 	render () {
 		return (
-			<div className="map-overlay collapse">
-				{this.renderToggle()}
-				<Collapse isOpened={this.state.expanded}>
-					{this.props.children}
+			<div className='map-overlay collapse'>
+				{ this.renderToggle() }
+				<Collapse isOpened={ this.state.expanded }>
+					{ this.props.children }
 				</Collapse>
 			</div>
 		);
