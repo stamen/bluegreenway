@@ -1,7 +1,14 @@
 #home {
 	$cell-margin: 1em;
 
+	// necessary for correct grid layout on mobile
 	position: relative;
+
+	.no-scroll & {
+		// take it out of the flow on map view to correctly position the FILTERS button 
+		position: static;
+	}
+
 	@include colorize-grid(7, 3, 2, null);
 
 	.page-header {
