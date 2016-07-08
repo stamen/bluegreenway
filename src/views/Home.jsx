@@ -9,6 +9,8 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
 import Event from '../components/Event';
 import Story from '../components/Story';
+import { getCategoryOptions, getCategoryMapLayerOptions } from '../models/stories';
+import { getTypesOptions, getTypesMapLayerOptions } from '../models/events';
 
 class Home extends React.Component {
 
@@ -33,16 +35,29 @@ class Home extends React.Component {
 		});
 	}
 
-	componentDidMount () {
-		//
-	}
-
-	componentWillReceiveProps (nextProps) {
-		//
-	}
-
 	componentWillUpdate (nextProps, nextState) {
-		//
+		const { stories, events } = this.props.store.getState();
+		if (stories.data.items.length && !stories.categoryOptions.length) {
+			// stories have loaded but filter options have not yet been derived
+			this.deriveFilterOptions(stories, null);
+		}
+		if (events.data.items.length && !events.eventTypeOptions.length) {
+			// events have loaded but filter options have not yet been derived
+			this.deriveFilterOptions(null, events.data.items);
+		}
+	}
+
+	deriveFilterOptions (stories, events) {
+		let { actions } = this.props;
+		if (stories) {
+			actions.storyCategoriesChange(getCategoryOptions(stories));
+			actions.mapLayersPickerStoryCategoriesChange(null, null, getCategoryMapLayerOptions(stories));
+		}
+
+		if (events) {
+			actions.eventTypesChange(getTypesOptions(events));
+			actions.mapLayersPickerEventTypesChange(null, null, getTypesMapLayerOptions(events));
+		}
 	}
 
 	componentDidUpdate (prevProps) {
@@ -174,14 +189,28 @@ class Home extends React.Component {
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
 			<MapOverlayContainer>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
+					<MapLayersPicker
+						title='Stories'
+						layers={ mapLayersPicker.storyCategories }
+						onLayerChange={ this.props.actions.mapLayersPickerStoryCategoriesChange }
+					/>
+				</MapOverlay>
+				<MapOverlay>
+					<MapLayersPicker
+						title='Events'
+						layers={ mapLayersPicker.eventTypes }
+						onLayerChange={ this.props.actions.mapLayersPickerEventTypesChange }
+					/>
+				</MapOverlay>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Recreation'
 						layers={ mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Transportation'
 						layers={ mapLayersPicker.transportation }

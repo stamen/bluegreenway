@@ -20,6 +20,8 @@ export const MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED = 'MAP_LAYERS_PICKER_TRANS
 export const MAP_LAYERS_PICKER_STORIES_CHANGED = 'MAP_LAYERS_PICKER_STORIES_CHANGED';
 export const MAP_LAYERS_PICKER_EVENTS_CHANGED = 'MAP_LAYERS_PICKER_EVENTS_CHANGED';
 export const MAP_LAYERS_PICKER_PROJECTS_CHANGED = 'MAP_LAYERS_PICKER_PROJECTS_CHANGED';
+export const MAP_LAYERS_PICKER_STORY_CATEGORIES_CHANGED = 'MAP_LAYERS_PICKER_STORY_CATEGORIES_CHANGED';
+export const MAP_LAYERS_PICKER_EVENT_TYPES_CHANGED = 'MAP_LAYERS_PICKER_EVENT_TYPES_CHANGED';
 export const ITEM_SELECTED = 'ITEM_SELECTED';
 export const EVENTS_START_DATE_CHANGED = 'EVENTS_START_DATE_CHANGED';
 export const EVENTS_END_DATE_CHANGED = 'EVENTS_END_DATE_CHANGED';
@@ -200,6 +202,7 @@ export default function (store) {
 			});
 		},
 
+		// visibility of additional map layers, e.g. "recreation" (icons)
 		mapLayersPickerLayerChange (key, value) {
 			store.dispatch({
 				type: MAP_LAYERS_PICKER_LAYERS_CHANGED,
@@ -208,6 +211,7 @@ export default function (store) {
 			});
 		},
 
+		// visibility of transportation map layer
 		mapLayersPickerTransportationChange (key, value) {
 			store.dispatch({
 				type: MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED,
@@ -216,6 +220,7 @@ export default function (store) {
 			});
 		},
 
+		// visibility of stories map marker layer
 		mapLayersPickerStoriesChange (value) {
 			store.dispatch({
 				type: MAP_LAYERS_PICKER_STORIES_CHANGED,
@@ -223,6 +228,7 @@ export default function (store) {
 			});
 		},
 
+		// visibility of events map marker layer
 		mapLayersPickerEventsChange (value) {
 			store.dispatch({
 				type: MAP_LAYERS_PICKER_EVENTS_CHANGED,
@@ -230,10 +236,31 @@ export default function (store) {
 			});
 		},
 
+		// visibility of projects map geojson layer
 		mapLayersPickerProjectsChange (value) {
 			store.dispatch({
 				type: MAP_LAYERS_PICKER_PROJECTS_CHANGED,
 				value
+			});
+		},
+
+		// visible story categories
+		mapLayersPickerStoryCategoriesChange (key, checked, allCategories=null) {
+			store.dispatch({
+				type: MAP_LAYERS_PICKER_STORY_CATEGORIES_CHANGED,
+				key,
+				checked,
+				allCategories
+			});
+		},
+
+		// visible event types
+		mapLayersPickerEventTypesChange (key, checked, allTypes=null) {
+			store.dispatch({
+				type: MAP_LAYERS_PICKER_EVENT_TYPES_CHANGED,
+				key,
+				checked,
+				allTypes
 			});
 		},
 

@@ -35,6 +35,30 @@
 		margin: 0;
 	}
 
+	svg {
+		// nudge icons down to center-align with text labels
+		transform: translateY(0.5rem);
+	}
+
+	.stories {
+		@include story-fill-color(1.0);
+	}
+	.events {
+		@include event-fill-color(1.0);
+	}
+
+	.any {
+		fill: $dark-gray;
+	}
+
+	.off {
+		fill-opacity: 0.25;
+	}
+
+	input.hidden {
+		display: none;
+	}
+
 	label {
 		color: $blue;
 		font-size: 12px;
@@ -46,5 +70,13 @@
 			color: $dark-gray;
 			font-weight: normal;
 		}
+
+		&.stories {
+			@include story-label-color(1.0);
+		}
+		&.events {
+			@include event-label-color(1.0);
+		}
 	}
+
 }

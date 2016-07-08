@@ -1,4 +1,5 @@
 import moment from 'moment';
+import slug from 'slug';
 import { find, sortBy, uniq } from 'lodash';
 
 import { timestampFormat } from './common';
@@ -69,9 +70,21 @@ export function getCostsOptions(events) {
 	return costs;
 }
 
-export function getTypesOptions(events) {
+export function getTypesOptions(events, addAny=true) {
 	let types = events.map(event => event.type);
 	types = uniq(types.filter(type => type)).sort();
-	types.unshift('Any');
+	if (addAny) types.unshift('Any');
 	return types;
+}
+
+export function getTypesMapLayerOptions (events) {
+	let types = getTypesOptions(events, false);
+	return types.map(type => ({
+		key: slug(type).toLowerCase(),
+		name: type,
+		icon: 'icon_marker-pushpin',
+		iconSize: [20, 30],
+		iconType: 'events',
+		checked: true
+	}));
 }

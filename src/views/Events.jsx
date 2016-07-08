@@ -8,7 +8,7 @@ import Event from '../components/Event';
 import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
 import MapLayersPicker from '../components/MapLayersPicker';
-import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
+import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import {
 	getAgeRangesOptions,

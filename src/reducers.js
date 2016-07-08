@@ -45,7 +45,7 @@ export default {
 	},
 
 	mapLayersPicker: combineReducers({
-		layers (state = {}, action) {
+		layers (state = [], action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_LAYERS_CHANGED:
 					return state.map(layer => {
@@ -59,7 +59,7 @@ export default {
 			}
 		},
 
-		transportation (state = {}, action) {
+		transportation (state = [], action) {
 			switch (action.type) {
 				case actions.MAP_LAYERS_PICKER_TRANSPORTATION_CHANGED:
 					return state.map(layer => {
@@ -98,7 +98,44 @@ export default {
 				default:
 					return state;
 			}
+		},
+
+		storyCategories (state = [], action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_STORY_CATEGORIES_CHANGED:
+					// if allCategories specified, overwrite with new list
+					if (action.allCategories) return action.allCategories.concat();
+
+					// else, just set selection state at specified key
+					return state.map(type => {
+						if (type.key === action.key) {
+							type.checked = action.checked;
+						}
+						return type;
+					});
+				default:
+					return state;
+			}
+		},
+		
+		eventTypes (state = [], action) {
+			switch (action.type) {
+				case actions.MAP_LAYERS_PICKER_EVENT_TYPES_CHANGED:
+					// if allTypes specified, overwrite with new list
+					if (action.allTypes) return action.allTypes.concat();
+
+					// else, just set selection state at specified key
+					return state.map(type => {
+						if (type.key === action.key) {
+							type.checked = action.checked;
+						}
+						return type;
+					});
+				default:
+					return state;
+			}
 		}
+		
 	}),
 
 	events: combineReducers({

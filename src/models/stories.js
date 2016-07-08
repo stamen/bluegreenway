@@ -40,9 +40,21 @@ export function cleanStoriesData (items) {
 	return items.map(item => cleanStoryItem(item));
 }
 
-export function getCategoryOptions(stories) {
+export function getCategoryOptions (stories, addAny=true) {
 	let categories = stories.data.items.map(story => story.category);
 	categories = uniq(categories.filter(category => category)).sort();
-	categories.unshift('Any');
+	if (addAny) categories.unshift('Any');
 	return categories;
+}
+
+export function getCategoryMapLayerOptions (stories) {
+	let categories = getCategoryOptions(stories, false);
+	return categories.map(storyCategory => ({
+		key: slug(storyCategory).toLowerCase(),
+		name: storyCategory,
+		icon: 'icon_marker-eyedrop',
+		iconSize: [20, 30],
+		iconType: 'stories',
+		checked: true
+	}));
 }

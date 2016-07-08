@@ -109,6 +109,27 @@
 	}
 }
 
+@mixin story-label-color ($opacity) {
+	&[for=general-stories-history] {
+		color: rgba($purple, $opacity);
+	}
+	&[for=points-of-interest] {
+		color: rgba($med-blue, $opacity);
+	}
+	&[for=people-of-the-blue-greenway] {
+		color: rgba($blue, $opacity);
+	}
+	&[for=blue-greenway-highlights] {
+		color: rgba($dark-green, $opacity);
+	}
+	&[for=unused-type-5] {
+		color: rgba($orange, $opacity);
+	}
+	&[for=unused-type-6] {
+		color: rgba($green, $opacity);
+	}
+}
+
 @mixin event-background-color ($opacity) {
 	&.special-events {
 		background-color: rgba($green, $opacity);
@@ -148,5 +169,26 @@
 	}
 	&.unused-type-6 {
 		fill: rgba($blue, $opacity);
+	}
+}
+
+@mixin event-label-color ($opacity) {
+	&[for=special-events] {
+		color: rgba($green, $opacity);
+	}
+	&[for=social-activities] {
+		color: rgba($purple, $opacity);
+	}
+	&[for=unused-type-3] {
+		color: rgba($orange, $opacity);
+	}
+	&[for=unused-type-4] {
+		color: rgba($dark-green, $opacity);
+	}
+	&[for=unused-type-5] {
+		color: rgba($med-blue, $opacity);
+	}
+	&[for=unused-type-6] {
+		color: rgba($blue, $opacity);
 	}
 }
