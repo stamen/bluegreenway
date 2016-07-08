@@ -78,9 +78,7 @@ export class MapOverlay extends React.Component {
 		return (
 			<div className='map-overlay collapse'>
 				{ this.renderToggle() }
-				<Collapse isOpened={ this.state.expanded }>
-					{ this.props.children }
-				</Collapse>
+				{ this.props.children }
 			</div>
 		);
 	}

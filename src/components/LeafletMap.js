@@ -125,6 +125,17 @@ export default class LeafletMap extends React.Component {
 			this.mapState.map.removeLayer(this.mapState.layers.projects);
 		}
 
+		// TODO: toggle markers by category/type.
+		//  See "TODO: Create a LayerGroup for each story/event category." below for more info.
+		/*
+		mapLayersPicker.storyCategories.forEach(storyCategory => {
+			//
+		});
+		mapLayersPicker.eventTypes.forEach(eventType => {
+			//
+		});
+		*/
+
 		if (projects.selectedProject) {
 			let popup = this.mapState.projects.popups[projects.selectedProject.id];
 
@@ -328,16 +339,18 @@ export default class LeafletMap extends React.Component {
 			}
 		});
 
-		let markers = [];
+		let markers = [],
+			markersByType = {};
 		markerObjs.forEach(markerObj => {
-			let icon = L.divIcon({
-				className: `marker ${ type } ${ slug(markerObj.items[0].category, { lower: true }) }`,
-				iconSize: null,
-				html:
-					`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
-						<use xlink:href='#${ svgSymbolId }' />
-					</svg>`
-			});
+			let categoryKey = slug(markerObj.items[0].category).toLowerCase(),
+				icon = L.divIcon({
+					className: `marker ${ type } ${ categoryKey }`,
+					iconSize: null,
+					html:
+						`<svg width='${ svgSize[0] }' height='${ svgSize[1] }'>
+							<use xlink:href='#${ svgSymbolId }' />
+						</svg>`
+				});
 
 			let popupContentContainer = document.createElement('div');
 			popupContentContainer.classList.add('popup-item-container', type);
@@ -360,12 +373,34 @@ export default class LeafletMap extends React.Component {
 					autoPanPaddingTopLeft: [24, sassVars.header.height],
 					autoPanPaddingBottomRight: [24, 24]
 				});
+
 			markers.push(marker);
+
+			if (!markersByType[categoryKey]) {
+				markersByType[categoryKey] = [];
+			}
+			markersByType[categoryKey].push(marker);
 		});
 
 		if (!markers.length) return null;
 
 		this.mapState.layers[type] = L.layerGroup(markers);
+
+		// TODO: Create a LayerGroup for each story/event category.
+		// Not doing this now because of the marker-at-location overlap problem:
+		// 
+		// All markers are placed at the centroid of their corresponding project.
+		// This means that all markers for a given project are stacked directly on top of one another,
+		// rendering only the top marker in that stack visible and interactive.
+		// Therefore, the `markerObjs.forEach` loop above groups all stories/events per project
+		// into a single marker, and assigns that marker a category matching the first item in the stack.
+		// 
+		// So, there aren't actually markers drawn for every item,
+		// and a UI that allows toggling markers by category could have no visible effect due to the overlap.
+		// A solution for this problem would require both design and implementation,
+		// and we're out of time...so the legends will remain non-interactive.
+		// 
+		// this.mapState.layers[categoryKey] = L.layerGroup(markersByType[categoryKey]);
 	}
 
 	initMarkerPopup (type, data, index) {

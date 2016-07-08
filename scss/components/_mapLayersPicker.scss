@@ -42,9 +42,19 @@
 
 	.stories {
 		@include story-fill-color(1.0);
+
+		// disabling story category / event type toggling.
+		// see TODO in LeafletMap::createMarkerMapLayer() for more info.
+		pointer-events: none;
+		cursor: default;
 	}
 	.events {
 		@include event-fill-color(1.0);
+
+		// disabling story category / event type toggling.
+		// see TODO in LeafletMap::createMarkerMapLayer() for more info.
+		pointer-events: none;
+		cursor: default;
 	}
 
 	.any {
@@ -76,6 +86,8 @@
 		}
 		&.events {
 			@include event-label-color(1.0);
+			position: relative;
+		    top: -0.25rem;
 		}
 	}
 

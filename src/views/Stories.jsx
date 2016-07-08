@@ -196,14 +196,21 @@ class Stories extends React.Component {
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
+					<MapLayersPicker
+						title='Stories'
+						layers={ storeState.mapLayersPicker.storyCategories }
+						onLayerChange={ this.props.actions.mapLayersPickerStoryCategoriesChange }
+					/>
+				</MapOverlay>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Recreation'
 						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Transportation'
 						layers={ storeState.mapLayersPicker.transportation }

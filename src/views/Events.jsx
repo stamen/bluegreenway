@@ -141,21 +141,28 @@ class Events extends React.Component {
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer className="events-map-overlay">
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
+					<MapLayersPicker
+						title='Events'
+						layers={ storeState.mapLayersPicker.eventTypes }
+						onLayerChange={ this.props.actions.mapLayersPickerEventTypesChange }
+					/>
+				</MapOverlay>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Recreation'
 						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
 					/>
 				</MapOverlay>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Transportation'
 						layers={ storeState.mapLayersPicker.transportation }
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
 					<DateRange
 						ref='dateFilter'
 						minDate={ moment('1/1/2015', 'M/D/YYYY') }
