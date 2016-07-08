@@ -19,8 +19,52 @@
 		font-size: 0.77rem;
 	}
 
-	@media (#{$bp-larger-than-tablet}) {
-		//
+	.menu-social-media {
+		display: none;
+		width: 100%;
+		text-align: center;
+
+		@media (#{$bp-larger-than-tablet}) {
+			display: block;
+		}
+
+		&-buttons {
+			margin: 0 auto;
+			margin-top: 1rem;
+			width: 180px;
+		}
+
+		&-button {
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			display: inline-block;
+			height: 25px;
+			margin-left: 10px;
+			margin-right: 10px;
+			width: 25px;
+		}
+
+		&-facebook {
+			background-image: url('./img/buttons/buttons_desktop-facebook.png');
+		}
+		&-instagram {
+			background-image: url('./img/buttons/buttons_desktop-instagram.png');
+		}
+		&-twitter {
+			background-image: url('./img/buttons/buttons_desktop-twitter.png');
+		}
+
+		@media #{$bp-high-pixel-density} {
+			&-facebook {
+				background-image: url('./img/buttons/buttons_desktop-facebook@2x.png');
+			}
+			&-instagram {
+				background-image: url('./img/buttons/buttons_desktop-instagram@2x.png');
+			}
+			&-twitter {
+				background-image: url('./img/buttons/buttons_desktop-twitter@2x.png');
+			}
+		}
 	}
 }
 
