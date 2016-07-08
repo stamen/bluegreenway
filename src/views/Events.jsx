@@ -14,7 +14,8 @@ import {
 	getAgeRangesOptions,
 	getCostsOptions,
 	getLocationsOptions,
-	getTypesOptions
+	getTypesOptions,
+	getFilteredEvents
 } from '../models/events';
 
 // global for tracking which default image to use when no photo is supplied
@@ -127,31 +128,8 @@ class Events extends React.Component {
 		}
 	}
 
-	getFilteredEvents () {
-		const storeState = this.props.store.getState();
-
-		const { events } = storeState,
-			eventItems = events.data.items;
-		if (!eventItems.length) return [];
-
-		const {
-			ageRange,
-			cost,
-			type,
-			location
-		} = events;
-		
-		const currentRange = moment.range(events.startDate, events.endDate);
-		return eventItems
-			.filter(event => moment.range(event.startDate, event.endDate).overlaps(currentRange))
-			.filter(event => ageRange ? event.ageRange === ageRange : true)
-			.filter(event => cost ? event.cost === cost : true)
-			.filter(event => type ? event.type === type : true)
-			.filter(event => location ? event.location === location : true);
-	}
-
 	render () {
-		let eventItems = this.getFilteredEvents();
+		let eventItems = getFilteredEvents(this.props.store.getState().events);
 		return (
 			<div id="events">
 				{ this.props.params.mode === 'page' ?  this.renderPageView(eventItems) : this.renderMapView(eventItems) }

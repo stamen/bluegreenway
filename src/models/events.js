@@ -88,3 +88,25 @@ export function getTypesMapLayerOptions (events) {
 		checked: true
 	}));
 }
+
+export function getFilteredEvents (eventsState) {
+	const eventItems = eventsState.data.items;
+	if (!eventItems.length) return [];
+
+	const {
+		ageRange,
+		cost,
+		type,
+		location,
+		startDate,
+		endDate
+	} = eventsState;
+	
+	const currentRange = moment.range(startDate, endDate);
+	return eventItems
+		.filter(event => moment.range(event.startDate, event.endDate).overlaps(currentRange))
+		.filter(event => ageRange ? event.ageRange === ageRange : true)
+		.filter(event => cost ? event.cost === cost : true)
+		.filter(event => type ? event.type === type : true)
+		.filter(event => location ? event.location === location : true);
+}

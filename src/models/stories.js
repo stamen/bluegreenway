@@ -58,3 +58,19 @@ export function getCategoryMapLayerOptions (stories) {
 		checked: true
 	}));
 }
+
+export function getFilteredStories (storiesState) {
+	const storyItems = storiesState.data.items;
+	if (!storyItems.length) return [];
+
+	const {
+		category,
+		startDate,
+		endDate
+	} = storiesState;
+	
+	const currentRange = moment.range(startDate, endDate);
+	return storyItems
+		.filter(story => currentRange.contains(story.postDate))
+		.filter(story => category ? story.category === category : true);
+}

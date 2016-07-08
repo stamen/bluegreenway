@@ -8,7 +8,7 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import StoryFilters from '../components/StoryFilters';
-import { getCategoryOptions } from '../models/stories';
+import { getCategoryOptions, getFilteredStories } from '../models/stories';
 
 class Stories extends React.Component {
 
@@ -103,25 +103,8 @@ class Stories extends React.Component {
 		}
 	}
 
-	getFilteredStories () {
-		const storeState = this.props.store.getState();
-
-		const { stories } = storeState,
-			storyItems = stories.data.items;
-		if (!storyItems.length) return [];
-
-		const {
-			category
-		} = stories;
-		
-		const currentRange = moment.range(stories.startDate, stories.endDate);
-		return storyItems
-			.filter(story => currentRange.contains(story.postDate))
-			.filter(story => category ? story.category === category : true);
-	}
-
 	render () {
-		let storyItems = this.getFilteredStories();
+		let storyItems = getFilteredStories(this.props.store.getState().stories);
 		return (
 			<div id="stories">
 				{ this.props.params.mode === 'page' ? this.renderPageView(storyItems) : this.renderMapView(storyItems) }
