@@ -5,7 +5,8 @@ import slug from 'slug';
 import { queue } from 'd3-queue';
 
 import MapLayersPicker from '../components/MapLayersPicker';
-import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
+import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
+import MapPOILegend from '../components/MapPOILegend';
 import PageHeader from '../components/PageHeader';
 import * as tileLayers from '../../static/tileLayers.json';
 import * as dataURLs from '../../static/dataUrls.json';
@@ -220,7 +221,9 @@ class Projects extends React.Component {
 						title='Recreation'
 						layers={ mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
+					>
+						<MapPOILegend/>
+					</MapLayersPicker>
 				</MapOverlay>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker

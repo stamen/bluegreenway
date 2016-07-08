@@ -5,7 +5,8 @@ import moment from 'moment';
 import Story from '../components/Story';
 import DateRange from '../components/DateRange';
 import MapLayersPicker from '../components/MapLayersPicker';
-import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
+import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
+import MapPOILegend from '../components/MapPOILegend';
 import PageHeader from '../components/PageHeader';
 import StoryFilters from '../components/StoryFilters';
 import {
@@ -213,7 +214,9 @@ class Stories extends React.Component {
 						title='Recreation'
 						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
+					>
+						<MapPOILegend/>
+					</MapLayersPicker>
 				</MapOverlay>
 				<MapOverlay>
 					<MapLayersPicker

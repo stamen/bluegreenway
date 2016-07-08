@@ -5,7 +5,8 @@ import { withRouter } from 'react-router';
 import { Timeline } from 'react-twitter-widgets';
 
 import MapLayersPicker from '../components/MapLayersPicker';
-import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
+import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
+import MapPOILegend from '../components/MapPOILegend';
 import PageHeader from '../components/PageHeader';
 
 class About extends React.Component {
@@ -44,7 +45,9 @@ class About extends React.Component {
 						title='Recreation'
 						layers={ this.state.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
+					>
+						<MapPOILegend/>
+					</MapLayersPicker>
 				</MapOverlay>
 				<MapOverlay collapsible={ true }>
 					<MapLayersPicker

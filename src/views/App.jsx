@@ -34,12 +34,14 @@ class App extends React.Component {
 		let footer = this.refs.footer;
 		let mode = nextProps.params.mode || 'page';
 
-		if (mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
-			contentContainer.classList.add('map-view-enabled');
-			this.setState({ showFooter: false });
-		} else if (mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
-			contentContainer.classList.remove('map-view-enabled');
-			this.setState({ showFooter: true });
+		if (contentContainer) {
+			if (mode === 'map' && !contentContainer.classList.contains('map-view-enabled')) {
+				contentContainer.classList.add('map-view-enabled');
+				this.setState({ showFooter: false });
+			} else if (mode === 'page' && contentContainer.classList.contains('map-view-enabled')) {
+				contentContainer.classList.remove('map-view-enabled');
+				this.setState({ showFooter: true });
+			}
 		}
 	}
 

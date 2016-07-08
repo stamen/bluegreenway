@@ -9,6 +9,7 @@ import DateRange from '../components/DateRange';
 import EventFilters from '../components/EventFilters';
 import MapLayersPicker from '../components/MapLayersPicker';
 import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
+import MapPOILegend from '../components/MapPOILegend';
 import PageHeader from '../components/PageHeader';
 import {
 	getAgeRangesOptions,
@@ -155,7 +156,9 @@ class Events extends React.Component {
 						title='Recreation'
 						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
+					>
+						<MapPOILegend/>
+					</MapLayersPicker>
 				</MapOverlay>
 				<MapOverlay>
 					<MapLayersPicker

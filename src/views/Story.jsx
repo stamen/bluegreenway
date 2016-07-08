@@ -4,8 +4,12 @@ import moment from 'moment';
 import { get } from 'lodash';
 
 import MapLayersPicker from '../components/MapLayersPicker';
-import MapOverlay from '../components/MapOverlay';
+import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
+import MapPOILegend from '../components/MapPOILegend';
 import PageHeader from '../components/PageHeader';
+import {
+	getCategoryMapLayerOptions
+} from '../models/stories';
 
 class Story extends React.Component {
 
@@ -13,15 +17,29 @@ class Story extends React.Component {
 		super(props);
 	}
 
-	componentWillUpdate (nextProps, nextState) {
-		this.updateSelectedStory(nextProps);
-	}
-
 	componentWillMount () {
-		if (!this.props.store.getState().stories.data.items.length) {
+		const storeState = this.props.store.getState();
+		if (!storeState.stories.data.items.length) {
 			this.props.actions.fetchStoriesData();
 		} else {
 			this.updateSelectedStory(this.props);
+		}
+
+		if (storeState.stories.data.items.length &&
+			!storeState.mapLayersPicker.storyCategories.length) {
+			// stories have loaded but story categories for legend have not yet been derived
+			this.props.actions.mapLayersPickerStoryCategoriesChange(null, null, getCategoryMapLayerOptions(storeState.stories));
+		}
+	}
+
+	componentWillUpdate (nextProps, nextState) {
+		this.updateSelectedStory(nextProps);
+
+		const storeState = nextProps.store.getState();
+		if (storeState.stories.data.items.length &&
+			!storeState.mapLayersPicker.storyCategories.length) {
+			// stories have loaded but story categories for legend have not yet been derived
+			this.props.actions.mapLayersPickerStoryCategoriesChange(null, null, getCategoryMapLayerOptions(storeState.stories));
 		}
 	}
 
@@ -40,6 +58,8 @@ class Story extends React.Component {
 			{ query } = props.location,
 			id = query && query.id ? +query.id : null;
 
+		console.log(">>>>> updateSelectedStory query:", query);
+		console.log(">>>>> id:", id, "selected:", storeState.stories.selectedStory);
 		if (id && !storeState.stories.selectedStory) {
 			storeState.stories.data.items.forEach(story => {
 				if (story.title === storyTitle) {
@@ -62,6 +82,7 @@ class Story extends React.Component {
 
 	renderPageView () {
 		const storeState = this.props.store.getState();
+		console.log(storeState.stories.data.items.length, storeState.stories.selectedStory);
 		if (!storeState.stories.data.items.length || !storeState.stories.selectedStory) {
 			return null;
 		}
@@ -114,22 +135,31 @@ class Story extends React.Component {
 	renderMapView () {
 		const storeState = this.props.store.getState();
 		return (
-			<div>
-				<MapOverlay collapsible={ true }>
+			<MapOverlayContainer>
+				<MapOverlay>
+					<MapLayersPicker
+						title='Stories'
+						layers={ storeState.mapLayersPicker.storyCategories }
+						onLayerChange={ this.props.actions.mapLayersPickerStoryCategoriesChange }
+					/>
+				</MapOverlay>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Recreation'
 						layers={ storeState.mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
+					>
+						<MapPOILegend/>
+					</MapLayersPicker>
 				</MapOverlay>
-				<MapOverlay collapsible={ true }>
+				<MapOverlay>
 					<MapLayersPicker
 						title='Transportation'
 						layers={ storeState.mapLayersPicker.transportation }
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
-			</div>
+			</MapOverlayContainer>
 		);
 	}
 }
