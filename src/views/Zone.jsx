@@ -77,6 +77,7 @@ class Zone extends Component {
 			);
 		}
 
+		debugger;
 		let { name, description, image } = zone.properties,
 			mapUrl = 'projects/map';	// TODO: pass this in instead of hardcoding
 
