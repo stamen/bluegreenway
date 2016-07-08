@@ -162,6 +162,7 @@ class Events extends React.Component {
 						onLayerChange={ this.props.actions.mapLayersPickerTransportationChange }
 					/>
 				</MapOverlay>
+				{/*
 				<MapOverlay>
 					<DateRange
 						ref='dateFilter'
@@ -172,6 +173,7 @@ class Events extends React.Component {
 						onRangeChange={ this.updateFilters }
 					/>
 				</MapOverlay>
+				*/}
 			</MapOverlayContainer>
 		);
 	}
