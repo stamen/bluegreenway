@@ -77,9 +77,25 @@ class Zone extends Component {
 			);
 		}
 
-		debugger;
 		let { name, description, image } = zone.properties,
+			alt = '',
+			zoneProject = storeState.projects.data.items.find(p => p.name === zone.properties.name),
 			mapUrl = 'projects/map';	// TODO: pass this in instead of hardcoding
+
+		// Use zone metadata from CMS instead if we have it
+		if (zoneProject) {
+			name = zoneProject.name;
+			image = zoneProject.images.src;
+			alt =  zoneProject.images.alt;
+
+			console.log(">>>>> images:", zoneProject.images);
+
+			let temp = document.createElement('div');
+			temp.innerHTML = zoneProject.description;
+			description = temp.textContent || temp.innerText || '';
+		} else {
+			image = 'img/' + image;
+		}
 
 		return (
 			<div className='grid-container'>
@@ -91,7 +107,7 @@ class Zone extends Component {
 							{/* <Link className='button' onClick={ () => this.onZoneMapLinkClicked(zone) } to={ mapUrl }>View on Map</Link> */}
 						</div>
 						<div className='item-img'>
-							<img src={ `img/${ image || 'zone-placeholder.jpg' }` }/>
+							<img src={ `${ image || 'img/zone-placeholder.jpg' }` } alt={ alt }/>
 						</div>
 					</div>
 					<div className='projects-list'>
