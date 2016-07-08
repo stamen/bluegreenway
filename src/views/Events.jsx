@@ -15,6 +15,7 @@ import {
 	getCostsOptions,
 	getLocationsOptions,
 	getTypesOptions,
+	getTypesMapLayerOptions,
 	getFilteredEvents
 } from '../models/events';
 
@@ -67,6 +68,7 @@ class Events extends React.Component {
 		this.props.actions.costsChange(getCostsOptions(events));
 		this.props.actions.eventTypesChange(getTypesOptions(events));
 		this.props.actions.ageRangesChange(getAgeRangesOptions(events));
+		this.props.actions.mapLayersPickerEventTypesChange(null, null, getTypesMapLayerOptions(events));
 	}
 
 	updateFilters () {

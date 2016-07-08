@@ -8,7 +8,11 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import {MapOverlayContainer, MapOverlay} from '../components/MapOverlay';
 import PageHeader from '../components/PageHeader';
 import StoryFilters from '../components/StoryFilters';
-import { getCategoryOptions, getFilteredStories } from '../models/stories';
+import {
+	getCategoryOptions,
+	getCategoryMapLayerOptions,
+	getFilteredStories
+} from '../models/stories';
 
 class Stories extends React.Component {
 
@@ -57,6 +61,7 @@ class Stories extends React.Component {
 
 	deriveFilterOptions (stories) {
 		this.props.actions.storyCategoriesChange(getCategoryOptions(stories));
+		this.props.actions.mapLayersPickerStoryCategoriesChange(null, null, getCategoryMapLayerOptions(stories));
 	}
 
 	updateFilters () {
