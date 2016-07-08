@@ -12,6 +12,9 @@ const MapPageToggle = ({ mode, currentLocation }) => {
 	let mapUrl = view ? `${ view }/map/${ other }` : `map`,
 		pageUrl = view ? `${ view }/page/${ other }` : `page`;
 
+	mapUrl += currentLocation.search;
+	pageUrl += currentLocation.search;
+
 	return (
 		<div className='map-page-toggle'>
 			<Link to={ mapUrl } className={ 'map-page-toggle-btn' + (mode === 'map' ? ' active' : '') }>

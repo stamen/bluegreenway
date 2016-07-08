@@ -58,8 +58,6 @@ class Story extends React.Component {
 			{ query } = props.location,
 			id = query && query.id ? +query.id : null;
 
-		console.log(">>>>> updateSelectedStory query:", query);
-		console.log(">>>>> id:", id, "selected:", storeState.stories.selectedStory);
 		if (id && !storeState.stories.selectedStory) {
 			storeState.stories.data.items.forEach(story => {
 				if (story.title === storyTitle) {
@@ -82,7 +80,6 @@ class Story extends React.Component {
 
 	renderPageView () {
 		const storeState = this.props.store.getState();
-		console.log(storeState.stories.data.items.length, storeState.stories.selectedStory);
 		if (!storeState.stories.data.items.length || !storeState.stories.selectedStory) {
 			return null;
 		}
