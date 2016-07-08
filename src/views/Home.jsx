@@ -7,6 +7,7 @@ import moment from 'moment';
 import PageHeader from '../components/PageHeader';
 import MapLayersPicker from '../components/MapLayersPicker';
 import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
+import MapPOILegend from '../components/MapPOILegend';
 import Event from '../components/Event';
 import Story from '../components/Story';
 import { getCategoryOptions, getCategoryMapLayerOptions } from '../models/stories';
@@ -208,7 +209,9 @@ class Home extends React.Component {
 						title='Recreation'
 						layers={ mapLayersPicker.layers }
 						onLayerChange={ this.props.actions.mapLayersPickerLayerChange }
-					/>
+					>
+						<MapPOILegend/>
+					</MapLayersPicker>
 				</MapOverlay>
 				<MapOverlay>
 					<MapLayersPicker

@@ -65,6 +65,7 @@ export default class MapLayersPicker extends React.Component {
 					checked={ checked }
 				/>
 				<label htmlFor={ key } className={ iconType }>{ name }</label>
+				{ this.props.children }
 			</div>
 		);
 	}
