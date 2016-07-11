@@ -11,6 +11,9 @@ import Story from './Story';
 import sassVars from '../../scss/variables.json';
 import * as dataURLs from '../../static/dataUrls.json';
 
+import { getFilteredEvents } from '../models/events';
+
+
 // TODO: move these to variables.json
 const layerStyles = {
 	'open space': {
@@ -274,6 +277,11 @@ export default class LeafletMap extends React.Component {
 		// bail if projects geojson not yet loaded
 		let projectsGeoJSON = get(storeState, 'geodata.projects.geojson.features');
 		if (!projectsGeoJSON || !projectsGeoJSON.length) return null;
+
+		// filter out past events
+		if (type === 'events') {
+			layerData = getFilteredEvents(storeState.events);
+		}
 
 		let locationsField,
 			svgSize,
