@@ -34,9 +34,8 @@ export default class MapPOILegend extends React.Component {
 		return (
 			<div className='map-poi-legend'>
 				{ pois.map(poi =>
-					<div>
+					<div key={ poi.label }>
 						<svg
-							key={ poi.label }
 							width={ poi.iconSize[0] }
 							height={ poi.iconSize[1] }
 							className={ slug(poi.label) }
