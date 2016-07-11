@@ -90,7 +90,7 @@ class Home extends React.Component {
 			itemsByType = {
 				story: storeState.stories.data.items.filter(item => item.category !== 'People of the Blue Greenway'),
 				people: storeState.stories.data.items.filter(item => item.category === 'People of the Blue Greenway'),
-				event: storeState.events.data.items.concat()
+				event: storeState.events.data.items.concat().reverse()
 			};
 
 		let gridItemTypes = [
