@@ -18,10 +18,16 @@ class App extends React.Component {
 
 	constructor (props) {
 		super(props);
+
 		// bind event handlers
 		this.onAppStateChange = this.onAppStateChange.bind(this);
+		this.onHashChange = this.onHashChange.bind(this);
+		
 		// subscribe for future state changes
 		props.store.subscribe(this.onAppStateChange);
+
+		window.addEventListener('hashchange', this.onHashChange);
+		this.onHashChange();
 	}
 
 	componentWillMount () {
@@ -45,8 +51,15 @@ class App extends React.Component {
 		}
 	}
 
-	componentDidUpdate () {
-		//
+	onHashChange (event) {
+		let url = document.location.pathname + document.location.search + document.location.hash;
+		if (this.lastUrl === url) return;
+		this.lastUrl = url;
+
+		// Track hash changes in Google Analytics as virtual pageviews
+		// https://developers.google.com/analytics/devguides/collection/analyticsjs/single-page-applications#tracking_virtual_pageviews
+		window.ga('set', 'page', url);
+		window.ga('send', 'pageview');
 	}
 
 	onAppStateChange () {
