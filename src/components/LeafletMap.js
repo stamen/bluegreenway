@@ -148,6 +148,38 @@ export default class LeafletMap extends React.Component {
 				popup = this.mapState.projects.popups[projects.selectedProject.id];
 			}
 
+			// if not a placeholder, recenter on open
+			if (!projects.selectedProject.isPlaceholder) {
+				let map = this.mapState.map,
+					onPopupOpen = function (event) {
+						let container = popup._container,
+							h = container && container.offsetHeight,
+							img = projects.selectedProject.images && projects.selectedProject.images.src;
+
+						if (img) h += 200;
+						container.style.bottom = `${ -h / 2 }px`;
+
+						/*
+						// this works, but creates too much jumpy motion.
+						// using hardcoded values above immediately on popup open instead.
+						if (h && img) {
+							img = new Image();
+							img.addEventListener('load', (imgEvent) => {
+								h = container.offsetHeight;
+								container.style.bottom = `${ -h / 2 }px`;
+							});
+							img.src = projects.selectedProject.images.src;
+						} else if (h) {
+							container.style.bottom = `${ -h / 2 }px`;
+						}
+						*/
+						
+						// only ever do this once.
+						map.off('popupopen', onPopupOpen);
+					};
+				map.on('popupopen', onPopupOpen);
+			}
+
 			// ...and then open it.
 			if (popup) {
 				popup.openOn(this.mapState.map);
