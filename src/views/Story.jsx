@@ -130,6 +130,9 @@ class Story extends React.Component {
 	}
 
 	renderMapView () {
+		// this is all handled by LeafletMap now
+		return '';
+
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer>

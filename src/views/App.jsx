@@ -22,7 +22,7 @@ class App extends React.Component {
 		// bind event handlers
 		this.onAppStateChange = this.onAppStateChange.bind(this);
 		this.onHashChange = this.onHashChange.bind(this);
-		
+
 		// subscribe for future state changes
 		props.store.subscribe(this.onAppStateChange);
 
@@ -82,6 +82,9 @@ class App extends React.Component {
 	}
 
 	render () {
+		let routeName = React.Children.map(this.props.children, child => child.props.route.name);
+		routeName = (routeName && routeName.length) ? routeName[0] : '';
+
 		// pass props down to route view
 		let childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, ...this.props));
 		let mode = this.props.params.mode || 'page';
@@ -92,7 +95,7 @@ class App extends React.Component {
 			<div>
 			<MapPageToggle currentLocation={ this.props.location } mode={ mode } />
 				<div className={ 'background-container' + (mode === 'map' ? '' : ' blurred') }>
-					<LeafletMap { ...this.props } />
+					<LeafletMap { ...this.props } routeName={ routeName }/>
 				</div>
 				<Header actions={this.props.actions} menuOpen={ this.state.menuOpen } mode={ mode } />
 

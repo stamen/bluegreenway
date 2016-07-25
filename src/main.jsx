@@ -66,30 +66,30 @@ render((
 			<IndexRedirect to='home' />
 			<Route path='home'>
 				<IndexRedirect to='page' />
-				<Route path=':mode' component={ Home } />
+				<Route path=':mode' component={ Home } name='Home' />
 			</Route>
 
 			<Route path='stories'>
 				<IndexRedirect to='page' />
-				<Route path=':mode' component={ Stories } />
-				<Route path=':mode/:title' component={ Story } />
+				<Route path=':mode' component={ Stories } name='Stories' />
+				<Route path=':mode/:title' component={ Story } name='Story' />
 			</Route>
 
 			<Route path='events'>
 				<IndexRedirect to='page' />
-				<Route path=':mode' component={ Events } />
+				<Route path=':mode' component={ Events } name='Events' />
 			</Route>
 
 			<Route path='projects'>
 				<IndexRedirect to='page' />
-				<Route path=':mode' component={ Projects } />
-				<Route path='page/:zone' component={ Zone } />
-				<Route path=':mode/:zone' component={ Projects } />
+				<Route path=':mode' component={ Projects } name='Projects' />
+				<Route path='page/:zone' component={ Zone } name='Zone' />
+				<Route path=':mode/:zone' component={ Projects } name='Projects' />
 			</Route>
 
 			<Route path='about'>
 				<IndexRedirect to='page' />
-				<Route path=':mode' component={ About } />
+				<Route path=':mode' component={ About } name='About' />
 			</Route>
 		</Route>
 		<Route path='*' component={ RouteNotFound } />
