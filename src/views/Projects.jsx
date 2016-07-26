@@ -213,9 +213,6 @@ class Projects extends React.Component {
 	}
 
 	renderMapView () {
-		// this is all handled by LeafletMap now
-		return '';
-
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
 			<MapOverlayContainer>

@@ -1,22 +1,17 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { get } from 'lodash';
 import centroid from 'turf-centroid';
 import slug from 'slug';
+import ReactDOM from 'react-dom';
 import { queue } from 'd3-queue';
-import { get } from 'lodash';
-
-import Event from './Event';
-import Story from './Story';
-import MapLayersPicker from './MapLayersPicker';
-import { MapOverlayContainer, MapOverlay } from './MapOverlay';
-import MapPOILegend from './MapPOILegend';
 
 import { vizJSON } from '../models/common.js';
-import { getFilteredEvents } from '../models/events';
-
+import Event from './Event';
+import Story from './Story';
 import sassVars from '../../scss/variables.json';
 import * as dataURLs from '../../static/dataUrls.json';
 
+import { getFilteredEvents } from '../models/events';
 
 
 // TODO: move these to variables.json
@@ -42,119 +37,7 @@ const layerStyles = {
 	}
 };
 
-const overlaysByRoute = {
-	'Home': [
-		'stories',
-		'events',
-		'recreation',
-		'transportation'
-	],
-	'Stories': [
-		'stories',
-		'recreation',
-		'transportation'
-	],
-	'Story': [
-		'stories',
-		'recreation',
-		'transportation'
-	],
-	'Events': [
-		'events',
-		'recreation',
-		'transportation'/*,
-		'dateFilter'*/
-	],
-	'Projects': [
-		'recreation',
-		'transportation'
-	],
-	'Zone': [
-		'stories',
-		'events',
-		'recreation',
-		'transportation'
-	],
-	'Projects': [
-		'recreation',
-		'transportation'
-	],
-	'About': [
-		'recreation',
-		'transportation'
-	]
-};
-
-const overlayDefinitions = {
-	'stories': (storeState, actions) => {
-		return (
-			<MapOverlay key='stories'>
-				<MapLayersPicker
-					title='Stories'
-					layers={ storeState.mapLayersPicker.storyCategories }
-					onLayerChange={ actions.mapLayersPickerStoryCategoriesChange }
-				/>
-			</MapOverlay>
-		);
-	},
-	'events': (storeState, actions) => {
-		return (
-			<MapOverlay key='events'>
-				<MapLayersPicker
-					title='Events'
-					layers={ storeState.mapLayersPicker.eventTypes }
-					onLayerChange={ actions.mapLayersPickerEventTypesChange }
-				/>
-			</MapOverlay>
-		);
-	},
-	'recreation': (storeState, actions) => {
-		return (
-			<MapOverlay key='recreation'>
-				<MapLayersPicker
-					title='Recreation'
-					layers={ storeState.mapLayersPicker.layers }
-					onLayerChange={ actions.mapLayersPickerLayerChange }
-				>
-					<MapPOILegend/>
-				</MapLayersPicker>
-			</MapOverlay>
-		);
-	},
-	'transportation': (storeState, actions) => {
-		return (
-			<MapOverlay key='transportation'>
-				<MapLayersPicker
-					title='Transportation'
-					layers={ storeState.mapLayersPicker.transportation }
-					onLayerChange={ actions.mapLayersPickerTransportationChange }
-				/>
-			</MapOverlay>
-		);
-	},
-	'dateFilter': (storeState, actions) => {
-		// -- unused --
-		return (
-			<MapOverlay key='dateFilter'>
-				<DateRange
-					ref='dateFilter'
-					minDate={ moment('1/1/2015', 'M/D/YYYY') }
-					maxDate={ moment().add(1, 'year') }
-					initialStartDate={ storeState.events.startDate }
-					initialEndDate={ storeState.events.endDate }
-					onRangeChange={ this.updateFilters }
-				/>
-			</MapOverlay>
-		);
-	}
-};
-
 export default class LeafletMap extends React.Component {
-
-	static propTypes = {
-		routeName: PropTypes.string
-	};
-
 	constructor (props) {
 		super(props);
 
@@ -169,7 +52,6 @@ export default class LeafletMap extends React.Component {
 		};
 
 		this.onMapClicked = this.onMapClicked.bind(this);
-		this.onMapMoved = this.onMapMoved.bind(this);
 	}
 
 	componentWillMount () {
@@ -189,11 +71,6 @@ export default class LeafletMap extends React.Component {
 		this.initMap(get(storeState, 'geodata.projects.geojson'));
 
 		this.updateMapLayers(storeState);
-		this.updateMapOverlays(storeState);
-
-		if (this.mapState.map) {
-			this.onMapMoved();
-		}
 	}
 
 	componentDidUpdate (prevProps, prevState) {
@@ -296,7 +173,7 @@ export default class LeafletMap extends React.Component {
 							container.style.bottom = `${ -h / 2 }px`;
 						}
 						*/
-
+						
 						// only ever do this once.
 						map.off('popupopen', onPopupOpen);
 					};
@@ -322,27 +199,6 @@ export default class LeafletMap extends React.Component {
 			}
 			projectFeature.layer.setStyle(projectStyle);
 		});
-	}
-
-	updateMapOverlays (storeState) {
-		if (!this.mapState.map) return;
-
-		let overlayPane = this.mapState.map.getPanes().overlayPane,
-			overlayIds = overlaysByRoute[this.props.routeName],
-			overlays = overlayIds ? overlayIds.map(id => overlayDefinitions[id](storeState, this.props.actions)) : [],
-			overlayContainerElement = overlayPane.querySelector('.moc-container');
-
-		if (!overlayContainerElement) {
-			overlayContainerElement = document.createElement('div');
-			overlayContainerElement.classList.add('moc-container');
-			overlayPane.appendChild(overlayContainerElement);
-		}
-
-		ReactDOM.render((
-			<MapOverlayContainer>
-				{ overlays }
-			</MapOverlayContainer>
-		), overlayContainerElement);
 	}
 
 	initMap (projectsGeoJSON) {
@@ -423,7 +279,6 @@ export default class LeafletMap extends React.Component {
 			});
 
 			map.on('click', this.onMapClicked);
-			map.on('move', this.onMapMoved);
 
 			this.mapState.initing = false;
 			this.mapState.map = map;
@@ -573,18 +428,18 @@ export default class LeafletMap extends React.Component {
 
 		// TODO: Create a LayerGroup for each story/event category.
 		// Not doing this now because of the marker-at-location overlap problem:
-		//
+		// 
 		// All markers are placed at the centroid of their corresponding project.
 		// This means that all markers for a given project are stacked directly on top of one another,
 		// rendering only the top marker in that stack visible and interactive.
 		// Therefore, the `markerObjs.forEach` loop above groups all stories/events per project
 		// into a single marker, and assigns that marker a category matching the first item in the stack.
-		//
+		// 
 		// So, there aren't actually markers drawn for every item,
 		// and a UI that allows toggling markers by category could have no visible effect due to the overlap.
 		// A solution for this problem would require both design and implementation,
 		// and we're out of time...so the legends will remain non-interactive.
-		//
+		// 
 		// this.mapState.layers[categoryKey] = L.layerGroup(markersByType[categoryKey]);
 	}
 
@@ -692,30 +547,7 @@ export default class LeafletMap extends React.Component {
 	}
 
 	onMapClicked (event) {
-		let parent = event.originalEvent.target.parentElement,
-			targetIsMapOverlay = false;
-		while (parent) {
-			if (parent.classList.contains('map-overlay-container')) {
-				targetIsMapOverlay = true;
-				break;
-			}
-			parent = parent.parentElement;
-		}
-
-		if (!targetIsMapOverlay) {
-			this.props.actions.updateSelectedProject(null);
-		}
-	}
-
-	onMapMoved (event) {
-		// keep MapOverlayContainer from moving as the map moves;
-		// i.e. lock its position to the viewport instead of the map.
-		let mapPaneTransform = this.mapState.map.getPanes().mapPane.style.transform.split('(')[1].split(','),
-			mapOverlayContainer = this.mapState.map.getPanes().overlayPane.querySelector('.map-overlay-container'),
-			left = parseFloat(mapPaneTransform[0].replace('px', '')),
-			top = parseFloat(mapPaneTransform[1].replace('px', ''));
-
-		mapOverlayContainer.style.transform = `translate3d(${ -left }px, ${ -top }px, 0)`;
+		this.props.actions.updateSelectedProject(null);
 	}
 
 	/**

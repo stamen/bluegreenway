@@ -170,7 +170,7 @@ class Home extends React.Component {
 				if (!item.event.photoURL) {
 					defaultImageIndex = (defaultImageIndex++ % 6) + 1;
 				}
-
+				
 				return (
 					<div className='grid-item three columns' key={ item.event.startDate.format('YYYYMMDD') + item.event.id }>
 						<Event
@@ -187,9 +187,6 @@ class Home extends React.Component {
 	}
 
 	renderMapView () {
-		// this is all handled by LeafletMap now
-		return '';
-
 		let { mapLayersPicker } = this.props.store.getState();
 		return (
 			<MapOverlayContainer>

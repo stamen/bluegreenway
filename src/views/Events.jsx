@@ -141,9 +141,6 @@ class Events extends React.Component {
 	}
 
 	renderMapView (eventItems) {
-		// this is all handled by LeafletMap now
-		return '';
-
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer className="events-map-overlay">

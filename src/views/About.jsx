@@ -38,9 +38,6 @@ class About extends React.Component {
 	}
 
 	renderMapView () {
-		// this is all handled by LeafletMap now
-		return '';
-
 		return (
 			<MapOverlayContainer>
 				<MapOverlay collapsible={ true }>

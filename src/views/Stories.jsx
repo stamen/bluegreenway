@@ -24,7 +24,7 @@ class Stories extends React.Component {
 
 	componentWillMount () {
 		const storeState = this.props.store.getState();
-
+		
 		// set map layers
 		this.props.actions.mapLayersPickerStoriesChange(true);
 		this.props.actions.mapLayersPickerEventsChange(false);
@@ -199,9 +199,6 @@ class Stories extends React.Component {
 	}
 
 	renderMapView (storyItems) {
-		// this is all handled by LeafletMap now
-		return '';
-
 		const storeState = this.props.store.getState();
 		return (
 			<MapOverlayContainer>

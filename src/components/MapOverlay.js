@@ -5,7 +5,6 @@ import Collapse from 'react-collapse';
 export class MapOverlayContainer extends React.Component {
 	constructor (props) {
 		super(props);
-		this.handleToggleFiltersClick = this.handleToggleFiltersClick.bind(this);
 	}
 
 	componentWillMount () {
@@ -14,12 +13,13 @@ export class MapOverlayContainer extends React.Component {
 		});
 	}
 
-	handleToggleFiltersClick () {
-		// KLUDGE: the map overlay refactor puts the overlays into the map and therefore under MapPageToggle.
-		// Just need to get this done, so that's what this code does. Even if it's nasty.
-		document.querySelector('.map-page-toggle').style.display = this.state.filtersOpen ? 'block' : 'none';
+	componentDidMount () {
+	}
 
-		this.setState({ filtersOpen: !this.state.filtersOpen });
+	componentWillUnmount () {
+	}
+
+	componentDidUpdate () {
 	}
 
 	render () {
@@ -30,7 +30,7 @@ export class MapOverlayContainer extends React.Component {
 				<div className='map-overlay-container-contents'>
 					{ this.props.children }
 				</div>
-				<a className="map-overlay-container-toggle-filters" onClick={ this.handleToggleFiltersClick }>
+				<a className="map-overlay-container-toggle-filters" onClick={ () => { this.setState({ filtersOpen: !filtersOpen }); } }>
 					{ filtersOpen ? 'select' : 'filters' }
 				</a>
 			</div>
@@ -42,7 +42,6 @@ export class MapOverlay extends React.Component {
 
 	constructor (props) {
 		super(props);
-		this.handleCollapseToggleClick = this.handleCollapseToggleClick.bind(this);
 	}
 
 	componentWillMount () {
@@ -69,7 +68,7 @@ export class MapOverlay extends React.Component {
 	renderToggle () {
 		if (this.props.collapsible) {
 			return (
-				<span className={ 'collapse-toggle' + (this.state.expanded ? ' expanded' : ' collapsed')} onClick={ this.handleCollapseToggleClick }></span>
+				<span className={ 'collapse-toggle' + (this.state.expanded ? ' expanded' : ' collapsed')} onClick={this.handleCollapseToggleClick.bind(this) }></span>
 			);
 		}
 		return null;

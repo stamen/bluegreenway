@@ -1,8 +1,4 @@
 .map-overlay {
-	svg {
-		position: static;
-	}
-
 	color: $blue;
 
 	&:not(:last-of-type) {
@@ -24,39 +20,33 @@
 }
 
 .map-overlay-container {
-	position: absolute;
+	left: $body-margin;
+	position: static;
+	top: $body-margin;
 	z-index: 1;
-	width: 100vw;
-	height: 100vh;
-	pointer-events: none;
 
 	@media (#{$bp-larger-than-mobile}) {
-		left: $body-margin;
-		top: $header-height + $body-margin;
-		width: inherit;
-		height: inherit;
-		pointer-events: auto;
+		position: absolute;
 	}
 
 	.map-overlay-container-contents {
 		display: none;
 		background-color: rgba($background-color, 0.9);
+		height: 100%;
 		padding-top: $header-height;
 		position: absolute;
 		width: 100%;
-		height: 100%;
 		z-index: $header-z-index - 1;
 
 		@media (#{$bp-larger-than-mobile}) {
-			width: inherit;
-			height: inherit;
 			background-color: inherit;
+			height: inherit;
 			padding-top: 0;
+			width: inherit;
 		}
 	}
 
 	&.filters-open {
-		pointer-events: auto;
 		.map-overlay-container-contents {
 			display: block;
 		}
@@ -81,7 +71,6 @@
 	text-transform: uppercase;
 	transform: translateX(-50%);
 	z-index: $header-z-index - 1;
-	pointer-events: auto;
 
 	&:focus,
 	&:hover,
