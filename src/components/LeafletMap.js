@@ -230,7 +230,7 @@ export default class LeafletMap extends React.Component {
 				zoomControl: false,
 				minZoom: 12,
 				maxZoom: 16,
-				maxBounds: [[mapCenter[0] - 0.1, mapCenter[1] - 0.1], [mapCenter[0] + 0.1, mapCenter[1] + 0.1]]
+				maxBounds: [[mapCenter[0] - 0.3, mapCenter[1] - 0.3], [mapCenter[0] + 0.3, mapCenter[1] + 0.3]]
 			};
 
 		const layerOptions = {
@@ -407,7 +407,8 @@ export default class LeafletMap extends React.Component {
 			}
 
 			let w = type === 'events' ? 265 : 510,
-				h = 265;
+				h = 265,
+				left = 24*3 + document.querySelector('.map-overlay-container-contents').offsetWidth;	// keep popup to right of legend panels
 
 			let marker = L.marker(markerObj.centroidResult.reverse(), {
 					icon: icon
@@ -420,7 +421,7 @@ export default class LeafletMap extends React.Component {
 					maxWidth: w,
 
 					offset: [-w/2 - 24, h/2],
-					autoPanPaddingTopLeft: [24, sassVars.header.height],
+					autoPanPaddingTopLeft: [left, sassVars.header.height],
 					autoPanPaddingBottomRight: [24, 24]
 				});
 
