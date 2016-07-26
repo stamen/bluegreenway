@@ -13,6 +13,10 @@
 .story-cell {
 	background-size: cover;
 	background-position: center;
+	&.top-crop {
+		background-position: top;
+	}
+	
 	color: $white;
 	cursor: pointer;
 	position: relative;

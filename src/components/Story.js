@@ -20,6 +20,10 @@ const Story = (props) => {
 
 	let categorySlug = props.category ? slug(props.category).toLowerCase() : '';
 
+	if (categorySlug === 'people-of-the-blue-greenway') {
+		storyClassName += ' top-crop';
+	}
+
 	return (
 		<div
 			className={ storyClassName }
