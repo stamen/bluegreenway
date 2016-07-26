@@ -399,6 +399,13 @@ export default class LeafletMap extends React.Component {
 			popupContentContainer.classList.add('popup-item-container', type);
 			markerObj.elements.forEach(item => popupContentContainer.appendChild(item));
 
+			// on shorter viewports, limit max-height of popup
+			// to innerHeight - header height - padding
+			if (window.innerHeight < 900) {
+				let popupPadding = 0.5 * 18;	// _app.scss::$popup-padding
+				popupContentContainer.style.maxHeight = `${ window.innerHeight - sassVars.header.height - 2 * popupPadding }px`;
+			}
+
 			let w = type === 'events' ? 265 : 510,
 				h = 265;
 
