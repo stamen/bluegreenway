@@ -90,7 +90,7 @@ class Home extends React.Component {
 			itemsByType = {
 				story: storeState.stories.data.items.filter(item => item.category !== 'People of the Blue Greenway'),
 				people: storeState.stories.data.items.filter(item => item.category === 'People of the Blue Greenway'),
-				event: storeState.events.data.items.concat().reverse()
+				event: this.reorderEvents(storeState.events.data.items.concat())
 			};
 
 		let gridItemTypes = [
@@ -184,6 +184,23 @@ class Home extends React.Component {
 		});
 
 		return divs;
+	}
+
+
+	// order events like so:
+	// start from current date and walk forward until end of event list
+	// then fill out any remaining events in the layout in reverse chronological order,
+	// moving backwards from today's date.
+	// e.g. if today is the 20th, events might look like this:
+	// [20, 24, 25, 27, 19, 15, 13, 12]
+	reorderEvents (events) {
+
+		let now = moment(),
+			futureEvents = events.filter(e => e.startDate.isAfter(now)),
+			pastEvents = events.filter(e => e.startDate.isBefore(now)).reverse();
+
+		return futureEvents.concat(pastEvents);
+
 	}
 
 	renderMapView () {
