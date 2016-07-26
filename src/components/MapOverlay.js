@@ -19,11 +19,6 @@ export class MapOverlayContainer extends React.Component {
 		// Just need to get this done, so that's what this code does. Even if it's nasty.
 		document.querySelector('.map-page-toggle').style.display = this.state.filtersOpen ? 'block' : 'none';
 
-		// KLUDGE: the map overlay refactor puts the overlays under the markers; this is primarily noticeable on mobile.
-		// while the filter overlays are open, place markers below overlays, with !important to override cartodb.css
-		document.querySelector('.leaflet-marker-pane').style.zIndex = this.state.filtersOpen ? null : '4';
-		document.querySelector('.leaflet-overlay-pane').style.zIndex = this.state.filtersOpen ? null : '6';
-
 		this.setState({ filtersOpen: !this.state.filtersOpen });
 	}
 

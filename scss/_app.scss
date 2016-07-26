@@ -132,6 +132,26 @@ a:active {
 
 // general map styles
 .map-container {
+	// place markers below overlays,
+	// with !important to override cartodb.css
+	.leaflet-marker-pane {
+		z-index: 4 !important;
+	}
+	.leaflet-overlay-pane {
+		z-index: 6 !important;
+	}
+
+	// now that markers are below overlays,
+	// the fullscreen container holding project geojson polygons
+	// is covering the markers. disable mouse events on container,
+	// but re-enable on the individual polygons.
+	.leaflet-overlay-pane > .leaflet-zoom-animated {
+		pointer-events: none;
+		> g {
+			pointer-events: auto;
+		}
+	}
+
 	.marker {
 		&.stories,
 		&.events {
