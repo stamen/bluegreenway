@@ -408,7 +408,8 @@ export default class LeafletMap extends React.Component {
 
 			let w = type === 'events' ? 265 : 510,
 				h = 265,
-				left = 24*3 + document.querySelector('.map-overlay-container-contents').offsetWidth;	// keep popup to right of legend panels
+				mapOverlayContents = document.querySelector('.map-overlay-container-contents'),
+				left = 24*3 + (mapOverlayContents ? mapOverlayContents.offsetWidth : 240);	// keep popup to right of legend panels
 
 			let marker = L.marker(markerObj.centroidResult.reverse(), {
 					icon: icon
