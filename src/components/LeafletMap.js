@@ -69,8 +69,11 @@ export default class LeafletMap extends React.Component {
 	componentWillUpdate (nextProps, nextState) {
 		const storeState = nextProps.store.getState();
 		this.initMap(get(storeState, 'geodata.projects.geojson'));
-
 		this.updateMapLayers(storeState);
+
+		if (this.mapState.map && nextProps.params.mode !== 'map') {
+			this.mapState.map.closePopup();
+		}
 	}
 
 	componentDidUpdate (prevProps, prevState) {
