@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router';
 import moment from 'moment';
 import { get } from 'lodash';
 
-import { zoneConfigs } from './Projects.jsx';
 import ProjectItem from '../components/ProjectItem';
 import MapLayersPicker from '../components/MapLayersPicker';
 import MapOverlay from '../components/MapOverlay';
@@ -88,8 +87,6 @@ class Zone extends Component {
 			image = zoneProject.images.src;
 			alt =  zoneProject.images.alt;
 
-			console.log(">>>>> images:", zoneProject.images);
-
 			let temp = document.createElement('div');
 			temp.innerHTML = zoneProject.description;
 			description = temp.textContent || temp.innerText || '';
@@ -145,7 +142,7 @@ class Zone extends Component {
 		})
 
 		// remove the project that matches the current zone
-		.filter(project => project.name !== get(zone, 'properties.name'));
+		.filter(project => this.props.store.getState().zoneConfigs.every(zone => zone.bgwZoneId !== project.name));
 
 		let projectListItems = [];
 
