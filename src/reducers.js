@@ -517,7 +517,7 @@ export const initialState = {
 		},
 		{
 			id: 'p70',
-			title: 'Pier 70 / Central Waterfront',
+			title: 'Pier 70/Central Waterfront',
 			slug: 'pier_70',
 			bgwZoneId: 'Pier 70/Central Waterfront'
 		},
