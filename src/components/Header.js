@@ -68,10 +68,10 @@ export default class Header extends React.Component {
 				<h1><Link to={ `/home/${ this.props.mode }` } onClick={ this.props.actions.menuHidden }>BLUE<span className="site-header-green">GREENWAY</span></Link></h1>
 				<div className='menu'>
 					<ul>
-						<li><Link to={ `/stories/${ this.props.mode }` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>Stories</span></Link></li>
-						<li><Link to={ `/events/${ this.props.mode }` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>Events</span></Link></li>
-						<li><Link to={ `/projects/${ this.props.mode }` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>Projects</span></Link></li>
 						<li><Link to={ `/about/page` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>About</span></Link></li>
+						<li><Link to={ `/projects/${ this.props.mode }` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>Projects</span></Link></li>
+						<li><Link to={ `/events/${ this.props.mode }` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>Events</span></Link></li>
+						<li><Link to={ `/stories/${ this.props.mode }` } onClick={ this.props.actions.menuHidden } activeClassName='active'><span>Stories</span></Link></li>
 					</ul>
 					<div className='menu-social-media'>
 						<div className='menu-social-media-buttons'>
