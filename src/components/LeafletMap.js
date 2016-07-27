@@ -155,12 +155,21 @@ export default class LeafletMap extends React.Component {
 			if (!projects.selectedProject.isPlaceholder) {
 				let map = this.mapState.map,
 					onPopupOpen = function (event) {
+						// push project popup down a bit when it contains an image,
+						// in an attempt to keep it within viewport bounds and not underneath the header.
+						// not a perfect implementation, but the user can always pan the map as necessary.
 						let container = popup._container,
-							h = container && container.offsetHeight,
-							img = projects.selectedProject.images && projects.selectedProject.images.src;
-
-						if (img) h += 200;
-						container.style.bottom = `${ -h / 2 }px`;
+							img = projects.selectedProject.images && projects.selectedProject.images.src,
+							imgEstimatedHeight = 100;
+						if (container && img) {
+							// popup expands upwards when the image loads;
+							// if this places it underneath the header, push it down.
+							let bounds = container.getBoundingClientRect();
+							if (bounds.top - imgEstimatedHeight < sassVars.header.height) {
+								let offset = sassVars.header.height - (bounds.top - imgEstimatedHeight);
+								container.style.bottom = `${ parseFloat(container.style.bottom.replace('px', '')) - offset }px`;
+							}
+						}
 
 						/*
 						// this works, but creates too much jumpy motion.
@@ -176,7 +185,7 @@ export default class LeafletMap extends React.Component {
 							container.style.bottom = `${ -h / 2 }px`;
 						}
 						*/
-						
+
 						// only ever do this once.
 						map.off('popupopen', onPopupOpen);
 					};
@@ -440,18 +449,18 @@ export default class LeafletMap extends React.Component {
 
 		// TODO: Create a LayerGroup for each story/event category.
 		// Not doing this now because of the marker-at-location overlap problem:
-		// 
+		//
 		// All markers are placed at the centroid of their corresponding project.
 		// This means that all markers for a given project are stacked directly on top of one another,
 		// rendering only the top marker in that stack visible and interactive.
 		// Therefore, the `markerObjs.forEach` loop above groups all stories/events per project
 		// into a single marker, and assigns that marker a category matching the first item in the stack.
-		// 
+		//
 		// So, there aren't actually markers drawn for every item,
 		// and a UI that allows toggling markers by category could have no visible effect due to the overlap.
 		// A solution for this problem would require both design and implementation,
 		// and we're out of time...so the legends will remain non-interactive.
-		// 
+		//
 		// this.mapState.layers[categoryKey] = L.layerGroup(markersByType[categoryKey]);
 	}
 

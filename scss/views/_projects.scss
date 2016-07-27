@@ -57,9 +57,12 @@
 	}
 }
 
+$popup-padding: 1.0rem;
 .project-popup {
 	width: 15rem;
+	max-height: calc(100vh - #{$header-height + 2*$popup-padding});
 	padding: 1rem 0.5rem;
+	overflow-y: auto;
 
 	background-color: $white;
 	color: $blue;
