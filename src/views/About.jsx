@@ -102,9 +102,9 @@ class About extends React.Component {
 				<h2>Blue Greenway Donors</h2>
 				<p>The great work of the Blue Greenway would be impossible without the generous, long-standing support of many funders. We deeply appreciate the investments that have been made by the following:
 					<ul>
-						<li>William and Flora Hewlett Foundation</li>
+						<li>The William and Flora Hewlett Foundation</li>
 						<li>Eucalyptus Foundation</li>
-						<li>San Francisco Foundation</li>
+						<li>The San Francisco Foundation</li>
 						<li>Wells Fargo</li>
 						<li>City and County of San Francisco</li>
 						<li>Walter and Elise Haas, Sr. Fund</li>
