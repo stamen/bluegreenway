@@ -197,6 +197,7 @@ class Events extends React.Component {
 	}
 
 	renderRows (eventItems) {
+
 		const storeState = this.props.store.getState(),
 			firstRowLength = 2,
 			rowLength = 4;
@@ -227,10 +228,14 @@ class Events extends React.Component {
 			});
 		}
 
+		if (!eventCells.length) {
+			firstEvent = { noEventsPlaceholder: true };
+		}
+
 		return (
 			<div>
 				<div className='row'>
-					<div className='three columns date-picker-cell' style={{ background: 'white' }}>
+					<div className='three columns date-picker-cell'>
 						<DateRange
 							ref='dateFilter'
 							minDate={ moment('1/1/2015', 'M/D/YYYY') }
@@ -240,7 +245,7 @@ class Events extends React.Component {
 							onRangeChange={ this.updateFilters }
 						/>
 					</div>
-					<div className='three columns filter-cell' style={{ background: 'white' }}>
+					<div className='three columns filter-cell'>
 						<div className="filter-header">Filter Events</div>
 						<EventFilters
 							ref='eventFilter'
@@ -261,13 +266,26 @@ class Events extends React.Component {
 	}
 
 	renderEvent (event, index) {
-		return (
-			<Event
-				{ ...event }
-				defaultImageIndex={ (index % 6) + 1 }
-				key={ event.startDate.format('YYYYMMDD') + event.id }
-			/>
-		);
+
+		if (event.noEventsPlaceholder) {
+
+			return (
+				<div className='placeholder-cell six columns'>
+					<p>There are no upcoming events, or no events match the current filter. Please change the options at left to see more events.</p>
+				</div>
+			);
+
+		} else {
+
+			return (
+				<Event
+					{ ...event }
+					defaultImageIndex={ (index % 6) + 1 }
+					key={ event.startDate.format('YYYYMMDD') + event.id }
+				/>
+			);
+
+		}
 	}
 
 }

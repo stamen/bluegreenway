@@ -1,13 +1,16 @@
 $events-padding: 0.5em;
+$cell-height-mobile: 20rem;
 
 #events {
-	@include colorize-grid(20, 4, 1, null);
+	// @include colorize-grid(20, 4, 1, null);
 	color: $text-color;
 
 	.date-picker-cell,
-	.filter-cell {
+	.filter-cell,
+	.placeholder-cell {
+		background-color: $background-color;
 		box-shadow: $page-shadow;
-		height: 20rem;
+		height: $cell-height-mobile;
 
 		@media (#{$bp-larger-than-mobile}) {
 			height: $row-height;
@@ -102,4 +105,25 @@ $events-padding: 0.5em;
 	background: #DA9D9D;
 	margin-bottom: 25px;
 	padding: 15px;
+}
+
+.placeholder-cell {
+	position: relative;
+	color: $blue;
+	padding: 0 3rem;
+	text-align: center;
+
+	p {
+		margin-top: $cell-height-mobile / 2;
+		margin-bottom: 0;
+		font-size: 1.25rem;
+
+		@media (#{$bp-larger-than-mobile}) {
+			margin-top: $row-height / 2;
+			font-size: 1.1rem;
+			line-height: 1.5rem;
+		}
+
+		transform: translateY(-50%);
+	}
 }
