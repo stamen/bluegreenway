@@ -3,13 +3,12 @@
 	box-shadow: $page-shadow;
 	color: $blue;
 	font-size: 1.5rem;
-	padding-bottom: 3rem;
-	padding-top: 3rem;
+	padding: $footer-padding 0;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: $footer-height;
+	height: calc(#{$footer-height} + #{2*$footer-padding});
 	z-index: $footer-z-index;
 
 	@media (#{$bp-larger-than-mobile}) {
@@ -123,6 +122,7 @@
 }
 
 .site-footer-advocate {
-	margin-bottom: 5px;
+	max-width: 10rem;
+	margin: 0 auto 1rem auto;
 	text-align: center;
 }

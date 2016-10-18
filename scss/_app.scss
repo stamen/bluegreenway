@@ -91,7 +91,7 @@ a:active {
 }
 
 .grid-container {
-	margin: 1em 0 $footer-height 0;
+	margin: 1em 0 calc(#{$footer-height} + #{2*$footer-padding}) 0;
 	@media (#{$bp-larger-than-mobile}) {
 		margin-bottom: ($body-margin + $footer-height-larger-than-mobile);
 		margin-left: $column-margin;

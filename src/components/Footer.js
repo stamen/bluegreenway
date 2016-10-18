@@ -9,7 +9,7 @@ export default (props) => (
 		<div className="site-footer-container">
 			<div className="site-footer-row row">
 				<div className="site-footer-column">
-					<div className="site-footer-advocate">The Blue Greenway is advocated by:</div>
+					<div className="site-footer-advocate">The Blue Greenway is an advocacy and community engagement project of:</div>
 					<a href="http://sfparksalliance.org" className="site-footer-sfpa-logo"></a>
 					<div className='menu-social-media'>
 						<div className='menu-social-media-buttons'>
