@@ -177,6 +177,7 @@ class Home extends React.Component {
 							{ ...item.event }
 							homepage={ true }
 							defaultImageIndex={ defaultImageIndex }
+							muted={ item.event.isPast }
 						/>
 					</div>
 				);
@@ -197,7 +198,13 @@ class Home extends React.Component {
 
 		let now = moment(),
 			futureEvents = events.filter(e => e.startDate.isAfter(now)),
-			pastEvents = events.filter(e => e.startDate.isBefore(now)).reverse();
+			pastEvents = events
+				.filter(e => e.startDate.isBefore(now))
+				.map(e => ({
+					...e,
+					isPast: true
+				}))
+				.reverse();
 
 		return futureEvents.concat(pastEvents);
 
