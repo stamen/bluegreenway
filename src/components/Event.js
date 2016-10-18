@@ -20,10 +20,14 @@ const Event = (props) => {
 		eventClassName='event-cell three columns';
 	}
 
+	if (props.muted) {
+		eventClassName += ' muted';
+	}
+
 	// Strip the ?popup=1 if it exists
 	eventURL = eventURL.replace('?popup=1', '');
 
-	if (eventURL) {
+	if (eventURL && !props.muted) {
 		return (
 			<div
 				className={ eventClassName }

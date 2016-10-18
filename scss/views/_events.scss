@@ -20,6 +20,10 @@ $events-padding: 0.5em;
 	position: relative;
 	background-repeat: no-repeat;
 	background-size: cover;
+
+	&.muted {
+		cursor: default;
+	}
 }
 
 .event-shade {
