@@ -69,9 +69,17 @@ class About extends React.Component {
 				<p>&mdash;Mayor Newsom’s 2006 Blue Greenway Task Force Vision Statement (updated)</p>
 
 				<h2>About the Blue Greenway</h2>
-				<div style={{ float: 'right' }}>
+				<div className='sidebar' style={{ float: 'right' }}>
+					<a href='http://www.sfparksalliance.org/sites/default/files/bgway_map.pdf' target='_blank'><div className='brochure'>
+						<img src='./img/brochure-thumb.jpg' alt='Blue Greenway brochure-map'/>
+						<div className='shade'></div>
+						<h3>View the brochure</h3>
+					</div></a>
 					<Timeline
-						options={{ height: 600 }}
+						options={{
+							height: 600,
+							width: '100%'	// from _about.scss
+						}}
 						widgetId={'725404019116675072'} />
 				</div>
 				<p>The Blue Greenway is a multi-agency effort to create an interconnected system of trails and parks on San Francisco’s southeast waterfront. Once complete, it will transform this neglected resource into a premier series of public open spaces: 13 miles of waterfront parks and trails running from AT&T Park south to Candlestick Point. The Blue Greenway project will complete San Francisco’s portions of the Bay Trail and Bay Water Trail, and provide active transportation routes connecting San Francisco’s growing eastern neighborhoods with the employment centers of Mission Bay and downtown.</p>

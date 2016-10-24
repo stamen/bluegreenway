@@ -29,8 +29,54 @@
 		}
 	}
 
-	.twitter-timeline {
-		box-shadow: $page-shadow;
-		margin-left: 1rem;
+	.sidebar {
+		width: 100%;
+		margin-bottom: 2rem;
+		padding: 0 1rem;
+		box-sizing: border-box;
+
+		.brochure {
+			position: relative;
+			margin-bottom: 1rem;
+		}
+		.shade {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: calc(100% - 4px);	//  ¯\_(ツ)_/¯
+			width: 100%;
+			background-color: $header-shade;
+
+			&:hover {
+				opacity: 0.5;
+			}
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+			box-shadow: $page-shadow;
+		}
+
+		h3 {
+			position: absolute;
+			left: 1rem;
+			top: 1rem;
+			margin: 0;
+
+			color: $text-color;
+			font-family: 'NeutrafaceText';
+
+			text-shadow: $text-shadow;
+			pointer-events: none;
+		}
+
+		.twitter-timeline {
+			box-shadow: $page-shadow;
+		}
+
+		@media (#{$bp-larger-than-mobile}) {
+			width: 30rem;
+		}
 	}
 }
