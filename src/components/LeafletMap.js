@@ -418,7 +418,9 @@ export default class LeafletMap extends React.Component {
 			let w = type === 'events' ? 265 : 510,
 				h = 265,
 				mapOverlayContents = document.querySelector('.map-overlay-container-contents'),
-				left = 24*3 + (mapOverlayContents ? mapOverlayContents.offsetWidth : 240);	// keep popup to right of legend panels
+				minLeft = window.innerWidth < 768 ? 12 : 24 * 3,									// keep popup to right of legend panels
+				left = minLeft + (mapOverlayContents ? mapOverlayContents.offsetWidth : 240),
+				offset = window.innerWidth < 768 ? [-24, h/2] : [-w/2 - 24, h/2];
 
 			let marker = L.marker(markerObj.centroidResult.reverse(), {
 					icon: icon
@@ -430,7 +432,7 @@ export default class LeafletMap extends React.Component {
 					// required for auto panning and offset to work correctly
 					maxWidth: w,
 
-					offset: [-w/2 - 24, h/2],
+					offset: offset,
 					autoPanPaddingTopLeft: [left, sassVars.header.height],
 					autoPanPaddingBottomRight: [24, 24]
 				});
