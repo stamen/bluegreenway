@@ -47,7 +47,7 @@ export default class MapLayersPicker extends React.Component {
 
 		return (
 			<div className='map-layers-picker-checkbox' key={ key }>
-				{ icon ? 
+				{ icon ?
 					<svg
 						width={ iconSize[0] }
 						height={ iconSize[1] }
@@ -64,7 +64,7 @@ export default class MapLayersPicker extends React.Component {
 					onChange={ e => this.handleChange(key, e.target.checked) }
 					checked={ checked }
 				/>
-				<label htmlFor={ key } className={ iconType }>{ name }</label>
+				<label htmlFor={ key } className={ iconType } dangerouslySetInnerHTML={{ __html: decodeURIComponent(name) }}></label>
 				{ this.props.children }
 			</div>
 		);
