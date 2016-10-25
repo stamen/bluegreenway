@@ -1,3 +1,5 @@
+$toggle-filters-font-size: 1.5rem;
+
 .map-overlay {
 	color: $blue;
 
@@ -32,7 +34,7 @@
 	.map-overlay-container-contents {
 		display: none;
 		background-color: rgba($background-color, 0.9);
-		height: 100%;
+		// height: 100%;
 		padding-top: $header-height;
 		position: absolute;
 		width: 100%;
@@ -40,7 +42,7 @@
 
 		@media (#{$bp-larger-than-mobile}) {
 			background-color: inherit;
-			height: inherit;
+			// height: inherit;
 			padding-top: 0;
 			width: inherit;
 		}
@@ -49,6 +51,7 @@
 	&.filters-open {
 		.map-overlay-container-contents {
 			display: block;
+			padding-bottom: 4 * $toggle-filters-font-size;
 		}
 	}
 
@@ -63,7 +66,7 @@
 	background: $green;
 	bottom: 1rem;
 	color: white;
-	font-size: 1.5rem;
+	font-size: $toggle-filters-font-size;
 	font-weight: bold;
 	left: 50%;
 	padding: 1rem 5rem;

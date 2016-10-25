@@ -29,12 +29,21 @@ export class MapOverlayContainer extends React.Component {
 			<div className={ 'map-overlay-container ' + (filtersOpen ? ' filters-open' : '') }>
 				<div className='map-overlay-container-contents'>
 					{ this.props.children }
+					{ filtersOpen ? this.renderFiltersButton(true) : null }
 				</div>
-				<a className="map-overlay-container-toggle-filters" onClick={ () => { this.setState({ filtersOpen: !filtersOpen }); } }>
-					{ filtersOpen ? 'select' : 'filters' }
-				</a>
+				{ !filtersOpen ? this.renderFiltersButton(false) : null }
 			</div>
 		);
+	}
+
+	renderFiltersButton (filtersOpen) {
+
+		return (
+			<a className="map-overlay-container-toggle-filters" onClick={ () => { this.setState({ filtersOpen: !filtersOpen }); } }>
+				{ filtersOpen ? 'select' : 'filters' }
+			</a>
+		);
+
 	}
 }
 
