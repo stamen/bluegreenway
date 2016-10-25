@@ -1,4 +1,5 @@
 $toggle-filters-font-size: 1.5rem;
+$toggle-filters-padding-vert: 1rem;
 
 .map-overlay {
 	color: $blue;
@@ -52,6 +53,7 @@ $toggle-filters-font-size: 1.5rem;
 		.map-overlay-container-contents {
 			display: block;
 			padding-bottom: 4 * $toggle-filters-font-size;
+			min-height: calc(100vh - #{$header-height + 2 * $toggle-filters-padding-vert});
 		}
 	}
 
@@ -64,12 +66,12 @@ $toggle-filters-font-size: 1.5rem;
 
 .map-overlay-container-toggle-filters {
 	background: $green;
-	bottom: 1rem;
+	bottom: $toggle-filters-padding-vert;
 	color: white;
 	font-size: $toggle-filters-font-size;
 	font-weight: bold;
 	left: 50%;
-	padding: 1rem 5rem;
+	padding: $toggle-filters-padding-vert 5rem;
 	position: absolute;
 	text-transform: uppercase;
 	transform: translateX(-50%);
