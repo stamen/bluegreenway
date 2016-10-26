@@ -120,7 +120,8 @@ class Home extends React.Component {
 						startDate: moment(),
 						endDate: moment(),
 						title: "Coming Soon...",
-						cost: "N/A"
+						cost: "N/A",
+						isPast: true
 					});
 				} else {
 					// TODO: find a way to fail more gracefully than this,
@@ -170,7 +171,7 @@ class Home extends React.Component {
 				if (!item.event.photoURL) {
 					defaultImageIndex = (defaultImageIndex++ % 6) + 1;
 				}
-				
+
 				return (
 					<div className='grid-item three columns' key={ item.event.startDate.format('YYYYMMDD') + item.event.id }>
 						<Event
