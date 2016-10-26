@@ -228,7 +228,7 @@ class Events extends React.Component {
 			});
 		}
 
-		if (!eventCells.length) {
+		if (!firstEvent) {
 			firstEvent = { noEventsPlaceholder: true };
 		}
 
