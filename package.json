@@ -27,6 +27,7 @@
     "react-dom": "^15.0.1",
     "react-dropdown": "^1.0.3",
     "react-height": "^2.1.0",
+    "react-modal": "^1.5.2",
     "react-motion": "^0.4.3",
     "react-router": "^2.4.1",
     "react-router-scroll": "^0.2.0",

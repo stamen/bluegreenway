@@ -1,0 +1,33 @@
+.brochure-modal {
+	position: absolute;
+
+	left: 5vw;
+	right: 5vw;
+	top: 5vh;
+	height: 90vh;
+
+	margin: 0 auto;
+	padding: 0;
+
+	@media (#{$bp-larger-than-mobile}) {
+		top: 2 * $header-height;
+		width: 600px;
+		height: calc(100vh - #{4 * $header-height});
+	}
+
+	background-color: $background-color;
+
+    overflow: hidden;
+    outline: none;
+
+}
+
+.brochure-modal-overlay {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 5;		// over footer
+}

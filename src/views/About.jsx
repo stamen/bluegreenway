@@ -8,6 +8,7 @@ import MapLayersPicker from '../components/MapLayersPicker';
 import { MapOverlayContainer, MapOverlay } from '../components/MapOverlay';
 import MapPOILegend from '../components/MapPOILegend';
 import PageHeader from '../components/PageHeader';
+import BrochureModal from '../components/BrochureModal';
 
 class About extends React.Component {
 
@@ -15,6 +16,8 @@ class About extends React.Component {
 		super(props);
 		this.onStateChange = this.onStateChange.bind(this);
 		this.unsubscribeStateChange = props.store.subscribe(this.onStateChange);
+		this.openBrochureModal = this.openBrochureModal.bind(this);
+		this.onBrochureModalClose = this.onBrochureModalClose.bind(this);
 	}
 
 	componentWillMount () {
@@ -35,6 +38,14 @@ class About extends React.Component {
 	onStateChange () {
 		let storeState = this.props.store.getState();
 		this.setState(storeState);
+	}
+
+	openBrochureModal () {
+		this.setState({ brochureModalIsOpen: true });
+	}
+
+	onBrochureModalClose () {
+		this.setState({ brochureModalIsOpen: false });
 	}
 
 	renderMapView () {
@@ -67,11 +78,11 @@ class About extends React.Component {
 				<PageHeader />
 				<h2>About the Blue Greenway</h2>
 				<div className='sidebar' style={{ float: 'right' }}>
-					<a href='http://www.sfparksalliance.org/sites/default/files/bgway_map.pdf' target='_blank'><div className='brochure'>
+					<div onClick={ this.openBrochureModal } className='brochure'>
 						<img src='./img/brochure-thumb.jpg' alt='Blue Greenway brochure-map'/>
 						<div className='shade'></div>
 						<h3>View the brochure</h3>
-					</div></a>
+					</div>
 					<Timeline
 						options={{
 							height: twitterHeight,
@@ -105,7 +116,7 @@ class About extends React.Component {
 				</p>
 				*/}
 				<h2>Blue Greenway Donors</h2>
-				<p>The great work of the Blue Greenway would be impossible without the generous, long-standing support of many funders. We deeply appreciate the investments that have been made by the following:
+				<div className='p'>The great work of the Blue Greenway would be impossible without the generous, long-standing support of many funders. We deeply appreciate the investments that have been made by the following:
 					<ul>
 						<li>The William and Flora Hewlett Foundation</li>
 						<li>Eucalyptus Foundation</li>
@@ -119,7 +130,7 @@ class About extends React.Component {
 						<li>Forest City</li>
 						<li>Anonymous donors</li>
 					</ul>
-				</p>
+				</div>
 			</div>
 		);
 	}
@@ -128,6 +139,10 @@ class About extends React.Component {
 		return (
 			<div id='about'>
 				{ this.props.params.mode === 'page' ? this.renderPageView() : this.renderMapView() }
+				<BrochureModal
+					isOpen={ this.state.brochureModalIsOpen }
+					onClose={ this.onBrochureModalClose }
+				/>
 			</div>
 		);
 	}
