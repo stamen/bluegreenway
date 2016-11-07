@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 export default React.createClass({
 	render () {
 		return (
-			<div>
-				<h1>Oops. Try going <Link to='/'>somewhere else</Link>.</h1>
+			<div style={ { padding: '2rem' } }>
+				<h1>Oops! There's nothing here. Try <Link to='/' style={ { textDecoration: 'underline' } }>zooming out to see the whole Blue Greenway</Link>.</h1>
 			</div>
 		);
 	}
