@@ -25,7 +25,7 @@ export default (props) => (
 						San Francisco, CA 94103
 					</p>
 					<p><a href="mailto:feedback@sfparksalliance.org">General feedback</a></p>
-					<p><a href="mailto:events@sfparksalliance.org?subject=Add%20a%20Blue%20Greenway%20Event">Add your event</a></p>
+					<p><a href="mailto:feedback@sfparksalliance.org?subject=Add%20a%20Blue%20Greenway%20Event">Add your event</a></p>
 				</div>
 				<div className="menu-social-media site-footer-column three columns">
 					<div className='menu-social-media-buttons'>
