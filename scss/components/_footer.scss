@@ -11,6 +11,11 @@
 	height: calc(#{$footer-height} + #{2*$footer-padding});
 	z-index: $footer-z-index;
 
+	a {
+		// @extend %neutra-bold;
+		text-decoration: underline;
+	}
+
 	@media (#{$bp-larger-than-mobile}) {
 		height: $footer-height-larger-than-mobile;
 		padding-bottom: 0;
@@ -18,29 +23,30 @@
 		font-size: 0.77rem;
 	}
 
+	.grid-container {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
 	.menu-social-media {
 		display: none;
-		width: 100%;
 		text-align: center;
 
+		@media (#{$bp-larger-than-mobile}) {
+			padding: 2rem 0.5rem;
+		}
 		@media (#{$bp-larger-than-tablet}) {
 			display: block;
-		}
-
-		&-buttons {
-			margin: 0 auto;
-			margin-top: 1rem;
-			width: 180px;
 		}
 
 		&-button {
 			background-size: 100% 100%;
 			background-repeat: no-repeat;
 			display: inline-block;
-			height: 25px;
+			height: 50px;
 			margin-left: 10px;
 			margin-right: 10px;
-			width: 25px;
+			width: 50px;
 		}
 
 		&-facebook {
@@ -64,36 +70,24 @@
 				background-image: url('./img/buttons/buttons_desktop-twitter@2x.png');
 			}
 		}
-	}
-}
 
-.site-footer-container {
-	width: 100%;
-
-	@media (#{$bp-larger-than-mobile}) {
-		width: $container-width-larger-than-mobile;
-		padding: $container-padding-larger-than-mobile;
-	}
-
-	@media (#{$bp-larger-than-tablet}) {
-		width: $container-width-larger-than-tablet;
-		padding: $container-padding-larger-than-tablet;
+		p {
+			margin: 1.5rem 0 0 0;
+		}
 	}
 }
 
 .site-footer-column {
-	padding: 15px;
+	padding: 1 rem;
 	margin: 0 auto;
 	text-align: center;
-	width: 240px;
 
 	@media (#{$bp-larger-than-mobile}) {
 		float: left;
 		margin: auto;
 		margin-left: $column-margin;
-		padding: 30px;
+		padding: 2rem;
 		text-align: left;
-		width: 24.25%;
 
 		&:first-child {
 			margin: 0;
