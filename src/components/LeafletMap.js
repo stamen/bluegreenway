@@ -542,7 +542,7 @@ export default class LeafletMap extends React.Component {
 			popupContent = `
 				<div class='project-popup'>
 					<h3>${ project.name }</h3>
-					<img src=${ project.images.src } alt=${ project.images.alt }/>
+					${ project.images ? `<img src=${ project.images.src } alt=${ project.images.alt }/>` : '' }
 					${ description }
 				</div>
 			`;
