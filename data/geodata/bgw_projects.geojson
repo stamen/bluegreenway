@@ -846,13 +846,13 @@
         ]
       },
       "properties": {
-        "cartodb_id": 110,
+        "cartodb_id": 11,
         "bgw_zone": "mb",
-        "bgw_id": 6388000,
-        "name": "Bayfront Park",
+        "bgw_id": 6388,
+        "name": "Chase Center",
         "pdf_id": 6,
         "category": "open space",
-        "id_is_fake": true
+        "id_is_fake": false
       }
     },
     {
@@ -919,13 +919,13 @@
         ]
       },
       "properties": {
-        "cartodb_id": 11,
+        "cartodb_id": 110,
         "bgw_zone": "mb",
-        "bgw_id": 6388,
-        "name": "Chase Center",
+        "bgw_id": 6388000,
+        "name": "Bayfront Park",
         "pdf_id": 6,
         "category": "open space",
-        "id_is_fake": false
+        "id_is_fake": true
       }
     },
     {
