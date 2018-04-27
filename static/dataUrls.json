@@ -1,7 +1,7 @@
 {
-	"events": "http://sfparksalliance.org/feeds/events.json/1",
-	"stories": "http://sfparksalliance.org/feeds/bgw-news.json",
-	"projects": "http://sfparksalliance.org/feeds/locations.json/1",
+	"events": "https://www.sfparksalliance.org/feeds/events.json/1",
+	"stories": "https://www.sfparksalliance.org/feeds/bgw-news.json",
+	"projects": "https://www.sfparksalliance.org/feeds/locations.json/1",
 	"zones": "https://raw.githubusercontent.com/stamen/bluegreenway/master/data/geodata/bluegreenway_zones.geojson",
 	"projectsGeoData": "https://raw.githubusercontent.com/stamen/bluegreenway/master/data/geodata/bgw_projects.geojson",
   "mapLabels": "https://bluegreenway.cartodb.com/api/v2/viz/5b9d66e2-2c57-423c-a594-f06704c5d9b4/viz.json",
