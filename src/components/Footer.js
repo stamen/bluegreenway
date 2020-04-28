@@ -21,7 +21,7 @@ export default (props) => (
 					<div className="site-footer-header">Contact</div>
 					<p>
 						415.621.3260<br />
-						1663 Mission St, Suite 320<br />
+						1074 Folsom Street<br />
 						San Francisco, CA 94103
 					</p>
 					<p><a href="mailto:feedback@sfparksalliance.org">General feedback</a></p>
